@@ -59,3 +59,11 @@ typings/
 
 # next.js build output
 .next
+
+# taken from makerpass
+node_modules/
+dist/
+build/
+package-lock.json
+bundle.js
+.DS_Store

@@ -1,0 +1,41 @@
+{
+  "name": "curiosity",
+  "version": "1.0.0",
+  "description": "Bounty based question-and-answer site",
+  "main": "index.js",
+  "scripts": {
+    "react-dev": "webpack -d --watch",
+    "server-dev": "nodemon --inspect server/index.js",
+    "start": "node server/index.js",
+    "heroku-postbuild": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teamSlytherin/curiosity.git"
+  },
+  "author": "teamSlytherin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teamSlytherin/curiosity/issues"
+  },
+  "homepage": "https://github.com/teamSlytherin/curiosity#readme",
+  "keywords": [],
+  "devDependencies": {
+    "babel-core": "^6.23.3",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  }
+}
