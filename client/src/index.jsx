@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 
-class App extends React.Component {
-  constructor() {
-    super();
-  }
-  render() {
-    return <div>Curiosity</div>;
-  }
+const client = new ApolloClient({
+	uri: 'http://localhost:3000/graphql'
+});
+
+class App extends Component {
+	constructor() {
+		super();
+	}
+	render() {
+		return (
+			<ApolloProvider client={client}>
+				<div>
+					<h1>Hey im working</h1>
+				</div>
+			</ApolloProvider>
+		);
+	}
 }
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('root'));
