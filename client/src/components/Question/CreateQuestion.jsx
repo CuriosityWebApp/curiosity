@@ -6,32 +6,80 @@ class CreateQuestion extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userId: '',
+			userId: this.props.userId,
 			title: '',
 			content: '',
 			bounty: '',
-			category: ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'],
+			category: '',
 			restriction: '',
-			tags: []
+			tags: ''
 		};
 	}
 
+	displayCategories() {
+		let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
+
+		return categories.map(category => {
+			return (
+				<option key={category} value={category}>
+					{category}
+				</option>
+			);
+		});
+	}
+
+	submitForm(e) {
+		console.log('State of the CreateQuestion: ', this.state);
+		let tags = this.state.tags.split('');
+		console.log('TAGS IN FORM', tags);
+		e.preventDefault();
+		this.props.AddQuestion({
+			variables: {
+				userId: this.state.userId,
+				title: this.state.title,
+				content: this.state.content,
+				bounty: this.state.bounty,
+				category: this.state.category,
+				restriction: this.state.restriction,
+				tags: tags
+			}
+		});
+	}
 	render() {
 		const { title, content, bounty, category, restriction, tags } = this.state;
 		return (
 			<div>
 				<h2>Ask a Question: </h2>
-				<form>
+				<form onSubmit={this.submitForm.bind(this)}>
 					<label>Amount of Bounty: </label>
-					<input type="number" value={bounty} onchange={e => this.setState({ bounty: e.target.value })} />
+					<input type="number" value={bounty} onChange={e => this.setState({ bounty: e.target.value })} />
 					<label>Category: </label>
 					<select>
-						<options />
+						<option>Select Category</option>
+						{this.displayCategories()}
 					</select>
+					<label>Answer by rank: </label>
+					<input
+						type="number"
+						value={restriction}
+						onChange={e => this.setState({ restriction: e.target.value })}
+					/>
+					<label>Tags (separated by space): </label>
+					<input type="text" value={tags} onChange={e => this.setState({ tags: e.target.value })} />
+					<label>Title: </label>
+					<input type="text" value={title} onChange={e => this.setState({ title: e.target.value })} />
+					<label>Content of the Questions: </label>
+					<textarea
+						rows="15"
+						cols="80"
+						value={content}
+						onChange={e => this.setState({ content: e.target.value })}
+					/>
+					<button onClick={this.submit.form.bind(this)}>Post Question</button>
 				</form>
 			</div>
 		);
 	}
 }
 
-export default CreateQuestion;
+export default graphql(AddQuestion)(CreateQuestion);

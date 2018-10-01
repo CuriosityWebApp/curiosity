@@ -1,6 +1,6 @@
-import gql from 'apollo-boost';
+import { gql } from 'apollo-boost';
 
-const GetUser = gql`
+const getUser = gql`
 	query($id: ID!) {
 		user(id: $id) {
 			id
@@ -27,7 +27,7 @@ const GetUser = gql`
 	}
 `;
 
-const GetQuestion = gql`
+const getQuestion = gql`
 	query($id: ID!) {
 		question(id: $id) {
 			title
@@ -67,22 +67,30 @@ const GetQuestion = gql`
 // 	}
 // `;
 
-const GetQuestions = gql`
-	{
+const getQuestions = gql`
+	query {
 		questions {
 			id
-			title
 			category
-			question
+			questionTitle
+			questionContent
 			user {
 				username
 			}
 			bounty
 			restriction
 			tags
+			answers {
+				user {
+					username
+					rank
+				}
+				answer
+				createdAt
+			}
 			createdAt
 		}
 	}
 `;
 
-module.exports = { GetUser, GetQuestion, GetQuestions };
+module.exports = { getUser, getQuestion, getQuestions };

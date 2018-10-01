@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import QuestionList from './components/Question/QuestionList.jsx';
 
 const client = new ApolloClient({
 	uri: 'http://localhost:3000/graphql'
@@ -14,12 +15,16 @@ class App extends Component {
 	}
 	render() {
 		return (
-			<ApolloProvider client={client}>
-				<div>
-					<h1>Hey im working</h1>
-				</div>
-			</ApolloProvider>
+			<div>
+				<QuestionList />
+			</div>
 		);
 	}
 }
-ReactDOM.render(<App />, document.getElementById('root'));
+
+ReactDOM.render(
+	<ApolloProvider client={client}>
+		<App />
+	</ApolloProvider>,
+	document.getElementById('root')
+);
