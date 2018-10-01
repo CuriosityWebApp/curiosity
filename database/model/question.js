@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
   userId: String,
-  question: String,
+  questionTitle: String,
+  questionContent: String,
   category: String,
   bounty: Number,
   bountyPaid: Boolean,

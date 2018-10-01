@@ -47,7 +47,8 @@ const QuestionType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     userId: { type: GraphQLID },
-    question: { type: GraphQLString },
+    questionTitle: { type: GraphQLString },
+    questionContent: {type: GraphQLString},
     category: { type: GraphQLString },
     bounty: { type: GraphQLInt },
     bountyPaid: { type: GraphQLBoolean },
