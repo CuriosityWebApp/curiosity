@@ -2,6 +2,7 @@ const User = require("../model/user.js");
 const Question = require("../model/question.js");
 const Answer = require("../model/answer.js");
 const Transaction = require("../model/transaction.js");
+var GraphQLDate = require('graphql-date')
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -15,10 +16,11 @@ const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
     id: { type: GraphQLID },
-    userId: { type: GraphQLID },
     username: { type: GraphQLString },
     rank: { type: GraphQLInt },
     credit: { type: GraphQLInt },
+    createdAt: { type: GraphQLDate },
+    updatedAt: { type: GraphQLDate },
     questions: {
       type: new GraphQLList(QuestionType),
       resolve(parent, args) {
@@ -47,11 +49,14 @@ const QuestionType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     userId: { type: GraphQLID },
-    question: { type: GraphQLString },
+    questionTitle: { type: GraphQLString },
+    questionContent: {type: GraphQLString},
     category: { type: GraphQLString },
     bounty: { type: GraphQLInt },
     bountyPaid: { type: GraphQLBoolean },
     restriction: { type: GraphQLInt },
+    createdAt: { type: GraphQLDate },
+    updatedAt: { type: GraphQLDate },
     tags: { type: new GraphQLList(GraphQLString) },
     user: {
       type: UserType,
@@ -76,6 +81,8 @@ const AnswerType = new GraphQLObjectType({
     questionId: { type: GraphQLID },
     answer: { type: GraphQLString },
     score: { type: GraphQLInt },
+    createdAt: { type: GraphQLDate },
+    updatedAt: { type: GraphQLDate },
     user: {
       type: UserType,
       resolve(parent, args) {
@@ -99,6 +106,8 @@ const TransactionType = new GraphQLObjectType({
     senderId: { type: GraphQLID },
     receiverId: { type: GraphQLID },
     amount: { type: GraphQLInt },
+    createdAt: { type: GraphQLDate },
+    updatedAt: { type: GraphQLDate },
     sender: {
       type: UserType,
       resolve(parent, args) {

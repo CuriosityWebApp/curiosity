@@ -6,6 +6,10 @@ const transactionSchema = new Schema({
   senderId: String,
   receiverId: String,
   amount: Number
-})
+},
+  {
+    timestamps: true
+  }
+)
 
 module.exports = mongoose.model('Transaction', transactionSchema);
