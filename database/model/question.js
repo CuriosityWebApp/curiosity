@@ -7,9 +7,13 @@ const questionSchema = new Schema({
   questionContent: String,
   category: String,
   bounty: Number,
-  bountyPaid: Boolean,
-  restriction: Number,
+  bountyPaid: {type: Boolean, default: false},
+  restriction: {type: Number, default: 0},
   tags: [String]
-})
+},
+  {
+    timestamps: true
+  }
+)
 
 module.exports = mongoose.model('Question', questionSchema);
