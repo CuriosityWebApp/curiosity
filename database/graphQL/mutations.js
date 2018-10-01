@@ -22,6 +22,7 @@ const Mutation = new GraphQLObjectType({
       type: UserType,
       args: {
         username: { type: new GraphQLNonNull(GraphQLString) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
         rank: { type: GraphQLInt },
         credit: { type: GraphQLInt },
       },
@@ -118,6 +119,7 @@ const Mutation = new GraphQLObjectType({
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
         username: { type: GraphQLString },
+        email: { type: GraphQLString },
         rank: { type: GraphQLInt },
         credit: { type: GraphQLInt }
       },
