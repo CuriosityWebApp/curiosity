@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter, Router, Route, Link } from 'react-router-dom';
-import QuestionList from './components/Question/QuestionList.jsx';
-import AnswerList from './components/Answer/AnswerList.jsx';
+import App from './components/Auth/App.jsx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
 });
 
-class App extends Component {
+class Index extends Component {
   constructor() {
     super();
   }
@@ -26,7 +25,7 @@ class App extends Component {
           </div>
         </div>
         <div>
-          <QuestionList />
+          <App />
         </div>
       </div>
     );
@@ -35,7 +34,9 @@ class App extends Component {
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <BrowserRouter>
+      <Index />
+    </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root'),
 );
