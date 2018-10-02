@@ -10,7 +10,6 @@ class AnswerList extends Component {
 			return <div>Loading...</div>;
 		} else {
 			let answers = this.props.data.question.answers;
-			console.log('Answers in answer list ', answers);
 			return answers.map(answer => {
 				return <AnswerItem key={answer.id} answerId={answer.id} />;
 			});

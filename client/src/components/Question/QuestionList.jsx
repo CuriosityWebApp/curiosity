@@ -14,37 +14,33 @@ class QuestionList extends Component {
 		this.onSelect = this.onSelect.bind(this);
 	}
 
-  onSelect(id) {
-		console.log(id);
+	onSelect(id) {
 		this.setState({
 			selected: id
-		})
+		});
 	}
 
 	displayQuestions() {
 		let data = this.props.data;
-		// console.log('Data in display questions', data);
 		if (data.loading) {
 			return <div>Loading Questions...</div>;
 		} else {
 			return data.questions.map(post => {
-				return <QuestionItem key={post.id} postData={post} onSelect={this.onSelect}/>;
+				return <QuestionItem key={post.id} postData={post} onSelect={this.onSelect} />;
 			});
 		}
 	}
 
-  render() {
+	render() {
 		if (!this.state.selected) {
 			return (
 				<div>
 					<h3>Top Questions</h3>
 					<ul>{this.displayQuestions()}</ul>
 				</div>
-			)
+			);
 		} else {
-			return (
-				<QuestionContent id={this.state.selected}/>
-			)
+			return <QuestionContent id={this.state.selected} />;
 		}
 	}
 }
