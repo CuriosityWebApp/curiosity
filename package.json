@@ -44,12 +44,14 @@
     "flow-bin": "^0.42.0",
     "graphql": "^14.0.2",
     "graphql-date": "^1.0.3",
+    "moment": "^2.22.2",
     "mongoose": "^5.2.18",
     "path": "^0.12.7",
     "prettier-eslint": "^8.8.2",
     "react": "^16.5.2",
     "react-apollo": "^2.2.3",
     "react-dom": "^16.5.2",
-    "react-router": "^4.3.1"
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1"
   }
 }

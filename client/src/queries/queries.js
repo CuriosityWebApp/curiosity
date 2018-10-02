@@ -30,8 +30,8 @@ const getUser = gql`
 const getQuestion = gql`
 	query($id: ID!) {
 		question(id: $id) {
-			title
-			question
+			questionTitle
+			questionContent
 			category
 			bounty
 			restriction

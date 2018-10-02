@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import { BrowserRouter, Router, Route, Link } from 'react-router-dom';
 import QuestionList from './components/Question/QuestionList.jsx';
 
 const client = new ApolloClient({
@@ -23,8 +23,8 @@ class App extends Component {
 }
 
 ReactDOM.render(
-	<ApolloProvider client={client}>
-		<App />
-	</ApolloProvider>,
+		<ApolloProvider client={client}>
+			<App />
+		</ApolloProvider>,
 	document.getElementById('root')
 );
