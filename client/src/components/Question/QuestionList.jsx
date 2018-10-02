@@ -35,8 +35,7 @@ class QuestionList extends Component {
 		if (!this.state.selected) {
 			return (
 				<div>
-					<h3>Top Questions</h3>
-					<ul>{this.displayQuestions()}</ul>
+					<div>{this.displayQuestions()}</div>
 				</div>
 			);
 		} else {
