@@ -41,6 +41,7 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
+    "firebase": "^5.5.2",
     "flow-bin": "^0.42.0",
     "graphql": "^14.0.2",
     "graphql-date": "^1.0.3",
@@ -51,6 +52,7 @@
     "react": "^16.5.2",
     "react-apollo": "^2.2.3",
     "react-dom": "^16.5.2",
+    "react-firebaseui": "^3.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
   }
