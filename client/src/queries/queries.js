@@ -42,30 +42,26 @@ const getQuestion = gql`
 			}
 			answers {
 				id
-				answer
-				score
-				user {
-					username
-					rank
-				}
 			}
 			createdAt
 		}
 	}
 `;
 
-// const getAnswer = gql`
-// 	query($id: ID!) {
-// 		answer(id: $id) {
-// 			answer
-// 			score
-// 			user {
-// 				username
-// 				rank
-// 			}
-// 		}
-// 	}
-// `;
+// passing in the questionId
+const getAnswer = gql`
+	query($id: ID!) {
+		answer(id: $id) {
+			answer
+			score
+			createdAt
+			user {
+				username
+				rank
+			}
+		}
+	}
+`;
 
 const getQuestions = gql`
 	query {
@@ -80,17 +76,17 @@ const getQuestions = gql`
 			bounty
 			restriction
 			tags
-			answers {
-				user {
-					username
-					rank
-				}
-				answer
-				createdAt
-			}
 			createdAt
+			answers {
+				id
+			}
 		}
 	}
 `;
 
-module.exports = { getUser, getQuestion, getQuestions };
+module.exports = {
+  getUser,
+  getQuestion,
+  getQuestions,
+  getAnswer,
+};
