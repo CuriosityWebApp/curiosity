@@ -9,7 +9,7 @@ const getUser = gql`
       credit
       questions {
         id
-        title
+        questionTitle
         bounty
       }
       answers {
@@ -21,7 +21,7 @@ const getUser = gql`
         id
         questionId
         amount
-        recipient
+        receiverId
       }
     }
   }
