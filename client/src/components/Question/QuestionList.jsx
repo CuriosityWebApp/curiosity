@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import { getQuestions } from '../../queries/queries.js';
 
 import QuestionItem from './QuestionItem.jsx';
+import QuestionContent from './QuestionContent.jsx';
 
 class QuestionList extends Component {
 	constructor(props) {
@@ -10,26 +11,41 @@ class QuestionList extends Component {
 		this.state = {
 			selected: null
 		};
+		this.onSelect = this.onSelect.bind(this);
 	}
+
+  onSelect(id) {
+		console.log(id);
+		this.setState({
+			selected: id
+		})
+	}
+
 	displayQuestions() {
 		let data = this.props.data;
-		console.log('Data in display questions', data);
+		// console.log('Data in display questions', data);
 		if (data.loading) {
 			return <div>Loading Questions...</div>;
 		} else {
 			return data.questions.map(post => {
-				return <QuestionItem key={post.id} postData={post} />;
+				return <QuestionItem key={post.id} postData={post} onSelect={this.onSelect}/>;
 			});
 		}
 	}
 
-	render() {
-		return (
-			<div>
-				<h3>Top Questions</h3>
-				<ul>{this.displayQuestions()}</ul>
-			</div>
-		);
+  render() {
+		if (!this.state.selected) {
+			return (
+				<div>
+					<h3>Top Questions</h3>
+					<ul>{this.displayQuestions()}</ul>
+				</div>
+			)
+		} else {
+			return (
+				<QuestionContent id={this.state.selected}/>
+			)
+		}
 	}
 }
 
