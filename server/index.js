@@ -18,7 +18,7 @@ mongoose.connection
   .once('open', () => console.log('Connected to MongoDB..'))
   .on('error', error => console.log('Error connecting to DB'));
 
-app.use(express.static(path.join(__dirname, '/../client/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(
   '/graphql',
   graphqlHTTP({
