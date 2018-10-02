@@ -5,6 +5,7 @@ import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter, Router, Route, Link } from 'react-router-dom';
 import QuestionList from './components/Question/QuestionList.jsx';
 import AnswerList from './components/Answer/AnswerList.jsx';
+import UserProfile from './components/User/UserProfile.jsx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
@@ -26,7 +27,7 @@ class App extends Component {
           </div>
         </div>
         <div>
-          <QuestionList />
+          <UserProfile />
         </div>
       </div>
     );
