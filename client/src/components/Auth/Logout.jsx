@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 
-const Logout = ({ logout }) => {
-	return <a onClick={logout}>Log Out</a>;
-};
+// const Logout = ({ logout }) => {
+// 	console.log('hi');
+// 	return (
+// 		<a onClick={logout}>Log Out</a>
+// 	)
+// };
 
-export default Logout;
+// export default Logout;

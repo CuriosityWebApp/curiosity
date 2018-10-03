@@ -84,9 +84,20 @@ const getQuestions = gql`
   }
 `;
 
+const checkUserEmail = gql`
+  query($email: String!) {
+    checkUserEmail(email: $email) {
+      id
+      username
+      email
+    }
+  }
+`;
+
 module.exports = {
   getUser,
   getQuestion,
   getQuestions,
-  getAnswer,
+	getAnswer,
+	checkUserEmail
 };

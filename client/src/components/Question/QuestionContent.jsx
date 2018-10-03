@@ -23,7 +23,7 @@ class QuestionContent extends Component {
 						return (
 							<div className="list-group">
 							  <div className="list-group-item list-group-item-action flex-column align-items-start">
-		              <div class="d-flex w-100 justify-content-between">
+		              <div className="d-flex w-100 justify-content-between">
 								    <h3 className="mb-1">{data.question.questionTitle}</h3>
 										<div>
 								      <small>Bounty: {data.question.bounty}</small>

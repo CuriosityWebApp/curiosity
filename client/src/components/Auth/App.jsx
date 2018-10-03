@@ -3,9 +3,9 @@ import firebase, { database } from 'firebase/app';
 import 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Main from '../Main/Main.jsx';
-import QuestionList from '../Question/QuestionList.jsx';
+import UsernameSubmit from './UsernameSubmit.jsx';
+import Login from './Login.jsx';
 
 firebase.initializeApp({
 	apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
@@ -16,10 +16,12 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isSignedIn: true
+			loading: true,
+			oAuthData: null
 		};
 		// this.finishRegistration = this.finishRegistration.bind(this);
 		this.handleLogout = this.handleLogout.bind(this);
+		this.authListener = this.authListener.bind(this);
 	}
 	uiConfig = {
 		signInFlow: 'popup',
@@ -34,26 +36,50 @@ class App extends Component {
 			signInSuccessWithAuthResult: () => false
 		}
 	};
-	componentDidMount = () => {
-		firebase.auth().onAuthStateChanged(user => {
-			this.setState({ isSignedIn: !!user });
-		});
-	};
 
-	handleLogout() {
-		firebaseAuth.signOut();
-		this.setState({ signedIn: false });
+	componentDidMount = () => {
+		this.authListener();
+	};
+	
+	authListener() {
+		firebase.auth().onAuthStateChanged(user => {
+		  if (user) {
+		  	this.setState({ 
+					loading: false,
+					oAuthData: Object.assign({}, user.providerData[0])
+				});
+		  } else {
+				this.setState({
+					loading: false,
+					oAuthData: null
+				})
+			}
+	  });
 	}
+	
+	handleLogout() {
+		this.setState({
+			oAuthData: null
+		});
+
+		firebase.auth().signOut()
+		.then(() => {
+			return;
+		})
+		.catch((err) => {
+			console.error(err);
+		})
+	}
+
 	render() {
+		if (this.state.loading) {
+			return <div>loading</div>
+		}
 		return (
 			<div>
-				{this.state.isSignedIn ? (
-					<Main signedIn={this.state.isSignedIn} logout={this.handleLogout} />
-				) : (
-					<StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
-				)}
+				<Main oAuthData={this.state.oAuthData} logout={this.handleLogout} uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
 			</div>
-		);
+		)
 	}
 }
 
