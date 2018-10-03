@@ -9,29 +9,44 @@ const Navigation = ({ oAuthData, logout }) => {
 		<div>
 			{oAuthData ? (
 				<ul>
-					<li>
-						<NavLink to="/">Main Page</NavLink>
-					</li>
-					<li>
-						<NavLink to="/createQuestion">Ask Question</NavLink>
-					</li>
+					<LinkContainer to="/">
+            <NavItem>
+              Main Page
+            </NavItem>
+          </LinkContainer>
+					<LinkContainer to="/createQuestion">
+            <NavItem>
+              Ask Question
+            </NavItem>
+          </LinkContainer>
 					<LinkContainer to="/">
             <NavItem onClick={ logout }>
               Logout
             </NavItem>
           </LinkContainer>
+					<LinkContainer to="/profileUser">
+            <NavItem>
+              Profile
+            </NavItem>
+          </LinkContainer>
 				</ul>
 			) : (
 				<ul>
-					<li>
-						<NavLink to="/">Main Page</NavLink>
-					</li>
-					<li>
-						<NavLink to="/login">Login</NavLink>
-					</li>
-					<li>
-						<NavLink to="/signup">Sign Up</NavLink>{' '}
-					</li>
+				  <LinkContainer to="/">
+            <NavItem>
+              Main Page
+            </NavItem>
+          </LinkContainer>
+					<LinkContainer to="/login">
+            <NavItem>
+              Login
+            </NavItem>
+          </LinkContainer>
+					<LinkContainer to="/signup">
+            <NavItem>
+              SignUp
+            </NavItem>
+          </LinkContainer>
 				</ul>
 			)}
 		</div>

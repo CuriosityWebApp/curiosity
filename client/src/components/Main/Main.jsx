@@ -6,6 +6,7 @@ import CreateQuestion from '../Question/CreateQuestion.jsx';
 import UsernameSubmit from '../Auth/UsernameSubmit.jsx';
 import Logout from '../Auth/Logout.jsx';
 import Login from '../Auth/Login.jsx';
+import ProfileUser from '../User/ProfileUser.jsx';
 
 class Main extends Component {
 	constructor(props) {
@@ -39,6 +40,13 @@ class Main extends Component {
 				  		path="/logout"
 				  		render={() => {
 				  			return <Logout />;
+				  		}}
+				  	/>
+						<Route
+				  		exact
+				  		path="/profileUser"
+				  		render={() => {
+				  			return <ProfileUser />;
 				  		}}
 				  	/>
 				  	<Route
