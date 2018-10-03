@@ -16,6 +16,9 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isSignedIn: true,
+			email: '',
+			userId: '5bb28b121723602d90864b71',
 			loading: true,
 			oAuthData: null
 		};
@@ -40,47 +43,55 @@ class App extends Component {
 	componentDidMount = () => {
 		this.authListener();
 	};
-	
+
 	authListener() {
 		firebase.auth().onAuthStateChanged(user => {
-		  if (user) {
-		  	this.setState({ 
+			if (user) {
+				this.setState({
 					loading: false,
 					oAuthData: Object.assign({}, user.providerData[0])
 				});
-		  } else {
+			} else {
 				this.setState({
 					loading: false,
 					oAuthData: null
-				})
+				});
 			}
-	  });
+		});
 	}
-	
+
 	handleLogout() {
 		this.setState({
 			oAuthData: null
 		});
 
-		firebase.auth().signOut()
-		.then(() => {
-			return;
-		})
-		.catch((err) => {
-			console.error(err);
-		})
+		firebase
+			.auth()
+			.signOut()
+			.then(() => {
+				return;
+			})
+			.catch(err => {
+				console.error(err);
+			});
 	}
 
 	render() {
 		console.log("Im at app", this.state.oAuthData);
 		if (this.state.loading) {
-			return <div>loading</div>
+			return <div>loading</div>;
 		}
 		return (
 			<div>
-				<Main oAuthData={this.state.oAuthData} logout={this.handleLogout} uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
+				<Main
+					userId={this.state.userId}
+					oAuthData={this.state.oAuthData}
+					logout={this.handleLogout}
+					uiConfig={this.uiConfig}
+					firebaseAuth={firebase.auth()}
+				/>
 			</div>
-		)
+		);
 	}
 }
 

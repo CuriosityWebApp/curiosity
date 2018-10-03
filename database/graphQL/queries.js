@@ -3,12 +3,7 @@ const Question = require('../../database/model/question.js');
 const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
 const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLBoolean,
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
 } = require('graphql');
 const {
   UserType, QuestionType, AnswerType, TransactionType,

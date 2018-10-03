@@ -6,14 +6,14 @@ class CreateQuestion extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userId: this.props.userId,
 			title: '',
 			content: '',
-			bounty: '',
+			bounty: 0,
 			category: '',
 			restriction: '',
 			tags: ''
 		};
+		this.displayCategories = this.displayCategories.bind(this);
 	}
 
 	displayCategories() {
@@ -29,21 +29,25 @@ class CreateQuestion extends Component {
 	}
 
 	submitForm(e) {
-		console.log('State of the CreateQuestion: ', this.state);
-		let tags = this.state.tags.split('');
-		console.log('TAGS IN FORM', tags);
+		console.log('State of the CreateQuestion: ', this.state, this.props.userId);
 		e.preventDefault();
-		this.props.AddQuestion({
-			variables: {
-				userId: this.state.userId,
-				title: this.state.title,
-				content: this.state.content,
-				bounty: this.state.bounty,
-				category: this.state.category,
-				restriction: this.state.restriction,
-				tags: tags
-			}
-		});
+		this.props
+			.mutate({
+				mutation: AddQuestion,
+				variables: {
+					userId: this.props.userId,
+					questionTitle: this.state.title,
+					questionContent: this.state.content,
+					bounty: Number(this.state.bounty),
+					category: this.state.category,
+					restriction: Number(this.state.restriction),
+					tags: this.state.tags.split(' ')
+				}
+			})
+			.then(data => {
+				console.log('success', data);
+			})
+			.catch(err => console.log('error bro', err));
 	}
 	render() {
 		const { title, content, bounty, category, restriction, tags } = this.state;
@@ -53,21 +57,26 @@ class CreateQuestion extends Component {
 				<form onSubmit={this.submitForm.bind(this)}>
 					<label>Amount of Bounty: </label>
 					<input type="number" value={bounty} onChange={e => this.setState({ bounty: e.target.value })} />
+					<br />
 					<label>Category: </label>
-					<select>
+					<select onChange={e => this.setState({ category: e.target.value })}>
 						<option>Select Category</option>
 						{this.displayCategories()}
 					</select>
+					<br />
 					<label>Answer by rank: </label>
 					<input
 						type="number"
 						value={restriction}
 						onChange={e => this.setState({ restriction: e.target.value })}
 					/>
-					<label>Tags (separated by space): </label>
+					<br />
+					<label>Tags (#name): </label>
 					<input type="text" value={tags} onChange={e => this.setState({ tags: e.target.value })} />
+					<br />
 					<label>Title: </label>
 					<input type="text" value={title} onChange={e => this.setState({ title: e.target.value })} />
+					<br />
 					<label>Content of the Questions: </label>
 					<textarea
 						rows="15"
@@ -75,8 +84,8 @@ class CreateQuestion extends Component {
 						value={content}
 						onChange={e => this.setState({ content: e.target.value })}
 					/>
-					<button onClick={this.submit.form.bind(this)}>Post Question</button>
 				</form>
+				<button onClick={this.submitForm.bind(this)}>Post Question</button>
 			</div>
 		);
 	}
