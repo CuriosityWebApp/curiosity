@@ -19,8 +19,29 @@ class UserProfile extends Component {
           if (error) {
             return <p>Error! ${error}</p>;
           } else {
-            console.log(data);
-            return <div>hello</div>;
+            console.log(data.user);
+            return (
+              <div>
+                <div>
+                  Answers
+                  {data.user.answers.map(answer => {
+                    return <div key={answer.id}>{answer.answer}</div>;
+                  })}
+                </div>
+                <div>
+                  Questions
+                  {data.user.questions.map(question => {
+                    return <div key={question.id}>{question.questionTitle}</div>;
+                  })}
+                </div>
+                <div>
+                  Transactions
+                  {data.user.questions.map(question => {
+                    return <div key={question.id}>{question.questionTitle}</div>;
+                  })}
+                </div>
+              </div>
+            );
           }
         }}
       </Query>
