@@ -93,20 +93,11 @@ const checkUserEmail = gql`
 		}
 	}
 `;
-const checkUserEmail = gql`
-	query($email: String!) {
-		checkUserEmail(email: $email) {
-			id
-			username
-			email
-		}
-	}
-`;
 
 module.exports = {
-	getUser,
-	getQuestion,
-	getQuestions,
-	getAnswer,
-	checkUserEmail
+  getUser,
+  getQuestion,
+  getQuestions,
+  getAnswer,
+  checkUserEmail,
 };
