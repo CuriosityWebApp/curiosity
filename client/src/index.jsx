@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter, Router, Route, Link } from 'react-router-dom';
-import UserProfile from './components/User/UserProfile.jsx';
 import App from './components/Auth/App.jsx';
 
 const client = new ApolloClient({
@@ -26,7 +25,7 @@ class Index extends Component {
           </div>
         </div>
         <div>
-          <UserProfile />
+          <App />
         </div>
       </div>
     );
