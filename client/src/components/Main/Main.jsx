@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Router, Route, Link } from 'react-router-dom';
 import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
 import UsernameSubmit from '../Auth/UsernameSubmit.jsx';
-import Logout from '../Auth/Logout.jsx';
 import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
 
@@ -33,13 +32,6 @@ class Main extends Component {
 				  		path="/signup"
 				  		render={() => {
 				  			return <Signup />;
-				  		}}
-				  	/>
-						<Route
-				  		exact
-				  		path="/logout"
-				  		render={() => {
-				  			return <Logout />;
 				  		}}
 				  	/>
 						<Route

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavItem, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import Logout from '../Auth/Logout.jsx';
+import Login from '../Auth/Logout.jsx';
 
 const Navigation = ({ oAuthData, logout }) => {
 	return (
@@ -42,7 +42,7 @@ const Navigation = ({ oAuthData, logout }) => {
               Login
             </NavItem>
           </LinkContainer>
-					<LinkContainer to="/signup">
+					<LinkContainer to="/newuser">
             <NavItem>
               SignUp
             </NavItem>

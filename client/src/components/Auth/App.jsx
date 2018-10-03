@@ -72,6 +72,7 @@ class App extends Component {
 	}
 
 	render() {
+		console.log("Im at app", this.state.oAuthData);
 		if (this.state.loading) {
 			return <div>loading</div>
 		}
