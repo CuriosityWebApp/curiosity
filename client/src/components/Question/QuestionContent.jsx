@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import { getQuestion } from '../../queries/queries.js';
 import AnswerList from '../Answer/AnswerList.jsx';
 import moment from 'moment';
+import CreateAnswer from '../Answer/CreateAnswer.jsx';
 
 class QuestionContent extends Component {
 	constructor(props) {
@@ -41,6 +42,7 @@ class QuestionContent extends Component {
 									</div>
 								</div>
 								<AnswerList id={this.props.id} />
+								<CreateAnswer userId={this.props.userId} questionId={this.props.id} />
 							</div>
 						);
 					}

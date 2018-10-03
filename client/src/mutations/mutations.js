@@ -3,8 +3,8 @@ import { gql } from 'apollo-boost';
 const AddQuestion = gql`
 	mutation(
 		$userId: ID!
-		$title: String!
-		$question: String!
+		$questionTitle: String!
+		$questionContent: String!
 		$category: String
 		$bounty: Int!
 		$restriction: Int!
@@ -12,11 +12,11 @@ const AddQuestion = gql`
 	) {
 		addQuestion(
 			userId: $userId
-			title: $title
-			question: $question
+			questionTitle: $questionTitle
+			questionContent: $questionContent
 			category: $category
 			bounty: $bounty
-			restrition: $restriction
+			restriction: $restriction
 			tags: $tags
 		) {
 			id

@@ -23,7 +23,7 @@ class App extends Component {
 			isSignedIn: true,
 			didrun: false,
 			email: '',
-			userId: ''
+			userId: '5bb28b121723602d90864b71'
 		};
 		// this.finishRegistration = this.finishRegistration.bind(this);
 		this.handleLogout = this.handleLogout.bind(this);
@@ -60,33 +60,13 @@ class App extends Component {
 		console.log('this is the email', this.state.email);
 		return (
 			<div>
-				{this.state.isSignedIn && this.state.didrun === true ? (
-					<Query query={checkUserEmail} variables={{ email: this.state.email }}>
-						{({ loading, error, data }) => {
-							console.log('Data in query', data);
-							if (loading) {
-								return <div>Loading...</div>;
-							}
-							if (error) {
-								console.log('IM NOT WORKING REDIRECT', error);
-								return <Redirect to="/newuser" />;
-							} else {
-								if (data.id === null) {
-								} else {
-									this.setState({ userId: data.id, isSignedIn: true }, () => {
-										return (
-											<Main
-												userId={this.state.userId}
-												email={this.state.email}
-												signedIn={this.state.isSignedIn}
-												logout={this.handleLogout}
-											/>
-										);
-									});
-								}
-							}
-						}}
-					</Query>
+				{this.state.isSignedIn ? (
+					<Main
+						userId={this.state.userId}
+						email={this.state.email}
+						signedIn={this.state.isSignedIn}
+						logout={this.handleLogout}
+					/>
 				) : (
 					<StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
 				)}
