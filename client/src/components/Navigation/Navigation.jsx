@@ -1,33 +1,52 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Navbar, Nav, NavItem, Image } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import Logout from '../Auth/Logout.jsx';
 
-const Navigation = ({ signedIn, logout }) => {
+const Navigation = ({ oAuthData, logout }) => {
 	return (
 		<div>
-			{signedIn ? (
+			{oAuthData ? (
 				<ul>
-					<li>
-						<NavLink to="/">Main Page</NavLink>
-					</li>
-					<li>
-						<NavLink to="/createQuestion">Ask Question</NavLink>
-					</li>
-					<li>
-						<Logout logout={logout} />
-					</li>
+					<LinkContainer to="/">
+            <NavItem>
+              Main Page
+            </NavItem>
+          </LinkContainer>
+					<LinkContainer to="/createQuestion">
+            <NavItem>
+              Ask Question
+            </NavItem>
+          </LinkContainer>
+					<LinkContainer to="/">
+            <NavItem onClick={ logout }>
+              Logout
+            </NavItem>
+          </LinkContainer>
+					<LinkContainer to="/profileUser">
+            <NavItem>
+              Profile
+            </NavItem>
+          </LinkContainer>
 				</ul>
 			) : (
 				<ul>
-					<li>
-						<NavLink to="/">Main Page</NavLink>
-					</li>
-					<li>
-						<NavLink to="/login">Login</NavLink>
-					</li>
-					<li>
-						<NavLink to="/signup">Sign Up</NavLink>{' '}
-					</li>
+				  <LinkContainer to="/">
+            <NavItem>
+              Main Page
+            </NavItem>
+          </LinkContainer>
+					<LinkContainer to="/login">
+            <NavItem>
+              Login
+            </NavItem>
+          </LinkContainer>
+					<LinkContainer to="/signup">
+            <NavItem>
+              SignUp
+            </NavItem>
+          </LinkContainer>
 				</ul>
 			)}
 		</div>

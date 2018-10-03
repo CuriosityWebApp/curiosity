@@ -9,7 +9,7 @@ const getUser = gql`
 			credit
 			questions {
 				id
-				title
+				questionTitle
 				bounty
 			}
 			answers {
@@ -21,7 +21,7 @@ const getUser = gql`
 				id
 				questionId
 				amount
-				recipient
+				receiverId
 			}
 		}
 	}
@@ -83,6 +83,16 @@ const getQuestions = gql`
 		}
 	}
 `;
+
+const checkUserEmail = gql`
+	query($email: String!) {
+		checkUserEmail(email: $email) {
+			id
+			username
+			email
+		}
+	}
+`;
 const checkUserEmail = gql`
 	query($email: String!) {
 		checkUserEmail(email: $email) {
@@ -94,9 +104,9 @@ const checkUserEmail = gql`
 `;
 
 module.exports = {
-  getUser,
-  getQuestion,
-  getQuestions,
-  getAnswer,
-  checkUserEmail,
+	getUser,
+	getQuestion,
+	getQuestions,
+	getAnswer,
+	checkUserEmail
 };
