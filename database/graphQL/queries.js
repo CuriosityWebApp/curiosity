@@ -70,6 +70,14 @@ const RootQuery = new GraphQLObjectType({
         return Transaction.find({});
       },
     },
+    checkUserEmail: {
+      type: UserType,
+      args: { email: { type: GraphQLString } },
+      resolve(parent, args) {
+        // code to get data from db
+        return User.findOne({ email: args.email });
+      },
+    },
   },
 });
 

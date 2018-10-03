@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Navbar, Nav, NavItem, Image } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import Logout from '../Auth/Logout.jsx';
 
-const Navigation = ({ signedIn, logout }) => {
+const Navigation = ({ oAuthData, logout }) => {
 	return (
 		<div>
-			{signedIn ? (
+			{oAuthData ? (
 				<ul>
 					<li>
 						<NavLink to="/">Main Page</NavLink>
@@ -13,9 +15,11 @@ const Navigation = ({ signedIn, logout }) => {
 					<li>
 						<NavLink to="/createQuestion">Ask Question</NavLink>
 					</li>
-					<li>
-						<Logout logout={logout} />
-					</li>
+					<LinkContainer to="/">
+            <NavItem onClick={ logout }>
+              Logout
+            </NavItem>
+          </LinkContainer>
 				</ul>
 			) : (
 				<ul>
