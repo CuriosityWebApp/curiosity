@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Navigation from '../Navigation/Navigation.jsx';
-import { BrowserRouter, Switch, Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Router, Route, NavLink } from 'react-router-dom';
 import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
+import NewUserForm from '../Auth/NewUserForm.jsx';
 
 class Main extends Component {
 	constructor(props) {
@@ -13,34 +14,31 @@ class Main extends Component {
 		return (
 			<div>
 				<Navigation signedIn={this.props.signedIn} logout={this.props.logout} />
-				<BrowserRouter>
-					<Switch>
-						<Route
-							path="/"
-							render={() => {
-								return <QuestionList />;
-							}}
-						/>
-						<Route
-							path="createQuestion"
-							render={() => {
-								return <CreateQuestion />;
-							}}
-						/>
-						<Route
-							path="/login"
-							render={() => {
-								return <Login />;
-							}}
-						/>
-						<Route
-							path="/signup"
-							render={() => {
-								return <Signup />;
-							}}
-						/>
-					</Switch>
-				</BrowserRouter>
+				<Switch>
+					<Route exact path="/" component={QuestionList} />
+					<Route exact path="/createQuestion" component={CreateQuestion} />
+					<Route
+						exact
+						path="/login"
+						render={() => {
+							return <Login />;
+						}}
+					/>
+					<Route
+						exact
+						path="/signup"
+						render={() => {
+							return <Signup />;
+						}}
+					/>
+					<Route
+						exact
+						path="/newuser"
+						render={() => {
+							return <NewUserForm email={this.props.email} />;
+						}}
+					/>
+				</Switch>
 			</div>
 		);
 	}

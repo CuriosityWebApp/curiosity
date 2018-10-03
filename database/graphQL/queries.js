@@ -3,12 +3,7 @@ const Question = require('../../database/model/question.js');
 const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
 const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLBoolean,
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
 } = require('graphql');
 const {
   UserType, QuestionType, AnswerType, TransactionType,
@@ -68,6 +63,14 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(TransactionType),
       resolve(parent, args) {
         return Transaction.find({});
+      },
+    },
+    checkUserEmail: {
+      type: UserType,
+      args: { email: { type: GraphQLString } },
+      resolve(parent, args) {
+        // code to get data from db
+        return User.findOne({ email: args.email });
       },
     },
   },

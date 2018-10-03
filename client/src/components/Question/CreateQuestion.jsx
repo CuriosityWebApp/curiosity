@@ -53,21 +53,26 @@ class CreateQuestion extends Component {
 				<form onSubmit={this.submitForm.bind(this)}>
 					<label>Amount of Bounty: </label>
 					<input type="number" value={bounty} onChange={e => this.setState({ bounty: e.target.value })} />
+					<br />
 					<label>Category: </label>
 					<select>
 						<option>Select Category</option>
 						{this.displayCategories()}
 					</select>
+					<br />
 					<label>Answer by rank: </label>
 					<input
 						type="number"
 						value={restriction}
 						onChange={e => this.setState({ restriction: e.target.value })}
 					/>
+					<br />
 					<label>Tags (separated by space): </label>
 					<input type="text" value={tags} onChange={e => this.setState({ tags: e.target.value })} />
+					<br />
 					<label>Title: </label>
 					<input type="text" value={title} onChange={e => this.setState({ title: e.target.value })} />
+					<br />
 					<label>Content of the Questions: </label>
 					<textarea
 						rows="15"
@@ -75,8 +80,8 @@ class CreateQuestion extends Component {
 						value={content}
 						onChange={e => this.setState({ content: e.target.value })}
 					/>
-					<button onClick={this.submit.form.bind(this)}>Post Question</button>
 				</form>
+				<button onClick={this.submitForm.bind(this)}>Post Question</button>
 			</div>
 		);
 	}
