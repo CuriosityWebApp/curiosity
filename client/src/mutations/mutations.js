@@ -3,8 +3,8 @@ import { gql } from 'apollo-boost';
 const AddQuestion = gql`
 	mutation(
 		$userId: ID!
-		$title: String!
-		$question: String!
+		$questionTitle: String!
+		$questionContent: String!
 		$category: String
 		$bounty: Int!
 		$restriction: Int!
@@ -12,11 +12,11 @@ const AddQuestion = gql`
 	) {
 		addQuestion(
 			userId: $userId
-			title: $title
-			question: $question
+			questionTitle: $title
+			questionContent: $question
 			category: $category
 			bounty: $bounty
-			restrition: $restriction
+			restriction: $restriction
 			tags: $tags
 		) {
 			id
@@ -25,16 +25,28 @@ const AddQuestion = gql`
 `;
 
 const AddAnswer = gql`
-	mutation($userId: ID!, $questionId: ID!, $answer: String!) {
-		addAnswer(userId: $userId, questionId: $questionId, answer: $answer) {
+	mutation(
+		$userId: ID!, 
+		$questionId: ID!, 
+		$answer: String!) {
+		addAnswer(
+			userId: $userId, 
+			questionId: $questionId, 
+			answer: $answer) {
 			id
 		}
 	}
 `;
 
 const AddUser = gql`
-	mutation($username: String!) {
-		addUser(username: $username) {
+	mutation(
+		$username: String!,
+		$email: String!,
+		) {
+		addUser(
+			username: $username,
+			email: $email,
+			) {
 			id
 			username
 			rank
@@ -43,4 +55,22 @@ const AddUser = gql`
 	}
 `;
 
-module.exports = { AddQuestion, AddAnswer, AddUser };
+const AddTransaction = gql`
+	mutation(
+		$questionId: ID!,
+		$senderId: ID!,
+		$receiverId: ID!,
+		$amount: Int!,
+	) {
+		AddTransaction(
+			questionId: $questionId,
+			senderId: $senderId,
+			receiverId: $receiverId,
+			amount: $amountId
+		) {
+			id
+		}
+	}
+`;
+
+module.exports = { AddQuestion, AddAnswer, AddUser, AddTransaction };
