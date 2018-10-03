@@ -39,7 +39,7 @@ class QuestionList extends Component {
 				</div>
 			);
 		} else {
-			return <QuestionContent id={this.state.selected} />;
+			return <QuestionContent userId={this.props.userId} id={this.state.selected} />;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navigation from '../Navigation/Navigation.jsx';
-import { BrowserRouter, Switch, Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Router, Route, NavLink } from 'react-router-dom';
 import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
 import UsernameSubmit from '../Auth/UsernameSubmit.jsx';

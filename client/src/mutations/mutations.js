@@ -12,8 +12,8 @@ const AddQuestion = gql`
 	) {
 		addQuestion(
 			userId: $userId
-			questionTitle: $title
-			questionContent: $question
+			questionTitle: $questionTitle
+			questionContent: $questionContent
 			category: $category
 			bounty: $bounty
 			restriction: $restriction
