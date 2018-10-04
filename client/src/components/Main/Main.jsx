@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Query, graphql } from 'react-apollo';
-import { BrowserRouter, Switch, Router, Route, NavLink, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Router, Route, NavLink, Redirect, Link } from 'react-router-dom';
 import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
 import QuestionContent from '../Question/QuestionContent.jsx';
@@ -77,16 +77,13 @@ class Main extends Component {
                   </div>
                   <div className="card">
                     <div className="card-header">
-                      <LinkContainer to="/">
-                        <div
+                        <Link to='/'
                           onClick={e => {
-                            e.preventDefault();
                             this.props.logout();
                           }}
                         >
                           Log Out
-                        </div>
-                      </LinkContainer>
+                        </Link>
                     </div>
                   </div>
                 </div>
@@ -219,6 +216,7 @@ class Main extends Component {
                               <QuestionContent
                                 userId={this.props.userId}
                                 id={match.params.questionId}
+                                signedIn={this.props.signedIn}
                               />
                             );
                           }}

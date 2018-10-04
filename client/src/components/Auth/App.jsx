@@ -4,11 +4,8 @@ import 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import Main from '../Main/Main.jsx';
-import UsernameSubmit from './UsernameSubmit.jsx';
-import Login from './Login.jsx';
 import { checkUserEmail } from '../../queries/queries.js';
-import { graphql, client, withApollo } from 'react-apollo';
-import { check } from 'graphql-anywhere';
+import { withApollo } from 'react-apollo';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
@@ -16,33 +13,35 @@ firebase.initializeApp({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSignedIn: null,
-      email: '',
-      userId: null,
-      loading: true,
-      oAuthData: null,
-    };
-    // this.finishRegistration = this.finishRegistration.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.authListener = this.authListener.bind(this);
-    this.getUser = this.getUser.bind(this);
-  }
-  uiConfig = {
-    signInFlow: 'popup',
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-      firebase.auth.GithubAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    ],
-    callbacks: {
-      signInSuccessWithAuthResult: () => false,
-    },
-  };
+	constructor(props) {
+		super(props);
+		this.state = {
+			isSignedIn: null,
+			email: '',
+			userId: null,
+			loading: true,
+			oAuthData: null
+		};
+		// this.finishRegistration = this.finishRegistration.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
+		this.authListener = this.authListener.bind(this);
+		this.getUser = this.getUser.bind(this);
+	}
+
+	
+	uiConfig = {
+		signInFlow: 'popup',
+		signInOptions: [
+			firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+			firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+			firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+			firebase.auth.GithubAuthProvider.PROVIDER_ID,
+			firebase.auth.EmailAuthProvider.PROVIDER_ID
+		],
+		callbacks: {
+			signInSuccessWithAuthResult: () => false
+		}
+	};
 
   componentDidMount = () => {
     this.authListener();
@@ -95,43 +94,42 @@ class App extends Component {
     console.log('this is const userid', this.state.userId);
   };
 
-  handleLogout() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        this.setState({
-          oAuthData: null,
-          userId: null,
-          email: null,
-          isSignedIn: false,
-        });
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }
+	handleLogout() {
+		firebase
+			.auth()
+			.signOut()
+			.then(() => {
+				this.setState({
+					oAuthData: null,
+					userId: null,
+					email: null,
+					isSignedIn: false,
+				});
+			})
+			.catch(err => {
+				console.error(err);
+			});
+	}
 
-  render() {
-    console.log('Im at app', this.state.oAuthData);
-    if (this.state.loading) {
-      return <div>loading</div>;
-    }
-    return (
-      <div>
-        <Main
-          signedIn={this.state.isSignedIn}
-          userId={this.state.userId}
-          oAuthData={this.state.oAuthData}
-          isSignedIn={this.state.isSignedIn}
-          userId={this.state.userId}
-          logout={this.handleLogout}
-          uiConfig={this.uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
-      </div>
-    );
-  }
+	render() {
+		console.log('Im at app', this.state.oAuthData);
+		if (this.state.loading) {
+			return <div>loading</div>;
+		}
+		return (
+			<div>
+				<Main
+					signedIn={this.state.isSignedIn}
+					userId={this.state.userId}
+					oAuthData={this.state.oAuthData}
+					userId={this.state.userId}
+					logout={this.handleLogout}
+					uiConfig={this.uiConfig}
+					firebaseAuth={firebase.auth()}
+				/>
+			</div>
+		);
+	}
 }
 
 export default withApollo(App);
