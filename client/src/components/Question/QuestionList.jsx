@@ -8,30 +8,31 @@ import QuestionItem from './QuestionItem.jsx';
 import QuestionContent from './QuestionContent.jsx';
 
 class QuestionList extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			selected: null
-		};
-		this.onSelect = this.onSelect.bind(this);
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: null,
+    };
+    this.onSelect = this.onSelect.bind(this);
+  }
 
-	onSelect(id) {
-		this.setState({
-			selected: id
-		});
-	}
+  onSelect(id) {
+    this.setState({
+      selected: id,
+    });
+  }
 
-	displayQuestions() {
-		let data = this.props.data;
-		if (data.loading) {
-			return <div>Loading Questions...</div>;
-		} else {
-			return data.questions.map(post => {
-				return <QuestionItem key={post.id} postData={post} onSelect={this.onSelect} />;
-			});
-		}
-	}
+  displayQuestions() {
+    let data = this.props.data;
+    if (data.loading) {
+      return <div>Loading Questions...</div>;
+    } else {
+      this.props.data.refetch();
+      return data.questions.map(post => {
+        return <QuestionItem key={post.id} postData={post} onSelect={this.onSelect} />;
+      });
+    }
+  }
 
 	render() {
 		console.log("I am selected" , this.state.selected)
