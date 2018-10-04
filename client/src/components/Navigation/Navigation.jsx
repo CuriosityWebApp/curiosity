@@ -42,11 +42,6 @@ const Navigation = ({ oAuthData, logout }) => {
               Login
             </NavItem>
           </LinkContainer>
-					<LinkContainer to="/newuser">
-            <NavItem>
-              SignUp
-            </NavItem>
-          </LinkContainer>
 				</ul>
 			)}
 		</div>
