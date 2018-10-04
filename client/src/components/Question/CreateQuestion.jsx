@@ -7,12 +7,12 @@ class CreateQuestion extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			title: null,
-			content: null,
+			title: undefined,
+			content: undefined,
 			bounty: 0,
-			category: null,
-			restriction: null,
-			tags: null,
+			category: undefined,
+			restriction: undefined,
+			tags: undefined,
 			redirect: false
 		};
 		this.displayCategories = this.displayCategories.bind(this);
@@ -31,9 +31,13 @@ class CreateQuestion extends Component {
 	}
 
 	submitForm(e) {
-		let { title, content, restriction } = this.state;
-		console.log('State of the CreateQuestion: ', this.state, this.props.userId);
 		e.preventDefault();
+		let { title, content, restriction } = this.state;
+		let splittedTags = this.state.tags;
+
+		if (this.state.tags) {
+			splittedTags = this.state.tags.split(' ');
+		}
 		if (!title || !content || !restriction) {
 			alert("Can't post an empty question!");
 		} else {
@@ -47,7 +51,7 @@ class CreateQuestion extends Component {
 						bounty: Number(this.state.bounty),
 						category: this.state.category,
 						restriction: Number(this.state.restriction),
-						tags: this.state.tags.split(' ')
+						tags: splittedTags
 					}
 				})
 				.then(data => this.setState({ redirect: true }))
