@@ -6,12 +6,10 @@ class CreateAnswer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			answerContent: null
+			answerContent: ''
 		};
 	}
 	submitAnswer(e) {
-		// e.preventDefault();
-		console.log('Data from state', this.state.answerContent, this.props.userId, this.props.questionId);
 		this.state.answerContent
 			? this.props
 					.mutate({
@@ -22,8 +20,10 @@ class CreateAnswer extends Component {
 							answer: this.state.answerContent
 						}
 					})
-					.then(({ data }) => refetchQueries)
-					.catch(err => console.log('Error', err))
+					.then(() => {
+						this.setState({ answerContent: '' });
+						this.props.forceRender();
+					})
 			: alert('Please write your answer before sending it');
 	}
 	render() {
