@@ -12,7 +12,7 @@ app.use(cors());
 
 mongoose.connect(
   'mongodb://hyunjae9034:test1234@ds117773.mlab.com:17773/practice',
-  { useNewUrlParser: true },
+  { useCreateIndex: true, useNewUrlParser: true },
 );
 mongoose.connection
   .once('open', () => console.log('Connected to MongoDB..'))
