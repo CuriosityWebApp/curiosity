@@ -16,107 +16,122 @@ firebase.initializeApp({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSignedIn: false,
-      email: '',
-      userId: null,
-      loading: true,
-      oAuthData: null,
-    };
-    // this.finishRegistration = this.finishRegistration.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.authListener = this.authListener.bind(this);
-    this.getUser = this.getUser.bind(this);
-  }
-  uiConfig = {
-    signInFlow: 'popup',
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-      firebase.auth.GithubAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    ],
-    callbacks: {
-      signInSuccessWithAuthResult: () => false,
-    },
-  };
+	constructor(props) {
+		super(props);
+		this.state = {
+			isSignedIn: null,
+			email: '',
+			userId: null,
+			loading: true,
+			oAuthData: null
+		};
+		// this.finishRegistration = this.finishRegistration.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
+		this.authListener = this.authListener.bind(this);
+		this.getUser = this.getUser.bind(this);
+	}
+	uiConfig = {
+		signInFlow: 'popup',
+		signInOptions: [
+			firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+			firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+			firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+			firebase.auth.GithubAuthProvider.PROVIDER_ID,
+			firebase.auth.EmailAuthProvider.PROVIDER_ID
+		],
+		callbacks: {
+			signInSuccessWithAuthResult: () => false
+		}
+	};
 
   componentDidMount = () => {
     this.authListener();
   };
 
-  authListener() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState(
-          {
-            loading: false,
-            isSignedIn: true,
-            oAuthData: Object.assign({}, user.providerData[0]),
-          },
-          () => {
-            this.getUser(this.state.oAuthData.email);
-          },
-        );
-      } else {
-        this.setState({
-          loading: false,
-          oAuthData: null,
-        });
-      }
-    });
-  }
+	authListener() {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				console.log(user);
+				this.setState(
+					{
+						loading: false,
+						isSignedIn: true,
+						oAuthData: Object.assign({}, user.providerData[0])
+					},
+					() => {
+						console.log('this is email', this.state.oAuthData.email);
+						this.getUser(this.state.oAuthData.email);
+					}
+				);
+			} else {
+				this.setState({
+					loading: false,
+					oAuthData: null
+				});
+			}
+		});
+	}
 
-  getUser = async email => {
-    const userId = await this.props.client
-      .query({
-        query: checkUserEmail,
-        variables: {
-          email: email,
-        },
-      })
-      .then(({ data }) => {
-        this.setState({ userId: data.checkUserEmail.id });
-      })
-      .catch(err => console.log('you got an error', err));
-  };
+	getUser = async email => {
+		const userId = await this.props.client
+			.query({
+				query: checkUserEmail,
+				variables: {
+					email: email
+				}
+			})
+			.then(({ data }) => {
+				if (data.checkUserEmail.id) {
+					this.props.setUser(data.checkUserEmail.id, true);
+				} else {
+					console.log('waiting for email to fetch user data');
+				}
+			})
+			.then(() => {
+				this.setState({ userId: this.props.userId, isSignedIn: this.props.signedIn });
+				console.log(this.state.userId);
+			})
+			.catch(err => console.log('you got an error', err));
+		console.log('this is const userid', this.state.userId);
+	};
 
-  handleLogout() {
-    this.setState({
-      oAuthData: null,
-    });
+	handleLogout() {
+		firebase
+			.auth()
+			.signOut()
+			.then(() => {
+				this.setState({
+					oAuthData: null,
+					userId: null,
+					email: null,
+					isSignedIn: false
+				});
+			})
+			.catch(err => {
+				console.error(err);
+			});
+	}
 
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        return;
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }
-
-  render() {
-    if (this.state.loading) {
-      return <div>loading</div>;
-    }
-    return (
-      <div>
-        <Main
-          oAuthData={this.state.oAuthData}
-          isSignedIn={this.state.isSignedIn}
-          userId={this.props.userId}
-          logout={this.handleLogout}
-          uiConfig={this.uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
-      </div>
-    );
-  }
+	render() {
+		console.log('Im at app', this.state.oAuthData);
+		if (this.state.loading) {
+			return <div>loading</div>;
+		}
+		return (
+			<div>
+				<Main
+					signedIn={this.state.isSignedIn}
+					userId={this.state.userId}
+					oAuthData={this.state.oAuthData}
+					isSignedIn={this.state.isSignedIn}
+					userId={this.state.userId}
+					logout={this.handleLogout}
+					uiConfig={this.uiConfig}
+					firebaseAuth={firebase.auth()}
+				/>
+			</div>
+		);
+	}
 }
 
 export default withApollo(App);
