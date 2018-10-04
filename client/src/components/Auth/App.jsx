@@ -19,7 +19,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isSignedIn: false,
+			isSignedIn: null,
 			email: '',
 			userId: null,
 			loading: true,
@@ -51,15 +51,18 @@ class App extends Component {
 	authListener() {
 		firebase.auth().onAuthStateChanged(user => {
 			if (user) {
-				console.log(user)
-				this.setState({
-					loading: false,
-					isSignedIn: true,
-					oAuthData: Object.assign({}, user.providerData[0])
-				}, () => {
-					console.log("this is email", this.state.oAuthData.email)
-					this.getUser(this.state.oAuthData.email)
-				});
+				console.log(user);
+				this.setState(
+					{
+						loading: false,
+						isSignedIn: true,
+						oAuthData: Object.assign({}, user.providerData[0])
+					},
+					() => {
+						console.log('this is email', this.state.oAuthData.email);
+						this.getUser(this.state.oAuthData.email);
+					}
+				);
 			} else {
 				this.setState({
 					loading: false,
@@ -69,29 +72,40 @@ class App extends Component {
 		});
 	}
 
-	getUser = async (email) => {
-		const userId = await this.props.client.query({
-			query: checkUserEmail,
-			variables: {
-				email: email
-			}
-		}).then(({data}) => {
-			console.log('THIS IS USER ID', data.checkUserEmail.id);
-			this.setState({userId: data.checkUserEmail.id})
-		}).catch((err) => console.log('you got an error', err));
+	getUser = async email => {
+		const userId = await this.props.client
+			.query({
+				query: checkUserEmail,
+				variables: {
+					email: email
+				}
+			})
+			.then(({ data }) => {
+				if (data.checkUserEmail.id) {
+					this.props.setUser(data.checkUserEmail.id, true);
+				} else {
+					console.log('waiting for email to fetch user data');
+				}
+			})
+			.then(() => {
+				this.setState({ userId: this.props.userId, isSignedIn: this.props.signedIn });
+				console.log(this.state.userId);
+			})
+			.catch(err => console.log('you got an error', err));
 		console.log('this is const userid', this.state.userId);
-	}
+	};
 
 	handleLogout() {
-		this.setState({
-			oAuthData: null
-		});
-
 		firebase
 			.auth()
 			.signOut()
 			.then(() => {
-				return;
+				this.setState({
+					oAuthData: null,
+					userId: null,
+					email: null,
+					isSignedIn: false
+				});
 			})
 			.catch(err => {
 				console.error(err);
@@ -99,7 +113,7 @@ class App extends Component {
 	}
 
 	render() {
-		console.log("Im at app", this.state.oAuthData);
+		console.log('Im at app', this.state.oAuthData);
 		if (this.state.loading) {
 			return <div>loading</div>;
 		}

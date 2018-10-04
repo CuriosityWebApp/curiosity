@@ -7,22 +7,13 @@ import CreateAnswer from '../Answer/CreateAnswer.jsx';
 
 class QuestionContent extends Component {
 	constructor(props) {
-		super(props); 
+		super(props);
 		this.state = {
 			answerClicked: false
-		}
-		this.answerAccessCheck = this.answerAccessCheck.bind(this);
-	}
-	answerAccessCheck(e) {
-		e.preventDefault();
-		this.props.signedIn ? (
-			<CreateAnswer userId={this.props.userId} questionId={this.props.id} />
-		) : (
-			alert('Please log into your account to be able to answer!')
-		);
+		};
 	}
 	render() {
-		console.log("Do i get here?", this.props)
+		console.log('Do i get here?', this.props);
 		return (
 			<Query query={getQuestion} variables={{ id: this.props.id }}>
 				{({ loading, error, data }) => {
@@ -54,7 +45,15 @@ class QuestionContent extends Component {
 								</div>
 								<AnswerList id={this.props.id} />
 								<div>
-									<button onClick={this.answerAccessCheck}>Respond</button>
+									{this.props.signedIn ? (
+										<CreateAnswer userId={this.props.userId} questionId={this.props.id} />
+									) : (
+										<button
+											onClick={() => alert('Please log into your account to be able to answer!')}
+										>
+											Respond
+										</button>
+									)}
 								</div>
 							</div>
 						);
