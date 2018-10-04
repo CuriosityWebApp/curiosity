@@ -11,8 +11,8 @@ import { graphql, client, withApollo } from 'react-apollo';
 import { check } from 'graphql-anywhere';
 
 firebase.initializeApp({
-	apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
-	authDomain: 'curiosity-a9199.firebaseapp.com'
+  apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
+  authDomain: 'curiosity-a9199.firebaseapp.com',
 });
 
 class App extends Component {
@@ -44,9 +44,9 @@ class App extends Component {
 		}
 	};
 
-	componentDidMount = () => {
-		this.authListener();
-	};
+  componentDidMount = () => {
+    this.authListener();
+  };
 
 	authListener() {
 		firebase.auth().onAuthStateChanged(user => {

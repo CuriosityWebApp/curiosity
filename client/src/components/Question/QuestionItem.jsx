@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment'
 
 class QuestionItem extends Component {
 	render() {
 		let {postData} = this.props
 		return (
-			<a>
+			<Link to="">
 			  <div className="list-group">
 			    <div className="list-group-item list-group-item-action flex-column align-items-start" onClick={() => this.props.onSelect(postData.id)}>
 			    	<div className="d-flex w-100 justify-content-between">
@@ -20,7 +21,7 @@ class QuestionItem extends Component {
 			  		</div>
 			    </div>
 			  </div>
-			</a>
+			</Link>
 		);
 	}
 };

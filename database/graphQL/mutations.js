@@ -9,7 +9,7 @@ const {
   GraphQLInt,
   GraphQLList,
   GraphQLBoolean,
-  GraphQLNonNull
+  GraphQLNonNull,
 } = require('graphql');
 const {
   UserType, QuestionType, AnswerType, TransactionType,
@@ -99,21 +99,20 @@ const Mutation = new GraphQLObjectType({
     deleteQuestion: {
       type: QuestionType,
       args: {
-        questionId: { type: new GraphQLNonNull(GraphQLID) }
+        questionId: { type: new GraphQLNonNull(GraphQLID) },
       },
       async resolve(parent, args) {
-        return await Answer.deleteMany({questionId: args.questionId})
-        .then(res => Question.findByIdAndRemove({_id: args.questionId}))
-      }
+        return await Answer.deleteMany({ questionId: args.questionId }).then(res => Question.findByIdAndRemove({ _id: args.questionId }));
+      },
     },
     deleteAnswer: {
       type: AnswerType,
       args: {
-        answerId: { type: new GraphQLNonNull(GraphQLID) }
+        answerId: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve(parent, args) {
-        return Answer.findByIdAndRemove({_id: args.answerId})
-      }
+        return Answer.findByIdAndRemove({ _id: args.answerId });
+      },
     },
     updateUser: {
       type: UserType,
@@ -122,11 +121,11 @@ const Mutation = new GraphQLObjectType({
         username: { type: GraphQLString },
         email: { type: GraphQLString },
         rank: { type: GraphQLInt },
-        credit: { type: GraphQLInt }
+        credit: { type: GraphQLInt },
       },
       resolve(parent, args) {
-        return User.findOneAndUpdate({ _id: args.id }, args, { new: false })
-      }
+        return User.findOneAndUpdate({ _id: args.id }, args, { new: false });
+      },
     },
     updateQuestion: {
       type: QuestionType,
@@ -139,19 +138,19 @@ const Mutation = new GraphQLObjectType({
         tags: { type: new GraphQLList(GraphQLString) },
       },
       resolve(parent, args) {
-        return Question.findOneAndUpdate({ _id: args.id }, args, { new: false })
-      }
+        return Question.findOneAndUpdate({ _id: args.id }, args, { new: false });
+      },
     },
     updateAnswer: {
       type: AnswerType,
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
-        answer: { type: GraphQLString }
+        answer: { type: GraphQLString },
       },
       resolve(parent, args) {
-        return Answer.findOneAndUpdate({ _id: args.id }, args, { new: false })
-      }
-    }
+        return Answer.findOneAndUpdate({ _id: args.id }, args, { new: false });
+      },
+    },
   },
 });
 
