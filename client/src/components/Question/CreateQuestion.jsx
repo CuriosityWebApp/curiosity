@@ -60,6 +60,7 @@ class CreateQuestion extends Component {
 	}
 	render() {
 		const { title, content, bounty, category, restriction, tags, redirect } = this.state;
+		console.log('I AM PROPS', this.props);
 		if (redirect) {
 			return <Redirect to="/" />;
 		} else {

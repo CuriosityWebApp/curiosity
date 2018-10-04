@@ -7,6 +7,7 @@ const getUser = gql`
 			username
 			rank
 			credit
+			email
 			questions {
 				id
 				questionTitle
@@ -96,10 +97,26 @@ const checkUserEmail = gql`
 	}
 `;
 
+const searchQuestion = gql`
+	query($term: String!) {
+		searchQuestion(term: $term) {
+			id
+			category
+			questionTitle
+			questionContent
+			bounty
+			restriction
+			tags
+			createdAt
+		}
+	}
+`;
+
 module.exports = {
   getUser,
   getQuestion,
   getQuestions,
   getAnswer,
   checkUserEmail,
+  searchQuestion,
 };

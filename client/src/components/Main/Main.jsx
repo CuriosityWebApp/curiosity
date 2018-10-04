@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
 import QuestionContent from '../Question/QuestionContent.jsx';
 import UsernameSubmit from '../Auth/UsernameSubmit.jsx';
 import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
+import Search from './Search.jsx';
 //navigation
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -75,16 +76,14 @@ class Main extends Component {
 									</div>
 									<div className="card">
 										<div className="card-header">
-											<LinkContainer to="/">
-												<div
-													onClick={e => {
-														e.preventDefault();
-														this.props.logout();
-													}}
-												>
-													Log Out
-												</div>
-											</LinkContainer>
+											<Link
+												to="/"
+												onClick={e => {
+													this.props.logout();
+												}}
+											>
+												Log Out
+											</Link>
 										</div>
 									</div>
 								</div>
@@ -112,20 +111,7 @@ class Main extends Component {
 						<div className="container-fluid">
 							<span className="sidebar_icon">
 								<ul className="left-navbar">
-									<form className="form-inline">
-										<label className="sr-only" htmlFor="inlineFormInputName2">
-											Name
-										</label>
-										<input
-											type="text"
-											className="form-control mb-2 mr-2"
-											id="inlineFormInputName2"
-											placeholder="Search Questions"
-										/>
-										<button type="submit" className="btn btn-primary mb-2">
-											Submit
-										</button>
-									</form>
+									<Search />
 								</ul>
 								<ul className="right-navbar">
 									<li>

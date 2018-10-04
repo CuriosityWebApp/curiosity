@@ -51,6 +51,7 @@
     "prettier-eslint": "^8.8.2",
     "react": "^16.5.2",
     "react-apollo": "^2.2.3",
+    "react-autocomplete": "^1.8.1",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.2",
     "react-firebaseui": "^3.0.7",

@@ -20,6 +20,8 @@ class App extends Component {
 		this.authListener = this.authListener.bind(this);
 		this.getUser = this.getUser.bind(this);
 	}
+
+	
 	uiConfig = {
 		signInFlow: 'popup',
 		signInOptions: [
