@@ -22,6 +22,7 @@ class QuestionContent extends Component {
 		);
 	}
 	render() {
+		console.log("Do i get here?", this.props)
 		return (
 			<Query query={getQuestion} variables={{ id: this.props.id }}>
 				{({ loading, error, data }) => {

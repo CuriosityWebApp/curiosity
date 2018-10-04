@@ -17,8 +17,9 @@ class ProfileUser extends Component {
   }
 
   render() {
+    console.log(this.props.id)
     return (
-      <Query query={getUser} variables={{ id: '5bb28b0d1723602d90864b70' }}>
+      <Query query={getUser} variables={{ id: this.props.id }}>
         {({ loading, error, data }) => {
           if (loading) {
             return <p>Loading...</p>;
