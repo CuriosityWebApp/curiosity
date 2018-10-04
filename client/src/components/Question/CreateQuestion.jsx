@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, client, compose, withApollo } from 'react-apollo';
-import { AddQuestion } from '../../mutations/mutations.js';
+import { AddQuestion, UpdateUser } from '../../mutations/mutations.js';
 import { Redirect } from 'react-router-dom';
 
 class CreateQuestion extends Component {
@@ -56,10 +56,19 @@ class CreateQuestion extends Component {
 				})
 				.then(data => this.setState({ redirect: true }))
 				.catch(err => console.log('error bro', err));
+
+			this.props
+			  .mutate({
+					mutation: UpdateUser,
+					variables: {
+						credit:
+					}
+				})
 		}
 	}
 	render() {
 		const { title, content, bounty, category, restriction, tags, redirect } = this.state;
+		console.log("I AM PROPS", this.props);
 		if (redirect) {
 			return <Redirect to="/" />;
 		} else {
@@ -104,4 +113,4 @@ class CreateQuestion extends Component {
 	}
 }
 
-export default graphql(AddQuestion)(CreateQuestion);
+export default graphql(AddQuestion, UpdateUser)(CreateQuestion);
