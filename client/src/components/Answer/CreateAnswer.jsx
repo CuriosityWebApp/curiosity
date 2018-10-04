@@ -6,23 +6,25 @@ class CreateAnswer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			answerContent: ''
+			answerContent: null
 		};
 	}
 	submitAnswer(e) {
 		// e.preventDefault();
 		console.log('Data from state', this.state.answerContent, this.props.userId, this.props.questionId);
-		this.props
-			.mutate({
-				mutation: AddAnswer,
-				variables: {
-					userId: this.props.userId,
-					questionId: this.props.questionId,
-					answer: this.state.answerContent
-				}
-			})
-			.then(({ data }) => console.log('Success', data))
-			.catch(err => console.log('Error', err));
+		this.state.answerContent
+			? this.props
+					.mutate({
+						mutation: AddAnswer,
+						variables: {
+							userId: this.props.userId,
+							questionId: this.props.questionId,
+							answer: this.state.answerContent
+						}
+					})
+					.then(({ data }) => refetchQueries)
+					.catch(err => console.log('Error', err))
+			: alert('Please write your answer before sending it');
 	}
 	render() {
 		return (

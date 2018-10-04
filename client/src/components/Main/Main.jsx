@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Query, graphql } from 'react-apollo';
-import Navigation from '../Navigation/Navigation.jsx';
 import { BrowserRouter, Switch, Router, Route, NavLink, Redirect } from 'react-router-dom';
 import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
@@ -15,23 +14,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userId: null,
-    };
-    this.handleUserId = this.handleUserId.bind(this);
-    this.handleLogOut = this.handleLogOut.bind(this);
-  }
-
-  handleUserId(id) {
-    this.setState({
-      userId: id,
-    });
-  }
-
-  handleLogOut() {
-    this.setState({
-      userId: null,
-    });
+    this.state = {};
   }
 
   render() {
@@ -98,7 +81,6 @@ class Main extends Component {
                           onClick={e => {
                             e.preventDefault();
                             this.props.logout();
-                            this.handleLogOut();
                           }}
                         >
                           Log Out
@@ -181,7 +163,12 @@ class Main extends Component {
                         <Route
                           exact
                           path="/createQuestion"
-                          render={() => <CreateQuestion userId={this.props.userId} />}
+                          render={() => (
+                            <CreateQuestion
+                              userId={this.props.userId}
+                              signedIn={this.props.signedIn}
+                            />
+                          )}
                         />
                         <Route
                           exact
