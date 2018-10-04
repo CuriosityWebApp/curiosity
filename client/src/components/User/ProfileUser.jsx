@@ -17,7 +17,6 @@ class ProfileUser extends Component {
   }
 
   render() {
-    console.log(this.props.id)
     return (
       <Query query={getUser} variables={{ id: this.props.id }}>
         {({ loading, error, data }) => {
@@ -29,7 +28,7 @@ class ProfileUser extends Component {
           } else {
             return (
               <div>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                   <a className="navbar-brand" style={{ color: 'white' }}>
                     {data.user.username}
                     's Profile
@@ -118,8 +117,10 @@ class ProfileUser extends Component {
                 </nav>
                 {this.state.activeTab === 'info' && <UserInfo user={data.user} />}
                 {this.state.activeTab === 'wallet' && <UserWallet user={data.user} />}
-                {this.state.activeTab === 'questions' && <UserQuestions user={data.user} />}
-                {this.state.activeTab === 'answers' && <UserAnswers user={data.user} />}
+                {this.state.activeTab === 'questions' && (
+                  <UserQuestions questions={data.user.questions} />
+                )}
+                {this.state.activeTab === 'answers' && <UserAnswers answers={data.user.answers} />}
               </div>
             );
           }

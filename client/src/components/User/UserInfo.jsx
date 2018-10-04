@@ -5,6 +5,8 @@ const UserInfo = ({ user }) => {
     <div className="card">
       <strong>User Info</strong>
       <div className="card-body">
+        E-Mail: {user.email}
+        <br />
         Username: {user.username}
         <br />
         Rank: {user.rank}
