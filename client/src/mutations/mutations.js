@@ -25,52 +25,33 @@ const AddQuestion = gql`
 `;
 
 const AddAnswer = gql`
-	mutation(
-		$userId: ID!, 
-		$questionId: ID!, 
-		$answer: String!) {
-		addAnswer(
-			userId: $userId, 
-			questionId: $questionId, 
-			answer: $answer) {
+	mutation($userId: ID!, $questionId: ID!, $answer: String!) {
+		addAnswer(userId: $userId, questionId: $questionId, answer: $answer) {
 			id
 		}
 	}
 `;
 
 const AddUser = gql`
-	mutation(
-		$username: String!,
-		$email: String!,
-		) {
-		addUser(
-			username: $username,
-			email: $email,
-			) {
+	mutation($username: String!, $email: String!) {
+		addUser(username: $username, email: $email) {
 			id
 			username
-			rank
-			credit
 		}
 	}
 `;
 
 const AddTransaction = gql`
-	mutation(
-		$questionId: ID!,
-		$senderId: ID!,
-		$receiverId: ID!,
-		$amount: Int!,
-	) {
-		AddTransaction(
-			questionId: $questionId,
-			senderId: $senderId,
-			receiverId: $receiverId,
-			amount: $amountId
-		) {
+	mutation($questionId: ID!, $senderId: ID!, $receiverId: ID!, $amount: Int!) {
+		AddTransaction(questionId: $questionId, senderId: $senderId, receiverId: $receiverId, amount: $amountId) {
 			id
 		}
 	}
 `;
 
-module.exports = { AddQuestion, AddAnswer, AddUser, AddTransaction };
+module.exports = {
+  AddQuestion,
+  AddAnswer,
+  AddUser,
+  AddTransaction,
+};

@@ -4,28 +4,18 @@ import 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import Main from '../Main/Main.jsx';
-import UsernameSubmit from './UsernameSubmit.jsx';
-import Login from './Login.jsx';
 import { checkUserEmail } from '../../queries/queries.js';
-import { graphql, client, withApollo } from 'react-apollo';
-import { check } from 'graphql-anywhere';
+import { withApollo } from 'react-apollo';
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
-  authDomain: 'curiosity-a9199.firebaseapp.com',
+	apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
+	authDomain: 'curiosity-a9199.firebaseapp.com'
 });
 
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			isSignedIn: null,
-			email: '',
-			userId: null,
-			loading: true,
-			oAuthData: null
-		};
-		// this.finishRegistration = this.finishRegistration.bind(this);
+		this.state = {};
 		this.handleLogout = this.handleLogout.bind(this);
 		this.authListener = this.authListener.bind(this);
 		this.getUser = this.getUser.bind(this);
@@ -44,30 +34,16 @@ class App extends Component {
 		}
 	};
 
-  componentDidMount = () => {
-    this.authListener();
-  };
+	componentDidMount = () => {
+		this.authListener();
+	};
 
 	authListener() {
 		firebase.auth().onAuthStateChanged(user => {
 			if (user) {
-				console.log(user);
-				this.setState(
-					{
-						loading: false,
-						isSignedIn: true,
-						oAuthData: Object.assign({}, user.providerData[0])
-					},
-					() => {
-						console.log('this is email', this.state.oAuthData.email);
-						this.getUser(this.state.oAuthData.email);
-					}
-				);
+				this.getUser(user.email);
 			} else {
-				this.setState({
-					loading: false,
-					oAuthData: null
-				});
+				console.log('wrong user');
 			}
 		});
 	}
@@ -82,30 +58,24 @@ class App extends Component {
 			})
 			.then(({ data }) => {
 				if (data.checkUserEmail.id) {
-					this.props.setUser(data.checkUserEmail.id, true);
-				} else {
-					console.log('waiting for email to fetch user data');
+					this.props.setUser(data.checkUserEmail, true, email);
 				}
 			})
-			.then(() => {
-				this.setState({ userId: this.props.userId, isSignedIn: this.props.signedIn });
-				console.log(this.state.userId);
-			})
 			.catch(err => console.log('you got an error', err));
-		console.log('this is const userid', this.state.userId);
 	};
 
 	handleLogout() {
+		let noUser = {
+			id: undefined,
+			username: undefined,
+			credits: 0,
+			rank: 0
+		};
 		firebase
 			.auth()
 			.signOut()
 			.then(() => {
-				this.setState({
-					oAuthData: null,
-					userId: null,
-					email: null,
-					isSignedIn: false
-				});
+				this.props.setUser(noUser, false, undefined);
 			})
 			.catch(err => {
 				console.error(err);
@@ -113,18 +83,11 @@ class App extends Component {
 	}
 
 	render() {
-		console.log('Im at app', this.state.oAuthData);
-		if (this.state.loading) {
-			return <div>loading</div>;
-		}
 		return (
 			<div>
 				<Main
-					signedIn={this.state.isSignedIn}
-					userId={this.state.userId}
-					oAuthData={this.state.oAuthData}
-					isSignedIn={this.state.isSignedIn}
-					userId={this.state.userId}
+					setUser={this.props.setUser}
+					user={this.props.user}
 					logout={this.handleLogout}
 					uiConfig={this.uiConfig}
 					firebaseAuth={firebase.auth()}

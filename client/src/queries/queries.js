@@ -90,6 +90,8 @@ const checkUserEmail = gql`
 			id
 			username
 			email
+			rank
+			credit
 		}
 	}
 `;

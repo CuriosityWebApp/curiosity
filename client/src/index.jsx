@@ -1,44 +1,55 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
-import { ApolloProvider, withApollo } from 'react-apollo';
-import { BrowserRouter, Router, Route, Link } from 'react-router-dom';
+import { ApolloProvider } from 'react-apollo';
+import { BrowserRouter } from 'react-router-dom';
 import App from './components/Auth/App.jsx';
-import { checkUserEmail } from './queries/queries.js';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+	uri: 'http://localhost:3000/graphql'
 });
 
 class Index extends Component {
-  constructor() {
-    super();
-    this.state = {
-      userId: null,
-      isSignedIn: false,
-    };
-    this.setUser = this.setUser.bind(this);
-  }
-  setUser(ID, signedIn) {
-    this.setState({ userId: ID, isSignedIn: signedIn });
-  }
-  render() {
-    return (
-      <App
-        setUser={(ID, signedIn) => {
-          this.setUser(ID, signedIn);
-        }}
-        signedIn={this.state.isSignedIn}
-        userId={this.state.userId}
-      />
-    );
-  }
+	constructor() {
+		super();
+		this.state = {
+			user: {
+				id: undefined,
+				username: undefined,
+				signedIn: false,
+				credits: 0,
+				rank: 0
+			}
+		};
+		this.setUser = this.setUser.bind(this);
+	}
+	setUser({ id, username, credit, rank }, signedIn, email) {
+		let updatedUser = {
+			id: id,
+			signedIn: signedIn,
+			username: username,
+			credits: credit,
+			rank: rank,
+			email: email
+		};
+		this.setState({ user: updatedUser });
+	}
+	render() {
+		return (
+			<App
+				setUser={(user, signedIn, email) => {
+					this.setUser(user, signedIn, email);
+				}}
+				user={this.state.user}
+			/>
+		);
+	}
 }
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <BrowserRouter>
-      <Index />
-    </BrowserRouter>
-  </ApolloProvider>,
-  document.getElementById('root'),
+	<ApolloProvider client={client}>
+		<BrowserRouter>
+			<Index />
+		</BrowserRouter>
+	</ApolloProvider>,
+	document.getElementById('root')
 );
