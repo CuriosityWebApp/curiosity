@@ -1,12 +1,12 @@
 import React from 'react';
-import { graphql } from 'react-apollo'
-import { AddUser } from '../../mutations/mutations.js'
- 
+import { graphql } from 'react-apollo';
+import { AddUser } from '../../mutations/mutations.js';
+
 class UsernameSubmit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ''
+      username: '',
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -18,27 +18,24 @@ class UsernameSubmit extends React.Component {
 
   handleClick() {
     this.props
-    .mutate({
-      mutation: AddUser,
-      variables: {
-        username: this.state.username,
-        email: this.props.email
-      }
-    })
-    .then(({data}) => {
-      console.log(data)
-      this.props.handleUserId(data.addUser.id)
-    }
-    )
-    .catch((err) => console.error(err))
+      .mutate({
+        mutation: AddUser,
+        variables: {
+          username: this.state.username,
+          email: this.props.email,
+        },
+      })
+      .then(({ data }) => {
+        this.props.handleUserId(data.addUser.id);
+      })
+      .catch(err => console.error(err));
   }
 
   handleInputChange(evt) {
-    this.setState({username: evt.target.value});
+    this.setState({ username: evt.target.value });
   }
 
   render() {
-    console.log(this.props.email)
     return (
       <div>
         <h3>Choose a username</h3>
@@ -68,4 +65,4 @@ class UsernameSubmit extends React.Component {
   }
 }
 
-export default graphql(AddUser)(UsernameSubmit)
+export default graphql(AddUser)(UsernameSubmit);

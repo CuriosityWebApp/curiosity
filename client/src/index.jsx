@@ -10,8 +10,11 @@ const client = new ApolloClient({
 });
 
 class Index extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      userId: '5bb28b0d1723602d90864b70',
+    };
   }
   render() {
     return (
@@ -25,7 +28,7 @@ class Index extends Component {
           </div>
         </div>
         <div>
-          <App />
+          <App userId={this.state.userId} />
         </div>
       </div>
     );
