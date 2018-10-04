@@ -56,14 +56,6 @@ class CreateQuestion extends Component {
 				})
 				.then(data => this.setState({ redirect: true }))
 				.catch(err => console.log('error bro', err));
-
-			this.props
-			  .mutate({
-					mutation: UpdateUser,
-					variables: {
-						credit:
-					}
-				})
 		}
 	}
 	render() {

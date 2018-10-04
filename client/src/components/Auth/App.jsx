@@ -47,52 +47,52 @@ class App extends Component {
     this.authListener();
   };
 
-	authListener() {
-		firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-				console.log(user);
-				this.setState(
-					{
-						loading: false,
-						isSignedIn: true,
-						oAuthData: Object.assign({}, user.providerData[0])
-					},
-					() => {
-						console.log('this is email', this.state.oAuthData.email);
-						this.getUser(this.state.oAuthData.email);
-					}
-				);
-			} else {
-				this.setState({
-					loading: false,
-					oAuthData: null
-				});
-			}
-		});
-	}
+  authListener() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user);
+        this.setState(
+          {
+            loading: false,
+            isSignedIn: true,
+            oAuthData: Object.assign({}, user.providerData[0]),
+          },
+          () => {
+            console.log('this is email', this.state.oAuthData.email);
+            this.getUser(this.state.oAuthData.email);
+          },
+        );
+      } else {
+        this.setState({
+          loading: false,
+          oAuthData: null,
+        });
+      }
+    });
+  }
 
-	getUser = async email => {
-		const userId = await this.props.client
-			.query({
-				query: checkUserEmail,
-				variables: {
-					email: email
-				}
-			})
-			.then(({ data }) => {
-				if (data.checkUserEmail.id) {
-					this.props.setUser(data.checkUserEmail.id, true);
-				} else {
-					console.log('waiting for email to fetch user data');
-				}
-			})
-			.then(() => {
-				this.setState({ userId: this.props.userId, isSignedIn: this.props.signedIn });
-				console.log(this.state.userId);
-			})
-			.catch(err => console.log('you got an error', err));
-		console.log('this is const userid', this.state.userId);
-	};
+  getUser = async email => {
+    const userId = await this.props.client
+      .query({
+        query: checkUserEmail,
+        variables: {
+          email: email,
+        },
+      })
+      .then(({ data }) => {
+        if (data.checkUserEmail.id) {
+          this.props.setUser(data.checkUserEmail.id, true);
+        } else {
+          console.log('waiting for email to fetch user data');
+        }
+      })
+      .then(() => {
+        this.setState({ userId: this.props.userId, isSignedIn: this.props.signedIn });
+        console.log(this.state.userId);
+      })
+      .catch(err => console.log('you got an error', err));
+    console.log('this is const userid', this.state.userId);
+  };
 
 	handleLogout() {
 		firebase

@@ -7,6 +7,7 @@ import QuestionContent from '../Question/QuestionContent.jsx';
 import UsernameSubmit from '../Auth/UsernameSubmit.jsx';
 import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
+import Search from './Search.jsx';
 import { checkUserEmail } from '../../queries/queries.js';
 //navigation
 import { LinkContainer } from 'react-router-bootstrap';
@@ -110,20 +111,7 @@ class Main extends Component {
             <div className="container-fluid">
               <span className="sidebar_icon">
                 <ul className="left-navbar">
-                  <form className="form-inline">
-                    <label className="sr-only" htmlFor="inlineFormInputName2">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control mb-2 mr-2"
-                      id="inlineFormInputName2"
-                      placeholder="Search Questions"
-                    />
-                    <button type="submit" className="btn btn-primary mb-2">
-                      Submit
-                    </button>
-                  </form>
+                  <Search />
                 </ul>
                 <ul className="right-navbar">
                   <li>
