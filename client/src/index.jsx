@@ -37,7 +37,7 @@ class Index extends Component {
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <BrowserRouter history={browserHistory}>
+    <BrowserRouter >
       <Index />
     </BrowserRouter>
   </ApolloProvider>,
