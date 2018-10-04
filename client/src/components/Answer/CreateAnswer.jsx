@@ -10,7 +10,7 @@ class CreateAnswer extends Component {
 		};
 	}
 	submitAnswer(e) {
-		e.preventDefault();
+		// e.preventDefault();
 		console.log('Data from state', this.state.answerContent, this.props.userId, this.props.questionId);
 		this.props
 			.mutate({

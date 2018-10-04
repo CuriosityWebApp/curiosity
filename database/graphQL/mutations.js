@@ -29,6 +29,7 @@ const Mutation = new GraphQLObjectType({
       resolve(parent, args) {
         const user = new User({
           username: args.username,
+          email: args.email,
           rank: 0,
           credit: 0,
         });

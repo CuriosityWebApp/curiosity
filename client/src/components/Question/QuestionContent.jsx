@@ -7,10 +7,11 @@ import CreateAnswer from '../Answer/CreateAnswer.jsx';
 
 class QuestionContent extends Component {
 	constructor(props) {
-		super(props);
+		super(props)
 	}
 
 	render() {
+		console.log("Do i get here?", this.props)
 		return (
 			<Query query={getQuestion} variables={{ id: this.props.id }}>
 				{({ loading, error, data }) => {
