@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import { BrowserRouter, Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Router, Route, Link, browserHistory } from 'react-router-dom';
 import App from './components/Auth/App.jsx';
 
 const client = new ApolloClient({
@@ -37,7 +37,7 @@ class Index extends Component {
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <BrowserRouter>
+    <BrowserRouter >
       <Index />
     </BrowserRouter>
   </ApolloProvider>,
