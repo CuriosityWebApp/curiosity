@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
-const UserAnswers = ({ user }) => {
+const UserAnswers = ({ answers }) => {
   return (
     <div className="card">
       <strong>Answers</strong>
-      {user.answers.length > 0 ? (
-        user.answers.map(answer => {
+      {answers.length > 0 ? (
+        answers.map(answer => {
           return (
             <div className="card-body" key={answer.id}>
-              {answer.answer}
+              Answer: {answer.answer}
+              <br />
+              Score: {answer.score}
+              <br />
+              CreatedAt: {moment(answer.createdAt).fromNow()}
+              <br />
+              questionId: {answer.questionId}
             </div>
           );
         })

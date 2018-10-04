@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 const UserWallet = ({ user }) => {
   return (
     <div>
       <strong>Wallet</strong>
       <div className="card">
-        <strong>Add Credits</strong>
+        <strong>Credits: </strong>
+        {user.credit}
         <div>
           <img
             src="http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c530.png"
@@ -21,7 +23,17 @@ const UserWallet = ({ user }) => {
         <strong>Transactions</strong>
         {user.transactions.length > 0 ? (
           user.transaction.map(transaction => {
-            return <div className="card-body" key={transaction.id} />;
+            return (
+              <div className="card-body" key={transaction.id}>
+                QuestionId: {transaction.transactionId}
+                <br />
+                Amount: {transaction.amount}
+                <br />
+                Sender: {transaction.sender.username}
+                <br />
+                Recipient: {transaction.recipient.username}
+              </div>
+            );
           })
         ) : (
           <div className="card">

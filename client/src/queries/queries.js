@@ -5,23 +5,34 @@ const getUser = gql`
     user(id: $id) {
       id
       username
+      email
       rank
       credit
       questions {
         id
         questionTitle
         bounty
+        bounty
+        bountyPaid
+        createdAt
       }
       answers {
         id
         answer
         score
+        questionId
+        createdAt
       }
       transactions {
         id
         questionId
         amount
-        receiverId
+        sender {
+          username
+        }
+        recipient {
+          username
+        }
       }
     }
   }
