@@ -54,7 +54,19 @@ class Search extends React.Component {
           items={this.state.questions}
           getItemValue={item => item.questionTitle}
           renderItem={(item, highlighted) => (
-            <div key={item.id} style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}>
+            <div
+              key={item.id}
+              style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}
+              onClick={() => {
+                <Route
+                  exact
+                  path="/questionContent/:questionId"
+                  render={({ match }) => {
+                    return <QuestionContent userId={this.props.userId} id={item.questionId} />;
+                  }}
+                />;
+              }}
+            >
               {item.questionTitle}
             </div>
           )}

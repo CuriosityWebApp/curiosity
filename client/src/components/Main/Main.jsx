@@ -114,7 +114,7 @@ class Main extends Component {
             <div className="container-fluid">
               <span className="sidebar_icon">
                 <ul className="left-navbar">
-                  <Search />
+                  <Search userId={this.props.userId} />
                 </ul>
                 <ul className="right-navbar">
                   <li>
