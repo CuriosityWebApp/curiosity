@@ -19,22 +19,11 @@ class Index extends Component {
   render() {
     return (
       <div>
-        <div className="jumbotron jumbotron-fluid" id="home-jumbo">
-          <div className="container" style={{ marginLeft: 50, marginRight: 25 }}>
-            <h1 className="display-4">Curiosity</h1>
-            <p className="lead">Hello world</p>
-            <div className="pb-1" />
-            {/* <Signup emailAndPassSignUp={props.emailAndPassSignUp} googleSignUp={props.googleSignUp} /> */}
-          </div>
-        </div>
-        <div>
-          <App userId={this.state.userId} />
-        </div>
+        <App userId={this.state.userId} />
       </div>
     );
   }
 }
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
