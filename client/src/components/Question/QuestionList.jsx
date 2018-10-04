@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { getQuestions } from '../../queries/queries.js';
-
+import { BrowserRouter, Switch, Router, Route, NavLink, Redirect } from 'react-router-dom';
+import { NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import QuestionItem from './QuestionItem.jsx';
 import QuestionContent from './QuestionContent.jsx';
 
@@ -32,15 +34,17 @@ class QuestionList extends Component {
 	}
 
 	render() {
+		console.log("I am selected" , this.state.selected)
 		if (!this.state.selected) {
 			return (
 				<div>
 					<div>{this.displayQuestions()}</div>
 				</div>
-			);
+			)
 		} else {
-			return <QuestionContent userId={this.props.userId} id={this.state.selected} />;
-		}
+			return (
+			  <Redirect to={`/questionContent/${this.state.selected}`} />
+			)}
 	}
 }
 

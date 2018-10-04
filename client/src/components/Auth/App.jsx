@@ -6,6 +6,9 @@ import 'firebase/firestore';
 import Main from '../Main/Main.jsx';
 import UsernameSubmit from './UsernameSubmit.jsx';
 import Login from './Login.jsx';
+import { checkUserEmail } from '../../queries/queries.js';
+import { graphql, client, withApollo } from 'react-apollo';
+import { check } from 'graphql-anywhere';
 
 firebase.initializeApp({
 	apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
@@ -16,15 +19,16 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isSignedIn: true,
+			isSignedIn: false,
 			email: '',
-			userId: '5bb28b121723602d90864b71',
+			userId: null,
 			loading: true,
 			oAuthData: null
 		};
 		// this.finishRegistration = this.finishRegistration.bind(this);
 		this.handleLogout = this.handleLogout.bind(this);
 		this.authListener = this.authListener.bind(this);
+		this.getUser = this.getUser.bind(this);
 	}
 	uiConfig = {
 		signInFlow: 'popup',
@@ -47,9 +51,14 @@ class App extends Component {
 	authListener() {
 		firebase.auth().onAuthStateChanged(user => {
 			if (user) {
+				console.log(user)
 				this.setState({
 					loading: false,
+					isSignedIn: true,
 					oAuthData: Object.assign({}, user.providerData[0])
+				}, () => {
+					console.log("this is email", this.state.oAuthData.email)
+					this.getUser(this.state.oAuthData.email)
 				});
 			} else {
 				this.setState({
@@ -58,6 +67,19 @@ class App extends Component {
 				});
 			}
 		});
+	}
+
+	getUser = async (email) => {
+		const userId = await this.props.client.query({
+			query: checkUserEmail,
+			variables: {
+				email: email
+			}
+		}).then(({data}) => {
+			console.log('THIS IS USER ID', data.checkUserEmail.id);
+			this.setState({userId: data.checkUserEmail.id})
+		}).catch((err) => console.log('you got an error', err));
+		console.log('this is const userid', this.state.userId);
 	}
 
 	handleLogout() {
@@ -84,8 +106,9 @@ class App extends Component {
 		return (
 			<div>
 				<Main
-					userId={this.state.userId}
 					oAuthData={this.state.oAuthData}
+					isSignedIn={this.state.isSignedIn}
+					userId={this.state.userId}
 					logout={this.handleLogout}
 					uiConfig={this.uiConfig}
 					firebaseAuth={firebase.auth()}
@@ -95,4 +118,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default withApollo(App);

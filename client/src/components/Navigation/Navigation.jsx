@@ -20,8 +20,8 @@ const Navigation = ({ oAuthData, logout }) => {
             </NavItem>
           </LinkContainer>
 					<LinkContainer to="/">
-            <NavItem onClick={ logout }>
-              Logout
+            <NavItem onClick={ (e) => {e.preventDefault(); logout(); this.props.handleLogout()} }>
+              Log Out
             </NavItem>
           </LinkContainer>
 					<LinkContainer to="/profileUser">

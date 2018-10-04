@@ -1,11 +1,12 @@
 import React from 'react';
-
+import { graphql } from 'react-apollo'
+import { AddUser } from '../../mutations/mutations.js'
+ 
 class UsernameSubmit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      email: '',
+      username: ''
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -16,25 +17,28 @@ class UsernameSubmit extends React.Component {
   }
 
   handleClick() {
-    // if username is taken, don't allow click
-    // if (username is unique)
-    // save username + emailaddress(from firebase)
-    // into database
+    this.props
+    .mutate({
+      mutation: AddUser,
+      variables: {
+        username: this.state.username,
+        email: this.props.email
+      }
+    })
+    .then(({data}) => {
+      console.log(data)
+      this.props.handleUserId(data.addUser.id)
+    }
+    )
+    .catch((err) => console.error(err))
   }
 
   handleInputChange(evt) {
-    this.setState(
-      {
-        username: evt.target.value,
-      },
-      () => {
-        // query database to find if username is unique
-        // if taken, don't allow click
-      },
-    );
+    this.setState({username: evt.target.value});
   }
 
   render() {
+    console.log(this.props.email)
     return (
       <div>
         <h3>Choose a username</h3>
@@ -51,7 +55,6 @@ class UsernameSubmit extends React.Component {
             <p>
               <button
                 onClick={e => {
-                  e.preventDefault();
                   this.handleClick();
                 }}
               >
@@ -65,4 +68,4 @@ class UsernameSubmit extends React.Component {
   }
 }
 
-export default UsernameSubmit;
+export default graphql(AddUser)(UsernameSubmit)

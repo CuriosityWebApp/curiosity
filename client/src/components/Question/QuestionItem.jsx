@@ -5,7 +5,7 @@ class QuestionItem extends Component {
 	render() {
 		let {postData} = this.props
 		return (
-			<a href="#">
+			<a>
 			  <div className="list-group">
 			    <div className="list-group-item list-group-item-action flex-column align-items-start" onClick={() => this.props.onSelect(postData.id)}>
 			    	<div className="d-flex w-100 justify-content-between">
@@ -16,7 +16,7 @@ class QuestionItem extends Component {
 			  			<small className="text-muted d-flex w-100 justify-content-between">Posted By {postData.user.username} {moment(postData.createdAt).fromNow()}</small>
 			    		<small className="text-muted"> Rank {postData.restriction} </small>
 			    		<small className="text-muted"> Answers {postData.answers.length}</small>
-			    		{/* <p>{postData.questionContent}</p> */}
+			    		<p>{postData.questionContent}</p>
 			  		</div>
 			    </div>
 			  </div>
