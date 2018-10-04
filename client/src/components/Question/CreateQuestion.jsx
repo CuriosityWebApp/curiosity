@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, client, compose, withApollo } from 'react-apollo';
 import { AddQuestion } from '../../mutations/mutations.js';
+import { checkUserEmail } from '../../queries/queries.js';
 
 class CreateQuestion extends Component {
 	constructor(props) {
@@ -15,6 +16,19 @@ class CreateQuestion extends Component {
 		};
 		this.displayCategories = this.displayCategories.bind(this);
 	}
+	componentDidMount() {
+		this.getuser();
+	}
+	getuser = async () => {
+		const res = await this.props.client
+			.query({
+				query: checkUserEmail,
+				variables: {
+					email: 'Hyunjae9034@gmail.com'
+				}
+			})
+			.then(({ data }) => console.log('this is the id', data.checkUserEmail.id));
+	};
 
 	displayCategories() {
 		let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
@@ -91,4 +105,7 @@ class CreateQuestion extends Component {
 	}
 }
 
-export default graphql(AddQuestion)(CreateQuestion);
+export default compose(
+	withApollo,
+	graphql(AddQuestion, { name: 'AddQuestion' })
+)(CreateQuestion);

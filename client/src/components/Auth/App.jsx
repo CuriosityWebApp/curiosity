@@ -83,6 +83,7 @@ class App extends Component {
 		return (
 			<div>
 				<Main
+					signedIn={this.state.isSignedIn}
 					userId={this.state.userId}
 					oAuthData={this.state.oAuthData}
 					logout={this.handleLogout}

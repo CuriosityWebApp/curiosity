@@ -7,9 +7,20 @@ import CreateAnswer from '../Answer/CreateAnswer.jsx';
 
 class QuestionContent extends Component {
 	constructor(props) {
-		super(props);
+		super(props); 
+		this.state = {
+			answerClicked: false
+		}
+		this.answerAccessCheck = this.answerAccessCheck.bind(this);
 	}
-
+	answerAccessCheck(e) {
+		e.preventDefault();
+		this.props.signedIn ? (
+			<CreateAnswer userId={this.props.userId} questionId={this.props.id} />
+		) : (
+			alert('Please log into your account to be able to answer!')
+		);
+	}
 	render() {
 		return (
 			<Query query={getQuestion} variables={{ id: this.props.id }}>
@@ -20,12 +31,11 @@ class QuestionContent extends Component {
 					if (error) {
 						return <p>Error! ${error}</p>;
 					} else {
-						console.log(data);
 						return (
 							<div className="list-group">
-							  <div className="list-group-item list-group-item-action flex-column align-items-start">
-		              <div className="d-flex w-100 justify-content-between">
-								    <h3 className="mb-1">{data.question.questionTitle}</h3>
+								<div className="list-group-item list-group-item-action flex-column align-items-start">
+									<div className="d-flex w-100 justify-content-between">
+										<h3 className="mb-1">{data.question.questionTitle}</h3>
 										<div>
 											<small>Bounty: {data.question.bounty}</small>
 											<br />
@@ -42,7 +52,9 @@ class QuestionContent extends Component {
 									</div>
 								</div>
 								<AnswerList id={this.props.id} />
-								<CreateAnswer userId={this.props.userId} questionId={this.props.id} />
+								<div>
+									<button onClick={this.answerAccessCheck}>Respond</button>
+								</div>
 							</div>
 						);
 					}

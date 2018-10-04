@@ -39,7 +39,9 @@ class QuestionList extends Component {
 				</div>
 			);
 		} else {
-			return <QuestionContent userId={this.props.userId} id={this.state.selected} />;
+			return (
+				<QuestionContent signedIn={this.props.signedIn} userId={this.props.userId} id={this.state.selected} />
+			);
 		}
 	}
 }

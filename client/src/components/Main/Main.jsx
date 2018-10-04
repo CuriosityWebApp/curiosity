@@ -19,7 +19,7 @@ class Main extends Component {
 			<div>
 				<Navigation oAuthData={this.props.oAuthData} logout={this.props.logout} />
 				  <Switch>
-						<Route exact path="/" render={() => <QuestionList userId={this.props.userId} />} />
+						<Route exact path="/" render={() => <QuestionList signedIn={this.props.signedIn} userId={this.props.userId} />} />
 					  <Route exact path="/createQuestion" render={() => <CreateQuestion userId={this.props.userId} />} />
 				  	<Route
 				  		exact
