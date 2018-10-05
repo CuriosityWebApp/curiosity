@@ -15,6 +15,7 @@ const getUser = gql`
       }
       answers {
         id
+        questionId
         answer
         score
       }
@@ -29,62 +30,62 @@ const getUser = gql`
 `;
 
 const getQuestion = gql`
-	query($id: ID!) {
-		question(id: $id) {
-			questionTitle
-			questionContent
-			category
-			bounty
-			restriction
-			tags
-			user {
-				id
-				username
-				rank
-			}
-			answers {
-				id
-			}
-			createdAt
-		}
-	}
+  query($id: ID!) {
+    question(id: $id) {
+      questionTitle
+      questionContent
+      category
+      bounty
+      restriction
+      tags
+      user {
+        id
+        username
+        rank
+      }
+      answers {
+        id
+      }
+      createdAt
+    }
+  }
 `;
 
 // passing in the questionId
 const getAnswer = gql`
-	query($id: ID!) {
-		answer(id: $id) {
-			answer
-			score
-			createdAt
-			user {
-				id
-				username
-				rank
-			}
-		}
-	}
+  query($id: ID!) {
+    answer(id: $id) {
+      answer
+      score
+      createdAt
+      user {
+        id
+        username
+        rank
+      }
+    }
+  }
 `;
 
 const getQuestions = gql`
-	query {
-		questions {
-			id
-			category
-			questionTitle
-			questionContent
-			user {
-				username
-			}
-			bounty
-			restriction
-			tags
-			createdAt
-			answers {
-				id
-			}
-		}
-	}
+  query {
+    questions {
+      id
+      category
+      questionTitle
+      questionContent
+      user {
+        username
+      }
+      bounty
+      restriction
+      tags
+      createdAt
+      answers {
+        id
+      }
+    }
+  }
 `;
 
 const checkUserEmail = gql`
