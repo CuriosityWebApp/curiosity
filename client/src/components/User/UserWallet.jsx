@@ -7,7 +7,7 @@ const UserWallet = ({ user }) => {
       <strong>Wallet</strong>
       <div className="card">
         <strong>Credits: </strong>
-        {user.credit}
+        <h3><strong><em>{user.credit}</em></strong></h3>
         <div>
           <img
             src="http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c530.png"
@@ -22,10 +22,10 @@ const UserWallet = ({ user }) => {
       <div className="card">
         <strong>Transactions</strong>
         {user.transactions.length > 0 ? (
-          user.transaction.map(transaction => {
+          user.transactions.map(transaction => {
             return (
               <div className="card-body" key={transaction.id}>
-                QuestionId: {transaction.transactionId}
+                Question: {transaction.questionName.questionTitle}
                 <br />
                 Amount: {transaction.amount}
                 <br />

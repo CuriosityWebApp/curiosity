@@ -115,7 +115,13 @@ const TransactionType = new GraphQLObjectType({
     recipient: {
       type: UserType,
       resolve(parent, args) {
-        return Question.findById(parent.receiverId);
+        return User.findById(parent.receiverId);
+      },
+    },
+    questionName: {
+      type: QuestionType,
+      resolve(parent, args) {
+        return Question.findById(parent.questionId);
       },
     },
   }),

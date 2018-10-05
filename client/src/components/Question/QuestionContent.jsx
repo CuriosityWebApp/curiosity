@@ -48,6 +48,7 @@ class QuestionContent extends Component {
 						ownerId={data.question.user.id}
 						loggedId={this.props.loggedId}
 						isPaid={data.question.bountyPaid}
+						bounty={data.question.bounty}
 					/>
 					<div>
 						{this.props.user.signedIn ? (
