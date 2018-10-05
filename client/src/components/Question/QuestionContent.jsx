@@ -18,7 +18,6 @@ class QuestionContent extends Component {
   }
   displayQuestionContent() {
     let data = this.props.data;
-
 		if (data && data.loading) {
 			return <div> Loading...</div>;
 		}
@@ -44,7 +43,7 @@ class QuestionContent extends Component {
 							<div>{data.question.questionContent}</div>
 						</div>
 					</div>
-					<AnswerList id={this.props.id} ownerId={data.question.user.id} loggedId={this.props.loggedId}/>
+					<AnswerList id={this.props.id} ownerId={data.question.user.id} loggedId={this.props.loggedId} isPaid={data.question.bountyPaid}/>
 					<div>
 						{this.props.user.signedIn ? (
 							<CreateAnswer

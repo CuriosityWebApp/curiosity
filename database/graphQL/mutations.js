@@ -163,6 +163,16 @@ const Mutation = new GraphQLObjectType({
           { $inc: {credit: args.credit}}
        )
       }
+    },
+    updatePaid: {
+      type: QuestionType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        bountyPaid: { type: GraphQLBoolean }
+      },
+      resolve(parent, args) {
+        return Question.findOneAndUpdate({ _id: args.id }, args, { new: false });
+      }
     }
   },
 });

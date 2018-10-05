@@ -35,6 +35,7 @@ const getQuestion = gql`
 			questionContent
 			category
 			bounty
+      bountyPaid
 			restriction
 			tags
 			user {
