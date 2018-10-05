@@ -38,9 +38,7 @@ class Search extends React.Component {
   };
 
   handleInputChange(evt) {
-    this.setState({ term: evt.target.value }, () => {
-      this.getQuestions(this.state.term);
-    });
+    this.setState({ term: evt.target.value });
   }
 
   executeSearch(e) {
