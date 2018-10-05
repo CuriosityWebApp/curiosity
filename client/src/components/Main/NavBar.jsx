@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Search from '../Search/Search.jsx';
 import { LinkContainer } from 'react-router-bootstrap';
 
-class Main extends Component {
+class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -129,4 +129,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default NavBar;
