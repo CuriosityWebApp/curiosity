@@ -49,30 +49,45 @@ const AddTransaction = gql`
 	}
 `;
 
+const UpdatePostLikes = gql`
+	mutation($id: ID!, $score: Int) {
+		likesOnQuestion(id: $id, score: $score) {
+			id
+			score
+		}
+	}
+`;
+const UpdateAnswerLikes = gql`
+	mutation($userId: ID!, $answerId: ID!, $score: Int) {
+		likesOnAnswer(id: $answerId, score: $score) {
+			id
+			score
+		}
+		updateUserRank(id: $userId, rank: $score) {
+			id
+			rank
+		}
+	}
+`;
 const UpdateCredit = gql`
-  mutation(
-		$id: ID!,
-		$credit: Int,
-	) {
-		updateCredit(
-			id: $id,
-			credit: $credit
-		) {
+	mutation($id: ID!, $credit: Int) {
+		updateCredit(id: $id, credit: $credit) {
 			id
 		}
 	}
 `;
-
 const UpdatePaid = gql`
-  mutation(
-		$id: ID!,
-    $bountyPaid: Boolean
-	) {
-		UpdatePaid(
-			id: $id,
-			bountyPaid: $bountyPaid
-		)
+	mutation($id: ID!, $bountyPaid: Boolean) {
+		UpdatePaid(id: $id, bountyPaid: $bountyPaid)
 	}
-`
-
-module.exports = { AddQuestion, AddAnswer, AddUser, AddTransaction, UpdateCredit, UpdatePaid };
+`;
+module.exports = {
+  AddQuestion,
+  AddAnswer,
+  AddUser,
+  AddTransaction,
+  UpdateAnswerLikes,
+  UpdatePostLikes,
+  UpdateCredit,
+  UpdatePaid,
+};

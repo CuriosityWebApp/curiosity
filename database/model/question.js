@@ -12,6 +12,8 @@ const questionSchema = new Schema(
     bountyPaid: { type: Boolean, default: false },
     restriction: { type: Number, default: 0 },
     tags: [String],
+    views: { type: Number, default: 0 },
+    score: { type: Number, default: 0 },
   },
   {
     timestamps: true,

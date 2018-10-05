@@ -21,8 +21,8 @@ const Mutation = new GraphQLObjectType({
     addUser: {
       type: UserType,
       args: {
-        username: { type: new GraphQLNonNull(GraphQLString) },
-        email: { type: new GraphQLNonNull(GraphQLString) },
+        username: { type: GraphQLNonNull(GraphQLString) },
+        email: { type: GraphQLNonNull(GraphQLString) },
         rank: { type: GraphQLInt },
         credit: { type: GraphQLInt },
       },
@@ -39,11 +39,11 @@ const Mutation = new GraphQLObjectType({
     addQuestion: {
       type: QuestionType,
       args: {
-        userId: { type: new GraphQLNonNull(GraphQLID) },
-        questionTitle: { type: new GraphQLNonNull(GraphQLString) },
-        questionContent: { type: new GraphQLNonNull(GraphQLString) },
+        userId: { type: GraphQLNonNull(GraphQLID) },
+        questionTitle: { type: GraphQLNonNull(GraphQLString) },
+        questionContent: { type: GraphQLNonNull(GraphQLString) },
         category: { type: GraphQLString },
-        bounty: { type: new GraphQLNonNull(GraphQLInt) },
+        bounty: { type: GraphQLNonNull(GraphQLInt) },
         restriction: { type: GraphQLInt },
         tags: { type: new GraphQLList(GraphQLString) },
       },
@@ -63,9 +63,9 @@ const Mutation = new GraphQLObjectType({
     addAnswer: {
       type: AnswerType,
       args: {
-        userId: { type: new GraphQLNonNull(GraphQLID) },
-        questionId: { type: new GraphQLNonNull(GraphQLID) },
-        answer: { type: new GraphQLNonNull(GraphQLString) },
+        userId: { type: GraphQLNonNull(GraphQLID) },
+        questionId: { type: GraphQLNonNull(GraphQLID) },
+        answer: { type: GraphQLNonNull(GraphQLString) },
         score: { type: GraphQLInt },
       },
       resolve(parent, args) {
@@ -81,10 +81,10 @@ const Mutation = new GraphQLObjectType({
     addTransaction: {
       type: TransactionType,
       args: {
-        questionId: { type: new GraphQLNonNull(GraphQLID) },
-        senderId: { type: new GraphQLNonNull(GraphQLID) },
-        receiverId: { type: new GraphQLNonNull(GraphQLID) },
-        amount: { type: new GraphQLNonNull(GraphQLInt) },
+        questionId: { type: GraphQLNonNull(GraphQLID) },
+        senderId: { type: GraphQLNonNull(GraphQLID) },
+        receiverId: { type: GraphQLNonNull(GraphQLID) },
+        amount: { type: GraphQLNonNull(GraphQLInt) },
       },
       resolve(parent, args) {
         const transaction = new Transaction({
@@ -99,7 +99,7 @@ const Mutation = new GraphQLObjectType({
     deleteQuestion: {
       type: QuestionType,
       args: {
-        questionId: { type: new GraphQLNonNull(GraphQLID) },
+        questionId: { type: GraphQLNonNull(GraphQLID) },
       },
       async resolve(parent, args) {
         return await Answer.deleteMany({ questionId: args.questionId }).then(res => Question.findByIdAndRemove({ _id: args.questionId }));
@@ -108,7 +108,7 @@ const Mutation = new GraphQLObjectType({
     deleteAnswer: {
       type: AnswerType,
       args: {
-        answerId: { type: new GraphQLNonNull(GraphQLID) },
+        answerId: { type: GraphQLNonNull(GraphQLID) },
       },
       resolve(parent, args) {
         return Answer.findByIdAndRemove({ _id: args.answerId });
@@ -117,7 +117,7 @@ const Mutation = new GraphQLObjectType({
     updateUser: {
       type: UserType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: GraphQLNonNull(GraphQLID) },
         username: { type: GraphQLString },
         email: { type: GraphQLString },
         rank: { type: GraphQLInt },
@@ -130,7 +130,7 @@ const Mutation = new GraphQLObjectType({
     updateQuestion: {
       type: QuestionType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: GraphQLNonNull(GraphQLID) },
         questionTitle: { type: GraphQLString },
         questionContent: { type: GraphQLString },
         category: { type: GraphQLString },
@@ -144,36 +144,63 @@ const Mutation = new GraphQLObjectType({
     updateAnswer: {
       type: AnswerType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: GraphQLNonNull(GraphQLID) },
         answer: { type: GraphQLString },
       },
       resolve(parent, args) {
         return Answer.findOneAndUpdate({ _id: args.id }, args, { new: false });
       },
     },
+    likesOnAnswer: {
+      type: AnswerType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        score: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        return Answer.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
+      },
+    },
+    likesOnQuestion: {
+      type: QuestionType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        score: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        return Question.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
+      },
+    },
+    updateUserRank: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        rank: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        return User.findOneAndUpdate({ _id: args.id }, { $inc: { rank: args.rank } });
+      },
+    },
     updateCredit: {
       type: UserType,
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
-        credit: { type: GraphQLInt }
+        credit: { type: GraphQLInt },
       },
       resolve(parent, args) {
-        return User.update(
-          { _id: args.id },
-          { $inc: {credit: args.credit}}
-       )
-      }
+        return User.update({ _id: args.id }, { $inc: { credit: args.credit } });
+      },
     },
     updatePaid: {
       type: QuestionType,
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
-        bountyPaid: { type: GraphQLBoolean }
+        bountyPaid: { type: GraphQLBoolean },
       },
       resolve(parent, args) {
         return Question.findOneAndUpdate({ _id: args.id }, args, { new: false });
-      }
-    }
+      },
+    },
   },
 });
 
