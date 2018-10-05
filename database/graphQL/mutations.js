@@ -151,6 +151,19 @@ const Mutation = new GraphQLObjectType({
         return Answer.findOneAndUpdate({ _id: args.id }, args, { new: false });
       },
     },
+    updateCredit: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        credit: { type: GraphQLInt }
+      },
+      resolve(parent, args) {
+        return User.update(
+          { _id: args.id },
+          { $inc: {credit: args.credit}}
+       )
+      }
+    }
   },
 });
 

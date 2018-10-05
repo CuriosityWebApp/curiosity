@@ -43,25 +43,24 @@ const AddUser = gql`
 
 const AddTransaction = gql`
 	mutation($questionId: ID!, $senderId: ID!, $receiverId: ID!, $amount: Int!) {
-		AddTransaction(questionId: $questionId, senderId: $senderId, receiverId: $receiverId, amount: $amountId) {
+		addTransaction(questionId: $questionId, senderId: $senderId, receiverId: $receiverId, amount: $amountId) {
 			id
 		}
 	}
 `;
 
-const UpdateUser = gql`
-	mutation($rank: Int, $credit: Int) {
-		UpdateUser(rank: $rank, credit: $credit) {
-			rank
-			credit
+const UpdateCredit = gql`
+  mutation(
+		$id: ID!,
+		$credit: Int,
+	) {
+		updateCredit(
+			id: $id,
+			credit: $credit
+		) {
+			id
 		}
 	}
 `;
 
-module.exports = {
-  AddQuestion,
-  AddAnswer,
-  AddUser,
-  AddTransaction,
-  UpdateUser,
-};
+module.exports = { AddQuestion, AddAnswer, AddUser, AddTransaction, UpdateCredit };
