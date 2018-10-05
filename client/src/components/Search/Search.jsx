@@ -37,8 +37,14 @@ class Search extends React.Component {
             onChange={e => {
               this.setState({ term: e.target.value });
             }}
+            style={{ marginBottom: '7px', marginLeft: '60px', width: '400px' }}
           />
-          <button type="submit" className="btn btn-primary mb-2" onClick={this.executeSearch}>
+          <button
+            type="submit"
+            className="btn btn-primary mb-2"
+            onClick={this.executeSearch}
+            style={{ marginLeft: '10px' }}
+          >
             Filter
           </button>
         </form>

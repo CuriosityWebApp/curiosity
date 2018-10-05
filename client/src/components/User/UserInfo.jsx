@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 const UserInfo = ({ user }) => {
-  console.log(user);
   return (
     <div className="card">
       <strong>User Info</strong>

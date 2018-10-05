@@ -18,6 +18,9 @@ const getUser = gql`
         questionId
         answer
         score
+        question {
+          questionTitle
+        }
       }
       transactions {
         id

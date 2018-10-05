@@ -1,38 +1,68 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { Redirect } from 'react-router-dom';
 
-const UserQuestions = ({ questions }) => {
-  // bounty: 30;
-  // bountyPaid: false;
-  // createdAt: '2018-10-01T21:09:56.180Z';
-  // id: '5bb28d241723602d90864b76';
-  return (
-    <div className="card">
-      <strong>Questions</strong>
-      {questions.length > 0 ? (
-        questions.map(question => {
-          return (
-            <div className="card-body" key={question.id}>
-              Title: {question.questionTitle}
-              <br />
-              CreatedAt: {moment(question.createdAt).fromNow()}
-              <br />
-              Bounty: {question.bounty}
-              Paid?: {question.bountyPaid}
-              <br />
-              questionId: {question.id}
-            </div>
-          );
-        })
-      ) : (
+class UserQuestions extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirected: false,
+      questionId: '',
+    };
+    this.redirector = this.redirector.bind(this);
+  }
+
+  redirector(id) {
+    this.setState({ questionId: id }, () => {
+      this.setState({
+        redirected: true,
+      });
+    });
+  }
+
+  render() {
+    if (this.state.redirected) {
+      return <Redirect to={`/questionContent/${this.state.questionId}`} />;
+    } else {
+      return (
         <div className="card">
-          <div className="card-body">
-            <div>No Questions</div>
+          <strong>Questions</strong>
+          <div className="list-group">
+            {this.props.questions.length > 0 ? (
+              this.props.questions.map(question => {
+                return (
+                  <div
+                    key={question.id}
+                    className="list-group-item list-group-item-action flex-column align-items-start"
+                    onClick={() => {
+                      this.redirector(question.id);
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <div className="d-flex w-100 justify-content-between">
+                      <h5>{question.questionTitle}</h5>
+                      <p>Reward: {question.bounty}</p>
+                      <p>{question.bountyPaid}</p>
+                    </div>
+                    <div>
+                      <small className="text-muted d-flex w-100 justify-content-between">
+                        Created at: {moment(question.createdAt).fromNow()}
+                      </small>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="card">
+                <div className="card-body">
+                  <div>No Questions</div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
-    </div>
-  );
-};
-
+      );
+    }
+  }
+}
 export default UserQuestions;
