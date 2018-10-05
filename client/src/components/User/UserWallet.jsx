@@ -8,16 +8,14 @@ const UserWallet = ({ user }) => {
       <div className="card">
         <strong>Credits: </strong>
         {user.credit}
-        <div>
-          <img
-            src="http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c530.png"
-            style={{ width: '200px' }}
-          />
-          <img
-            src="https://cdn1.venmo.com/marketing/images/branding/downloads/venmo_logo_blue.svg"
-            style={{ width: '200px' }}
-          />
-        </div>
+        <img
+          src="http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c530.png"
+          style={{ width: '100px' }}
+        />
+        <img
+          src="https://cdn1.venmo.com/marketing/images/branding/downloads/venmo_logo_blue.svg"
+          style={{ width: '100px' }}
+        />
       </div>
       <div className="card">
         <strong>Transactions</strong>
