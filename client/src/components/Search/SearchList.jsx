@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { searchQuestion } from '../../queries/queries.js';
 import { Redirect } from 'react-router-dom';
-import QuestionItem from '../Question/QuestionItem.jsx';
+import SearchItem from '../Search/SearchItem.jsx';
 
 class SearchList extends Component {
   constructor(props) {
@@ -15,15 +15,16 @@ class SearchList extends Component {
   }
 
   onSelect(id) {
+    console.log('help');
     this.setState(
       {
         selected: id,
       },
       () => {
         console.log('help');
-        this.setState({
-          redirectAnswer: true,
-        });
+        // this.setState({
+        //   redirectAnswer: true,
+        // });
       },
     );
   }
@@ -32,10 +33,11 @@ class SearchList extends Component {
     let data = this.props.data.searchQuestion;
     if (this.props.data.loading) {
       return <div>Loading Questions...</div>;
+    } else if (data.length === 0) {
+      return <div>No search results</div>;
     } else {
       return data.map(post => {
-        console.log(post);
-        return <QuestionItem key={post.id} postData={post} onSelect={this.onSelect} />;
+        return <SearchItem key={post.id} postData={post} onSelect={this.onSelect} />;
       });
     }
   }
