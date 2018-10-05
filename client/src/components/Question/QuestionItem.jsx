@@ -10,6 +10,7 @@ class QuestionItem extends Component {
         <div
           className="list-group-item list-group-item-action flex-column align-items-start"
           onClick={() => this.props.onSelect(postData.id)}
+          style={{ cursor: 'pointer' }}
         >
           <div className="d-flex w-100 justify-content-between">
             <h5>{postData.questionTitle}</h5>

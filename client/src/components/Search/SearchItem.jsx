@@ -12,6 +12,7 @@ class SearchItem extends Component {
           onClick={() => {
             this.props.onSelect(postData.id);
           }}
+          style={{ cursor: 'pointer' }}
         >
           <div className="d-flex w-100 justify-content-between">
             <h5>{postData.questionTitle}</h5>
