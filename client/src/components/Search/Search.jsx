@@ -1,22 +1,21 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
 import { searchQuestion } from '../../queries/queries.js';
-import { client, withApollo } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 import Autocomplete from 'react-autocomplete';
+import { Redirect, Switch, Link } from 'react-router-dom';
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       term: '',
       questions: [],
+      searched: false,
+      clicked: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.executeSearch = this.executeSearch.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
-  }
-
-  executeSearch(e) {
-    e.preventDefault();
   }
 
   getQuestions = async term => {
@@ -44,29 +43,32 @@ class Search extends React.Component {
     });
   }
 
+  executeSearch(e) {
+    e.preventDefault();
+    this.setState({ searched: true }, () => {
+      this.setState({ searched: false });
+    });
+  }
+
   render() {
     return (
-      <form className="form-inline">
-        <label className="sr-only" htmlFor="inlineFormInputName2">
-          Name
-        </label>
-        <Autocomplete
-          items={this.state.questions}
-          getItemValue={item => item.questionTitle}
-          renderItem={(item, highlighted) => (
-            <div key={item.id} style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}>
-              {item.questionTitle}
-            </div>
-          )}
-          wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-          value={this.state.term}
-          onChange={this.handleInputChange}
-          inputProps={{ className: 'form-control', placeholder: 'askQuestion' }}
-        />
-        <button type="submit" className="btn btn-primary mb-2" onClick={this.executeSearch}>
-          Submit
-        </button>
-      </form>
+      <div>
+        <form className="form-inline" onSubmit={this.executeSearch}>
+          <label className="sr-only" htmlFor="inlineFormInputName2">
+            Name
+          </label>
+          <input
+            className="form-control"
+            placeholder="Filter Questions"
+            value={this.state.term}
+            onChange={this.handleInputChange}
+          />
+          <button type="submit" className="btn btn-primary mb-2" onClick={this.executeSearch}>
+            Filter
+          </button>
+        </form>
+        {this.state.searched && <Redirect to={`/search/${this.state.term}`} />}
+      </div>
     );
   }
 }
