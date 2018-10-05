@@ -49,11 +49,23 @@ const AddTransaction = gql`
 	}
 `;
 
-const UpdateUser = gql`
-	mutation($rank: Int, $credit: Int) {
-		UpdateUser(rank: $rank, credit: $credit) {
+const UpdatePostLikes = gql`
+	mutation($id: ID!, $score: Int) {
+		likesOnQuestion(id: $id, score: $score) {
+			id
+			score
+		}
+	}
+`;
+const UpdateAnswerLikes = gql`
+	mutation($userId: ID!, $answerId: ID!, $score: Int) {
+		likesOnAnswer(id: $answerId, score: $score) {
+			id
+			score
+		}
+		updateUserRank(id: $userId, rank: $score) {
+			id
 			rank
-			credit
 		}
 	}
 `;
@@ -63,5 +75,6 @@ module.exports = {
   AddAnswer,
   AddUser,
   AddTransaction,
-  UpdateUser,
+  UpdateAnswerLikes,
+  UpdatePostLikes,
 };

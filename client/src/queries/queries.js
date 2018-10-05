@@ -37,6 +37,7 @@ const getQuestion = gql`
 			bounty
 			restriction
 			tags
+			score
 			user {
 				username
 				rank
@@ -57,6 +58,7 @@ const getAnswer = gql`
 			score
 			createdAt
 			user {
+				id
 				username
 				rank
 			}
@@ -71,6 +73,7 @@ const getQuestions = gql`
 			category
 			questionTitle
 			questionContent
+			score
 			user {
 				username
 			}
