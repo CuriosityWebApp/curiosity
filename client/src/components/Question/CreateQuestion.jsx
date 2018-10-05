@@ -4,40 +4,40 @@ import { AddQuestion, UpdateCredit } from '../../mutations/mutations.js';
 import { Redirect } from 'react-router-dom';
 
 class CreateQuestion extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: undefined,
-      content: undefined,
-      bounty: 0,
-      category: undefined,
-      restriction: undefined,
-      tags: undefined,
-      returnedId: null,
-      redirect: false,
-    };
-    this.displayCategories = this.displayCategories.bind(this);
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			title: undefined,
+			content: undefined,
+			bounty: 0,
+			category: undefined,
+			restriction: undefined,
+			tags: undefined,
+			returnedId: null,
+			redirect: false
+		};
+		this.displayCategories = this.displayCategories.bind(this);
+	}
 
-  displayCategories() {
-    let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
+	displayCategories() {
+		let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
 
-    return categories.map(category => {
-      return (
-        <option key={category} value={category}>
-          {category}
-        </option>
-      );
-    });
-  }
+		return categories.map(category => {
+			return (
+				<option key={category} value={category}>
+					{category}
+				</option>
+			);
+		});
+	}
 
 	submitForm(e) {
-    e.preventDefault();
+		e.preventDefault();
 		let { title, content, restriction } = this.state;
 		let splittedTags = this.state.tags;
 
 		if (this.props.credits < Number(this.state.bounty)) {
-			alert("You have insufficient credit!")
+			alert('You have insufficient credit!');
 		}
 		if (this.state.tags) {
 			splittedTags = this.state.tags.split(' ');
@@ -46,7 +46,7 @@ class CreateQuestion extends Component {
 		if (!title || !content || !restriction) {
 			alert("Can't post an empty question!");
 		} else if (this.props.credits < Number(this.state.bounty)) {
-			alert("You have insufficient credit!")
+			alert('You have insufficient credit!');
 		} else {
 			this.props
 				.AddQuestion({
@@ -61,31 +61,31 @@ class CreateQuestion extends Component {
 						tags: splittedTags
 					}
 				})
-        .then(data => {
-          console.log("THIS IS CREATE QUESTION", data.data.addQuestion.id);
-          this.setState({ returnedId: data.data.addQuestion.id }, () => {
-            this.setState({ redirect: true }, () => {
-              this.setState({ redirect: false });
-            });
-          });
-        })
+				.then(data => {
+					console.log('THIS IS CREATE QUESTION', data.data.addQuestion.id);
+					this.setState({ returnedId: data.data.addQuestion.id }, () => {
+						this.setState({ redirect: true }, () => {
+							this.setState({ redirect: false });
+						});
+					});
+				})
 				.then(data => {
 					this.props.UpdateCredit({
 						mutation: UpdateCredit,
 						variables: {
 							id: this.props.userId,
-							credit: Number(this.state.bounty*-1)
+							credit: Number(this.state.bounty * -1)
 						}
-					})
+					});
 				})
 				.catch(err => console.log('error bro', err));
-		  }
+		}
 	}
 
 	render() {
 		const { title, content, bounty, category, restriction, tags, redirect } = this.state;
 		if (redirect) {
-			return <Redirect to={`/questionContent/${this.state.returnedId}`} />
+			return <Redirect to={`/questionContent/${this.state.returnedId}`} />;
 		} else {
 			return (
 				<div>
@@ -129,6 +129,6 @@ class CreateQuestion extends Component {
 }
 
 export default compose(
-	graphql(AddQuestion, { name: "AddQuestion" }),
-	graphql(UpdateCredit, { name: "UpdateCredit"})
-)(CreateQuestion)
+	graphql(AddQuestion, { name: 'AddQuestion' }),
+	graphql(UpdateCredit, { name: 'UpdateCredit' })
+)(CreateQuestion);
