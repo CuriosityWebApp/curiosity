@@ -43,7 +43,7 @@ const AddUser = gql`
 
 const AddTransaction = gql`
 	mutation($questionId: ID!, $senderId: ID!, $receiverId: ID!, $amount: Int!) {
-		AddTransaction(questionId: $questionId, senderId: $senderId, receiverId: $receiverId, amount: $amountId) {
+		addTransaction(questionId: $questionId, senderId: $senderId, receiverId: $receiverId, amount: $amountId) {
 			id
 		}
 	}
@@ -51,13 +51,15 @@ const AddTransaction = gql`
 
 const UpdateCredit = gql`
   mutation(
-		$id: Int,
+		$id: ID!,
 		$credit: Int,
 	) {
-		UpdateCredit(
+		updateCredit(
 			id: $id,
 			credit: $credit
-		) 
+		) {
+			id
+		}
 	}
 `;
 

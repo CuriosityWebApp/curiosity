@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import { AddQuestion } from '../../mutations/mutations.js';
+import { graphql, compose } from 'react-apollo';
+import { AddQuestion, UpdateCredit } from '../../mutations/mutations.js';
 import { Redirect } from 'react-router-dom';
 
 class CreateQuestion extends Component {
@@ -31,21 +31,26 @@ class CreateQuestion extends Component {
 	}
 
 	submitForm(e) {
-		e.preventDefault();
 		let { title, content, restriction } = this.state;
 		let splittedTags = this.state.tags;
 
+		if (this.props.credits < Number(this.state.bounty)) {
+			alert("You have insufficient credit!")
+		}
 		if (this.state.tags) {
 			splittedTags = this.state.tags.split(' ');
 		}
+
 		if (!title || !content || !restriction) {
 			alert("Can't post an empty question!");
+		} else if (this.props.credits < Number(this.state.bounty)) {
+			alert("You have insufficient credit!")
 		} else {
 			this.props
-				.mutate({
+				.AddQuestion({
 					mutation: AddQuestion,
 					variables: {
-						userId: this.props.user.id,
+						userId: this.props.userId,
 						questionTitle: this.state.title,
 						questionContent: this.state.content,
 						bounty: Number(this.state.bounty),
@@ -54,13 +59,22 @@ class CreateQuestion extends Component {
 						tags: splittedTags
 					}
 				})
+				.then(data => {
+					this.props.UpdateCredit({
+						mutation: UpdateCredit,
+						variables: {
+							id: this.props.userId,
+							credit: Number(this.state.bounty*-1)
+						}
+					})
+				})
 				.then(data => this.setState({ redirect: true }))
 				.catch(err => console.log('error bro', err));
-		}
+		  }
 	}
+
 	render() {
 		const { title, content, bounty, category, restriction, tags, redirect } = this.state;
-		console.log('I AM PROPS', this.props);
 		if (redirect) {
 			return <Redirect to="/" />;
 		} else {
@@ -105,4 +119,7 @@ class CreateQuestion extends Component {
 	}
 }
 
-export default graphql(AddQuestion)(CreateQuestion);
+export default compose(
+	graphql(AddQuestion, { name: "AddQuestion" }),
+	graphql(UpdateCredit, { name: "UpdateCredit"})
+)(CreateQuestion)

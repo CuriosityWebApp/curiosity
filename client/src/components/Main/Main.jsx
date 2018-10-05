@@ -18,6 +18,7 @@ class Main extends Component {
 
 	render() {
 		let { username, signedIn, rank, credits, id, email } = this.props.user;
+		console.log("IM MAIN", id, username)
 		return (
 			<div>
 				<div id="snb">
@@ -144,7 +145,7 @@ class Main extends Component {
 												<Route
 													exact
 													path="/createQuestion"
-													render={() => <CreateQuestion userId={id} signedIn={signedIn} />}
+													render={() => <CreateQuestion userId={id} signedIn={signedIn} credits={credits}/>}
 												/>
 												<Route
 													exact
@@ -185,6 +186,7 @@ class Main extends Component {
 													render={({ match }) => {
 														return (
 															<QuestionContent
+															  loggedId={id}
 																user={this.props.user}
 																id={match.params.questionId}
 															/>

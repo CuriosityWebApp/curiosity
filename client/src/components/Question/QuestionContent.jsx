@@ -44,7 +44,7 @@ class QuestionContent extends Component {
 							<div>{data.question.questionContent}</div>
 						</div>
 					</div>
-					<AnswerList id={this.props.id} />
+					<AnswerList id={this.props.id} ownerId={data.question.user.id} loggedId={this.props.loggedId}/>
 					<div>
 						{this.props.user.signedIn ? (
 							<CreateAnswer

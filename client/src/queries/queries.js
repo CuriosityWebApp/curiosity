@@ -38,6 +38,7 @@ const getQuestion = gql`
 			restriction
 			tags
 			user {
+				id
 				username
 				rank
 			}
@@ -59,6 +60,7 @@ const getAnswer = gql`
 			user {
 				username
 				rank
+				id
 			}
 		}
 	}
@@ -72,6 +74,7 @@ const getQuestions = gql`
 			questionTitle
 			questionContent
 			user {
+				id
 				username
 			}
 			bounty
