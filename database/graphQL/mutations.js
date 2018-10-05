@@ -181,6 +181,26 @@ const Mutation = new GraphQLObjectType({
         return User.findOneAndUpdate({ _id: args.id }, { $inc: { rank: args.rank } });
       },
     },
+    updateCredit: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        credit: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        return User.update({ _id: args.id }, { $inc: { credit: args.credit } });
+      },
+    },
+    updatePaid: {
+      type: QuestionType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        bountyPaid: { type: GraphQLBoolean },
+      },
+      resolve(parent, args) {
+        return Question.findOneAndUpdate({ _id: args.id }, args, { new: false });
+      },
+    },
   },
 });
 

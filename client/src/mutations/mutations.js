@@ -43,7 +43,7 @@ const AddUser = gql`
 
 const AddTransaction = gql`
 	mutation($questionId: ID!, $senderId: ID!, $receiverId: ID!, $amount: Int!) {
-		AddTransaction(questionId: $questionId, senderId: $senderId, receiverId: $receiverId, amount: $amountId) {
+		addTransaction(questionId: $questionId, senderId: $senderId, receiverId: $receiverId, amount: $amountId) {
 			id
 		}
 	}
@@ -69,7 +69,18 @@ const UpdateAnswerLikes = gql`
 		}
 	}
 `;
-
+const UpdateCredit = gql`
+	mutation($id: ID!, $credit: Int) {
+		updateCredit(id: $id, credit: $credit) {
+			id
+		}
+	}
+`;
+const UpdatePaid = gql`
+	mutation($id: ID!, $bountyPaid: Boolean) {
+		UpdatePaid(id: $id, bountyPaid: $bountyPaid)
+	}
+`;
 module.exports = {
   AddQuestion,
   AddAnswer,
@@ -77,4 +88,6 @@ module.exports = {
   AddTransaction,
   UpdateAnswerLikes,
   UpdatePostLikes,
+  UpdateCredit,
+  UpdatePaid,
 };

@@ -21,7 +21,6 @@ class App extends Component {
 		this.getUser = this.getUser.bind(this);
 	}
 
-	
 	uiConfig = {
 		signInFlow: 'popup',
 		signInOptions: [
@@ -59,8 +58,10 @@ class App extends Component {
 				}
 			})
 			.then(({ data }) => {
-				if (data.checkUserEmail.id) {
+				if (data.checkUserEmail) {
 					this.props.setUser(data.checkUserEmail, true, email);
+				} else {
+					this.props.setUser({}, true, email);
 				}
 			})
 			.catch(err => console.log('you got an error', err));

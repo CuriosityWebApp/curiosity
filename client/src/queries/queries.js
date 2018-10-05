@@ -35,10 +35,12 @@ const getQuestion = gql`
 			questionContent
 			category
 			bounty
+			bountyPaid
 			restriction
 			tags
 			score
 			user {
+				id
 				username
 				rank
 			}
@@ -107,10 +109,16 @@ const searchQuestion = gql`
 			category
 			questionTitle
 			questionContent
+			user {
+				username
+			}
 			bounty
 			restriction
 			tags
 			createdAt
+			answers {
+				id
+			}
 		}
 	}
 `;

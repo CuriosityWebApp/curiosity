@@ -6,15 +6,16 @@ import QuestionContent from '../Question/QuestionContent.jsx';
 import UsernameSubmit from '../Auth/UsernameSubmit.jsx';
 import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
-import Search from './Search.jsx';
+import Search from '../Search/Search.jsx';
+import SearchList from '../Search/SearchList.jsx';
 //navigation
 import { LinkContainer } from 'react-router-bootstrap';
 
 class Main extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
 	render() {
 		let { username, signedIn, rank, credits, id, email } = this.props.user;
@@ -144,7 +145,7 @@ class Main extends Component {
 												<Route
 													exact
 													path="/createQuestion"
-													render={() => <CreateQuestion userId={id} signedIn={signedIn} />}
+													render={() => <CreateQuestion userId={id} signedIn={signedIn} credits={credits} user={this.props.user}/>}
 												/>
 												<Route
 													exact
@@ -158,7 +159,7 @@ class Main extends Component {
 																		firebaseAuth={this.props.firebaseAuth}
 																	/>
 																);
-															} else {
+															} 
 																if (!username) {
 																	return (
 																		<UsernameSubmit
@@ -168,7 +169,7 @@ class Main extends Component {
 																	);
 																}
 																return <Redirect to="/" />;
-															}
+															
 														}
 													}}
 												/>
@@ -185,12 +186,26 @@ class Main extends Component {
 													render={({ match }) => {
 														return (
 															<QuestionContent
+															  loggedId={id}
 																user={this.props.user}
 																id={match.params.questionId}
 															/>
 														);
 													}}
 												/>
+												<Route
+                          exact
+                          path="/search/:term"
+                          render={({ match }) => {
+                            return (
+                              <SearchList
+                                userId={id}
+                                term={match.params.term}
+                                user={this.props.user}
+                              />
+                            );
+                          }}
+                        />
 											</Switch>
 										</div>
 									</div>
