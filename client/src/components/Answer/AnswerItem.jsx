@@ -5,8 +5,8 @@ import moment from 'moment';
 
 class AnswerItem extends Component {
 	chooseAnswer() {
-		if (this.props.ownerId === this.props.loggedId && this.props.data.answer.user.id !== this.props.loggedId) {
-			 return <small type="button" > Choose This Answer </small>
+		if (this.props.ownerId === this.props.loggedId && this.props.data.answer.user.id !== this.props.loggedId && !this.props.isPaid) {
+			 return <small><button type="button" > Choose This Answer </button></small>
 		}
 	}
 	displayAnswer() {
