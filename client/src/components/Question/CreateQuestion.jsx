@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, client, compose, withApollo } from 'react-apollo';
-import { AddQuestion, UpdateUser } from '../../mutations/mutations.js';
+import { AddQuestion } from '../../mutations/mutations.js';
 import { Redirect } from 'react-router-dom';
 
 class CreateQuestion extends Component {
@@ -105,4 +105,4 @@ class CreateQuestion extends Component {
 	}
 }
 
-export default graphql(AddQuestion, UpdateUser)(CreateQuestion);
+export default graphql(AddQuestion)(CreateQuestion);

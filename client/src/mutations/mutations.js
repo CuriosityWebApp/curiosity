@@ -73,19 +73,16 @@ const AddTransaction = gql`
 	}
 `;
 
-const UpdateUser = gql`
+const UpdateCredit = gql`
   mutation(
-		$rank: Int,
+		$id: Int,
 		$credit: Int,
 	) {
-		UpdateUser(
-			rank: $rank,
+		UpdateCredit(
+			id: $id,
 			credit: $credit
-		) {
-			rank
-			credit
-		}
+		) 
 	}
 `
 
-module.exports = { AddQuestion, AddAnswer, AddUser, AddTransaction, UpdateUser };
+module.exports = { AddQuestion, AddAnswer, AddUser, AddTransaction, UpdateCredit };
