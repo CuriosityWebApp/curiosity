@@ -16,8 +16,7 @@ class QuestionContent extends Component {
   forceRender() {
     this.setState({ rerender: !this.state.rerender });
   }
-  displayQuestionContent() {}
-  render() {
+  displayQuestionContent() {
     let data = this.props.data;
 
     if (data && data.loading) {
@@ -62,6 +61,9 @@ class QuestionContent extends Component {
         </div>
       );
     }
+  }
+  render() {
+    return this.displayQuestionContent();
   }
 }
 
