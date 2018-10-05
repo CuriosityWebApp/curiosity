@@ -19,7 +19,6 @@ class Main extends Component {
 
 	render() {
 		let { username, signedIn, rank, credits, id, email } = this.props.user;
-		console.log("IM MAIN", id, username)
 		return (
 			<div>
 				<div id="snb">
@@ -153,9 +152,7 @@ class Main extends Component {
 													path="/login"
 													render={() => {
 														{
-                              console.log(signedIn)
 															if (!signedIn) {
-                                console.log('here in ELSE MAIN')
 																return (
 																	<Login
 																		uiConfig={this.props.uiConfig}
