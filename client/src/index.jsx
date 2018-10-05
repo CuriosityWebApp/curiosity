@@ -32,7 +32,7 @@ class Index extends Component {
       rank: rank,
       email: email,
     };
-    this.setState({ user: updatedUser });
+    this.setState({ user: updatedUser }, () => console.log('this is the state', this.state));
   }
   render() {
     return (

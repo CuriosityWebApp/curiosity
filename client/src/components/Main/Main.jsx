@@ -153,14 +153,16 @@ class Main extends Component {
 													path="/login"
 													render={() => {
 														{
+                              console.log(signedIn)
 															if (!signedIn) {
+                                console.log('here in ELSE MAIN')
 																return (
 																	<Login
 																		uiConfig={this.props.uiConfig}
 																		firebaseAuth={this.props.firebaseAuth}
 																	/>
 																);
-															} else {
+															} 
 																if (!username) {
 																	return (
 																		<UsernameSubmit
@@ -170,7 +172,7 @@ class Main extends Component {
 																	);
 																}
 																return <Redirect to="/" />;
-															}
+															
 														}
 													}}
 												/>
