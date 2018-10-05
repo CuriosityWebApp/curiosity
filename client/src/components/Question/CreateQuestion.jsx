@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { graphql, client, compose, withApollo } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { AddQuestion } from '../../mutations/mutations.js';
 import { Redirect } from 'react-router-dom';
 
@@ -45,7 +45,7 @@ class CreateQuestion extends Component {
 				.mutate({
 					mutation: AddQuestion,
 					variables: {
-						userId: this.props.userId,
+						userId: this.props.user.id,
 						questionTitle: this.state.title,
 						questionContent: this.state.content,
 						bounty: Number(this.state.bounty),
@@ -60,7 +60,7 @@ class CreateQuestion extends Component {
 	}
 	render() {
 		const { title, content, bounty, category, restriction, tags, redirect } = this.state;
-		console.log("I AM PROPS", this.props);
+		console.log('I AM PROPS', this.props);
 		if (redirect) {
 			return <Redirect to="/" />;
 		} else {
