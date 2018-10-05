@@ -15,16 +15,14 @@ class SearchList extends Component {
   }
 
   onSelect(id) {
-    console.log('help');
     this.setState(
       {
         selected: id,
       },
       () => {
-        console.log('help');
-        // this.setState({
-        //   redirectAnswer: true,
-        // });
+        this.setState({
+          redirectAnswer: true,
+        });
       },
     );
   }
@@ -33,7 +31,7 @@ class SearchList extends Component {
     let data = this.props.data.searchQuestion;
     if (this.props.data.loading) {
       return <div>Loading Questions...</div>;
-    } else if (data.length === 0) {
+    } else if (data.length < 1) {
       return <div>No search results</div>;
     } else {
       return data.map(post => {
