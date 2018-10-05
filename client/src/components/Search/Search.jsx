@@ -13,38 +13,13 @@ class Search extends React.Component {
       searched: false,
       clicked: false,
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.executeSearch = this.executeSearch.bind(this);
-    this.getQuestions = this.getQuestions.bind(this);
-  }
-
-  getQuestions = async term => {
-    const questionList = await this.props.client
-      .query({
-        query: searchQuestion,
-        variables: {
-          term: term,
-        },
-      })
-      .then(({ data }) => {
-        if (data.searchQuestion) {
-          this.setState({
-            questions: data.searchQuestion,
-          });
-        } else {
-          console.log('waiting for term to fetch user data');
-        }
-      });
-  };
-
-  handleInputChange(evt) {
-    this.setState({ term: evt.target.value });
   }
 
   executeSearch(e) {
     e.preventDefault();
     this.setState({ searched: true }, () => {
-      this.setState({ searched: false });
+      this.setState({ searched: false, term: '' });
     });
   }
 
@@ -59,7 +34,9 @@ class Search extends React.Component {
             className="form-control"
             placeholder="Filter Questions"
             value={this.state.term}
-            onChange={this.handleInputChange}
+            onChange={e => {
+              this.setState({ term: e.target.value });
+            }}
           />
           <button type="submit" className="btn btn-primary mb-2" onClick={this.executeSearch}>
             Filter

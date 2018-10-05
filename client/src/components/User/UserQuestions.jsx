@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 const UserQuestions = ({ questions }) => {
-  console.log(questions);
-  bounty: 30;
-  bountyPaid: false;
-  createdAt: '2018-10-01T21:09:56.180Z';
-  id: '5bb28d241723602d90864b76';
+  // bounty: 30;
+  // bountyPaid: false;
+  // createdAt: '2018-10-01T21:09:56.180Z';
+  // id: '5bb28d241723602d90864b76';
   return (
     <div className="card">
       <strong>Questions</strong>

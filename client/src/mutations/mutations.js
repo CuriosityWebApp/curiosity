@@ -63,4 +63,16 @@ const UpdateCredit = gql`
 	}
 `;
 
-module.exports = { AddQuestion, AddAnswer, AddUser, AddTransaction, UpdateCredit };
+const UpdatePaid = gql`
+  mutation(
+		$id: ID!,
+    $bountyPaid: Boolean
+	) {
+		UpdatePaid(
+			id: $id,
+			bountyPaid: $bountyPaid
+		)
+	}
+`
+
+module.exports = { AddQuestion, AddAnswer, AddUser, AddTransaction, UpdateCredit, UpdatePaid };

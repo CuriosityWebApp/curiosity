@@ -6,7 +6,7 @@ import moment from 'moment';
 class AnswerItem extends Component {
 	chooseAnswer() {
 		if (this.props.ownerId === this.props.loggedId && this.props.data.answer.user.id !== this.props.loggedId && !this.props.isPaid) {
-			 return <small><button type="button" > Choose This Answer </button></small>
+			 return <small><button type="button"> Choose This Answer </button></small>
 		}
 	}
 	displayAnswer() {
@@ -43,17 +43,17 @@ class AnswerItem extends Component {
 		}
 	}
 
-	render() {
-		return <div>{this.displayAnswer()}</div>;
-	}
+  render() {
+    return <div>{this.displayAnswer()}</div>;
+  }
 }
 
 export default graphql(getAnswer, {
-	options: props => {
-		return {
-			variables: {
-				id: props.answerId
-			}
-		};
-	}
+  options: props => {
+    return {
+      variables: {
+        id: props.answerId,
+      },
+    };
+  },
 })(AnswerItem);

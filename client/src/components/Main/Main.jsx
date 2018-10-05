@@ -19,7 +19,6 @@ class Main extends Component {
 
 	render() {
 		let { username, signedIn, rank, credits, id, email } = this.props.user;
-		console.log("IM MAIN", id, username)
 		return (
 			<div>
 				<div id="snb">
@@ -160,7 +159,7 @@ class Main extends Component {
 																		firebaseAuth={this.props.firebaseAuth}
 																	/>
 																);
-															} else {
+															} 
 																if (!username) {
 																	return (
 																		<UsernameSubmit
@@ -170,7 +169,7 @@ class Main extends Component {
 																	);
 																}
 																return <Redirect to="/" />;
-															}
+															
 														}
 													}}
 												/>
