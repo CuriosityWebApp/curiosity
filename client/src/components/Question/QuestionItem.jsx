@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 class QuestionItem extends Component {
+  constructor() {
+    super();
+    this.UpdateLikes = this.UpdateLikes.bind();
+  }
+  UpdateLikes(e) {
+    e.stopPropagation();
+  }
   render() {
     let { postData } = this.props;
     return (
@@ -12,19 +19,29 @@ class QuestionItem extends Component {
             className="list-group-item list-group-item-action flex-column align-items-start"
             onClick={() => this.props.onSelect(postData.id)}
           >
-            <div class="row">
-              <div class="col-1">
-                <div class="row" style={{ textAlign: 'right' }}>
-                  <div class="col align-self-start">
-                    <i class="fa fa-caret-up" aria-hidden="true" style={{ color: 'green' }} />
+            <div className="row">
+              <div className="col-1">
+                <div className="row" style={{ textAlign: 'right' }}>
+                  <div className="col align-self-start">
+                    <i
+                      className="fa fa-caret-up"
+                      aria-hidden="true"
+                      style={{ color: 'green', cursor: 'pointer' }}
+                      onClick={this.UpdateLikes}
+                    />
                   </div>
-                  <div class="col align-self-start">{postData.score}</div>
-                  <div class="col align-self-start">
-                    <i class="fa fa-caret-down" aria-hidden="true" style={{ color: 'red' }} />
+                  <div className="col align-self-start">{postData.score}</div>
+                  <div className="col align-self-start">
+                    <i
+                      className="fa fa-caret-down"
+                      aria-hidden="true"
+                      style={{ color: 'red', cursor: 'pointer' }}
+                      onClick={this.UpdateLikes}
+                    />
                   </div>
                 </div>
               </div>
-              <div class="col-11">
+              <div className="col-11">
                 <div className="d-flex w-100 justify-content-between">
                   <h5>{postData.questionTitle}</h5>
                   <h6>Reward: {postData.bounty}</h6>

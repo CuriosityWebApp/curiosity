@@ -35,7 +35,7 @@ class UserAnswers extends Component {
                     key={answer.id}
                     className="list-group-item list-group-item-action flex-column align-items-start"
                     onClick={() => {
-                      this.redirector(answer.questionId);
+                      this.redirector(answer.question.id);
                     }}
                     style={{ cursor: 'pointer' }}
                   >
@@ -47,7 +47,6 @@ class UserAnswers extends Component {
                     <div>
                       <small className="text-muted d-flex w-100 justify-content-between">
                         CreatedAt: {moment(answer.createdAt).fromNow()}
-                        questionId: {answer.questionId}
                       </small>
                     </div>
                   </div>

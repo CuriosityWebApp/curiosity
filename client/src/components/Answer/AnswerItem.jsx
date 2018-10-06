@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { getAnswer } from '../../queries/queries.js';
-import { UpdateAnswerLikes } from '../../mutations/mutations.js';
+import {
+  UpdateAnswerLikes,
+  UpdatePaid,
+  UpdateCredit,
+  AddTransaction,
+} from '../../mutations/mutations.js';
 import moment from 'moment';
 
 class AnswerItem extends Component {
@@ -11,11 +16,12 @@ class AnswerItem extends Component {
       clicked: null,
     };
     this.UpdateLikes = this.UpdateLikes.bind(this);
+    this.clickChooseAnswer = this.clickChooseAnswer.bind(this);
   }
 
   UpdateLikes(e) {
+    e.stopPropagation();
     if (e.target.value > 0 && (this.state.clicked === null || this.state.clicked === 'down')) {
-      console.log('getting here, these are the values', e.target.value);
       this.props
         .UpdateAnswerLikes({
           variables: {
@@ -39,6 +45,37 @@ class AnswerItem extends Component {
       alert('You cannot add multiple likes/dislikes to 1 answer!');
     }
   }
+
+  clickChooseAnswer() {
+    this.props
+      .UpdatePaid({
+        variables: {
+          id: this.props.questionId,
+          bountyPaid: true,
+        },
+      })
+      .then(() => {
+        this.props.UpdateCredit({
+          mutation: UpdateCredit,
+          variables: {
+            id: this.props.getAnswer.answer.user.id,
+            credit: this.props.bounty,
+          },
+        });
+      })
+      .then(() => {
+        this.props.AddTransaction({
+          mutation: AddTransaction,
+          variables: {
+            questionId: this.props.questionId,
+            senderId: this.props.ownerId,
+            receiverId: this.props.getAnswer.answer.user.id,
+            amount: this.props.bounty,
+          },
+        });
+      });
+  }
+
   chooseAnswer() {
     if (
       this.props.ownerId === this.props.loggedId &&
@@ -47,35 +84,47 @@ class AnswerItem extends Component {
     ) {
       return (
         <small>
-          <button type="button"> Choose This Answer </button>
+          <button type="button" onClick={this.clickChooseAnswer}>
+            {' '}
+            Choose This Answer{' '}
+          </button>
         </small>
       );
     }
   }
   displayAnswer() {
-    console.log('THIS ARE THE PROPS answer', this.props.getAnswer);
-    console.log('THIS ARE THE UPDATE', this.props.UpdateAnswerLikes);
     let data = this.props.getAnswer;
     if (data && data.loading) {
       return <div>Loading answers...</div>;
     } else {
-      console.log('this is data for answers', data);
       return (
         <div className="list-group">
           <div className="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="row">
-              <div class="col-1">
-                <div class="row" style={{ textAlign: 'right' }}>
-                  <div class="col align-self-start">
-                    <i class="fa fa-caret-up" aria-hidden="true" style={{ color: 'green' }} />
+            <div className="row">
+              <div className="col-1">
+                <div className="row" style={{ textAlign: 'right' }}>
+                  <div className="col align-self-start">
+                    <i
+                      className="fa fa-caret-up"
+                      aria-hidden="true"
+                      style={{ color: 'green', cursor: 'pointer' }}
+                      value={1}
+                      onClick={this.UpdateLikes}
+                    />
                   </div>
-                  <div class="col align-self-start">{postData.score}</div>
-                  <div class="col align-self-start">
-                    <i class="fa fa-caret-down" aria-hidden="true" style={{ color: 'red' }} />
+                  <div className="col align-self-start">{data.answer.score}</div>
+                  <div className="col align-self-start">
+                    <i
+                      className="fa fa-caret-down"
+                      aria-hidden="true"
+                      style={{ color: 'red', cursor: 'pointer' }}
+                      value={-1}
+                      onClick={this.UpdateLikes}
+                    />
                   </div>
                 </div>
               </div>
-              <div class="col-11">
+              <div className="col-11">
                 <div className="d-flex w-100 justify-content-between">
                   <div>
                     <small>
@@ -119,4 +168,7 @@ export default compose(
     },
   }),
   graphql(UpdateAnswerLikes, { name: 'UpdateAnswerLikes' }),
+  graphql(UpdatePaid, { name: 'UpdatePaid' }),
+  graphql(UpdateCredit, { name: 'UpdateCredit' }),
+  graphql(AddTransaction, { name: 'AddTransaction' }),
 )(AnswerItem);

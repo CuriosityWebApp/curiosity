@@ -15,10 +15,10 @@ const getUser = gql`
       }
       answers {
         id
-        questionId
         answer
         score
         question {
+          id
           questionTitle
         }
       }
@@ -27,6 +27,15 @@ const getUser = gql`
         questionId
         amount
         receiverId
+        recipient {
+          username
+        }
+        sender {
+          username
+        }
+        questionName {
+          questionTitle
+        }
       }
     }
   }
