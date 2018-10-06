@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { getAnswer } from '../../queries/queries.js';
-import { UpdateAnswerLikes } from '../../mutations/mutations.js';
+import { UpdateAnswerLikes, UpdatePaid, UpdateCredit, AddTransaction } from '../../mutations/mutations.js';
 import moment from 'moment';
 
 class AnswerItem extends Component {
@@ -11,6 +11,7 @@ class AnswerItem extends Component {
 			clicked: null
 		};
 		this.UpdateLikes = this.UpdateLikes.bind(this);
+		this.clickChooseAnswer = this.clickChooseAnswer.bind(this);
 	}
 
 	UpdateLikes(e) {
@@ -53,6 +54,37 @@ class AnswerItem extends Component {
 			alert('You cannot add multiple likes/dislikes to 1 answer!');
 		}
 	}
+
+	clickChooseAnswer() {
+		this.props
+			.UpdatePaid({
+				variables: {
+					id: this.props.questionId,
+					bountyPaid: true
+				}
+			})
+			.then(() => {
+				this.props.UpdateCredit({
+					mutation: UpdateCredit,
+					variables: {
+						id: this.props.getAnswer.answer.user.id,
+						credit: this.props.bounty
+					}
+				});
+			})
+			.then(() => {
+				this.props.AddTransaction({
+					mutation: AddTransaction,
+					variables: {
+						questionId: this.props.questionId,
+						senderId: this.props.ownerId,
+						receiverId: this.props.getAnswer.answer.user.id,
+						amount: this.props.bounty
+					}
+				});
+			});
+	}
+
 	chooseAnswer() {
 		if (
 			this.props.ownerId === this.props.loggedId &&
@@ -61,7 +93,10 @@ class AnswerItem extends Component {
 		) {
 			return (
 				<small>
-					<button type="button"> Choose This Answer </button>
+					<button type="button" onClick={this.clickChooseAnswer}>
+						{' '}
+						Choose This Answer{' '}
+					</button>
 				</small>
 			);
 		}
@@ -71,37 +106,54 @@ class AnswerItem extends Component {
 		if (data && data.loading) {
 			return <div>Loading answers...</div>;
 		} else {
-			console.log('this is data for answers', data);
 			return (
 				<div className="list-group">
 					<div className="list-group-item list-group-item-action flex-column align-items-start">
-						<div className="d-flex w-100 justify-content-between">
-							<div>
-								<small>
-									Answer By {data.answer.user.username} {moment(data.answer.createdAt).fromNow()}
-								</small>
+						<div className="row">
+							<div className="col-1">
+								<div className="row" style={{ textAlign: 'right' }}>
+									<div className="col align-self-start">
+										<button
+											className="fa fa-caret-up"
+											aria-hidden="true"
+											style={{ color: 'green', cursor: 'pointer' }}
+											value={1}
+											onClick={this.UpdateLikes}
+										/>
+									</div>
+									<div className="col align-self-start">{data.answer.score}</div>
+									<div className="col align-self-start">
+										<button
+											className="fa fa-caret-down"
+											aria-hidden="true"
+											style={{ color: 'red', cursor: 'pointer' }}
+											value={-1}
+											onClick={this.UpdateLikes}
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="col-11">
+								<div className="d-flex w-100 justify-content-between">
+									<div>
+										<small>
+											Answer By {data.answer.user.username}{' '}
+											{moment(data.answer.createdAt).fromNow()}
+										</small>
+										<br />
+										{this.chooseAnswer()}
+									</div>
+									<div>
+										<small>Rank: {data.answer.user.rank}</small> <br />
+										<small>Votes: {data.answer.score}</small>
+									</div>
+								</div>
 								<br />
-								{this.chooseAnswer()}
-							</div>
-							<div>
-								<small>Rank: {data.answer.user.rank}</small> <br />
-								<small>Votes: {data.answer.score}</small>
+								<div className="answerContent">
+									<p>{data.answer.answer}</p>
+								</div>
 							</div>
 						</div>
-						<br />
-						<div className="answerContent">
-							<p>{data.answer.answer}</p>
-						</div>
-					</div>
-					<div>
-						<button value={1} className="fa fa-toggle-up" aria-hidden="true" onClick={this.UpdateLikes} />{' '}
-						{data.answer.score}{' '}
-						<button
-							value={-1}
-							className="fa fa-toggle-down"
-							aria-hidden="true"
-							onClick={this.UpdateLikes}
-						/>
 					</div>
 				</div>
 			);
@@ -124,5 +176,8 @@ export default compose(
 			};
 		}
 	}),
-	graphql(UpdateAnswerLikes, { name: 'UpdateAnswerLikes' })
+	graphql(UpdateAnswerLikes, { name: 'UpdateAnswerLikes' }),
+	graphql(UpdatePaid, { name: 'UpdatePaid' }),
+	graphql(UpdateCredit, { name: 'UpdateCredit' }),
+	graphql(AddTransaction, { name: 'AddTransaction' })
 )(AnswerItem);
