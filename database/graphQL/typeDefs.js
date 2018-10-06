@@ -79,6 +79,7 @@ const AnswerType = new GraphQLObjectType({
     questionId: { type: GraphQLID },
     answer: { type: GraphQLString },
     score: { type: GraphQLInt },
+    answerChosen: { type: GraphQLBoolean },
     createdAt: { type: GraphQLDate },
     updatedAt: { type: GraphQLDate },
     user: {

@@ -8,6 +8,7 @@ const answerSchema = new Schema(
     questionId: String,
     answer: String,
     score: { type: Number, default: 0 },
+    answerChosen: Boolean
   },
   {
     timestamps: true,
