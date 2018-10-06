@@ -198,7 +198,7 @@ const Mutation = new GraphQLObjectType({
         bountyPaid: { type: GraphQLBoolean },
       },
       resolve(parent, args) {
-        return Question.findOneAndUpdate({ _id: args.id }, args, { new: false });
+        return Question.findOneAndUpdate({ _id: args.id }, args, { new: false })
       },
     },
   },

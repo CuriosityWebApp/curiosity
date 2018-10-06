@@ -22,9 +22,15 @@ class AnswerItem extends Component {
 						userId: this.props.getAnswer.answer.user.id,
 						answerId: this.props.answerId,
 						score: 1
+					},
+					options: {
+						refetchQueries: ['getAnswer']
 					}
 				})
-				.then(() => this.setState({ clicked: 'up' }));
+				.then(data => {
+					console.log('this is the data', data);
+					this.setState({ clicked: 'up' });
+				});
 		} else if (e.target.value < 0 && (this.state.clicked === null || this.state.clicked === 'up')) {
 			this.props
 				.UpdateAnswerLikes({
@@ -32,7 +38,15 @@ class AnswerItem extends Component {
 						userId: this.props.getAnswer.answer.user.id,
 						answerId: this.props.answerId,
 						score: -1
-					}
+					},
+					refetchQueries: [
+						{
+							query: getAnswer,
+							variable: {
+								id: this.props.answerId
+							}
+						}
+					]
 				})
 				.then(() => this.setState({ clicked: 'down' }));
 		} else {
@@ -53,8 +67,6 @@ class AnswerItem extends Component {
 		}
 	}
 	displayAnswer() {
-		console.log('THIS ARE THE PROPS answer', this.props.getAnswer);
-		console.log('THIS ARE THE UPDATE', this.props.UpdateAnswerLikes);
 		let data = this.props.getAnswer;
 		if (data && data.loading) {
 			return <div>Loading answers...</div>;
