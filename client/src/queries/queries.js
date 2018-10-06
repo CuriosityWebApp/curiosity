@@ -137,6 +137,23 @@ const searchQuestion = gql`
   }
 `;
 
+const getMessages = gql`
+  query($receiverId: ID!) {
+    userMessages(receiverId: $receiverId) {
+      id
+      receiverId
+      senderId
+      createdAt
+      sender {
+        id
+        username
+      }
+      messageTitle
+      messageContent
+    }
+  }
+`;
+
 module.exports = {
   getUser,
   getQuestion,
@@ -144,4 +161,5 @@ module.exports = {
   getAnswer,
   checkUserEmail,
   searchQuestion,
+  getMessages,
 };

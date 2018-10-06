@@ -2,6 +2,7 @@ const User = require('../../database/model/user.js');
 const Question = require('../../database/model/question.js');
 const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
+const Message = require('../../database/model/message.js');
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -11,7 +12,11 @@ const {
   GraphQLBoolean,
 } = require('graphql');
 const {
-  UserType, QuestionType, AnswerType, TransactionType,
+  UserType,
+  QuestionType,
+  AnswerType,
+  TransactionType,
+  MessageType,
 } = require('./typeDefs.js');
 
 const RootQuery = new GraphQLObjectType({
@@ -84,6 +89,13 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         // code to get data from db
         return Question.find({ $text: { $search: args.term } });
+      },
+    },
+    userMessages: {
+      type: new GraphQLList(MessageType),
+      args: { receiverId: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Message.find({ receiverId: args.receiverId }).sort('-createdAt');
       },
     },
   },

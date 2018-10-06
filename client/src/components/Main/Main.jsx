@@ -8,6 +8,7 @@ import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
 import NavBar from './NavBar.jsx';
 import SearchList from '../Search/SearchList.jsx';
+import MessageList from '../Messages/MessageList.jsx';
 
 class Main extends Component {
   constructor(props) {
@@ -94,6 +95,13 @@ class Main extends Component {
                                 user={this.props.user}
                               />
                             );
+                          }}
+                        />
+                        <Route
+                          exact
+                          path="/messages"
+                          render={() => {
+                            return <MessageList userId={id} />;
                           }}
                         />
                       </Switch>
