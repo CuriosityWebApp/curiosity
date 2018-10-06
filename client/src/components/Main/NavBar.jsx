@@ -50,21 +50,41 @@ class NavBar extends Component {
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
                     <LinkContainer to="/">
-                      <div>Question List</div>
+                      <div>
+                        <i className="fa fa-list" />
+                        Question List
+                      </div>
                     </LinkContainer>
                   </div>
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
                     <LinkContainer to="/createQuestion">
-                      <div>Ask Question</div>
+                      <div>
+                        <i className="fa fa-question" />
+                        Ask Question
+                      </div>
                     </LinkContainer>
                   </div>
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
                     <LinkContainer to="/profileUser">
-                      <div>Profile</div>
+                      <div>
+                        <i className="fa fa-user" />
+                        Profile
+                      </div>
+                    </LinkContainer>
+                  </div>
+                </div>
+                <div className="card" style={{ cursor: 'pointer' }}>
+                  <div className="card-header">
+                    <LinkContainer to="/messages">
+                      <div>
+                        <i className="fa fa-envelope-o" />
+                        Messages
+                        <span className="label">New</span>
+                      </div>
                     </LinkContainer>
                   </div>
                 </div>
@@ -76,7 +96,10 @@ class NavBar extends Component {
                         this.props.logout();
                       }}
                     >
-                      Log Out
+                      <div>
+                        <i className="fa fa-sign-out" />
+                        Log Out
+                      </div>
                     </Link>
                   </div>
                 </div>
@@ -86,14 +109,20 @@ class NavBar extends Component {
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
                     <LinkContainer to="/">
-                      <div>Question List</div>
+                      <div>
+                        <i className="fa fa-list" />
+                        Question List
+                      </div>
                     </LinkContainer>
                   </div>
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
                     <LinkContainer to="/login">
-                      <div>Login</div>
+                      <div>
+                        <i className="fa fa-sign-in" />
+                        Login
+                      </div>
                     </LinkContainer>
                   </div>
                 </div>
