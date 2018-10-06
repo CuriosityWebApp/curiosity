@@ -233,6 +233,16 @@ const Mutation = new GraphQLObjectType({
         return Message.findByIdAndRemove({ _id: args.id });
       },
     },
+    updateChosenAnswer: {
+      type: AnswerType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        answerChosen: { type: GraphQLBoolean },
+      },
+      resolve(parent, args) {
+        return Answer.findByIdAndUpdate({ _id: args.id }, args, { new: false })
+      }
+    }
   },
 });
 

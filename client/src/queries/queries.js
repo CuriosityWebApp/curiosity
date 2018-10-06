@@ -71,6 +71,7 @@ const getAnswer = gql`
     answer(id: $id) {
       answer
       score
+      answerChosen
       createdAt
       user {
         id

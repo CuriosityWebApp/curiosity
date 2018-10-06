@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { getAnswer } from '../../queries/queries.js';
-import { UpdateAnswerLikes, UpdatePaid, UpdateCredit, AddTransaction } from '../../mutations/mutations.js';
+import { UpdateAnswerLikes } from '../../mutations/mutations.js';
 import moment from 'moment';
+import AnswerChoice from './AnswerChoice.jsx';
 
 class AnswerItem extends Component {
 	constructor(props) {
@@ -11,25 +12,20 @@ class AnswerItem extends Component {
 			clicked: null
 		};
 		this.UpdateLikes = this.UpdateLikes.bind(this);
-		this.clickChooseAnswer = this.clickChooseAnswer.bind(this);
 	}
 
 	UpdateLikes(e) {
 		if (e.target.value > 0 && (this.state.clicked === null || this.state.clicked === 'down')) {
-			console.log('getting here, these are the values', e.target.value);
+
 			this.props
 				.UpdateAnswerLikes({
 					variables: {
 						userId: this.props.getAnswer.answer.user.id,
 						answerId: this.props.answerId,
 						score: 1
-					},
-					options: {
-						refetchQueries: ['getAnswer']
 					}
 				})
 				.then(data => {
-					console.log('this is the data', data);
 					this.setState({ clicked: 'up' });
 				});
 		} else if (e.target.value < 0 && (this.state.clicked === null || this.state.clicked === 'up')) {
@@ -39,15 +35,7 @@ class AnswerItem extends Component {
 						userId: this.props.getAnswer.answer.user.id,
 						answerId: this.props.answerId,
 						score: -1
-					},
-					refetchQueries: [
-						{
-							query: getAnswer,
-							variable: {
-								id: this.props.answerId
-							}
-						}
-					]
+					}
 				})
 				.then(() => this.setState({ clicked: 'down' }));
 		} else {
@@ -55,52 +43,6 @@ class AnswerItem extends Component {
 		}
 	}
 
-	clickChooseAnswer() {
-		this.props
-			.UpdatePaid({
-				variables: {
-					id: this.props.questionId,
-					bountyPaid: true
-				}
-			})
-			.then(() => {
-				this.props.UpdateCredit({
-					mutation: UpdateCredit,
-					variables: {
-						id: this.props.getAnswer.answer.user.id,
-						credit: this.props.bounty
-					}
-				});
-			})
-			.then(() => {
-				this.props.AddTransaction({
-					mutation: AddTransaction,
-					variables: {
-						questionId: this.props.questionId,
-						senderId: this.props.ownerId,
-						receiverId: this.props.getAnswer.answer.user.id,
-						amount: this.props.bounty
-					}
-				});
-			});
-	}
-
-	chooseAnswer() {
-		if (
-			this.props.ownerId === this.props.loggedId &&
-			this.props.getAnswer.answer.user.id !== this.props.loggedId &&
-			!this.props.isPaid
-		) {
-			return (
-				<small>
-					<button type="button" onClick={this.clickChooseAnswer}>
-						{' '}
-						Choose This Answer{' '}
-					</button>
-				</small>
-			);
-		}
-	}
 	displayAnswer() {
 		let data = this.props.getAnswer;
 		if (data && data.loading) {
@@ -141,7 +83,14 @@ class AnswerItem extends Component {
 											{moment(data.answer.createdAt).fromNow()}
 										</small>
 										<br />
-										{this.chooseAnswer()}
+										<AnswerChoice 
+										  questionId={this.props.questionId} 
+									  	bounty={this.props.bounty} 
+									  	ownerId={this.props.ownerId}
+											answerId={this.props.answerId}
+											loggedId={this.props.loggedId}
+											isPaid={this.props.isPaid}
+										/>
 									</div>
 									<div>
 										<small>Rank: {data.answer.user.rank}</small> <br />
@@ -177,7 +126,4 @@ export default compose(
 		}
 	}),
 	graphql(UpdateAnswerLikes, { name: 'UpdateAnswerLikes' }),
-	graphql(UpdatePaid, { name: 'UpdatePaid' }),
-	graphql(UpdateCredit, { name: 'UpdateCredit' }),
-	graphql(AddTransaction, { name: 'AddTransaction' })
 )(AnswerItem);
