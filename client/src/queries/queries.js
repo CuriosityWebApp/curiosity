@@ -1,28 +1,32 @@
 import { gql } from 'apollo-boost';
 
 const getUser = gql`
-	query($id: ID!) {
-		user(id: $id) {
-			id
-			username
-			rank
-			credit
-			email
-			questions {
-				id
-				questionTitle
-				bounty
-			}
-			answers {
-				id
-				answer
-				score
-			}
-			transactions {
-				id
-				questionId
-				amount
-				receiverId
+  query($id: ID!) {
+    user(id: $id) {
+      id
+      username
+      rank
+      credit
+      email
+      questions {
+        id
+        questionTitle
+        bounty
+      }
+      answers {
+        id
+        answer
+        score
+        question {
+          id
+          questionTitle
+        }
+      }
+      transactions {
+        id
+        questionId
+        amount
+        receiverId
         recipient {
           username
         }
@@ -32,9 +36,9 @@ const getUser = gql`
         questionName {
           questionTitle
         }
-			}
-		}
-	}
+      }
+    }
+  }
 `;
 
 const getQuestion = gql`
