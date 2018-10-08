@@ -10,18 +10,20 @@ class AnswerList extends Component {
 			return <div>Loading...</div>;
 		} else {
 			let answers = this.props.data.question.answers;
-			let owner = this.props.data.question.user
+			let user = this.props.data.question.user;
 			this.props.data.refetch();
 			return answers.map(answer => {
-				return <AnswerItem 
-				key={answer.id} 
-				answerId={answer.id}
-				ownerId={owner.id}
-				isPaid={this.props.isPaid}
-				bounty={this.props.bounty}
-				loggedId={this.props.loggedId} 
-				questionId={this.props.id} 
-				/>;
+				return (
+					<AnswerItem
+						key={answer.id}
+						answerId={answer.id}
+						userId={user.id}
+						loggedId={this.props.loggedId}
+						isPaid={this.props.isPaid}
+						questionId={this.props.id}
+						bounty={this.props.bounty}
+					/>
+				);
 			});
 		}
 	}

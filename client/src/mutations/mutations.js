@@ -104,6 +104,48 @@ const DeleteMessage = gql`
   }
 `;
 
+const AnswerLike = gql`
+  mutation($id: ID!, $userId: ID!, $method: String!) {
+    AnswerRatedUpBy(id: $id, userId: $userId, method: $method) {
+      id
+      score
+      ratedUpBy
+      ratedDownBy
+    }
+  }
+`;
+const AnswerDislike = gql`
+  mutation($id: ID!, $userId: ID!, $method: String!) {
+    AnswerRatedDownBy(id: $id, userId: $userId, method: $method) {
+      id
+      score
+      ratedUpBy
+      ratedDownBy
+    }
+  }
+`;
+
+const QuestionLike = gql`
+  mutation($id: ID!, $userId: ID!, $method: String!) {
+    QuestionRatedUpBy(id: $id, userId: $userId, method: $method) {
+      id
+      score
+      ratedUpBy
+      ratedDownBy
+    }
+  }
+`;
+const QuestionDislike = gql`
+  mutation($id: ID!, $userId: ID!, $method: String!) {
+    QuestionRatedDownBy(id: $id, userId: $userId, method: $method) {
+      id
+      score
+      ratedUpBy
+      ratedDownBy
+    }
+  }
+`;
+
 const AddMessage = gql`
   mutation($senderId: ID!, $receiverId: ID!, $messageTitle: String!, $messageContent: String!) {
     addMessage(
@@ -122,11 +164,14 @@ module.exports = {
   AddAnswer,
   AddUser,
   AddTransaction,
-  UpdateAnswerLikes,
+  AnswerLike,
+  AnswerDislike,
   UpdatePostLikes,
   UpdateCredit,
   UpdatePaid,
   UpdateChosenAnswer,
   DeleteMessage,
   AddMessage,
+  QuestionLike,
+  QuestionDislike,
 };
