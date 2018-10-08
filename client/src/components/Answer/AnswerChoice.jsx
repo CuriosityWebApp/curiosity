@@ -70,14 +70,13 @@ class AnswerItem extends Component {
 				</small>
 			);
 		}
-
 		if (this.props.getQuestion.question.bountyPaid && this.props.getAnswer.answer.answerChosen) {
 			return <small>Best Answer</small>
 		}
   }
   
   render() {
-    let data = this.props.getAnswer;
+		let data = this.props.getAnswer;
 		if (data && data.loading) {
 			return <div>Loading answers...</div>;
 		} else {
