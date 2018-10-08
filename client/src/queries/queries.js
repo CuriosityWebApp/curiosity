@@ -67,6 +67,7 @@ const getQuestion = gql`
 
 // passing in the questionId
 const getAnswer = gql`
+<<<<<<< HEAD
 	query($id: ID!) {
 		answer(id: $id) {
 			id
@@ -82,6 +83,21 @@ const getAnswer = gql`
 			}
 		}
 	}
+=======
+  query($id: ID!) {
+    answer(id: $id) {
+      answer
+      score
+      answerChosen
+      createdAt
+      user {
+        id
+        username
+        rank
+      }
+    }
+  }
+>>>>>>> 96199fa77845bb1f4cc189124cc99b370fc20383
 `;
 
 const getQuestions = gql`
@@ -139,6 +155,23 @@ const searchQuestion = gql`
 	}
 `;
 
+const getMessages = gql`
+  query($receiverId: ID!) {
+    userMessages(receiverId: $receiverId) {
+      id
+      receiverId
+      senderId
+      createdAt
+      sender {
+        id
+        username
+      }
+      messageTitle
+      messageContent
+    }
+  }
+`;
+
 module.exports = {
   getUser,
   getQuestion,
@@ -146,4 +179,5 @@ module.exports = {
   getAnswer,
   checkUserEmail,
   searchQuestion,
+  getMessages,
 };

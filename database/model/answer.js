@@ -10,6 +10,7 @@ const answerSchema = new Schema(
     score: { type: Number, default: 0 },
     ratedUpBy: { type: [String], default: [] },
     ratedDownBy: { type: [String], default: [] },
+    answerChosen: Boolean,
   },
   {
     timestamps: true,

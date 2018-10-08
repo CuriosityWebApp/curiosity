@@ -3,6 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import { getAnswer } from '../../queries/queries.js';
 import { AnswerLike, AnswerDislike, UpdatePaid, UpdateCredit, AddTransaction } from '../../mutations/mutations.js';
 import moment from 'moment';
+import AnswerChoice from './AnswerChoice.jsx';
 
 class AnswerItem extends Component {
 	constructor(props) {
@@ -126,6 +127,14 @@ class AnswerItem extends Component {
 											{moment(data.answer.createdAt).fromNow()}
 										</small>
 										<br />
+										<AnswerChoice 
+										  questionId={this.props.questionId} 
+									  	bounty={this.props.bounty} 
+									  	ownerId={this.props.ownerId}
+											answerId={this.props.answerId}
+											loggedId={this.props.loggedId}
+											isPaid={this.props.isPaid}
+										/>
 									</div>
 									<div>
 										<small>Rank: {data.answer.user.rank}</small> <br />

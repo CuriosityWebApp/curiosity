@@ -27,7 +27,6 @@ class AnswerList extends Component {
 			});
 		}
 	}
-
 	render() {
 		return <div>{this.displayAnswers()}</div>;
 	}

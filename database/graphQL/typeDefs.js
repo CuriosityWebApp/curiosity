@@ -3,6 +3,7 @@ const User = require('../model/user.js');
 const Question = require('../model/question.js');
 const Answer = require('../model/answer.js');
 const Transaction = require('../model/transaction.js');
+const Message = require('../model/message.js');
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -165,9 +166,34 @@ const TransactionType = new GraphQLObjectType({
   }),
 });
 
+const MessageType = new GraphQLObjectType({
+  name: 'Message',
+  fields: () => ({
+    id: { type: GraphQLID },
+    senderId: { type: GraphQLID },
+    receiverId: { type: GraphQLID },
+    messageTitle: { type: GraphQLString },
+    messageContent: { type: GraphQLString },
+    createdAt: { type: GraphQLDate },
+    sender: {
+      type: UserType,
+      resolve(parent, args) {
+        return User.findById(parent.senderId);
+      },
+    },
+    recipient: {
+      type: UserType,
+      resolve(parent, args) {
+        return User.findById(parent.receiverId);
+      },
+    },
+  }),
+});
+
 module.exports = {
   UserType,
   QuestionType,
   AnswerType,
   TransactionType,
+  MessageType,
 };

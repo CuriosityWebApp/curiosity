@@ -2,6 +2,7 @@ const User = require('../model/user.js');
 const Question = require('../model/question.js');
 const Answer = require('../model/answer.js');
 const Transaction = require('../model/transaction.js');
+const Message = require('../model/message.js');
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -12,7 +13,7 @@ const {
   GraphQLNonNull,
 } = require('graphql');
 const {
-  UserType, QuestionType, AnswerType, TransactionType,
+  UserType, QuestionType, AnswerType, TransactionType, MessageType,
 } = require('./typeDefs.js');
 
 const Mutation = new GraphQLObjectType({
@@ -263,6 +264,43 @@ const Mutation = new GraphQLObjectType({
         if (args.method === 'delete') {
           return Answer.findOneAndUpdate({ _id: args.id }, { $pull: { ratedDownBy: args.userId } });
         }
+      },
+    },
+    addMessage: {
+      type: MessageType,
+      args: {
+        senderId: { type: GraphQLNonNull(GraphQLID) },
+        receiverId: { type: GraphQLNonNull(GraphQLID) },
+        messageTitle: { type: GraphQLNonNull(GraphQLString) },
+        messageContent: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        const message = new Message({
+          senderId: args.senderId,
+          receiverId: args.receiverId,
+          messageTitle: args.messageTitle,
+          messageContent: args.messageContent,
+        });
+        return message.save();
+      },
+    },
+    deleteMessage: {
+      type: MessageType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Message.findByIdAndRemove({ _id: args.id });
+      },
+    },
+    updateChosenAnswer: {
+      type: AnswerType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        answerChosen: { type: GraphQLBoolean },
+      },
+      resolve(parent, args) {
+        return Answer.findByIdAndUpdate({ _id: args.id }, args, { new: false });
       },
     },
   },
