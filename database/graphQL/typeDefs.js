@@ -11,6 +11,7 @@ const {
   GraphQLInt,
   GraphQLList,
   GraphQLBoolean,
+  GraphQLNonNull,
 } = require('graphql');
 
 const UserType = new GraphQLObjectType({
@@ -19,7 +20,21 @@ const UserType = new GraphQLObjectType({
     id: { type: GraphQLID },
     username: { type: GraphQLString },
     email: { type: GraphQLString },
-    rank: { type: GraphQLInt },
+    rank: {
+      type: GraphQLInt,
+      resolve(parent, args) {
+        return Answer.find({ userId: parent.id })
+          .then((data) => {
+            data.forEach(item => console.log('inside then at rank', item.score));
+            return data.reduce((sum, item) => {
+              console.log('inside reduce', sum);
+              sum += item.score;
+              return sum;
+            }, 0);
+          })
+          .catch(err => console.log('error in rank', err));
+      },
+    },
     credit: { type: GraphQLInt },
     createdAt: { type: GraphQLDate },
     updatedAt: { type: GraphQLDate },
@@ -61,7 +76,16 @@ const QuestionType = new GraphQLObjectType({
     updatedAt: { type: GraphQLDate },
     tags: { type: new GraphQLList(GraphQLString) },
     views: { type: GraphQLInt },
-    score: { type: GraphQLInt },
+    score: {
+      type: GraphQLInt,
+      resolve(parent, args) {
+        return Question.findById(parent.id)
+          .then(data => data.ratedUpBy.length - data.ratedDownBy.length)
+          .catch(err => console.log('error in question score: ', err));
+      },
+    },
+    ratedUpBy: { type: new GraphQLList(GraphQLID) },
+    ratedDownBy: { type: new GraphQLList(GraphQLID) },
     user: {
       type: UserType,
       resolve(parent, args) {
@@ -84,10 +108,18 @@ const AnswerType = new GraphQLObjectType({
     userId: { type: GraphQLID },
     questionId: { type: GraphQLID },
     answer: { type: GraphQLString },
-    score: { type: GraphQLInt },
-    answerChosen: { type: GraphQLBoolean },
+    score: {
+      type: GraphQLInt,
+      resolve(parent, args) {
+        return Answer.findById(parent.id)
+          .then(data => data.ratedUpBy.length - data.ratedDownBy.length)
+          .catch(err => console.log('error in answer score: ', err));
+      },
+    },
     createdAt: { type: GraphQLDate },
     updatedAt: { type: GraphQLDate },
+    ratedUpBy: { type: new GraphQLList(GraphQLID) },
+    ratedDownBy: { type: new GraphQLList(GraphQLID) },
     user: {
       type: UserType,
       resolve(parent, args) {

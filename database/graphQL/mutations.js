@@ -13,11 +13,7 @@ const {
   GraphQLNonNull,
 } = require('graphql');
 const {
-  UserType,
-  QuestionType,
-  AnswerType,
-  TransactionType,
-  MessageType,
+  UserType, QuestionType, AnswerType, TransactionType, MessageType,
 } = require('./typeDefs.js');
 
 const Mutation = new GraphQLObjectType({
@@ -189,7 +185,7 @@ const Mutation = new GraphQLObjectType({
     updateCredit: {
       type: UserType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: GraphQLNonNull(GraphQLID) },
         credit: { type: GraphQLInt },
       },
       resolve(parent, args) {
@@ -199,11 +195,75 @@ const Mutation = new GraphQLObjectType({
     updatePaid: {
       type: QuestionType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: GraphQLNonNull(GraphQLID) },
         bountyPaid: { type: GraphQLBoolean },
       },
       resolve(parent, args) {
         return Question.findOneAndUpdate({ _id: args.id }, args, { new: false });
+      },
+    },
+    QuestionRatedUpBy: {
+      type: QuestionType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        userId: { type: GraphQLNonNull(GraphQLID) },
+        method: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        if (args.method === 'add') {
+          return Question.findOneAndUpdate({ _id: args.id }, { $push: { ratedUpBy: args.userId } });
+        }
+        if (args.method === 'delete') {
+          return Question.findOneAndUpdate({ _id: args.id }, { $pull: { ratedUpBy: args.userId } });
+        }
+      },
+    },
+    QuestionRatedDownBy: {
+      type: QuestionType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        userId: { type: GraphQLNonNull(GraphQLID) },
+        method: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        if (args.method === 'add') {
+          return Question.findOneAndUpdate({ _id: args.id }, { $push: { ratedDownBy: args.userId } });
+        }
+        if (args.method === 'delete') {
+          return Question.findOneAndUpdate({ _id: args.id }, { $pull: { ratedDownBy: args.userId } });
+        }
+      },
+    },
+    AnswerRatedUpBy: {
+      type: AnswerType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        userId: { type: GraphQLNonNull(GraphQLID) },
+        method: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        if (args.method === 'add') {
+          return Answer.findOneAndUpdate({ _id: args.id }, { $push: { ratedUpBy: args.userId } });
+        }
+        if (args.method === 'delete') {
+          return Answer.findOneAndUpdate({ _id: args.id }, { $pull: { ratedUpBy: args.userId } });
+        }
+      },
+    },
+    AnswerRatedDownBy: {
+      type: AnswerType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        userId: { type: GraphQLNonNull(GraphQLID) },
+        method: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        if (args.method === 'add') {
+          return Answer.findOneAndUpdate({ _id: args.id }, { $push: { ratedDownBy: args.userId } });
+        }
+        if (args.method === 'delete') {
+          return Answer.findOneAndUpdate({ _id: args.id }, { $pull: { ratedDownBy: args.userId } });
+        }
       },
     },
     addMessage: {
@@ -240,9 +300,9 @@ const Mutation = new GraphQLObjectType({
         answerChosen: { type: GraphQLBoolean },
       },
       resolve(parent, args) {
-        return Answer.findByIdAndUpdate({ _id: args.id }, args, { new: false })
-      }
-    }
+        return Answer.findByIdAndUpdate({ _id: args.id }, args, { new: false });
+      },
+    },
   },
 });
 

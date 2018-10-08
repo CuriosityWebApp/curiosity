@@ -1,45 +1,91 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { getAnswer } from '../../queries/queries.js';
-import { UpdateAnswerLikes } from '../../mutations/mutations.js';
+import { AnswerLike, AnswerDislike, UpdatePaid, UpdateCredit, AddTransaction } from '../../mutations/mutations.js';
 import moment from 'moment';
 import AnswerChoice from './AnswerChoice.jsx';
 
 class AnswerItem extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			clicked: null
-		};
-		this.UpdateLikes = this.UpdateLikes.bind(this);
+		this.state = {};
+	}
+	IncrementLikes(e) {
+		let up, down, data;
+		let userId = this.props.userId;
+		if (this.props.getAnswer.loading) {
+			console.log('still loading');
+		} else {
+			data = this.props.getAnswer;
+			up = new Set(data.answer.ratedUpBy);
+			down = new Set(data.answer.ratedDownBy);
+			if (up.has(userId)) {
+				this.props
+					.AnswerLike({
+						mutation: AnswerLike,
+						variables: {
+							id: data.answer.id,
+							userId: userId,
+							method: 'delete'
+						}
+					})
+					.then(() => {
+						this.props.getAnswer.refetch();
+					});
+			} else if (!up.has(userId) && !down.has(userId)) {
+				this.props
+					.AnswerLike({
+						mutation: AnswerLike,
+						variables: {
+							id: data.answer.id,
+							userId: userId,
+							method: 'add'
+						}
+					})
+					.then(() => {
+						this.props.getAnswer.refetch();
+					});
+			}
+		}
 	}
 
-	UpdateLikes(e) {
-		if (e.target.value > 0 && (this.state.clicked === null || this.state.clicked === 'down')) {
-
-			this.props
-				.UpdateAnswerLikes({
-					variables: {
-						userId: this.props.getAnswer.answer.user.id,
-						answerId: this.props.answerId,
-						score: 1
-					}
-				})
-				.then(data => {
-					this.setState({ clicked: 'up' });
-				});
-		} else if (e.target.value < 0 && (this.state.clicked === null || this.state.clicked === 'up')) {
-			this.props
-				.UpdateAnswerLikes({
-					variables: {
-						userId: this.props.getAnswer.answer.user.id,
-						answerId: this.props.answerId,
-						score: -1
-					}
-				})
-				.then(() => this.setState({ clicked: 'down' }));
+	decrementLikes(e) {
+		let up, down, data;
+		let userId = this.props.userId;
+		if (this.props.getAnswer.loading) {
+			console.log('still loading');
 		} else {
-			alert('You cannot add multiple likes/dislikes to 1 answer!');
+			data = this.props.getAnswer;
+			up = new Set(data.answer.ratedUpBy);
+			down = new Set(data.answer.ratedDownBy);
+
+			if (down.has(userId)) {
+				this.props
+					.AnswerDislike({
+						mutation: AnswerDislike,
+						variables: {
+							id: data.answer.id,
+							userId: userId,
+							method: 'delete'
+						}
+					})
+					.then(() => {
+						this.props.getAnswer.refetch();
+					});
+			} else if (!up.has(userId) && !down.has(userId)) {
+				this.props
+					.AnswerDislike({
+						mutation: AnswerDislike,
+						variables: {
+							id: data.answer.id,
+							userId: userId,
+							method: 'add'
+						}
+					})
+					.then(() => {
+						this.props.getAnswer.refetch();
+					});
+			}
 		}
 	}
 
@@ -59,8 +105,7 @@ class AnswerItem extends Component {
 											className="fa fa-caret-up"
 											aria-hidden="true"
 											style={{ color: 'green', cursor: 'pointer' }}
-											value={1}
-											onClick={this.UpdateLikes}
+											onClick={this.IncrementLikes.bind(this)}
 										/>
 									</div>
 									<div className="col align-self-start">{data.answer.score}</div>
@@ -69,8 +114,7 @@ class AnswerItem extends Component {
 											className="fa fa-caret-down"
 											aria-hidden="true"
 											style={{ color: 'red', cursor: 'pointer' }}
-											value={-1}
-											onClick={this.UpdateLikes}
+											onClick={this.decrementLikes.bind(this)}
 										/>
 									</div>
 								</div>
@@ -83,10 +127,10 @@ class AnswerItem extends Component {
 											{moment(data.answer.createdAt).fromNow()}
 										</small>
 										<br />
-										<AnswerChoice 
-										  questionId={this.props.questionId} 
-									  	bounty={this.props.bounty} 
-									  	ownerId={this.props.ownerId}
+										<AnswerChoice
+											questionId={this.props.questionId}
+											bounty={this.props.bounty}
+											ownerId={this.props.ownerId}
 											answerId={this.props.answerId}
 											loggedId={this.props.loggedId}
 											isPaid={this.props.isPaid}
@@ -125,5 +169,8 @@ export default compose(
 			};
 		}
 	}),
-	graphql(UpdateAnswerLikes, { name: 'UpdateAnswerLikes' }),
+	graphql(AnswerLike, { name: 'AnswerLike' }),
+	graphql(AnswerDislike, { name: 'AnswerDislike' }),
+	graphql(UpdateCredit, { name: 'UpdateCredit' }),
+	graphql(AddTransaction, { name: 'AddTransaction' })
 )(AnswerItem);
