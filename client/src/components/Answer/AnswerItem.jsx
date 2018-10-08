@@ -11,50 +11,33 @@ class AnswerItem extends Component {
 	}
 	IncrementLikes(e) {
 		let up, down, data;
+		let userId = this.props.userId;
 		if (this.props.getAnswer.loading) {
 			console.log('still loading');
 		} else {
-			console.log('this is props', this.props.getAnswer);
 			data = this.props.getAnswer;
 			up = new Set(data.answer.ratedUpBy);
 			down = new Set(data.answer.ratedDownBy);
-
-			if (up.has(this.props.userId)) {
-				alert("Can't like it more than once");
-			} else if (up.has(this.props.userId) === false && down.has(this.props.userId) === true) {
-				console.log('inside of first else if at like', up, down);
-				console.log('result of up and down : >> ', up.has(this.props.userId), down.has(this.props.userId));
+			if (up.has(userId)) {
 				this.props
 					.AnswerLike({
 						mutation: AnswerLike,
 						variables: {
 							id: data.answer.id,
-							userId: this.props.userId,
-							method: 'add'
+							userId: userId,
+							method: 'delete'
 						}
 					})
 					.then(() => {
 						this.props.getAnswer.refetch();
-					})
-					.then(() => {
-						console.log('inside of first else if of likes at dislike', up, down);
-						this.props.AnswerDislike({
-							mutation: AnswerDislike,
-							variables: {
-								id: data.answer.id,
-								userId: this.props.userId,
-								method: 'delete'
-							}
-						});
 					});
-			} else if (up.has(this.props.userId) === false && down.has(this.props.userId) === false) {
-				console.log('inside of both false likes');
+			} else if (!up.has(userId) && !down.has(userId)) {
 				this.props
 					.AnswerLike({
 						mutation: AnswerLike,
 						variables: {
 							id: data.answer.id,
-							userId: this.props.userId,
+							userId: userId,
 							method: 'add'
 						}
 					})
@@ -63,11 +46,11 @@ class AnswerItem extends Component {
 					});
 			}
 		}
-		console.log('at the end', up, down);
 	}
 
 	decrementLikes(e) {
 		let up, down, data;
+		let userId = this.props.userId;
 		if (this.props.getAnswer.loading) {
 			console.log('still loading');
 		} else {
@@ -75,41 +58,26 @@ class AnswerItem extends Component {
 			up = new Set(data.answer.ratedUpBy);
 			down = new Set(data.answer.ratedDownBy);
 
-			if (down.has(this.props.userId)) {
-				alert("Can't dislike it more than once");
-			} else if (down.has(this.props.userId) === false && up.has(this.props.userId) === true) {
-				console.log('inside first else if of dislikes', up, down);
+			if (down.has(userId)) {
 				this.props
 					.AnswerDislike({
 						mutation: AnswerDislike,
 						variables: {
 							id: data.answer.id,
-							userId: this.props.userId,
-							method: 'add'
+							userId: userId,
+							method: 'delete'
 						}
 					})
 					.then(() => {
 						this.props.getAnswer.refetch();
-					})
-					.then(() => {
-						console.log('inside of like in decrement', up, down);
-						this.props.AnswerLike({
-							mutation: AnswerLike,
-							variables: {
-								id: data.answer.id,
-								userId: this.props.userId,
-								method: 'delete'
-							}
-						});
 					});
-			} else if (up.has(this.props.userId) === false && down.has(this.props.userId) === false) {
-				console.log('inside of both false in decrement', up, down);
+			} else if (!up.has(userId) && !down.has(userId)) {
 				this.props
 					.AnswerDislike({
-						mutation: AnswerLike,
+						mutation: AnswerDislike,
 						variables: {
 							id: data.answer.id,
-							userId: this.props.userId,
+							userId: userId,
 							method: 'add'
 						}
 					})
@@ -118,7 +86,6 @@ class AnswerItem extends Component {
 					});
 			}
 		}
-		console.log('at the end of decrement,', up, down);
 	}
 
 	displayAnswer() {
@@ -137,7 +104,6 @@ class AnswerItem extends Component {
 											className="fa fa-caret-up"
 											aria-hidden="true"
 											style={{ color: 'green', cursor: 'pointer' }}
-											value={1}
 											onClick={this.IncrementLikes.bind(this)}
 										/>
 									</div>
@@ -147,7 +113,6 @@ class AnswerItem extends Component {
 											className="fa fa-caret-down"
 											aria-hidden="true"
 											style={{ color: 'red', cursor: 'pointer' }}
-											value={-1}
 											onClick={this.decrementLikes.bind(this)}
 										/>
 									</div>

@@ -22,7 +22,16 @@ const UserType = new GraphQLObjectType({
     rank: {
       type: GraphQLInt,
       resolve(parent, args) {
-        return Answer.find({ userId: parent.id }).then(data => data.reduce((sum, item) => (sum += item.score), 0));
+        return Answer.find({ userId: parent.id })
+          .then((data) => {
+            data.forEach(item => console.log('inside then at rank', item.score));
+            return data.reduce((sum, item) => {
+              console.log('inside reduce', sum);
+              sum += item.score;
+              return sum;
+            }, 0);
+          })
+          .catch(err => console.log('error in rank', err));
       },
     },
     credit: { type: GraphQLInt },
@@ -69,7 +78,9 @@ const QuestionType = new GraphQLObjectType({
     score: {
       type: GraphQLInt,
       resolve(parent, args) {
-        return Question.findById(parent.id).then(data => data.ratedUpBy.length - data.ratedDownBy.length);
+        return Question.findById(parent.id)
+          .then(data => data.ratedUpBy.length - data.ratedDownBy.length)
+          .catch(err => console.log('error in question score: ', err));
       },
     },
     ratedUpBy: { type: new GraphQLList(GraphQLID) },
@@ -99,7 +110,9 @@ const AnswerType = new GraphQLObjectType({
     score: {
       type: GraphQLInt,
       resolve(parent, args) {
-        return Answer.findById(parent.id).then(data => data.ratedUpBy.length - data.ratedDownBy.length);
+        return Answer.findById(parent.id)
+          .then(data => data.ratedUpBy.length - data.ratedDownBy.length)
+          .catch(err => console.log('error in answer score: ', err));
       },
     },
     createdAt: { type: GraphQLDate },
