@@ -123,6 +123,14 @@ const checkUserEmail = gql`
     }
   }
 `;
+const checkUsername = gql`
+  query($username: String!) {
+    checkUsername(username: $username) {
+      id
+      username
+    }
+  }
+`;
 
 const searchQuestion = gql`
   query($term: String!) {
@@ -162,6 +170,15 @@ const getMessages = gql`
   }
 `;
 
+const getUsernames = gql`
+  query($username: String!) {
+    getUsernames(username: $username) {
+      id
+      username
+    }
+  }
+`;
+
 module.exports = {
   getUser,
   getQuestion,
@@ -170,4 +187,6 @@ module.exports = {
   checkUserEmail,
   searchQuestion,
   getMessages,
+  getUsernames,
+  checkUsername,
 };
