@@ -83,12 +83,27 @@ const RootQuery = new GraphQLObjectType({
         return User.findOne({ email: args.email });
       },
     },
+    checkUsername: {
+      type: UserType,
+      args: { username: { type: GraphQLString } },
+      resolve(parent, args) {
+        // code to get data from db
+        return User.findOne({ username: args.username });
+      },
+    },
     searchQuestion: {
       type: new GraphQLList(QuestionType),
       args: { term: { type: GraphQLString } },
       resolve(parent, args) {
         // code to get data from db
-        return Question.find({ $text: { $search: args.term } });
+        return Question.find({
+          $or: [
+            { questionContent: { $regex: args.term, $options: 'i' } },
+            { questionTitle: { $regex: args.term, $options: 'i' } },
+            { category: { $regex: args.term, $options: 'i' } },
+            { tags: { $regex: args.term, $options: 'i' } },
+          ],
+        });
       },
     },
     userMessages: {
@@ -98,7 +113,7 @@ const RootQuery = new GraphQLObjectType({
         return Message.find({ receiverId: args.receiverId }).sort('-createdAt');
       },
     },
-    findUsername: {
+    getUsernames: {
       type: new GraphQLList(UserType),
       args: { username: { type: GraphQLString } },
       resolve(parent, args) {

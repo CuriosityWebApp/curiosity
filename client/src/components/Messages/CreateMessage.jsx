@@ -1,54 +1,91 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { AddMessage } from '../../mutations/mutations.js';
 import { Redirect } from 'react-router-dom';
 import Autocomplete from 'react-autocomplete';
+import { getUsernames, checkUsername } from '../../queries/queries.js';
+import { withApollo } from 'react-apollo';
 
 class CreateMessage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      receiverId: '5bb28b0d1723602d90864b70',
+      receiverId: '',
       receiverName: '',
       title: '',
       content: '',
       returnedId: null,
       redirect: false,
-      users: [{ id: '555', username: 'justin' }],
+      users: [],
     };
     this.searchUsers = this.searchUsers.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
   searchUsers(e) {
-    this.setState({ receiverName: e.target.value });
+    this.setState({ receiverName: e.target.value }, () => {
+      this.props.client
+        .query({
+          query: getUsernames,
+          variables: {
+            username: this.state.receiverName,
+          },
+        })
+        .then(({ data }) => {
+          if (data.getUsernames) {
+            if (this.state.receiverName === '') {
+              this.setState({ users: [] });
+            } else {
+              this.setState({ users: data.getUsernames });
+            }
+          }
+        });
+    });
   }
 
   submitForm(e) {
     e.preventDefault();
-    let { title, content, receiverId } = this.state;
-    if (!title || !content || !receiverId) {
+    let { title, content, receiverName } = this.state;
+    if (!title || !content || !receiverName) {
       alert("Can't post an empty question!");
     } else {
-      this.props
-        .AddMessage({
-          mutation: AddMessage,
+      this.props.client
+        .query({
+          query: checkUsername,
           variables: {
-            senderId: this.props.userId,
-            messageTitle: this.state.title,
-            messageContent: this.state.content,
-            receiverId: this.state.receiverId,
+            username: this.state.receiverName,
           },
         })
-        .then(data => {
-          console.log(data);
-          // this.setState({ returnedId: data.data.addQuestion.id }, () => {
-          //   this.setState({ redirect: true }, () => {
-          //     this.setState({ redirect: false });
-          //   });
-          // });
+        .then(({ data }) => {
+          if (data.checkUsername) {
+            this.setState({ receiverId: data.checkUsername.id });
+          }
         })
-        .catch(err => console.log('error bro', err));
+        .then(() => {
+          console.log(this.props);
+          this.props
+            .mutate({
+              mutation: AddMessage,
+              variables: {
+                senderId: this.props.userId,
+                messageTitle: this.state.title,
+                messageContent: this.state.content,
+                receiverId: this.state.receiverId,
+              },
+            })
+            .then(data => {
+              console.log(data);
+              // this.setState({ returnedId: data.data.addQuestion.id }, () => {
+              //   this.setState({ redirect: true }, () => {
+              //     this.setState({ redirect: false });
+              //   });
+              // });
+            })
+            .catch(err => console.log('error bro', err));
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   }
 
@@ -107,4 +144,7 @@ class CreateMessage extends Component {
   }
 }
 
-export default graphql(AddMessage, { name: 'AddMessage' })(CreateMessage);
+export default compose(
+  withApollo,
+  graphql(AddMessage),
+)(CreateMessage);
