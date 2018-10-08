@@ -91,14 +91,27 @@ const UpdatePaid = gql`
 
 const UpdateChosenAnswer = gql`
   mutation($id: ID!, $answerChosen: Boolean) {
-		updateChosenAnswer(id: $id, answerChosen: $answerChosen) {
-			id
-		}
-	}
-`
+    updateChosenAnswer(id: $id, answerChosen: $answerChosen) {
+      id
+    }
+  }
+`;
 const DeleteMessage = gql`
   mutation($id: ID!) {
     deleteMessage(id: $id) {
+      id
+    }
+  }
+`;
+
+const AddMessage = gql`
+  mutation($senderId: ID!, $receiverId: ID!, $messageTitle: String!, $messageContent: String!) {
+    addMessage(
+      senderId: $senderId
+      receiverId: $receiverId
+      messageTitle: $messageTitle
+      messageContent: $messageContent
+    ) {
       id
     }
   }
@@ -112,7 +125,8 @@ module.exports = {
   UpdateAnswerLikes,
   UpdatePostLikes,
   UpdateCredit,
-	UpdatePaid,
-	UpdateChosenAnswer,
+  UpdatePaid,
+  UpdateChosenAnswer,
   DeleteMessage,
+  AddMessage,
 };

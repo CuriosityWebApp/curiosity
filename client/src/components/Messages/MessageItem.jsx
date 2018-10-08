@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import { DeleteMessage } from '../../mutations/mutations.js';
 import { graphql } from 'react-apollo';
 import moment from 'moment';
-import {
-  UpdateAnswerLikes,
-  UpdatePaid,
-  UpdateCredit,
-  AddTransaction,
-} from '../../mutations/mutations.js';
 
 class MessageItem extends Component {
   constructor(props) {

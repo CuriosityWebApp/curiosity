@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import { getMessages } from '../../queries/queries.js';
 import { Redirect } from 'react-router-dom';
 import MessageItem from './MessageItem.jsx';
+import CreateMessage from './CreateMessage.jsx';
 
 class MessageList extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class MessageList extends Component {
         return (
           <div className="card">
             <div className="card-body">
-              <div>No Answers</div>
+              <div>No Messages</div>
             </div>
           </div>
         );
@@ -58,6 +59,7 @@ class MessageList extends Component {
           <h2>
             <u>Messages</u>
           </h2>
+          <CreateMessage userId={this.props.userId} />
           <div>{this.displayQuestions()}</div>
         </div>
       );
