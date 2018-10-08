@@ -11,8 +11,25 @@ class QuestionList extends Component {
 			selected: null
 		};
 		this.onSelect = this.onSelect.bind(this);
+		this.onScroll = this.onScroll.bind(this);
 	}
 
+	componentDidMount() {
+		window.addEventListener('scroll', this.onScroll, false);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.onScroll, false);
+	}
+
+	onScroll = () => {
+		if (
+			window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 &&
+			this.props.data.questions.length
+		) {
+			console.log('reached the bottom of the page');
+		}
+	};
 	onSelect(id) {
 		this.setState({
 			selected: id
@@ -32,8 +49,8 @@ class QuestionList extends Component {
 						postData={post}
 						onSelect={this.onSelect}
 						userId={this.props.userId}
-            refetch={this.props.data.refetch}
-            ratedUp={post.ratedUpBy}
+						refetch={this.props.data.refetch}
+						ratedUp={post.ratedUpBy}
 					/>
 				);
 			});
