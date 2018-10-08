@@ -1,43 +1,60 @@
 import React, { Component } from 'react';
 import { getQuestion } from '../../queries/queries.js';
 import { graphql } from 'react-apollo';
-
+import CreateAnswer from './CreateAnswer.jsx';
 import AnswerItem from './AnswerItem.jsx';
 
 class AnswerList extends Component {
-	displayAnswers() {
-		if (this.props.data.loading) {
-			return <div>Loading...</div>;
-		} else {
-			let answers = this.props.data.question.answers;
-			let user = this.props.data.question.user;
-			this.props.data.refetch();
-			return answers.map(answer => {
-				return (
-					<AnswerItem
-						key={answer.id}
-						answerId={answer.id}
-						userId={user.id}
-						loggedId={this.props.loggedId}
-						isPaid={this.props.isPaid}
-						questionId={this.props.id}
-						bounty={this.props.bounty}
-					/>
-				);
-			});
-		}
-	}
-	render() {
-		return <div>{this.displayAnswers()}</div>;
-	}
+  displayAnswers() {
+    if (this.props.data.loading) {
+      return <div>Loading...</div>;
+    } else {
+      let answers = this.props.data.question.answers;
+      let user = this.props.data.question.user;
+      return answers.map(answer => {
+        return (
+          <AnswerItem
+            data={this.props.data}
+            key={answer.id}
+            answerId={answer.id}
+            userId={user.id}
+            loggedId={this.props.loggedId}
+            isPaid={this.props.isPaid}
+            questionId={this.props.id}
+            bounty={this.props.bounty}
+          />
+        );
+      });
+    }
+  }
+  render() {
+    return (
+      <div>
+        <div>{this.displayAnswers()}</div>
+        <div>
+          {this.props.signedIn ? (
+            <CreateAnswer
+              data={this.props.data}
+              userId={this.props.userId}
+              questionId={this.props.questionId}
+            />
+          ) : (
+            <button onClick={() => alert('Please log into your account to be able to answer!')}>
+              Respond
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default graphql(getQuestion, {
-	options: props => {
-		return {
-			variables: {
-				id: props.id
-			}
-		};
-	}
+  options: props => {
+    return {
+      variables: {
+        id: props.id,
+      },
+    };
+  },
 })(AnswerList);
