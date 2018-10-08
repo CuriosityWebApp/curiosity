@@ -4,7 +4,13 @@ const Question = require('../model/question.js');
 const Answer = require('../model/answer.js');
 const Transaction = require('../model/transaction.js');
 const {
-  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLBoolean,
+  GraphQLNonNull,
 } = require('graphql');
 
 const UserType = new GraphQLObjectType({
@@ -13,7 +19,12 @@ const UserType = new GraphQLObjectType({
     id: { type: GraphQLID },
     username: { type: GraphQLString },
     email: { type: GraphQLString },
-    rank: { type: GraphQLInt },
+    rank: {
+      type: GraphQLInt,
+      resolve(parent, args) {
+        return Answer.find({ userId: parent.id }).then(data => data.reduce((sum, item) => (sum += item.score), 0));
+      },
+    },
     credit: { type: GraphQLInt },
     createdAt: { type: GraphQLDate },
     updatedAt: { type: GraphQLDate },
@@ -55,7 +66,14 @@ const QuestionType = new GraphQLObjectType({
     updatedAt: { type: GraphQLDate },
     tags: { type: new GraphQLList(GraphQLString) },
     views: { type: GraphQLInt },
-    score: { type: GraphQLInt },
+    score: {
+      type: GraphQLInt,
+      resolve(parent, args) {
+        return Question.findById(parent.id).then(data => data.ratedUpBy.length - data.ratedDownBy.length);
+      },
+    },
+    ratedUpBy: { type: new GraphQLList(GraphQLID) },
+    ratedDownBy: { type: new GraphQLList(GraphQLID) },
     user: {
       type: UserType,
       resolve(parent, args) {
@@ -78,9 +96,16 @@ const AnswerType = new GraphQLObjectType({
     userId: { type: GraphQLID },
     questionId: { type: GraphQLID },
     answer: { type: GraphQLString },
-    score: { type: GraphQLInt },
+    score: {
+      type: GraphQLInt,
+      resolve(parent, args) {
+        return Answer.findById(parent.id).then(data => data.ratedUpBy.length - data.ratedDownBy.length);
+      },
+    },
     createdAt: { type: GraphQLDate },
     updatedAt: { type: GraphQLDate },
+    ratedUpBy: { type: new GraphQLList(GraphQLID) },
+    ratedDownBy: { type: new GraphQLList(GraphQLID) },
     user: {
       type: UserType,
       resolve(parent, args) {

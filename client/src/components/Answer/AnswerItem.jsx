@@ -1,106 +1,126 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { getAnswer } from '../../queries/queries.js';
-import { UpdateAnswerLikes, UpdatePaid, UpdateCredit, AddTransaction } from '../../mutations/mutations.js';
+import { AnswerLike, AnswerDislike, UpdatePaid, UpdateCredit, AddTransaction } from '../../mutations/mutations.js';
 import moment from 'moment';
 
 class AnswerItem extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			clicked: null
-		};
-		this.UpdateLikes = this.UpdateLikes.bind(this);
-		this.clickChooseAnswer = this.clickChooseAnswer.bind(this);
+		this.state = {};
 	}
-
-	UpdateLikes(e) {
-		if (e.target.value > 0 && (this.state.clicked === null || this.state.clicked === 'down')) {
-			console.log('getting here, these are the values', e.target.value);
-			this.props
-				.UpdateAnswerLikes({
-					variables: {
-						userId: this.props.getAnswer.answer.user.id,
-						answerId: this.props.answerId,
-						score: 1
-					},
-					options: {
-						refetchQueries: ['getAnswer']
-					}
-				})
-				.then(data => {
-					console.log('this is the data', data);
-					this.setState({ clicked: 'up' });
-				});
-		} else if (e.target.value < 0 && (this.state.clicked === null || this.state.clicked === 'up')) {
-			this.props
-				.UpdateAnswerLikes({
-					variables: {
-						userId: this.props.getAnswer.answer.user.id,
-						answerId: this.props.answerId,
-						score: -1
-					},
-					refetchQueries: [
-						{
-							query: getAnswer,
-							variable: {
-								id: this.props.answerId
-							}
-						}
-					]
-				})
-				.then(() => this.setState({ clicked: 'down' }));
+	IncrementLikes(e) {
+		let up, down, data;
+		if (this.props.getAnswer.loading) {
+			console.log('still loading');
 		} else {
-			alert('You cannot add multiple likes/dislikes to 1 answer!');
+			console.log('this is props', this.props.getAnswer);
+			data = this.props.getAnswer;
+			up = new Set(data.answer.ratedUpBy);
+			down = new Set(data.answer.ratedDownBy);
+
+			if (up.has(this.props.userId)) {
+				alert("Can't like it more than once");
+			} else if (up.has(this.props.userId) === false && down.has(this.props.userId) === true) {
+				console.log('inside of first else if at like', up, down);
+				console.log('result of up and down : >> ', up.has(this.props.userId), down.has(this.props.userId));
+				this.props
+					.AnswerLike({
+						mutation: AnswerLike,
+						variables: {
+							id: data.answer.id,
+							userId: this.props.userId,
+							method: 'add'
+						}
+					})
+					.then(() => {
+						this.props.getAnswer.refetch();
+					})
+					.then(() => {
+						console.log('inside of first else if of likes at dislike', up, down);
+						this.props.AnswerDislike({
+							mutation: AnswerDislike,
+							variables: {
+								id: data.answer.id,
+								userId: this.props.userId,
+								method: 'delete'
+							}
+						});
+					});
+			} else if (up.has(this.props.userId) === false && down.has(this.props.userId) === false) {
+				console.log('inside of both false likes');
+				this.props
+					.AnswerLike({
+						mutation: AnswerLike,
+						variables: {
+							id: data.answer.id,
+							userId: this.props.userId,
+							method: 'add'
+						}
+					})
+					.then(() => {
+						this.props.getAnswer.refetch();
+					});
+			}
 		}
+		console.log('at the end', up, down);
 	}
 
-	clickChooseAnswer() {
-		this.props
-			.UpdatePaid({
-				variables: {
-					id: this.props.questionId,
-					bountyPaid: true
-				}
-			})
-			.then(() => {
-				this.props.UpdateCredit({
-					mutation: UpdateCredit,
-					variables: {
-						id: this.props.getAnswer.answer.user.id,
-						credit: this.props.bounty
-					}
-				});
-			})
-			.then(() => {
-				this.props.AddTransaction({
-					mutation: AddTransaction,
-					variables: {
-						questionId: this.props.questionId,
-						senderId: this.props.ownerId,
-						receiverId: this.props.getAnswer.answer.user.id,
-						amount: this.props.bounty
-					}
-				});
-			});
+	decrementLikes(e) {
+		let up, down, data;
+		if (this.props.getAnswer.loading) {
+			console.log('still loading');
+		} else {
+			data = this.props.getAnswer;
+			up = new Set(data.answer.ratedUpBy);
+			down = new Set(data.answer.ratedDownBy);
+
+			if (down.has(this.props.userId)) {
+				alert("Can't dislike it more than once");
+			} else if (down.has(this.props.userId) === false && up.has(this.props.userId) === true) {
+				console.log('inside first else if of dislikes', up, down);
+				this.props
+					.AnswerDislike({
+						mutation: AnswerDislike,
+						variables: {
+							id: data.answer.id,
+							userId: this.props.userId,
+							method: 'add'
+						}
+					})
+					.then(() => {
+						this.props.getAnswer.refetch();
+					})
+					.then(() => {
+						console.log('inside of like in decrement', up, down);
+						this.props.AnswerLike({
+							mutation: AnswerLike,
+							variables: {
+								id: data.answer.id,
+								userId: this.props.userId,
+								method: 'delete'
+							}
+						});
+					});
+			} else if (up.has(this.props.userId) === false && down.has(this.props.userId) === false) {
+				console.log('inside of both false in decrement', up, down);
+				this.props
+					.AnswerDislike({
+						mutation: AnswerLike,
+						variables: {
+							id: data.answer.id,
+							userId: this.props.userId,
+							method: 'add'
+						}
+					})
+					.then(() => {
+						this.props.getAnswer.refetch();
+					});
+			}
+		}
+		console.log('at the end of decrement,', up, down);
 	}
 
-	chooseAnswer() {
-		if (
-			this.props.ownerId === this.props.loggedId &&
-			this.props.getAnswer.answer.user.id !== this.props.loggedId &&
-			!this.props.isPaid
-		) {
-			return (
-				<small>
-					<button type="button" onClick={this.clickChooseAnswer}>
-						{' '}
-						Choose This Answer{' '}
-					</button>
-				</small>
-			);
-		}
-	}
 	displayAnswer() {
 		let data = this.props.getAnswer;
 		if (data && data.loading) {
@@ -118,7 +138,7 @@ class AnswerItem extends Component {
 											aria-hidden="true"
 											style={{ color: 'green', cursor: 'pointer' }}
 											value={1}
-											onClick={this.UpdateLikes}
+											onClick={this.IncrementLikes.bind(this)}
 										/>
 									</div>
 									<div className="col align-self-start">{data.answer.score}</div>
@@ -128,7 +148,7 @@ class AnswerItem extends Component {
 											aria-hidden="true"
 											style={{ color: 'red', cursor: 'pointer' }}
 											value={-1}
-											onClick={this.UpdateLikes}
+											onClick={this.decrementLikes.bind(this)}
 										/>
 									</div>
 								</div>
@@ -141,7 +161,6 @@ class AnswerItem extends Component {
 											{moment(data.answer.createdAt).fromNow()}
 										</small>
 										<br />
-										{this.chooseAnswer()}
 									</div>
 									<div>
 										<small>Rank: {data.answer.user.rank}</small> <br />
@@ -176,8 +195,8 @@ export default compose(
 			};
 		}
 	}),
-	graphql(UpdateAnswerLikes, { name: 'UpdateAnswerLikes' }),
-	graphql(UpdatePaid, { name: 'UpdatePaid' }),
+	graphql(AnswerLike, { name: 'AnswerLike' }),
+	graphql(AnswerDislike, { name: 'AnswerDislike' }),
 	graphql(UpdateCredit, { name: 'UpdateCredit' }),
 	graphql(AddTransaction, { name: 'AddTransaction' })
 )(AnswerItem);

@@ -83,12 +83,35 @@ const UpdatePaid = gql`
 		}
 	}
 `;
+
+const AnswerLike = gql`
+	mutation($id: ID!, $userId: ID!, $method: String!) {
+		AnswerRatedUpBy(id: $id, userId: $userId, method: $method) {
+			id
+			score
+			ratedUpBy
+			ratedDownBy
+		}
+	}
+`;
+const AnswerDislike = gql`
+	mutation($id: ID!, $userId: ID!, $method: String!) {
+		AnswerRatedDownBy(id: $id, userId: $userId, method: $method) {
+			id
+			score
+			ratedUpBy
+			ratedDownBy
+		}
+	}
+`;
+
 module.exports = {
   AddQuestion,
   AddAnswer,
   AddUser,
   AddTransaction,
-  UpdateAnswerLikes,
+  AnswerLike,
+  AnswerDislike,
   UpdatePostLikes,
   UpdateCredit,
   UpdatePaid,
