@@ -4,7 +4,6 @@ import { getAnswer } from '../../queries/queries.js';
 import {
   AnswerLike,
   AnswerDislike,
-  UpdatePaid,
   UpdateCredit,
   AddTransaction,
 } from '../../mutations/mutations.js';
@@ -139,7 +138,8 @@ class AnswerItem extends Component {
                       ownerId={this.props.userId}
                       answerId={this.props.answerId}
                       loggedId={this.props.loggedId}
-                      isPaid={this.props.isPaid}
+											isPaid={this.props.isPaid}
+											data={this.props.data}
                     />
                   </div>
                   <div>

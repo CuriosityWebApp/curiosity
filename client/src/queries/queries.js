@@ -61,6 +61,7 @@ const getQuestion = gql`
       }
       answers {
         id
+        answerChosen
       }
       createdAt
     }
@@ -69,22 +70,22 @@ const getQuestion = gql`
 
 // passing in the questionId
 const getAnswer = gql`
-  query($id: ID!) {
-    answer(id: $id) {
-      id
-      answer
-      score
-      createdAt
-      ratedUpBy
-      ratedDownBy
+	query($id: ID!) {
+		answer(id: $id) {
+			id
+			answer
+			score
+			createdAt
+			ratedUpBy
+			ratedDownBy
       answerChosen
-      user {
-        id
-        username
-        rank
-      }
-    }
-  }
+			user {
+				id
+				username
+				rank
+			}
+		}
+	}
 `;
 
 const getQuestions = gql`
