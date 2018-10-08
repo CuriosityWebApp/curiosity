@@ -127,10 +127,10 @@ class AnswerItem extends Component {
 											{moment(data.answer.createdAt).fromNow()}
 										</small>
 										<br />
-										<AnswerChoice 
-										  questionId={this.props.questionId} 
-									  	bounty={this.props.bounty} 
-									  	ownerId={this.props.ownerId}
+										<AnswerChoice
+											questionId={this.props.questionId}
+											bounty={this.props.bounty}
+											ownerId={this.props.ownerId}
 											answerId={this.props.answerId}
 											loggedId={this.props.loggedId}
 											isPaid={this.props.isPaid}
