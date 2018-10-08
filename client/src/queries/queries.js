@@ -59,6 +59,7 @@ const getQuestion = gql`
       }
       answers {
         id
+        answerChosen
       }
       createdAt
     }
