@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getQuestion } from '../../queries/queries.js';
 import { graphql } from 'react-apollo';
-
+import CreateAnswer from './CreateAnswer.jsx';
 import AnswerItem from './AnswerItem.jsx';
 
 class AnswerList extends Component {
@@ -14,10 +14,10 @@ class AnswerList extends Component {
 			let user = this.props.data.question.user;
 			return answers.map(answer => {
 				if (answer.answerChosen) {
-					console.log(answer, "WTF")
 					return (
 				  	<AnswerItem
-				  		key={answer.id}
+							key={answer.id}
+							data={this.props.data}
 				  		answerId={answer.id}
 				  		userId={user.id}
 				  		loggedId={this.props.loggedId}
@@ -39,12 +39,12 @@ class AnswerList extends Component {
 		} else {
 			let answers = this.props.data.question.answers;
 			let user = this.props.data.question.user;
-			this.props.data.refetch();
 			return answers.map(answer => {
 				if (!answer.answerChosen) {
 				  return (
 				  	<AnswerItem
-				  		key={answer.id}
+							key={answer.id}
+							data={this.props.data}
 				  		answerId={answer.id}
 				  		userId={user.id}
 				  		loggedId={this.props.loggedId}
@@ -62,17 +62,30 @@ class AnswerList extends Component {
 			<div>
 				<div>{this.displayBestAnswer()}</div>
 				<div>{this.displayAnswers()}</div>
+				<div>
+				  {this.props.signedIn ? (
+				  	<CreateAnswer
+				  		data={this.props.data}
+				  		userId={this.props.userId}
+				  		questionId={this.props.questionId}
+				  	/>
+				  ) : (
+				  	<button onClick={() => alert('Please log into your account to be able to answer!')}>
+				  		Respond
+				  	</button>
+				  )}
+			  </div>
 			</div>
 		)
 	}
 }
 
 export default graphql(getQuestion, {
-	options: props => {
-		return {
-			variables: {
-				id: props.id
-			}
-		};
-	}
+  options: props => {
+    return {
+      variables: {
+        id: props.id,
+      },
+    };
+  },
 })(AnswerList);

@@ -51,8 +51,9 @@ class AnswerItem extends Component {
 				})
       })
       .then(() => {
-        this.props.getAnswer.refetch();
-        this.props.getQuestion.refetch();
+        // this.props.getAnswer.refetch();
+				// this.props.getQuestion.refetch();
+				this.props.data.refetch();
       })
 	}
 
@@ -70,6 +71,7 @@ class AnswerItem extends Component {
 				</small>
 			);
 		}
+
 		if (this.props.getQuestion.question.bountyPaid && this.props.getAnswer.answer.answerChosen) {
 			return <small>Best Answer</small>
 		}

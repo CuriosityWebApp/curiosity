@@ -54,7 +54,7 @@ const RootQuery = new GraphQLObjectType({
     users: {
       type: new GraphQLList(UserType),
       resolve(parent, args) {
-        return User.find({});
+        return User.find();
       },
     },
     questions: {
@@ -96,6 +96,13 @@ const RootQuery = new GraphQLObjectType({
       args: { receiverId: { type: GraphQLID } },
       resolve(parent, args) {
         return Message.find({ receiverId: args.receiverId }).sort('-createdAt');
+      },
+    },
+    findUsername: {
+      type: new GraphQLList(UserType),
+      args: { username: { type: GraphQLString } },
+      resolve(parent, args) {
+        return User.find({ username: { $regex: args.username, $options: 'i' } });
       },
     },
   },
