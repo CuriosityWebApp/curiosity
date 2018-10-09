@@ -6,6 +6,7 @@ import {
   AnswerDislike,
   UpdateCredit,
   AddTransaction,
+  AddMessage,
 } from '../../mutations/mutations.js';
 import moment from 'moment';
 import AnswerChoice from './AnswerChoice.jsx';
@@ -14,7 +15,12 @@ class AnswerItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.report = this.report.bind(this);
   }
+  componentDidMount() {
+    console.log(this.props.data);
+  }
+
   IncrementLikes(e) {
     let up, down, data;
     let userId = this.props.userId;
@@ -145,7 +151,10 @@ class AnswerItem extends Component {
                     </div>
                     <div>
                       <small>Rank: {data.answer.user.rank}</small> <br />
-                      <small>Votes: {data.answer.score}</small>
+                      <small>Votes: {data.answer.score}</small> <br />
+                      <button type="button" className="btn btn-danger btn-sm" onClick={this.report}>
+                        Report
+                      </button>
                     </div>
                   </div>
                   <br />
@@ -159,6 +168,24 @@ class AnswerItem extends Component {
         </React.Fragment>
       );
     }
+  }
+  report() {
+    console.log(this.props);
+    let messageTitle = 'REPORT: AnswerId:' + this.props.answerId;
+    let messageContent =
+      'User: ' +
+      this.props.getAnswer.answer.user.username +
+      '\nQuestionTitle: ' +
+      this.props.data.question.questionTitle;
+    this.props.AddMessage({
+      mutation: AddMessage,
+      variables: {
+        senderId: this.props.userId,
+        receiverId: '5bb8d00baf90e323e4b9c8a9',
+        messageTitle: messageTitle,
+        messageContent: messageContent,
+      },
+    });
   }
 
   render() {
@@ -181,4 +208,5 @@ export default compose(
   graphql(AnswerDislike, { name: 'AnswerDislike' }),
   graphql(UpdateCredit, { name: 'UpdateCredit' }),
   graphql(AddTransaction, { name: 'AddTransaction' }),
+  graphql(AddMessage, { name: 'AddMessage' }),
 )(AnswerItem);

@@ -6,7 +6,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render() {
@@ -94,17 +93,17 @@ class NavBar extends Component {
                 </div>
                 <div className="card">
                   <ul className="list-group list-group-flush">
-                    <Link to="/messages/new">
+                    <Link to="/messages/new" style={{ cursor: 'pointer' }}>
                       <li className="list-group-item">
                         <span>New</span>
                       </li>
                     </Link>
-                    <Link to="/messages/inbox">
+                    <Link to="/messages/inbox" style={{ cursor: 'pointer' }}>
                       <li className="list-group-item">
                         <span>Inbox</span>
                       </li>
                     </Link>
-                    <Link to="/messages/sent">
+                    <Link to="/messages/sent" style={{ cursor: 'pointer' }}>
                       <li className="list-group-item">
                         <span>Sent</span>
                       </li>
