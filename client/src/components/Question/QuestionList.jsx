@@ -11,13 +11,15 @@ class QuestionList extends Component {
 		this.state = {
 			selected: null,
 			skip: 0,
-			questions: []
+			questions: [],
+			rerender: true,
+			questionsScore: {}
 		};
 		this.onSelect = this.onSelect.bind(this);
 		this.onScroll = this.onScroll.bind(this);
 		this.getNextQuestions = this.getNextQuestions.bind(this);
 		this.throttledQuestionCall = _.throttle(this.getNextQuestions, 250, { leading: false });
-		this.throttledRefetch = _.throttle(this.refetchOnce, 250, { leading: false });
+		this.setQuestionScore = this.setQuestionScore.bind(this);
 	}
 	componentDidMount() {
 		this.getNextQuestions();
@@ -34,10 +36,11 @@ class QuestionList extends Component {
 			this.throttledQuestionCall();
 		}
 	};
-	refetchOnce() {
-		this.props.getQuestions.refetch();
-	}
 
+	forceRender() {
+		console.log('rerendering', this.state);
+		this.setState({ rerender: !this.state.rerender });
+	}
 	getNextQuestions = async () => {
 		await this.props.client
 			.query({
@@ -52,6 +55,7 @@ class QuestionList extends Component {
 				let next = this.state.skip + 15;
 				this.setState({ questions: newProps, skip: next }, () => {
 					window.addEventListener('scroll', this.onScroll, false);
+					this.setQuestionScore(this.state.questions);
 				});
 			})
 			.catch(err => console.log('error in nextquestions', err));
@@ -62,41 +66,55 @@ class QuestionList extends Component {
 			selected: id
 		});
 	}
+	setQuestionScore(info) {
+		let score = {};
+		info.forEach(item => {
+			score[item.id] = item.score;
+		});
+		this.setState({ questionsScore: score });
+	}
+
+	displayQuestions() {
+		if (this.props.data.loading) {
+			return <div>Loading Questions...</div>;
+		} else {
+			let data = this.state.questions.length > 1 ? this.state.questions : this.props.data.questions;
+			// this.props.data.refetch();
+			console.log('new data', data);
+			console.log('this is the state', this.state);
+			return data.map(post => {
+				return (
+					<QuestionItem
+						key={post.id}
+						postData={post}
+						score={post.score}
+						onSelect={this.onSelect}
+						userId={this.props.userId}
+						rerender={this.forceRender.bind(this)}
+						refetch={this.props.data.refetch}
+						ratedUp={post.ratedUpBy}
+					/>
+				);
+			});
+		}
+	}
 
 	render() {
-		if (this.props.getQuestions.loading) {
-			return <div>Loading...</div>;
-		} else {
-			console.log('this are the props', this.props.getQuestions.questions);
-			// console.log('this is the state', this.state.questions);
-			let data = this.state.questions.length > 0 ? this.state.questions : this.props.getQuestions.questions;
-			if (!this.state.selected) {
-				return (
+		if (!this.state.selected) {
+			return (
+				<div>
+					<h2>
+						<u>Questions</u>{' '}
+					</h2>
+					<div />
+					{this.displayQuestions()}
 					<div>
-						<h2>
-							<u>Questions</u>{' '}
-						</h2>
-						<div />
-						{data.map(post => {
-							return (
-								<QuestionItem
-									key={post.id}
-									refetch={this.throttledRefetch.bind(this)}
-									postData={post}
-									onSelect={this.onSelect}
-									userId={this.props.userId}
-									ratedUp={post.ratedUpBy}
-								/>
-							);
-						})}
-						<div>
-							<h3> You read all of it! Check back later...</h3>
-						</div>
+						<h3> You read all of it! Check back later...</h3>
 					</div>
-				);
-			} else {
-				return <Redirect to={`/questionContent/${this.state.selected}`} />;
-			}
+				</div>
+			);
+		} else {
+			return <Redirect to={`/questionContent/${this.state.selected}`} />;
 		}
 	}
 }
@@ -104,7 +122,6 @@ class QuestionList extends Component {
 export default compose(
 	withApollo,
 	graphql(getQuestions, {
-		name: 'getQuestions',
 		options: () => {
 			return {
 				variables: {

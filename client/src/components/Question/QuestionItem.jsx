@@ -21,52 +21,35 @@ class QuestionItem extends Component {
 		up = new Set(data.ratedUpBy);
 		down = new Set(data.ratedDownBy);
 		if (up.has(userId)) {
-			this.props.QuestionLike({
-				mutation: QuestionLike,
-				variables: {
-					id: data.id,
-					userId: userId,
-					method: 'delete'
-				},
-				refetchQueries: [
-					{
-						query: getQuestions,
-						variable: {
-							limit: 15,
-							skip: 0
-						}
+			this.props
+				.QuestionLike({
+					mutation: QuestionLike,
+					variables: {
+						id: data.id,
+						userId: userId,
+						method: 'delete'
 					}
-				]
-			});
-			// .then(({ data }) => {
-			// 	console.log('this is data ', data);
-			// 	// this.setState({ score: data.QuestionRatedUpBy.score });
-			// 	this.props.refetch();
-			// });
+				})
+				.then(() => {
+					// this.props.rerender();
+					// this.setState({ score: data.QuestionRatedUpBy.score });
+					this.props.refetch();
+				});
 		} else if (!up.has(userId) && !down.has(userId)) {
-			this.props.QuestionLike({
-				mutation: QuestionLike,
-				variables: {
-					id: data.id,
-					userId: userId,
-					method: 'add'
-				},
-				refetchQueries: [
-					{
-						query: getQuestions,
-						variables: {
-							limit: 15,
-							skip: 0
-						}
+			this.props
+				.QuestionLike({
+					mutation: QuestionLike,
+					variables: {
+						id: data.id,
+						userId: userId,
+						method: 'add'
 					}
-				]
-			});
-			// .then(({ data }) => {
-			// 	console.log('this is data ', data);
-
-			// 	// this.setState({ score: data.QuestionRatedUpBy.score });
-			// 	this.props.refetch();
-			// });
+				})
+				.then(() => {
+					// this.props.rerender();
+					// this.setState({ score: data.QuestionRatedUpBy.score });
+					this.props.refetch();
+				});
 		}
 	}
 
@@ -79,33 +62,35 @@ class QuestionItem extends Component {
 		down = new Set(data.ratedDownBy);
 
 		if (down.has(userId)) {
-			this.props.QuestionDislike({
-				mutation: QuestionDislike,
-				variables: {
-					id: data.id,
-					userId: userId,
-					method: 'delete'
-				},
-				refetchQueries: [{ query: getQuestions }]
-			});
-			// .then(({ data }) => {
-			// 	this.props.refetch();
-			// 	// this.setState({ score: data.QuestionRatedDownBy.score });
-			// });
+			this.props
+				.QuestionDislike({
+					mutation: QuestionDislike,
+					variables: {
+						id: data.id,
+						userId: userId,
+						method: 'delete'
+					}
+				})
+				.then(() => {
+					// this.props.rerender();
+					this.props.refetch();
+					// this.setState({ score: data.QuestionRatedDownBy.score });
+				});
 		} else if (!up.has(userId) && !down.has(userId)) {
-			this.props.QuestionDislike({
-				mutation: QuestionDislike,
-				variables: {
-					id: data.id,
-					userId: userId,
-					method: 'add'
-				},
-				refetchQueries: [{ query: getQuestions }]
-			});
-			// .then(({ data }) => {
-			// 	this.props.refetch();
-			// 	// this.setState({ score: data.QuestionRatedDownBy.score });
-			// });
+			this.props
+				.QuestionDislike({
+					mutation: QuestionDislike,
+					variables: {
+						id: data.id,
+						userId: userId,
+						method: 'add'
+					}
+				})
+				.then(() => {
+					// this.props.rerender();
+					this.props.refetch();
+					// this.setState({ score: data.QuestionRatedDownBy.score });
+				});
 		}
 	}
 
@@ -129,7 +114,7 @@ class QuestionItem extends Component {
 											onClick={this.IncrementLikes.bind(this)}
 										/>
 									</div>
-									<div className="col align-self-start">{postData.score}</div>
+									<div className="col align-self-start">{this.props.score}</div>
 									<div className="col align-self-start">
 										<button
 											className="fa fa-caret-down"
