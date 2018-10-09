@@ -8,7 +8,7 @@ import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
 import NavBar from './NavBar.jsx';
 import SearchList from '../Search/SearchList.jsx';
-import MessageList from '../Messages/MessageList.jsx';
+import MessagesAndCreate from '../Messages/MessagesAndCreate.jsx';
 
 class Main extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class Main extends Component {
     let { username, signedIn, rank, credits, id, email } = this.props.user;
     return (
       <div>
-        <NavBar user={this.props.user} logout={this.props.logout} />
+        <NavBar user={this.props.user} logout={this.props.logout} messages={this.props.messages} />
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <div className="bg-content">
             <div className="container-fluid">
@@ -99,9 +99,9 @@ class Main extends Component {
                         />
                         <Route
                           exact
-                          path="/messages"
-                          render={() => {
-                            return <MessageList userId={id} />;
+                          path="/messages/:folder"
+                          render={({ match }) => {
+                            return <MessagesAndCreate folder={match.params.folder} userId={id} />;
                           }}
                         />
                       </Switch>
