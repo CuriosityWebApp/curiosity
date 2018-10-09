@@ -167,6 +167,10 @@ const getMessages = gql`
         id
         username
       }
+      recipient {
+        id
+        username
+      }
       messageTitle
       messageContent
       unread
@@ -181,6 +185,10 @@ const userSentMessages = gql`
       senderId
       createdAt
       sender {
+        id
+        username
+      }
+      recipient {
         id
         username
       }

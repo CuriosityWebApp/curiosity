@@ -44,9 +44,11 @@ class MessageItem extends Component {
         <div className="list-group-item list-group-item-action flex-column align-items-start">
           <div className="d-flex w-100 justify-content-between">
             <div>
-              <small>Message Title: {data.messageTitle}</small>
-              <br />
               <small>Sender: {data.sender.username}</small>
+              <br />
+              <small>Receiver: {data.recipient.username}</small>
+              <br />
+              <small>Message Title: {data.messageTitle}</small>
               <br />
               <small>Content: {data.messageContent}</small> <br />
               <small>Date: {moment(data.createdAt).fromNow()}</small> <br />

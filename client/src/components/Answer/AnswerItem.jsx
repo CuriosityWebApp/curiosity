@@ -101,58 +101,56 @@ class AnswerItem extends Component {
     } else {
       return (
         <React.Fragment>
-          <div className="row">
-            <div className="col-1">
-              <div className="row" style={{ textAlign: 'right' }}>
-                <div className="col align-self-start">
-                  <button
-                    className="fa fa-caret-up"
-                    aria-hidden="true"
-                    style={{ color: 'green', cursor: 'pointer' }}
-                    onClick={this.IncrementLikes.bind(this)}
-                  />
+          <div className="list-group">
+            <div className="list-group-item list-group-item-action flex-column align-items-start">
+              <div className="row">
+                <div className="col-1">
+                  <div className="col align-self-start">
+                    <button
+                      className="fa fa-caret-up"
+                      aria-hidden="true"
+                      style={{ color: 'green', cursor: 'pointer' }}
+                      value={1}
+                      onClick={this.UpdateLikes}
+                    />
+                  </div>
+                  <div className="col align-self-start">{data.answer.score}</div>
+                  <div className="col align-self-start">
+                    <button
+                      className="fa fa-caret-down"
+                      aria-hidden="true"
+                      style={{ color: 'red', cursor: 'pointer' }}
+                      value={-1}
+                      onClick={this.UpdateLikes}
+                    />
+                  </div>
                 </div>
-                <div className="col align-self-start">{data.answer.score}</div>
-                <div className="col align-self-start">
-                  <button
-                    className="fa fa-caret-down"
-                    aria-hidden="true"
-                    style={{ color: 'red', cursor: 'pointer' }}
-                    onClick={this.decrementLikes.bind(this)}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="list-group col-11">
-              <div className="list-group-item list-group-item-action flex-column align-items-start">
-                <div className="row">
-                  <div className="col-11">
-                    <div className="d-flex w-100 justify-content-between">
-                      <div>
-                        <small>
-                          Answer By {data.answer.user.username}{' '}
-                          {moment(data.answer.createdAt).fromNow()}
-                        </small>
-                        <br />
-                        <AnswerChoice
-                          questionId={this.props.questionId}
-                          bounty={this.props.bounty}
-                          ownerId={this.props.userId}
-                          answerId={this.props.answerId}
-                          loggedId={this.props.loggedId}
-                          isPaid={this.props.isPaid}
-                          data={this.props.data}
-                        />
-                      </div>
-                      <div>
-                        <small>Rank: {data.answer.user.rank}</small> <br />
-                        <small>Votes: {data.answer.score}</small>
-                      </div>
+                <div className="col-11">
+                  <div className="d-flex w-100 justify-content-between">
+                    <div>
+                      <small>
+                        Answer By {data.answer.user.username}{' '}
+                        {moment(data.answer.createdAt).fromNow()}
+                      </small>
+                      <br />
+                      <AnswerChoice
+                        questionId={this.props.questionId}
+                        bounty={this.props.bounty}
+                        ownerId={this.props.userId}
+                        answerId={this.props.answerId}
+                        loggedId={this.props.loggedId}
+                        isPaid={this.props.isPaid}
+                        data={this.props.data}
+                      />
                     </div>
-                    <br />
-                    <div className="answerContent">
-                      <p>{data.answer.answer}</p>
+                    <div>
+                      <small>Rank: {data.answer.user.rank}</small> <br />
+                      <small>Votes: {data.answer.score}</small>
                     </div>
+                  </div>
+                  <br />
+                  <div className="answerContent">
+                    <p>{data.answer.answer}</p>
                   </div>
                 </div>
               </div>
