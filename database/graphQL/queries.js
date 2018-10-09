@@ -4,19 +4,10 @@ const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
 const Message = require('../../database/model/message.js');
 const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLBoolean,
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
 } = require('graphql');
 const {
-  UserType,
-  QuestionType,
-  AnswerType,
-  TransactionType,
-  MessageType,
+  UserType, QuestionType, AnswerType, TransactionType, MessageType,
 } = require('./typeDefs.js');
 
 const RootQuery = new GraphQLObjectType({
@@ -59,8 +50,12 @@ const RootQuery = new GraphQLObjectType({
     },
     questions: {
       type: new GraphQLList(QuestionType),
+      args: { limit: { type: GraphQLInt }, skip: { type: GraphQLInt } },
       resolve(parent, args) {
-        return Question.find({});
+        console.log('these are the args', args);
+        return Question.find()
+          .skip(args.skip)
+          .limit(args.limit);
       },
     },
     answers: {

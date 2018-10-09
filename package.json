@@ -46,6 +46,7 @@
     "flow-bin": "^0.42.0",
     "graphql": "^14.0.2",
     "graphql-date": "^1.0.3",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "mongoose": "^5.2.18",
     "path": "^0.12.7",

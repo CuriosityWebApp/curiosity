@@ -44,14 +44,14 @@ class QuestionContent extends Component {
 						</div>
 					</div>
 					<AnswerList
-					  id={this.props.id}
-					  ownerId={data.question.user.id}
-					  loggedId={this.props.loggedId}
-					  isPaid={data.question.bountyPaid}
-					  bounty={data.question.bounty}
-					  userId={this.props.user.id}
-					  questionId={this.props.id}
-					  signedIn={this.props.user.signedIn}
+						id={this.props.id}
+						ownerId={data.question.user.id}
+						loggedId={this.props.loggedId}
+						isPaid={data.question.bountyPaid}
+						bounty={data.question.bounty}
+						userId={this.props.user.id}
+						questionId={this.props.id}
+						signedIn={this.props.user.signedIn}
 					/>
 				</div>
 			);
@@ -63,11 +63,11 @@ class QuestionContent extends Component {
 }
 
 export default graphql(getQuestion, {
-  options: props => {
-    return {
-      variables: {
-        id: props.id,
-      },
-    };
-  },
+	options: props => {
+		return {
+			variables: {
+				id: props.id
+			}
+		};
+	}
 })(QuestionContent);

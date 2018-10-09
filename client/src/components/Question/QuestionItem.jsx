@@ -10,6 +10,9 @@ class QuestionItem extends Component {
 		super(props);
 		this.state = {};
 	}
+	componentDidMount() {
+		this.setState({ score: this.props.postData.score });
+	}
 	IncrementLikes(e) {
 		e.stopPropagation();
 		let up, down, data;
@@ -28,6 +31,8 @@ class QuestionItem extends Component {
 					}
 				})
 				.then(() => {
+					// this.props.rerender();
+					// this.setState({ score: data.QuestionRatedUpBy.score });
 					this.props.refetch();
 				});
 		} else if (!up.has(userId) && !down.has(userId)) {
@@ -41,6 +46,8 @@ class QuestionItem extends Component {
 					}
 				})
 				.then(() => {
+					// this.props.rerender();
+					// this.setState({ score: data.QuestionRatedUpBy.score });
 					this.props.refetch();
 				});
 		}
@@ -65,7 +72,9 @@ class QuestionItem extends Component {
 					}
 				})
 				.then(() => {
+					// this.props.rerender();
 					this.props.refetch();
+					// this.setState({ score: data.QuestionRatedDownBy.score });
 				});
 		} else if (!up.has(userId) && !down.has(userId)) {
 			this.props
@@ -78,7 +87,9 @@ class QuestionItem extends Component {
 					}
 				})
 				.then(() => {
+					// this.props.rerender();
 					this.props.refetch();
+					// this.setState({ score: data.QuestionRatedDownBy.score });
 				});
 		}
 	}
@@ -103,7 +114,7 @@ class QuestionItem extends Component {
 											onClick={this.IncrementLikes.bind(this)}
 										/>
 									</div>
-									<div className="col align-self-start">{postData.score}</div>
+									<div className="col align-self-start">{this.props.score}</div>
 									<div className="col align-self-start">
 										<button
 											className="fa fa-caret-down"
