@@ -4,19 +4,10 @@ const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
 const Message = require('../../database/model/message.js');
 const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLBoolean,
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
 } = require('graphql');
 const {
-  UserType,
-  QuestionType,
-  AnswerType,
-  TransactionType,
-  MessageType,
+  UserType, QuestionType, AnswerType, TransactionType, MessageType,
 } = require('./typeDefs.js');
 
 const RootQuery = new GraphQLObjectType({
@@ -54,13 +45,17 @@ const RootQuery = new GraphQLObjectType({
     users: {
       type: new GraphQLList(UserType),
       resolve(parent, args) {
-        return User.find({});
+        return User.find();
       },
     },
     questions: {
       type: new GraphQLList(QuestionType),
+      args: { limit: { type: GraphQLInt }, skip: { type: GraphQLInt } },
       resolve(parent, args) {
-        return Question.find({});
+        console.log('these are the args', args);
+        return Question.find()
+          .skip(args.skip)
+          .limit(args.limit);
       },
     },
     answers: {
@@ -83,12 +78,27 @@ const RootQuery = new GraphQLObjectType({
         return User.findOne({ email: args.email });
       },
     },
+    checkUsername: {
+      type: UserType,
+      args: { username: { type: GraphQLString } },
+      resolve(parent, args) {
+        // code to get data from db
+        return User.findOne({ username: args.username });
+      },
+    },
     searchQuestion: {
       type: new GraphQLList(QuestionType),
       args: { term: { type: GraphQLString } },
       resolve(parent, args) {
         // code to get data from db
-        return Question.find({ $text: { $search: args.term } });
+        return Question.find({
+          $or: [
+            { questionContent: { $regex: args.term, $options: 'i' } },
+            { questionTitle: { $regex: args.term, $options: 'i' } },
+            { category: { $regex: args.term, $options: 'i' } },
+            { tags: { $regex: args.term, $options: 'i' } },
+          ],
+        });
       },
     },
     userMessages: {
@@ -96,6 +106,13 @@ const RootQuery = new GraphQLObjectType({
       args: { receiverId: { type: GraphQLID } },
       resolve(parent, args) {
         return Message.find({ receiverId: args.receiverId }).sort('-createdAt');
+      },
+    },
+    getUsernames: {
+      type: new GraphQLList(UserType),
+      args: { username: { type: GraphQLString } },
+      resolve(parent, args) {
+        return User.find({ username: { $regex: args.username, $options: 'i' } });
       },
     },
   },

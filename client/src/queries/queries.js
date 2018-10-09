@@ -61,6 +61,7 @@ const getQuestion = gql`
 			}
 			answers {
 				id
+				answerChosen
 			}
 			createdAt
 		}
@@ -77,6 +78,7 @@ const getAnswer = gql`
 			createdAt
 			ratedUpBy
 			ratedDownBy
+			answerChosen
 			user {
 				id
 				username
@@ -87,8 +89,8 @@ const getAnswer = gql`
 `;
 
 const getQuestions = gql`
-	query {
-		questions {
+	query($limit: Int!, $skip: Int!) {
+		questions(limit: $limit, skip: $skip) {
 			id
 			category
 			questionTitle
@@ -118,6 +120,14 @@ const checkUserEmail = gql`
 			email
 			rank
 			credit
+		}
+	}
+`;
+const checkUsername = gql`
+	query($username: String!) {
+		checkUsername(username: $username) {
+			id
+			username
 		}
 	}
 `;
@@ -160,6 +170,15 @@ const getMessages = gql`
 	}
 `;
 
+const getUsernames = gql`
+	query($username: String!) {
+		getUsernames(username: $username) {
+			id
+			username
+		}
+	}
+`;
+
 module.exports = {
   getUser,
   getQuestion,
@@ -168,4 +187,6 @@ module.exports = {
   checkUserEmail,
   searchQuestion,
   getMessages,
+  getUsernames,
+  checkUsername,
 };

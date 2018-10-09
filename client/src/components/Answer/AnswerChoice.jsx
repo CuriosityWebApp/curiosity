@@ -51,8 +51,9 @@ class AnswerItem extends Component {
 				})
       })
       .then(() => {
-        this.props.getAnswer.refetch();
-        this.props.getQuestion.refetch();
+        // this.props.getAnswer.refetch();
+				// this.props.getQuestion.refetch();
+				this.props.data.refetch();
       })
 	}
 
@@ -77,7 +78,7 @@ class AnswerItem extends Component {
   }
   
   render() {
-    let data = this.props.getAnswer;
+		let data = this.props.getAnswer;
 		if (data && data.loading) {
 			return <div>Loading answers...</div>;
 		} else {

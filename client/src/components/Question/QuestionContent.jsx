@@ -45,23 +45,14 @@ class QuestionContent extends Component {
 					</div>
 					<AnswerList
 						id={this.props.id}
+						ownerId={data.question.user.id}
 						loggedId={this.props.loggedId}
 						isPaid={data.question.bountyPaid}
 						bounty={data.question.bounty}
+						userId={this.props.user.id}
+						questionId={this.props.id}
+						signedIn={this.props.user.signedIn}
 					/>
-					<div>
-						{this.props.user.signedIn ? (
-							<CreateAnswer
-								forceRender={this.forceRender.bind(this)}
-								userId={this.props.user.id}
-								questionId={this.props.id}
-							/>
-						) : (
-							<button onClick={() => alert('Please log into your account to be able to answer!')}>
-								Respond
-							</button>
-						)}
-					</div>
 				</div>
 			);
 		}

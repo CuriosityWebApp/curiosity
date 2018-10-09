@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { getQuestions } from '../../queries/queries.js';
 import { Redirect } from 'react-router-dom';
 import QuestionItem from './QuestionItem.jsx';
+import _ from 'lodash';
 
 class QuestionList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selected: null
+			selected: null,
+			skip: 0,
+			questions: []
 		};
 		this.onSelect = this.onSelect.bind(this);
 		this.onScroll = this.onScroll.bind(this);
+		this.getNextQuestions = this.getNextQuestions.bind(this);
+		this.throttledQuestionCall = _.throttle(this.getNextQuestions, 250, { leading: false });
+		this.throttledRefetch = _.throttle(this.refetchOnce, 250, { leading: false });
 	}
-
 	componentDidMount() {
+		this.getNextQuestions();
 		window.addEventListener('scroll', this.onScroll, false);
 	}
 
@@ -23,54 +29,89 @@ class QuestionList extends Component {
 	}
 
 	onScroll = () => {
-		if (
-			window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 &&
-			this.props.data.questions.length
-		) {
-			console.log('reached the bottom of the page');
+		if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && this.state.questions.length) {
+			window.removeEventListener('scroll', this.onScroll, false);
+			this.throttledQuestionCall();
 		}
 	};
+	refetchOnce() {
+		this.props.getQuestions.refetch();
+	}
+
+	getNextQuestions = async () => {
+		await this.props.client
+			.query({
+				query: getQuestions,
+				variables: {
+					limit: 15,
+					skip: this.state.skip
+				}
+			})
+			.then(({ data }) => {
+				let newProps = this.state.questions.concat(data.questions);
+				let next = this.state.skip + 15;
+				this.setState({ questions: newProps, skip: next }, () => {
+					window.addEventListener('scroll', this.onScroll, false);
+				});
+			})
+			.catch(err => console.log('error in nextquestions', err));
+	};
+
 	onSelect(id) {
 		this.setState({
 			selected: id
 		});
 	}
 
-	displayQuestions() {
-		let data = this.props.data;
-		if (data.loading) {
-			return <div>Loading Questions...</div>;
-		} else {
-			this.props.data.refetch();
-			return data.questions.map(post => {
-				return (
-					<QuestionItem
-						key={post.id}
-						postData={post}
-						onSelect={this.onSelect}
-						userId={this.props.userId}
-						refetch={this.props.data.refetch}
-						ratedUp={post.ratedUpBy}
-					/>
-				);
-			});
-		}
-	}
-
 	render() {
-		if (!this.state.selected) {
-			return (
-				<div>
-					<h2>
-						<u>Questions</u>{' '}
-					</h2>
-					<div>{this.displayQuestions()}</div>
-				</div>
-			);
+		if (this.props.getQuestions.loading) {
+			return <div>Loading...</div>;
 		} else {
-			return <Redirect to={`/questionContent/${this.state.selected}`} />;
+			console.log('this are the props', this.props.getQuestions.questions);
+			// console.log('this is the state', this.state.questions);
+			let data = this.state.questions.length > 0 ? this.state.questions : this.props.getQuestions.questions;
+			if (!this.state.selected) {
+				return (
+					<div>
+						<h2>
+							<u>Questions</u>{' '}
+						</h2>
+						<div />
+						{data.map(post => {
+							return (
+								<QuestionItem
+									key={post.id}
+									refetch={this.throttledRefetch.bind(this)}
+									postData={post}
+									onSelect={this.onSelect}
+									userId={this.props.userId}
+									ratedUp={post.ratedUpBy}
+								/>
+							);
+						})}
+						<div>
+							<h3> You read all of it! Check back later...</h3>
+						</div>
+					</div>
+				);
+			} else {
+				return <Redirect to={`/questionContent/${this.state.selected}`} />;
+			}
 		}
 	}
 }
 
-export default graphql(getQuestions)(QuestionList);
+export default compose(
+	withApollo,
+	graphql(getQuestions, {
+		name: 'getQuestions',
+		options: () => {
+			return {
+				variables: {
+					limit: 15,
+					skip: 0
+				}
+			};
+		}
+	})
+)(QuestionList);

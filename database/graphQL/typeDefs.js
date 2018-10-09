@@ -120,6 +120,7 @@ const AnswerType = new GraphQLObjectType({
     updatedAt: { type: GraphQLDate },
     ratedUpBy: { type: new GraphQLList(GraphQLID) },
     ratedDownBy: { type: new GraphQLList(GraphQLID) },
+    answerChosen: { type: GraphQLBoolean },
     user: {
       type: UserType,
       resolve(parent, args) {
