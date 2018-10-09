@@ -10,6 +10,16 @@ class NewList extends Component {
     this.displayMessages = this.displayMessages.bind(this);
   }
 
+  componentDidMount() {
+    console.log(this.props.userId);
+    this.props.ReadMessages({
+      mutation: ReadMessages,
+      variables: {
+        receiverId: this.props.userId,
+      },
+    });
+  }
+
   displayMessages() {
     let { loading, error, user } = this.props.getMessages;
     if (loading) {
