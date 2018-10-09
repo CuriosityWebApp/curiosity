@@ -24,14 +24,10 @@ const UserType = new GraphQLObjectType({
       type: GraphQLInt,
       resolve(parent, args) {
         return Answer.find({ userId: parent.id })
-          .then((data) => {
-            data.forEach(item => console.log('inside then at rank', item.score));
-            return data.reduce((sum, item) => {
-              console.log('inside reduce', sum);
-              sum += item.score;
-              return sum;
-            }, 0);
-          })
+          .then(data => data.reduce((sum, item) => {
+            sum += item.score;
+            return sum;
+          }, 0))
           .catch(err => console.log('error in rank', err));
       },
     },
@@ -55,6 +51,14 @@ const UserType = new GraphQLObjectType({
       resolve(parent, args) {
         return Transaction.find({
           $or: [{ senderId: parent.id }, { receiverId: parent.id }],
+        });
+      },
+    },
+    messages: {
+      type: new GraphQLList(MessageType),
+      resolve(parent, args) {
+        return Message.find({
+          receiverId: parent.id,
         });
       },
     },
@@ -175,6 +179,7 @@ const MessageType = new GraphQLObjectType({
     receiverId: { type: GraphQLID },
     messageTitle: { type: GraphQLString },
     messageContent: { type: GraphQLString },
+    unread: { type: GraphQLBoolean },
     createdAt: { type: GraphQLDate },
     sender: {
       type: UserType,

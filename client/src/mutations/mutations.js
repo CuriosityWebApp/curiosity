@@ -158,6 +158,13 @@ const AddMessage = gql`
     }
   }
 `;
+const ReadMessages = gql`
+  mutation($id: ID) {
+    ReadMessages(id: $id) {
+      id
+    }
+  }
+`;
 
 module.exports = {
   AddQuestion,
@@ -174,4 +181,5 @@ module.exports = {
   AddMessage,
   QuestionLike,
   QuestionDislike,
+  ReadMessages,
 };

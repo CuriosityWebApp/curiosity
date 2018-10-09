@@ -8,6 +8,7 @@ const messageSchema = new Schema(
     senderId: String,
     messageTitle: String,
     messageContent: String,
+    unread: Boolean,
   },
   {
     timestamps: true,
