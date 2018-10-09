@@ -159,8 +159,8 @@ const AddMessage = gql`
   }
 `;
 const ReadMessages = gql`
-  mutation($id: ID) {
-    ReadMessages(id: $id) {
+  mutation($receiverId: ID) {
+    ReadMessages(receiverId: $receiverId) {
       id
     }
   }

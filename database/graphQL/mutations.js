@@ -326,13 +326,12 @@ const Mutation = new GraphQLObjectType({
     ReadMessages: {
       type: MessageType,
       args: {
-        id: { type: GraphQLNonNull(GraphQLID) },
+        receiverId: { type: GraphQLID },
       },
       resolve(parent, args) {
-        return Message.update({ receiverId: args.id }, { unread: false }, { multi: true },);
+        return Message.update({ receiverId: args.receiverId }, { unread: false }, { multi: true });
       },
-
-    }
+    },
   },
 });
 
