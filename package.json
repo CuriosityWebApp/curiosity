@@ -37,6 +37,7 @@
     "apollo-boost": "^0.1.16",
     "babel-eslint": "^10.0.1",
     "babel-preset-flow": "^6.23.0",
+    "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
@@ -52,11 +53,13 @@
     "react": "^16.5.2",
     "react-apollo": "^2.2.3",
     "react-autocomplete": "^1.8.1",
-    "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.2",
     "react-firebaseui": "^3.0.7",
     "react-router": "^4.3.1",
     "react-router-bootstrap": "^0.24.4",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "react-stripe-elements": "^2.0.1",
+    "react-bootstrap": "^1.0.0-beta.1",
+    "stripe": "^6.12.1"
   }
 }
