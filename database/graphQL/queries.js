@@ -113,6 +113,13 @@ const RootQuery = new GraphQLObjectType({
         return Message.find({ receiverId: args.receiverId }).sort('-createdAt');
       },
     },
+    userSentMessages: {
+      type: new GraphQLList(MessageType),
+      args: { senderId: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Message.find({ senderId: args.senderId }).sort('-createdAt');
+      },
+    },
     getUsernames: {
       type: new GraphQLList(UserType),
       args: { username: { type: GraphQLString } },

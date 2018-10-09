@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 
 const getUser = gql`
-  query($id: ID!) {
+  query($id: ID) {
     user(id: $id) {
       id
       username
@@ -70,22 +70,22 @@ const getQuestion = gql`
 
 // passing in the questionId
 const getAnswer = gql`
-	query($id: ID!) {
-		answer(id: $id) {
-			id
-			answer
-			score
-			createdAt
-			ratedUpBy
-			ratedDownBy
+  query($id: ID!) {
+    answer(id: $id) {
+      id
+      answer
+      score
+      createdAt
+      ratedUpBy
+      ratedDownBy
       answerChosen
-			user {
-				id
-				username
-				rank
-			}
-		}
-	}
+      user {
+        id
+        username
+        rank
+      }
+    }
+  }
 `;
 
 const getQuestions = gql`
@@ -120,6 +120,9 @@ const checkUserEmail = gql`
       email
       rank
       credit
+      messages {
+        unread
+      }
     }
   }
 `;
@@ -154,7 +157,7 @@ const searchQuestion = gql`
 `;
 
 const getMessages = gql`
-  query($receiverId: ID!) {
+  query($receiverId: ID) {
     userMessages(receiverId: $receiverId) {
       id
       receiverId
@@ -164,8 +167,34 @@ const getMessages = gql`
         id
         username
       }
+      recipient {
+        id
+        username
+      }
       messageTitle
       messageContent
+      unread
+    }
+  }
+`;
+const userSentMessages = gql`
+  query($senderId: ID) {
+    userSentMessages(senderId: $senderId) {
+      id
+      receiverId
+      senderId
+      createdAt
+      sender {
+        id
+        username
+      }
+      recipient {
+        id
+        username
+      }
+      messageTitle
+      messageContent
+      unread
     }
   }
 `;
@@ -187,6 +216,7 @@ module.exports = {
   checkUserEmail,
   searchQuestion,
   getMessages,
+  userSentMessages,
   getUsernames,
   checkUsername,
 };

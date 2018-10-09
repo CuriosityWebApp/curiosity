@@ -6,11 +6,16 @@ import { LinkContainer } from 'react-router-bootstrap';
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render() {
     let { username, signedIn, rank, credits, id, email } = this.props.user;
+    let unreadMessages = 0;
+    for (let i = 0; i < this.props.messages.length; i++) {
+      if (this.props.messages[i].unread === true) {
+        unreadMessages++;
+      }
+    }
     return (
       <div id="snb">
         <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
@@ -49,44 +54,61 @@ class NavBar extends Component {
               <div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
-                    <LinkContainer to="/">
+                    <Link to="/">
                       <div>
                         <i className="fa fa-list" />
                         Question List
                       </div>
-                    </LinkContainer>
+                    </Link>
                   </div>
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
-                    <LinkContainer to="/createQuestion">
+                    <Link to="/createQuestion">
                       <div>
                         <i className="fa fa-question" />
                         Ask Question
                       </div>
-                    </LinkContainer>
+                    </Link>
                   </div>
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
-                    <LinkContainer to="/profileUser">
+                    <Link to="/profileUser">
                       <div>
                         <i className="fa fa-user" />
                         Profile
                       </div>
-                    </LinkContainer>
+                    </Link>
                   </div>
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
-                    <LinkContainer to="/messages">
-                      <div>
-                        <i className="fa fa-envelope-o" />
-                        Messages
-                        <span className="label">New</span>
-                      </div>
-                    </LinkContainer>
+                    <div>
+                      <i className="fa fa-envelope-o" />
+                      Messages
+                      {unreadMessages > 0 && <span className="label">New</span>}
+                    </div>
                   </div>
+                </div>
+                <div className="card">
+                  <ul className="list-group list-group-flush">
+                    <Link to="/messages/new" style={{ cursor: 'pointer' }}>
+                      <li className="list-group-item">
+                        <span>New</span>
+                      </li>
+                    </Link>
+                    <Link to="/messages/inbox" style={{ cursor: 'pointer' }}>
+                      <li className="list-group-item">
+                        <span>Inbox</span>
+                      </li>
+                    </Link>
+                    <Link to="/messages/sent" style={{ cursor: 'pointer' }}>
+                      <li className="list-group-item">
+                        <span>Sent</span>
+                      </li>
+                    </Link>
+                  </ul>
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
@@ -138,10 +160,12 @@ class NavBar extends Component {
               </ul>
               <ul className="right-navbar">
                 <li>
-                  <a href="#" className="icon-circle">
+                  <Link to="/messages/new" className="icon-circle">
                     <i className="fa fa-envelope-o" />
-                    <span className="badge badge-danger">5</span>
-                  </a>
+                    {this.props.messages.length > 0 && (
+                      <span className="badge badge-danger">{unreadMessages}</span>
+                    )}
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="icon-circle">

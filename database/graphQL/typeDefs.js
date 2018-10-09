@@ -54,6 +54,14 @@ const UserType = new GraphQLObjectType({
         });
       },
     },
+    messages: {
+      type: new GraphQLList(MessageType),
+      resolve(parent, args) {
+        return Message.find({
+          receiverId: parent.id,
+        });
+      },
+    },
   }),
 });
 
@@ -171,6 +179,7 @@ const MessageType = new GraphQLObjectType({
     receiverId: { type: GraphQLID },
     messageTitle: { type: GraphQLString },
     messageContent: { type: GraphQLString },
+    unread: { type: GraphQLBoolean },
     createdAt: { type: GraphQLDate },
     sender: {
       type: UserType,

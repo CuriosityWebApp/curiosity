@@ -6,6 +6,7 @@ import {
   AnswerDislike,
   UpdateCredit,
   AddTransaction,
+  AddMessage,
 } from '../../mutations/mutations.js';
 import moment from 'moment';
 import AnswerChoice from './AnswerChoice.jsx';
@@ -14,7 +15,12 @@ class AnswerItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.report = this.report.bind(this);
   }
+  componentDidMount() {
+    console.log(this.props.data);
+  }
+
   IncrementLikes(e) {
     let up, down, data;
     let userId = this.props.userId;
@@ -100,17 +106,18 @@ class AnswerItem extends Component {
       return <div>Loading answers...</div>;
     } else {
       return (
-        <div className="list-group">
-          <div className="list-group-item list-group-item-action flex-column align-items-start">
-            <div className="row">
-              <div className="col-1">
-                <div className="row" style={{ textAlign: 'right' }}>
+        <React.Fragment>
+          <div className="list-group">
+            <div className="list-group-item list-group-item-action flex-column align-items-start">
+              <div className="row">
+                <div className="col-1">
                   <div className="col align-self-start">
                     <button
                       className="fa fa-caret-up"
                       aria-hidden="true"
                       style={{ color: 'green', cursor: 'pointer' }}
-                      onClick={this.IncrementLikes.bind(this)}
+                      value={1}
+                      onClick={this.UpdateLikes}
                     />
                   </div>
                   <div className="col align-self-start">{data.answer.score}</div>
@@ -119,44 +126,66 @@ class AnswerItem extends Component {
                       className="fa fa-caret-down"
                       aria-hidden="true"
                       style={{ color: 'red', cursor: 'pointer' }}
-                      onClick={this.decrementLikes.bind(this)}
+                      value={-1}
+                      onClick={this.UpdateLikes}
                     />
                   </div>
                 </div>
-              </div>
-              <div className="col-11">
-                <div className="d-flex w-100 justify-content-between">
-                  <div>
-                    <small>
-                      Answer By {data.answer.user.username}{' '}
-                      {moment(data.answer.createdAt).fromNow()}
-                    </small>
-                    <br />
-                    <AnswerChoice
-                      questionId={this.props.questionId}
-                      bounty={this.props.bounty}
-                      ownerId={this.props.userId}
-                      answerId={this.props.answerId}
-                      loggedId={this.props.loggedId}
-											isPaid={this.props.isPaid}
-											data={this.props.data}
-                    />
+                <div className="col-11">
+                  <div className="d-flex w-100 justify-content-between">
+                    <div>
+                      <small>
+                        Answer By {data.answer.user.username}{' '}
+                        {moment(data.answer.createdAt).fromNow()}
+                      </small>
+                      <br />
+                      <AnswerChoice
+                        questionId={this.props.questionId}
+                        bounty={this.props.bounty}
+                        ownerId={this.props.userId}
+                        answerId={this.props.answerId}
+                        loggedId={this.props.loggedId}
+                        isPaid={this.props.isPaid}
+                        data={this.props.data}
+                      />
+                    </div>
+                    <div>
+                      <small>Rank: {data.answer.user.rank}</small> <br />
+                      <small>Votes: {data.answer.score}</small> <br />
+                      <button type="button" className="btn btn-danger btn-sm" onClick={this.report}>
+                        Report
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <small>Rank: {data.answer.user.rank}</small> <br />
-                    <small>Votes: {data.answer.score}</small>
+                  <br />
+                  <div className="answerContent">
+                    <p>{data.answer.answer}</p>
                   </div>
-                </div>
-                <br />
-                <div className="answerContent">
-                  <p>{data.answer.answer}</p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </React.Fragment>
       );
     }
+  }
+  report() {
+    console.log(this.props);
+    let messageTitle = 'REPORT: AnswerId:' + this.props.answerId;
+    let messageContent =
+      'User: ' +
+      this.props.getAnswer.answer.user.username +
+      '\nQuestionTitle: ' +
+      this.props.data.question.questionTitle;
+    this.props.AddMessage({
+      mutation: AddMessage,
+      variables: {
+        senderId: this.props.userId,
+        receiverId: '5bb8d00baf90e323e4b9c8a9',
+        messageTitle: messageTitle,
+        messageContent: messageContent,
+      },
+    });
   }
 
   render() {
@@ -179,4 +208,5 @@ export default compose(
   graphql(AnswerDislike, { name: 'AnswerDislike' }),
   graphql(UpdateCredit, { name: 'UpdateCredit' }),
   graphql(AddTransaction, { name: 'AddTransaction' }),
+  graphql(AddMessage, { name: 'AddMessage' }),
 )(AnswerItem);

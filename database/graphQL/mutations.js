@@ -13,7 +13,11 @@ const {
   GraphQLNonNull,
 } = require('graphql');
 const {
-  UserType, QuestionType, AnswerType, TransactionType, MessageType,
+  UserType,
+  QuestionType,
+  AnswerType,
+  TransactionType,
+  MessageType,
 } = require('./typeDefs.js');
 
 const Mutation = new GraphQLObjectType({
@@ -227,10 +231,16 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         if (args.method === 'add') {
-          return Question.findOneAndUpdate({ _id: args.id }, { $push: { ratedDownBy: args.userId } });
+          return Question.findOneAndUpdate(
+            { _id: args.id },
+            { $push: { ratedDownBy: args.userId } },
+          );
         }
         if (args.method === 'delete') {
-          return Question.findOneAndUpdate({ _id: args.id }, { $pull: { ratedDownBy: args.userId } });
+          return Question.findOneAndUpdate(
+            { _id: args.id },
+            { $pull: { ratedDownBy: args.userId } },
+          );
         }
       },
     },
@@ -280,6 +290,7 @@ const Mutation = new GraphQLObjectType({
           receiverId: args.receiverId,
           messageTitle: args.messageTitle,
           messageContent: args.messageContent,
+          unread: true,
         });
         return message.save();
       },
@@ -293,6 +304,15 @@ const Mutation = new GraphQLObjectType({
         return Message.findByIdAndRemove({ _id: args.id });
       },
     },
+
+    userMessages: {
+      type: new GraphQLList(MessageType),
+      args: { receiverId: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Message.find({ receiverId: args.receiverId }).sort('-createdAt');
+      },
+    },
+
     updateChosenAnswer: {
       type: AnswerType,
       args: {
@@ -301,6 +321,15 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         return Answer.findByIdAndUpdate({ _id: args.id }, args, { new: false });
+      },
+    },
+    ReadMessages: {
+      type: MessageType,
+      args: {
+        receiverId: { type: GraphQLID },
+      },
+      resolve(parent, args) {
+        return Message.update({ receiverId: args.receiverId }, { unread: false }, { multi: true });
       },
     },
   },
