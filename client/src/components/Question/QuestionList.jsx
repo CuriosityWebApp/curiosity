@@ -80,8 +80,6 @@ class QuestionList extends Component {
 		} else {
 			let data = this.state.questions.length > 1 ? this.state.questions : this.props.data.questions;
 			// this.props.data.refetch();
-			console.log('new data', data);
-			console.log('this is the state', this.state);
 			return data.map(post => {
 				return (
 					<QuestionItem
