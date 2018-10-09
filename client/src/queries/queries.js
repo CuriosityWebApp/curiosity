@@ -113,15 +113,18 @@ const getQuestions = gql`
 `;
 
 const checkUserEmail = gql`
-	query($email: String!) {
-		checkUserEmail(email: $email) {
-			id
-			username
-			email
-			rank
-			credit
-		}
-	}
+  query($email: String!) {
+    checkUserEmail(email: $email) {
+      id
+      username
+      email
+      rank
+      credit
+      messages {
+        unread
+      }
+    }
+  }
 `;
 const checkUsername = gql`
 	query($username: String!) {
@@ -154,20 +157,46 @@ const searchQuestion = gql`
 `;
 
 const getMessages = gql`
-	query($receiverId: ID!) {
-		userMessages(receiverId: $receiverId) {
-			id
-			receiverId
-			senderId
-			createdAt
-			sender {
-				id
-				username
-			}
-			messageTitle
-			messageContent
-		}
-	}
+  query($receiverId: ID) {
+    userMessages(receiverId: $receiverId) {
+      id
+      receiverId
+      senderId
+      createdAt
+      sender {
+        id
+        username
+      }
+      recipient {
+        id
+        username
+      }
+      messageTitle
+      messageContent
+      unread
+    }
+  }
+`;
+const userSentMessages = gql`
+  query($senderId: ID) {
+    userSentMessages(senderId: $senderId) {
+      id
+      receiverId
+      senderId
+      createdAt
+      sender {
+        id
+        username
+      }
+      recipient {
+        id
+        username
+      }
+      messageTitle
+      messageContent
+      unread
+    }
+  }
 `;
 
 const getUsernames = gql`
@@ -187,6 +216,7 @@ module.exports = {
   checkUserEmail,
   searchQuestion,
   getMessages,
+  userSentMessages,
   getUsernames,
   checkUsername,
 };

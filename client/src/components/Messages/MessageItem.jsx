@@ -9,8 +9,8 @@ class MessageItem extends Component {
     this.state = {
       clicked: null,
     };
-    this.displayMessage = this.displayMessage.bind(this);
     this.deleteMessage = this.deleteMessage.bind(this);
+    this.replyMessage = this.replyMessage.bind(this);
   }
 
   deleteMessage() {
@@ -22,45 +22,54 @@ class MessageItem extends Component {
         },
       })
       .then(() => {
-        this.props.data.refetch();
+        this.props.getMessages.refetch();
       });
   }
 
-  displayMessage() {
-    let data = this.props.post;
-    if (data && data.loading) {
-      return <div>Loading messages...</div>;
-    } else {
-      return (
-        <div className="list-group">
-          <div className="list-group-item list-group-item-action flex-column align-items-start">
-            <div className="d-flex w-100 justify-content-between">
-              <div>
-                <small>Message Title: {data.messageTitle}</small>
-                <br />
-                <small>Sender: {data.sender.username}</small>
-                <br />
-                <small>Content: {data.messageContent}</small> <br />
-              </div>
-              <div>
-                <small> {moment(data.createdAt).fromNow()}</small>
-                <button type="button" className="btn btn-danger" onClick={this.deleteMessage}>
-                  Delete
-                </button>
-              </div>
-            </div>
-            <br />
-            <div className="answerContent">
-              <p />
-            </div>
-          </div>
-        </div>
-      );
-    }
+  replyMessage() {
+    let newTitle = '(RE:"' + this.props.post.messageTitle + '")';
+    let oldContent =
+      '\n\n\n' +
+      `[On ${moment(this.props.post.createdAt).format('MMMM Do YYYY, h:mm:ss a')},${
+        this.props.post.sender.username
+      } wrote : "${this.props.post.messageContent}"]`;
+
+    this.props.replyFormat(this.props.post.sender.username, newTitle, oldContent);
   }
 
   render() {
-    return <div>{this.displayMessage()}</div>;
+    let data = this.props.post;
+    return (
+      <div className="list-group">
+        <div className="list-group-item list-group-item-action flex-column align-items-start">
+          <div className="d-flex w-100 justify-content-between">
+            <div>
+              <small>Sender: {data.sender.username}</small>
+              <br />
+              <small>Receiver: {data.recipient.username}</small>
+              <br />
+              <small>Message Title: {data.messageTitle}</small>
+              <br />
+              <small>Content: {data.messageContent}</small> <br />
+              <small>Date: {moment(data.createdAt).fromNow()}</small> <br />
+              <small>New?: {JSON.stringify(data.unread)}</small>
+            </div>
+            <div>
+              <button type="button" className="btn btn-info" onClick={this.replyMessage}>
+                Reply
+              </button>
+              <button type="button" className="btn btn-danger" onClick={this.deleteMessage}>
+                Delete
+              </button>
+            </div>
+          </div>
+          <br />
+          <div className="answerContent">
+            <p />
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
