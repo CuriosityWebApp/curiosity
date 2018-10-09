@@ -11,22 +11,72 @@ class PaymentCheckOut extends Component {
     super(props);
     this.state = {
       usd: '',
+      credits: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handlePayment = this.handlePayment.bind(this);
     this.submit = this.submit.bind(this);
+    this.usdToCredit = this.usdToCredit.bind(this);
   }
 
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value,
+      credits: this.usdToCredit(evt.target.value),
     });
   }
 
-  handlePayment(UpdateCredit) {
-    UpdateCredit({ variables: { id: this.props.id, credit: 5000 } });
-    console.log('Credit Received!');
+  usdToCredit(value) {
+    let usd = Number(value);
+    let credits = null;
+    let holder;
+
+    if (usd >= 100) {
+      holder = Math.floor(usd / 100);
+      credits += holder * 14000;
+      usd -= holder * 100;
+    }
+
+    if (usd >= 50) {
+      holder = Math.floor(usd / 50);
+      credits += holder * 6500;
+      usd -= holder * 50;
+    }
+
+    if (usd >= 20) {
+      holder = Math.floor(usd / 20);
+      credits += holder * 2450;
+      usd -= holder * 20;
+    }
+
+    if (usd >= 10) {
+      holder = Math.floor(usd / 10);
+      credits += holder * 1150;
+      usd -= holder * 10;
+    }
+
+    if (usd >= 5) {
+      holder = Math.floor(usd / 5);
+      credits += holder * 550;
+      usd -= holder * 5;
+    }
+
+    if (usd <= 4 && usd > 0) {
+      holder = Math.floor(usd / 1);
+      credits += holder * 100;
+      usd -= holder;
+    }
+
+    console.log(usd);
+    return credits;
+  }
+
+  async handlePayment(UpdateCredit) {
+    await UpdateCredit({ variables: { id: this.props.id, credit: this.state.credits } });
+    this.props.handleClose();
+    this.props.data.refetch();
+    alert(`You received ${this.state.credits}`);
   }
 
   async submit(UpdateCredit) {
@@ -149,7 +199,8 @@ class PaymentCheckOut extends Component {
                   <hr />
 
                   <div>
-                    <p>Would you like to complete the purchase?</p>
+                    <p>Please declare amount in usd</p>
+                    <span>$</span>
                     <input
                       className="create-input"
                       type="text"
@@ -158,22 +209,20 @@ class PaymentCheckOut extends Component {
                       onChange={this.handleChange}
                     />
                     <small>
-                      <em> You will receive 0 credits!</em>
+                      <em> You will receive {this.state.credits} credits!</em>
                     </small>
                   </div>
 
                   <hr />
 
+                  <p>Would you like to complete the purchase?</p>
                   <div className="checkout">
-                    <p>Would you like to complete the purchase?</p>
                     <form
                       onClick={() => {
                         this.submit(UpdateCredit);
-                        this.props.handleClose;
                       }}
                       onSubmit={() => {
                         this.submit(UpdateCredit);
-                        this.props.handleClose;
                       }}
                     >
                       <div className="card-field">
@@ -197,18 +246,3 @@ class PaymentCheckOut extends Component {
 }
 
 export default injectStripe(PaymentCheckOut);
-
-<div className="checkout">
-  <p>Would you like to complete the purchase?</p>
-  <form
-    onClick={() => this.submit(UpdateCredit)}
-    onSubmit={() => {
-      this.submit(UpdateCredit);
-    }}
-  >
-    <div className="card-field">
-      <CardElement />
-    </div>
-    <Button>Confirm Order</Button>
-  </form>
-</div>;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BuyCredit from '../Payment/BuyCredit.jsx';
 import moment from 'moment';
 
-const UserWallet = ({ user }) => {
+const UserWallet = ({ user, data }) => {
   return (
     <div>
       <strong>Wallet</strong>
@@ -19,7 +19,7 @@ const UserWallet = ({ user }) => {
             </strong>
           </div>
           <div>
-            <BuyCredit id={user.id} username={user.username} />
+            <BuyCredit id={user.id} username={user.username} data={data} />
           </div>
           <div>
             <strong>Redeem Credit</strong>

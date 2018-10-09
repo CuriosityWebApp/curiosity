@@ -38,6 +38,7 @@ class BuyCredit extends Component {
               {this.state.showComponent ? (
                 <PaymentCheckOut
                   id={this.props.id}
+                  data={this.props.data}
                   showComponent={this.state.showComponent}
                   handleClose={this.handleClose}
                 />

@@ -24,14 +24,10 @@ const UserType = new GraphQLObjectType({
       type: GraphQLInt,
       resolve(parent, args) {
         return Answer.find({ userId: parent.id })
-          .then((data) => {
-            data.forEach(item => console.log('inside then at rank', item.score));
-            return data.reduce((sum, item) => {
-              console.log('inside reduce', sum);
-              sum += item.score;
-              return sum;
-            }, 0);
-          })
+          .then(data => data.reduce((sum, item) => {
+            sum += item.score;
+            return sum;
+          }, 0))
           .catch(err => console.log('error in rank', err));
       },
     },
