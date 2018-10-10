@@ -44,6 +44,7 @@ const getUser = gql`
 const getQuestion = gql`
 	query($id: ID!) {
 		question(id: $id) {
+			id
 			questionTitle
 			questionContent
 			category
@@ -92,39 +93,23 @@ const getQuestions = gql`
 	query($limit: Int!, $skip: Int!) {
 		questions(limit: $limit, skip: $skip) {
 			id
-			category
-			questionTitle
-			questionContent
-			score
-			ratedUpBy
-			ratedDownBy
-			user {
-				username
-			}
-			bounty
-			restriction
-			tags
-			createdAt
-			answers {
-				id
-			}
 		}
 	}
 `;
 
 const checkUserEmail = gql`
-  query($email: String!) {
-    checkUserEmail(email: $email) {
-      id
-      username
-      email
-      rank
-      credit
-      messages {
-        unread
-      }
-    }
-  }
+	query($email: String!) {
+		checkUserEmail(email: $email) {
+			id
+			username
+			email
+			rank
+			credit
+			messages {
+				unread
+			}
+		}
+	}
 `;
 const checkUsername = gql`
 	query($username: String!) {
@@ -157,46 +142,46 @@ const searchQuestion = gql`
 `;
 
 const getMessages = gql`
-  query($receiverId: ID) {
-    userMessages(receiverId: $receiverId) {
-      id
-      receiverId
-      senderId
-      createdAt
-      sender {
-        id
-        username
-      }
-      recipient {
-        id
-        username
-      }
-      messageTitle
-      messageContent
-      unread
-    }
-  }
+	query($receiverId: ID) {
+		userMessages(receiverId: $receiverId) {
+			id
+			receiverId
+			senderId
+			createdAt
+			sender {
+				id
+				username
+			}
+			recipient {
+				id
+				username
+			}
+			messageTitle
+			messageContent
+			unread
+		}
+	}
 `;
 const userSentMessages = gql`
-  query($senderId: ID) {
-    userSentMessages(senderId: $senderId) {
-      id
-      receiverId
-      senderId
-      createdAt
-      sender {
-        id
-        username
-      }
-      recipient {
-        id
-        username
-      }
-      messageTitle
-      messageContent
-      unread
-    }
-  }
+	query($senderId: ID) {
+		userSentMessages(senderId: $senderId) {
+			id
+			receiverId
+			senderId
+			createdAt
+			sender {
+				id
+				username
+			}
+			recipient {
+				id
+				username
+			}
+			messageTitle
+			messageContent
+			unread
+		}
+	}
 `;
 
 const getUsernames = gql`
