@@ -18,9 +18,17 @@ class Search extends React.Component {
 
   executeSearch(e) {
     e.preventDefault();
-    this.setState({ searched: true }, () => {
-      this.setState({ searched: false, term: '' });
-    });
+    if (this.state.term === '') {
+      this.setState({ term: '!empty' }, () => {
+        this.setState({ searched: true }, () => {
+          this.setState({ searched: false, term: '' });
+        });
+      });
+    } else {
+      this.setState({ searched: true }, () => {
+        this.setState({ searched: false, term: '' });
+      });
+    }
   }
 
   render() {
