@@ -333,6 +333,15 @@ const Mutation = new GraphQLObjectType({
         return Message.updateMany({ receiverId: args.receiverId }, { unread: false });
       },
     },
+    ClearNotifications: {
+      type: AnswerType,
+      args: {
+        userId: { type: GraphQLID },
+      },
+      resolve(parent, args) {
+        return Answer.updateMany({ userId: args.userId }, { questionerSeen: true });
+      },
+    },
   },
 });
 

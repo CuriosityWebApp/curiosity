@@ -186,12 +186,12 @@ class NavBar extends Component {
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="icon-circle">
+                  <Link to="/notifications" className="icon-circle">
                     <i className="fa fa-bell-o" />
                     {unreadNotifications > 0 && (
                       <span className="badge badge-success">{unreadNotifications}</span>
                     )}
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </span>

@@ -112,7 +112,13 @@ const checkUserEmail = gql`
         id
         questionTitle
         answers {
+          id
           answer
+          createdAt
+          question {
+            id
+            questionTitle
+          }
           user {
             username
           }

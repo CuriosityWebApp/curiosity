@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import { DeleteNotification } from '../../mutations/mutations.js';
-import { graphql } from 'react-apollo';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 class NotificationItem extends Component {
   constructor(props) {
@@ -10,7 +9,6 @@ class NotificationItem extends Component {
       clicked: null,
     };
     this.deleteNotification = this.deleteNotification.bind(this);
-    this.replyNotification = this.replyNotification.bind(this);
   }
 
   deleteNotification() {
@@ -26,17 +24,6 @@ class NotificationItem extends Component {
       });
   }
 
-  replyNotification() {
-    let newTitle = '(RE:"' + this.props.post.NotificationTitle + '")';
-    let oldContent =
-      '\n\n\n' +
-      `[On ${moment(this.props.post.createdAt).format('MMMM Do YYYY, h:mm:ss a')},${
-        this.props.post.sender.username
-      } wrote : "${this.props.post.NotificationContent}"]`;
-
-    this.props.replyFormat(this.props.post.sender.username, newTitle, oldContent);
-  }
-
   render() {
     let data = this.props.post;
     return (
@@ -44,29 +31,21 @@ class NotificationItem extends Component {
         <div className="list-group-item list-group-item-action flex-column align-items-start">
           <div className="d-flex w-100 justify-content-between">
             <div>
-              <small>Sender: {data.sender.username}</small>
+              <small>Question Title: {data.question.questionTitle}</small>
               <br />
-              <small>Receiver: {data.recipient.username}</small>
+              <small>Answer: {data.answer}</small>
               <br />
-              <small>Notification Title: {data.NotificationTitle}</small>
-              <br />
-              <small>Content: {data.NotificationContent}</small> <br />
               <small>Date: {moment(data.createdAt).fromNow()}</small> <br />
-              <small>New?: {JSON.stringify(data.unread)}</small>
             </div>
             <div>
-              <button type="button" className="btn btn-info" onClick={this.replyNotification}>
-                Reply
-              </button>
-              <button type="button" className="btn btn-danger" onClick={this.deleteNotification}>
-                Delete
-              </button>
+              <Link to={`/questionContent/${data.question.id}`} style={{ cursor: 'pointer' }}>
+                <button type="button" className="btn btn-danger">
+                  Go To Question
+                </button>
+              </Link>
             </div>
           </div>
           <br />
-          <div className="answerContent">
-            <p />
-          </div>
         </div>
       </div>
     );

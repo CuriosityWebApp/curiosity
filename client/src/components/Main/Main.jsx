@@ -94,13 +94,7 @@ class Main extends Component {
                           exact
                           path="/search/:term"
                           render={({ match }) => {
-                            return (
-                              <SearchList
-                                userId={id}
-                                term={match.params.term}
-                                user={this.props.user}
-                              />
-                            );
+                            return <SearchList term={match.params.term} />;
                           }}
                         />
                         <Route

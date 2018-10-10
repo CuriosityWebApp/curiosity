@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
-import { getMessages } from '../../queries/queries.js';
-import { ReadMessages } from '../../mutations/mutations.js';
+import { ClearNotifications } from '../../mutations/mutations.js';
+import { graphql } from 'react-apollo';
 import NotificationItem from './NotificationItem.jsx';
 
 class Notifications extends Component {
   constructor(props) {
     super(props);
-    this.displayMessages = this.displayMessages.bind(this);
+    this.displayNotifications = this.displayNotifications.bind(this);
+    this.clearNotifications = this.clearNotifications.bind(this);
   }
 
-  displayMessages() {
+  displayNotifications() {
     let unreadNotifications = [];
     for (let j = 0; j < this.props.questions.length; j++) {
       for (let k = 0; k < this.props.questions[j].answers.length; k++) {
@@ -19,40 +19,40 @@ class Notifications extends Component {
         }
       }
     }
-    console.log(unreadNotifications);
-    // if (this.props.getMessages.userMessages.length > 0) {
-    //   return this.props.getMessages.userMessages.map(post => {
-    //     return (
-    //       <div>
-    //         <NotificationItem
-    //           key={post.id}
-    //           post={post}
-    //           onSelect={this.onSelect}
-    //           replyFormat={this.props.replyFormat}
-    //           getMessages={this.props.getMessages}
-    //         />
-    //       </div>
-    //     );
-    //   });
-    // } else {
-    //   return (
-    //     <div className="card">
-    //       <div className="card-body">
-    //         <div>No Messages</div>
-    //       </div>
-    //     </div>
-    //   );
-    // }
+    if (unreadNotifications.length > 0) {
+      return unreadNotifications.map(post => {
+        return <NotificationItem key={post.id} post={post} />;
+      });
+    } else {
+      return (
+        <div className="card">
+          <div className="card-body">
+            <div>No Notifications</div>
+          </div>
+        </div>
+      );
+    }
+  }
+  clearNotifications() {
+    this.props.ClearNotifications({
+      mutation: ClearNotifications,
+      variables: {
+        userId: this.props.userId,
+      },
+    });
   }
 
   render() {
     return (
       <div>
         <h2> Notifications</h2>
-        {this.displayMessages()}
+        <button type="button" className="btn btn-warning" onClick={this.clearNotifications}>
+          Clear Notifications
+        </button>
+        {this.displayNotifications()}
       </div>
     );
   }
 }
 
-export default Notifications;
+export default graphql(ClearNotifications, { name: 'ClearNotifications' })(Notifications);
