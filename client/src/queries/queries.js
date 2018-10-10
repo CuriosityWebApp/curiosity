@@ -44,6 +44,7 @@ const getUser = gql`
 const getQuestion = gql`
   query($id: ID!) {
     question(id: $id) {
+      id
       questionTitle
       questionContent
       category
@@ -89,25 +90,9 @@ const getAnswer = gql`
 `;
 
 const getQuestions = gql`
-  query($limit: Int!, $skip: Int!) {
-    questions(limit: $limit, skip: $skip) {
+  query($limit: Int!, $skip: Int!, $filter: String) {
+    questions(limit: $limit, skip: $skip, filter: $filter) {
       id
-      category
-      questionTitle
-      questionContent
-      score
-      ratedUpBy
-      ratedDownBy
-      user {
-        username
-      }
-      bounty
-      restriction
-      tags
-      createdAt
-      answers {
-        id
-      }
     }
   }
 `;

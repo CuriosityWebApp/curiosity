@@ -12,14 +12,13 @@ class QuestionList extends Component {
 			selected: null,
 			skip: 0,
 			questions: [],
-			rerender: true,
-			questionsScore: {}
+			filterBy: ''
 		};
 		this.onSelect = this.onSelect.bind(this);
 		this.onScroll = this.onScroll.bind(this);
 		this.getNextQuestions = this.getNextQuestions.bind(this);
 		this.throttledQuestionCall = _.throttle(this.getNextQuestions, 250, { leading: false });
-		this.setQuestionScore = this.setQuestionScore.bind(this);
+		this.displayCategories = this.displayCategories.bind(this);
 	}
 	componentDidMount() {
 		this.getNextQuestions();
@@ -36,26 +35,49 @@ class QuestionList extends Component {
 			this.throttledQuestionCall();
 		}
 	};
-
-	forceRender() {
-		console.log('rerendering', this.state);
-		this.setState({ rerender: !this.state.rerender });
+	displayCategories() {
+		let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
+		return categories.map(category => {
+			return (
+				<option key={category} value={category}>
+					{category}
+				</option>
+			);
+		});
 	}
+
+	filterQuestions() {
+		this.props.client
+			.query({
+				query: getQuestions,
+				variables: {
+					limit: 15,
+					skip: 0,
+					filter: this.state.filterBy
+				}
+			})
+			.then(({ data }) => {
+				console.log('this is data filter', data);
+				this.setState({ questions: data.questions });
+				window.addEventListener('scroll', this.onScroll, false);
+			});
+	}
+
 	getNextQuestions = async () => {
 		await this.props.client
 			.query({
 				query: getQuestions,
 				variables: {
 					limit: 15,
-					skip: this.state.skip
+					skip: this.state.skip,
+					filter: this.state.filterBy
 				}
 			})
 			.then(({ data }) => {
 				let newProps = this.state.questions.concat(data.questions);
-				let next = this.state.skip + 15;
+				let next = this.state.skip + 10;
 				this.setState({ questions: newProps, skip: next }, () => {
 					window.addEventListener('scroll', this.onScroll, false);
-					this.setQuestionScore(this.state.questions);
 				});
 			})
 			.catch(err => console.log('error in nextquestions', err));
@@ -66,31 +88,19 @@ class QuestionList extends Component {
 			selected: id
 		});
 	}
-	setQuestionScore(info) {
-		let score = {};
-		info.forEach(item => {
-			score[item.id] = item.score;
-		});
-		this.setState({ questionsScore: score });
-	}
 
 	displayQuestions() {
 		if (this.props.data.loading) {
 			return <div>Loading Questions...</div>;
 		} else {
-			let data = this.state.questions.length > 1 ? this.state.questions : this.props.data.questions;
-			// this.props.data.refetch();
+			let data = this.state.questions.length > 0 ? this.state.questions : this.props.data.questions;
 			return data.map(post => {
 				return (
 					<QuestionItem
 						key={post.id}
-						postData={post}
-						score={post.score}
+						questionId={post.id}
 						onSelect={this.onSelect}
 						userId={this.props.userId}
-						rerender={this.forceRender.bind(this)}
-						refetch={this.props.data.refetch}
-						ratedUp={post.ratedUpBy}
 					/>
 				);
 			});
@@ -102,8 +112,22 @@ class QuestionList extends Component {
 			return (
 				<div>
 					<h2>
-						<u>Questions</u>{' '}
+						<u>Questions</u>
 					</h2>
+					{'    '}
+					<label> Filter By: </label>{' '}
+					<select onChange={e => this.setState({ filterBy: e.target.value })}>
+						<option>Select Category</option>
+						{this.displayCategories()}
+					</select>
+					<button
+						type="submit"
+						className="btn btn-primary mb-2"
+						style={{ marginLeft: '10px' }}
+						onClick={this.filterQuestions.bind(this)}
+					>
+						Submit
+					</button>
 					<div />
 					{this.displayQuestions()}
 					<div>
@@ -124,7 +148,8 @@ export default compose(
 			return {
 				variables: {
 					limit: 15,
-					skip: 0
+					skip: 0,
+					filter: ''
 				}
 			};
 		}

@@ -11,31 +11,38 @@ class Notifications extends Component {
   }
 
   displayMessages() {
-    console.log(this.props);
-
-    if (this.props.getMessages.userMessages.length > 0) {
-      return this.props.getMessages.userMessages.map(post => {
-        return (
-          <div>
-            <NotificationItem
-              key={post.id}
-              post={post}
-              onSelect={this.onSelect}
-              replyFormat={this.props.replyFormat}
-              getMessages={this.props.getMessages}
-            />
-          </div>
-        );
-      });
-    } else {
-      return (
-        <div className="card">
-          <div className="card-body">
-            <div>No Messages</div>
-          </div>
-        </div>
-      );
+    let unreadNotifications = [];
+    for (let j = 0; j < this.props.questions.length; j++) {
+      for (let k = 0; k < this.props.questions[j].answers.length; k++) {
+        if (this.props.questions[j].answers[k].questionerSeen === false) {
+          unreadNotifications.push(this.props.questions[j].answers[k]);
+        }
+      }
     }
+    console.log(unreadNotifications);
+    // if (this.props.getMessages.userMessages.length > 0) {
+    //   return this.props.getMessages.userMessages.map(post => {
+    //     return (
+    //       <div>
+    //         <NotificationItem
+    //           key={post.id}
+    //           post={post}
+    //           onSelect={this.onSelect}
+    //           replyFormat={this.props.replyFormat}
+    //           getMessages={this.props.getMessages}
+    //         />
+    //       </div>
+    //     );
+    //   });
+    // } else {
+    //   return (
+    //     <div className="card">
+    //       <div className="card-body">
+    //         <div>No Messages</div>
+    //       </div>
+    //     </div>
+    //   );
+    // }
   }
 
   render() {
