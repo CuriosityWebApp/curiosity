@@ -21,7 +21,12 @@ class Main extends Component {
     let { username, signedIn, rank, credits, id, email } = this.props.user;
     return (
       <div>
-        <NavBar user={this.props.user} logout={this.props.logout} messages={this.props.messages} />
+        <NavBar
+          user={this.props.user}
+          logout={this.props.logout}
+          messages={this.props.messages}
+          questions={this.props.questions}
+        />
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <div className="bg-content">
             <div className="container-fluid">
@@ -109,7 +114,7 @@ class Main extends Component {
                           exact
                           path="/notifications"
                           render={() => {
-                            return <Notifications userId={id} />;
+                            return <Notifications userId={id} questions={this.props.questions} />;
                           }}
                         />
                       </Switch>

@@ -125,6 +125,7 @@ const AnswerType = new GraphQLObjectType({
     ratedUpBy: { type: new GraphQLList(GraphQLID) },
     ratedDownBy: { type: new GraphQLList(GraphQLID) },
     answerChosen: { type: GraphQLBoolean },
+    questionerSeen: { type: GraphQLBoolean },
     user: {
       type: UserType,
       resolve(parent, args) {

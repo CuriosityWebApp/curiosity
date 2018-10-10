@@ -16,6 +16,14 @@ class NavBar extends Component {
         unreadMessages++;
       }
     }
+    let unreadNotifications = 0;
+    for (let j = 0; j < this.props.questions.length; j++) {
+      for (let k = 0; k < this.props.questions[j].answers.length; k++) {
+        if (this.props.questions[j].answers[k].questionerSeen === false) {
+          unreadNotifications++;
+        }
+      }
+    }
     return (
       <div id="snb">
         <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
@@ -172,7 +180,7 @@ class NavBar extends Component {
                 <li>
                   <Link to="/messages/new" className="icon-circle">
                     <i className="fa fa-envelope-o" />
-                    {this.props.messages.length > 0 && (
+                    {unreadMessages > 0 && (
                       <span className="badge badge-danger">{unreadMessages}</span>
                     )}
                   </Link>
@@ -180,7 +188,9 @@ class NavBar extends Component {
                 <li>
                   <a href="#" className="icon-circle">
                     <i className="fa fa-bell-o" />
-                    <span className="badge badge-success">6</span>
+                    {unreadNotifications > 0 && (
+                      <span className="badge badge-success">{unreadNotifications}</span>
+                    )}
                   </a>
                 </li>
               </ul>

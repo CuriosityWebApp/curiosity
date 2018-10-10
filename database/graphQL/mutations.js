@@ -79,6 +79,7 @@ const Mutation = new GraphQLObjectType({
           questionId: args.questionId,
           answer: args.answer,
           score: 0,
+          questionerSeen: false,
         });
         return answer.save();
       },
