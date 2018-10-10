@@ -90,8 +90,8 @@ const getAnswer = gql`
 `;
 
 const getQuestions = gql`
-	query($limit: Int!, $skip: Int!) {
-		questions(limit: $limit, skip: $skip) {
+	query($limit: Int!, $skip: Int!, $filter: String) {
+		questions(limit: $limit, skip: $skip, filter: $filter) {
 			id
 		}
 	}
