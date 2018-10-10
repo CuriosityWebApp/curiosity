@@ -40,6 +40,7 @@ class NewList extends Component {
             <MessageItem
               key={post.id}
               post={post}
+              replyFormat={this.props.replyFormat}
               onSelect={this.onSelect}
               getMessages={this.props.getMessages}
             />

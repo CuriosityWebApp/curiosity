@@ -25,6 +25,7 @@ class InboxList extends Component {
               key={post.id}
               post={post}
               onSelect={this.onSelect}
+              replyFormat={this.props.replyFormat}
               getMessages={this.props.getMessages}
             />
           );

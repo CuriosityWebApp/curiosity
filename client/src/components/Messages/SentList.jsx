@@ -23,6 +23,7 @@ class SentList extends Component {
             <MessageItem
               key={post.id}
               post={post}
+              replyFormat={this.props.replyFormat}
               onSelect={this.onSelect}
               userMessages={this.props.userMessages}
             />
