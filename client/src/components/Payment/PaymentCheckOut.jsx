@@ -3,6 +3,7 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 import { Button } from 'react-bootstrap';
 import { Mutation } from 'react-apollo';
 import { Modal, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
+import axios from 'axios';
 
 import { UpdateCredit } from '../../mutations/mutations.js';
 
@@ -81,16 +82,19 @@ class PaymentCheckOut extends Component {
 
   async submit(UpdateCredit) {
     let token = await this.props.stripe.createToken({ name: this.props.username });
+    console.log(token);
 
-    let response = await fetch('/charge', {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: token,
-    });
-    if (response.ok) {
-      console.log('Purchase Complete!');
-      this.handlePayment(UpdateCredit);
-    }
+    axios
+      .post('/charge', {
+        usd: this.state.usd,
+        token: token,
+      })
+      .then(res => {
+        if (res.data.paid) {
+          console.log('Purchase Complete!', res.data);
+          this.handlePayment(UpdateCredit);
+        }
+      });
   }
 
   render() {
