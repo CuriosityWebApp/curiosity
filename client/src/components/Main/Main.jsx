@@ -9,6 +9,7 @@ import ProfileUser from '../User/ProfileUser.jsx';
 import NavBar from './NavBar.jsx';
 import SearchList from '../Search/SearchList.jsx';
 import MessagesAndCreate from '../Messages/MessagesAndCreate.jsx';
+import Notifications from '../Notifications/Notifications.jsx';
 
 class Main extends Component {
   constructor(props) {
@@ -102,6 +103,13 @@ class Main extends Component {
                           path="/messages/:folder"
                           render={({ match }) => {
                             return <MessagesAndCreate folder={match.params.folder} userId={id} />;
+                          }}
+                        />
+                        <Route
+                          exact
+                          path="/notifications"
+                          render={() => {
+                            return <Notifications userId={id} />;
                           }}
                         />
                       </Switch>

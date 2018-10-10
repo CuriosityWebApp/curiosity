@@ -112,6 +112,16 @@ class NavBar extends Component {
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
+                    <Link to="/notifications">
+                      <div>
+                        <i className="fa fa-bell" />
+                        Notifications
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+                <div className="card" style={{ cursor: 'pointer' }}>
+                  <div className="card-header">
                     <Link
                       to="/"
                       onClick={e => {
