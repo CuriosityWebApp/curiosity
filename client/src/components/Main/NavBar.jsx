@@ -16,6 +16,14 @@ class NavBar extends Component {
         unreadMessages++;
       }
     }
+    let unreadNotifications = 0;
+    for (let j = 0; j < this.props.questions.length; j++) {
+      for (let k = 0; k < this.props.questions[j].answers.length; k++) {
+        if (this.props.questions[j].answers[k].questionerSeen === false) {
+          unreadNotifications++;
+        }
+      }
+    }
     return (
       <div id="snb">
         <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
@@ -112,6 +120,16 @@ class NavBar extends Component {
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
+                    <Link to="/notifications">
+                      <div>
+                        <i className="fa fa-bell" />
+                        Notifications
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+                <div className="card" style={{ cursor: 'pointer' }}>
+                  <div className="card-header">
                     <Link
                       to="/"
                       onClick={e => {
@@ -162,16 +180,18 @@ class NavBar extends Component {
                 <li>
                   <Link to="/messages/new" className="icon-circle">
                     <i className="fa fa-envelope-o" />
-                    {this.props.messages.length > 0 && (
+                    {unreadMessages > 0 && (
                       <span className="badge badge-danger">{unreadMessages}</span>
                     )}
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="icon-circle">
+                  <Link to="/notifications" className="icon-circle">
                     <i className="fa fa-bell-o" />
-                    <span className="badge badge-success">6</span>
-                  </a>
+                    {unreadNotifications > 0 && (
+                      <span className="badge badge-success">{unreadNotifications}</span>
+                    )}
+                  </Link>
                 </li>
               </ul>
             </span>

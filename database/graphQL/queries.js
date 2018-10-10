@@ -4,10 +4,19 @@ const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
 const Message = require('../../database/model/message.js');
 const {
-  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLBoolean,
 } = require('graphql');
 const {
-  UserType, QuestionType, AnswerType, TransactionType, MessageType,
+  UserType,
+  QuestionType,
+  AnswerType,
+  TransactionType,
+  MessageType,
 } = require('./typeDefs.js');
 
 const RootQuery = new GraphQLObjectType({
@@ -50,7 +59,11 @@ const RootQuery = new GraphQLObjectType({
     },
     questions: {
       type: new GraphQLList(QuestionType),
-      args: { limit: { type: GraphQLInt }, skip: { type: GraphQLInt }, filter: { type: GraphQLString } },
+      args: {
+        limit: { type: GraphQLInt },
+        skip: { type: GraphQLInt },
+        filter: { type: GraphQLString },
+      },
       resolve(parent, args) {
         console.log('these are the args', args);
         if (!args.filter) {
@@ -100,7 +113,9 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(QuestionType),
       args: { term: { type: GraphQLString } },
       resolve(parent, args) {
-        // code to get data from db
+        if (args.term === '!empty') {
+          return Question.find({}).limit(25);
+        }
         return Question.find({
           $or: [
             { questionContent: { $regex: args.term, $options: 'i' } },
@@ -108,7 +123,7 @@ const RootQuery = new GraphQLObjectType({
             { category: { $regex: args.term, $options: 'i' } },
             { tags: { $regex: args.term, $options: 'i' } },
           ],
-        });
+        }).limit(25);
       },
     },
     userMessages: {
