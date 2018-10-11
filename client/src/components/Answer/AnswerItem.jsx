@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
+import { Link } from 'react-router-dom';
 import { getAnswer } from '../../queries/queries.js';
 import {
   AnswerLike,
@@ -8,6 +9,7 @@ import {
   AddTransaction,
   AddMessage,
 } from '../../mutations/mutations.js';
+import ProfileSmallPage from '../PublicProfile/ProfileSmallPage.jsx';
 import moment from 'moment';
 import AnswerChoice from './AnswerChoice.jsx';
 import _ from 'lodash';
@@ -105,6 +107,7 @@ class AnswerItem extends Component {
     if (data && data.loading) {
       return <div>Loading answers...</div>;
     } else {
+      console.log(data);
       return (
         <React.Fragment>
           <div className="list-group">
@@ -129,7 +132,18 @@ class AnswerItem extends Component {
                     />
                   </div>
                 </div>
-                <div className="col-11">
+                <div className="col-2">
+                  <Link
+                    to={`/user/${data.answer.user.id}`}
+                    style={{ textDecoration: 'none', color: 'black' }}
+                  >
+                    <div>
+                      <ProfileSmallPage userId={data.answer.user.id} />
+                    </div>
+                  </Link>
+                </div>
+                <div />
+                <div className="col-9">
                   <div className="d-flex w-100 justify-content-between">
                     <div>
                       <small>

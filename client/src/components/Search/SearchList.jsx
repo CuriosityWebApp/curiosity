@@ -7,20 +7,34 @@ import SearchItem from '../Search/SearchItem.jsx';
 class SearchList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      onSelect: null,
+    };
+    this.onSelect = this.onSelect.bind(this);
+  }
+
+  onSelect(id) {
+    this.setState({
+      onSelect: id,
+    });
   }
 
   displayQuestions() {
     let data = this.props.data.searchQuestion;
     if (this.props.data.loading) {
       return <div>Loading Questions...</div>;
-    } else if (data) {
+    } else if (data && !this.state.onSelect) {
       if (data.length < 1) {
         return <div>No search results</div>;
       } else {
         return data.map(post => {
-          return <SearchItem key={post.id} postData={post} />;
+          return <SearchItem key={post.id} postData={post} onSelect={this.onSelect} />;
         });
       }
+    }
+
+    if (this.state.onSelect) {
+      return <Redirect to={`/questionContent/${this.state.onSelect}`} />;
     }
   }
 

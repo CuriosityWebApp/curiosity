@@ -34,6 +34,7 @@ class Notifications extends Component {
     }
   }
   clearNotifications() {
+    console.log(this.props.userId);
     this.props.ClearNotifications({
       mutation: ClearNotifications,
       variables: {
