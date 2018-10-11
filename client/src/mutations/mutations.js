@@ -166,6 +166,14 @@ const ReadMessages = gql`
   }
 `;
 
+const ClearNotifications = gql`
+  mutation($id: ID) {
+    ClearNotifications(id: $id) {
+      id
+    }
+  }
+`;
+
 module.exports = {
   AddQuestion,
   AddAnswer,
@@ -182,4 +190,5 @@ module.exports = {
   QuestionLike,
   QuestionDislike,
   ReadMessages,
+  ClearNotifications,
 };

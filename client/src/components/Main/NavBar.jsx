@@ -16,6 +16,14 @@ class NavBar extends Component {
         unreadMessages++;
       }
     }
+    let unreadNotifications = 0;
+    for (let j = 0; j < this.props.questions.length; j++) {
+      for (let k = 0; k < this.props.questions[j].answers.length; k++) {
+        if (this.props.questions[j].answers[k].questionerSeen === false) {
+          unreadNotifications++;
+        }
+      }
+    }
     return (
       <div id="snb">
         <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
@@ -56,7 +64,7 @@ class NavBar extends Component {
                   <div className="card-header">
                     <Link to="/">
                       <div>
-                        <i className="fa fa-list" />
+                        <i className="fas fa-list" />
                         Question List
                       </div>
                     </Link>
@@ -66,7 +74,7 @@ class NavBar extends Component {
                   <div className="card-header">
                     <Link to="/createQuestion">
                       <div>
-                        <i className="fa fa-question" />
+                        <i className="fas fa-question" />
                         Ask Question
                       </div>
                     </Link>
@@ -76,7 +84,7 @@ class NavBar extends Component {
                   <div className="card-header">
                     <Link to="/profileUser">
                       <div>
-                        <i className="fa fa-user" />
+                        <i className="fas fa-user" />
                         Profile
                       </div>
                     </Link>
@@ -85,7 +93,7 @@ class NavBar extends Component {
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
                     <div>
-                      <i className="fa fa-envelope-o" />
+                      <i className="fas fa-envelope" />
                       Messages
                       {unreadMessages > 0 && <span className="label">New</span>}
                     </div>
@@ -93,9 +101,14 @@ class NavBar extends Component {
                 </div>
                 <div className="card">
                   <ul className="list-group list-group-flush">
-                    <Link to="/messages/new" style={{ cursor: 'pointer' }}>
+                    <Link to="/privatemessage" style={{ cursor: 'pointer' }}>
                       <li className="list-group-item">
-                        <span>New</span>
+                        <span>Create Message</span>
+                      </li>
+                    </Link>
+                    <Link to="/messages/unread" style={{ cursor: 'pointer' }}>
+                      <li className="list-group-item">
+                        <span>Unread</span>
                       </li>
                     </Link>
                     <Link to="/messages/inbox" style={{ cursor: 'pointer' }}>
@@ -112,6 +125,16 @@ class NavBar extends Component {
                 </div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
+                    <Link to="/notifications">
+                      <div>
+                        <i className="fas fa-bell" />
+                        Notifications
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+                <div className="card" style={{ cursor: 'pointer' }}>
+                  <div className="card-header">
                     <Link
                       to="/"
                       onClick={e => {
@@ -119,7 +142,7 @@ class NavBar extends Component {
                       }}
                     >
                       <div>
-                        <i className="fa fa-sign-out" />
+                        <i className="fas fa-sign-out-alt" />
                         Log Out
                       </div>
                     </Link>
@@ -132,7 +155,7 @@ class NavBar extends Component {
                   <div className="card-header">
                     <LinkContainer to="/">
                       <div>
-                        <i className="fa fa-list" />
+                        <i className="fas fa-list" />
                         Question List
                       </div>
                     </LinkContainer>
@@ -142,7 +165,7 @@ class NavBar extends Component {
                   <div className="card-header">
                     <LinkContainer to="/login">
                       <div>
-                        <i className="fa fa-sign-in" />
+                        <i className="fas fa-sign-in-alt" />
                         Login
                       </div>
                     </LinkContainer>
@@ -161,17 +184,19 @@ class NavBar extends Component {
               <ul className="right-navbar">
                 <li>
                   <Link to="/messages/new" className="icon-circle">
-                    <i className="fa fa-envelope-o" />
-                    {this.props.messages.length > 0 && (
+                    <i className="fas fa-envelope" />
+                    {unreadMessages > 0 && (
                       <span className="badge badge-danger">{unreadMessages}</span>
                     )}
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="icon-circle">
-                    <i className="fa fa-bell-o" />
-                    <span className="badge badge-success">6</span>
-                  </a>
+                  <Link to="/notifications" className="icon-circle">
+                    <i className="fas fa-bell" />
+                    {unreadNotifications > 0 && (
+                      <span className="badge badge-success">{unreadNotifications}</span>
+                    )}
+                  </Link>
                 </li>
               </ul>
             </span>

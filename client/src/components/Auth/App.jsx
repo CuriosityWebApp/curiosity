@@ -17,6 +17,7 @@ class App extends Component {
     super(props);
     this.state = {
       messages: [],
+      questions: [],
     };
     this.handleLogout = this.handleLogout.bind(this);
     this.authListener = this.authListener.bind(this);
@@ -63,6 +64,7 @@ class App extends Component {
         if (data.checkUserEmail) {
           this.props.setUser(data.checkUserEmail, true, email);
           this.setState({ messages: data.checkUserEmail.messages });
+          this.setState({ questions: data.checkUserEmail.questions });
         } else {
           this.props.setUser({}, true, email);
         }
@@ -98,6 +100,7 @@ class App extends Component {
           uiConfig={this.uiConfig}
           firebaseAuth={firebase.auth()}
           messages={this.state.messages}
+          questions={this.state.questions}
         />
       </div>
     );

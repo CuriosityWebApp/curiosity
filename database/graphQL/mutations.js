@@ -79,6 +79,7 @@ const Mutation = new GraphQLObjectType({
           questionId: args.questionId,
           answer: args.answer,
           score: 0,
+          questionerSeen: false,
         });
         return answer.save();
       },
@@ -329,7 +330,16 @@ const Mutation = new GraphQLObjectType({
         receiverId: { type: GraphQLID },
       },
       resolve(parent, args) {
-        return Message.update({ receiverId: args.receiverId }, { unread: false }, { multi: true });
+        return Message.updateMany({ receiverId: args.receiverId }, { unread: false });
+      },
+    },
+    ClearNotifications: {
+      type: AnswerType,
+      args: {
+        id: { type: GraphQLID },
+      },
+      resolve(parent, args) {
+        return Answer.updateMany({ _id: args.id }, { questionerSeen: true });
       },
     },
   },

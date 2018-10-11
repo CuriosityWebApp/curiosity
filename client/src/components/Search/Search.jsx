@@ -14,13 +14,40 @@ class Search extends React.Component {
       clicked: false,
     };
     this.executeSearch = this.executeSearch.bind(this);
+    this.searchQuestions = this.searchQuestions.bind(this);
+  }
+
+  searchQuestions(e) {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      this.props.client
+        .query({
+          query: searchQuestion,
+          variables: {
+            term: this.state.term,
+          },
+        })
+        .then(({ data }) => {
+          if (data.searchQuestion) {
+            this.setState({ questions: data.searchQuestion });
+          }
+        });
+    });
   }
 
   executeSearch(e) {
     e.preventDefault();
-    this.setState({ searched: true }, () => {
-      this.setState({ searched: false, term: '' });
-    });
+    if (this.state.term === '') {
+      this.setState({ term: ' ' }, () => {
+        this.setState({ searched: true }, () => {
+          this.setState({ searched: false, term: '' });
+        });
+      });
+    } else {
+      this.setState({ searched: true }, () => {
+        this.setState({ searched: false, term: '' });
+      });
+    }
   }
 
   render() {
@@ -30,14 +57,40 @@ class Search extends React.Component {
           <label className="sr-only" htmlFor="inlineFormInputName2">
             Name
           </label>
-          <input
-            className="form-control"
-            placeholder="Filter Questions"
-            value={this.state.term}
-            onChange={e => {
-              this.setState({ term: e.target.value });
+
+          <Autocomplete
+            items={this.state.questions}
+            getItemValue={item => item.questionTitle}
+            menuStyle={{
+              borderRadius: '3px',
+              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+              background: 'rgba(255, 255, 255, 1)',
+              padding: '2px 0',
+              fontSize: '90%',
+              position: 'absolute',
+              overflow: 'auto',
+              maxHeight: '50%',
+              zIndex: 1,
             }}
-            style={{ marginBottom: '7px', marginLeft: '60px', width: '400px' }}
+            renderItem={(item, highlighted) => (
+              <div
+                key={item.id}
+                style={{
+                  backgroundColor: highlighted ? '#eee' : 'transparent',
+                }}
+              >
+                {item.questionTitle}
+              </div>
+            )}
+            onChange={this.searchQuestions}
+            onSelect={value => this.setState({ term: value })}
+            value={this.state.term}
+            inputProps={{
+              placeholder: 'Filter Questions',
+              name: 'term',
+              style: { width: '500px' },
+              className: 'form-control',
+            }}
           />
           <button
             type="submit"

@@ -37,13 +37,13 @@ const UserType = new GraphQLObjectType({
     questions: {
       type: new GraphQLList(QuestionType),
       resolve(parent, args) {
-        return Question.find({ userId: parent.id });
+        return Question.find({ userId: parent.id }).sort('-createdAt');
       },
     },
     answers: {
       type: new GraphQLList(AnswerType),
       resolve(parent, args) {
-        return Answer.find({ userId: parent.id });
+        return Answer.find({ userId: parent.id }).sort('-createdAt');
       },
     },
     transactions: {
@@ -125,6 +125,7 @@ const AnswerType = new GraphQLObjectType({
     ratedUpBy: { type: new GraphQLList(GraphQLID) },
     ratedDownBy: { type: new GraphQLList(GraphQLID) },
     answerChosen: { type: GraphQLBoolean },
+    questionerSeen: { type: GraphQLBoolean },
     user: {
       type: UserType,
       resolve(parent, args) {

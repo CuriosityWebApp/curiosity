@@ -169,7 +169,6 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(QuestionType),
       args: { term: { type: GraphQLString } },
       resolve(parent, args) {
-        // code to get data from db
         return Question.find({
           $or: [
             { questionContent: { $regex: args.term, $options: 'i' } },
@@ -177,7 +176,7 @@ const RootQuery = new GraphQLObjectType({
             { category: { $regex: args.term, $options: 'i' } },
             { tags: { $regex: args.term, $options: 'i' } },
           ],
-        });
+        }).limit(25);
       },
     },
     userMessages: {

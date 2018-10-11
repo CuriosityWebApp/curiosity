@@ -37,7 +37,7 @@ class QuestionList extends Component {
 	}
 
 	onScroll = () => {
-		if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300 && this.state.questions.length) {
+		if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400 && this.state.questions.length) {
 			window.removeEventListener('scroll', this.onScroll, false);
 			this.throttledQuestionCall();
 		}
@@ -148,10 +148,22 @@ class QuestionList extends Component {
 	}
 
 	render() {
+		let filter = this.state.filterBy ? <span class="badge badge-warning">{this.state.filterBy}</span> : '';
+		let sorted = this.state.sortBy ? <span class="badge badge-warning">{this.state.sortBy}</span> : '';
+		let range = this.state.range ? (
+			this.state.range > 1 ? (
+				<span class="badge badge-warning">{this.state.range} days</span>
+			) : (
+				<span class="badge badge-warning">Today</span>
+			)
+		) : (
+			<span class="badge badge-warning">All time</span>
+		);
 		if (!this.state.selected) {
 			return (
 				<div>
 					<QuestionNavBar sortQuestions={this.sortQuestions} filterQuestions={this.filterQuestions} />
+					<span class="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
 					<div />
 					{this.displayQuestions()}
 					<div>

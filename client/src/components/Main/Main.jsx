@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
 import QuestionContent from '../Question/QuestionContent.jsx';
 import UsernameSubmit from '../Auth/UsernameSubmit.jsx';
+import ProfileFullPage from '../PublicProfile/ProfileFullPage.jsx';
 import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
 import NavBar from './NavBar.jsx';
 import SearchList from '../Search/SearchList.jsx';
 import MessagesAndCreate from '../Messages/MessagesAndCreate.jsx';
+import PrivateMessage from '../Messages/PrivateMessage.jsx';
+import Notifications from '../Notifications/Notifications.jsx';
 
 class Main extends Component {
   constructor(props) {
@@ -20,7 +23,12 @@ class Main extends Component {
     let { username, signedIn, rank, credits, id, email } = this.props.user;
     return (
       <div>
-        <NavBar user={this.props.user} logout={this.props.logout} messages={this.props.messages} />
+        <NavBar
+          user={this.props.user}
+          logout={this.props.logout}
+          messages={this.props.messages}
+          questions={this.props.questions}
+        />
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <div className="bg-content">
             <div className="container-fluid">
@@ -88,13 +96,7 @@ class Main extends Component {
                           exact
                           path="/search/:term"
                           render={({ match }) => {
-                            return (
-                              <SearchList
-                                userId={id}
-                                term={match.params.term}
-                                user={this.props.user}
-                              />
-                            );
+                            return <SearchList term={match.params.term} />;
                           }}
                         />
                         <Route
@@ -102,6 +104,25 @@ class Main extends Component {
                           path="/messages/:folder"
                           render={({ match }) => {
                             return <MessagesAndCreate folder={match.params.folder} userId={id} />;
+                          }}
+                        />
+                        <Route
+                          exact
+                          path="/user/:id"
+                          render={({ match }) => {
+                            return <ProfileFullPage userId={match.params.id} />;
+                          }}
+                        />
+                        <Route
+                          exact
+                          path="/privatemessage"
+                          render={() => <PrivateMessage userId={id} />}
+                        />
+                        <Route
+                          exact
+                          path="/notifications"
+                          render={() => {
+                            return <Notifications userId={id} questions={this.props.questions} />;
                           }}
                         />
                       </Switch>
