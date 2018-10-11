@@ -138,13 +138,14 @@ const checkUsername = gql`
 `;
 
 const searchQuestion = gql`
-  query($term: String!) {
+  query($term: String) {
     searchQuestion(term: $term) {
       id
       category
       questionTitle
       questionContent
       user {
+        id
         username
       }
       bounty

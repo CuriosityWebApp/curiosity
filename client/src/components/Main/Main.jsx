@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
 import QuestionContent from '../Question/QuestionContent.jsx';
@@ -9,6 +9,7 @@ import ProfileUser from '../User/ProfileUser.jsx';
 import NavBar from './NavBar.jsx';
 import SearchList from '../Search/SearchList.jsx';
 import MessagesAndCreate from '../Messages/MessagesAndCreate.jsx';
+import PrivateMessage from '../Messages/PrivateMessage.jsx';
 import Notifications from '../Notifications/Notifications.jsx';
 
 class Main extends Component {
@@ -104,6 +105,12 @@ class Main extends Component {
                             return <MessagesAndCreate folder={match.params.folder} userId={id} />;
                           }}
                         />
+                        <Route
+                          exact
+                          path="/privatemessage"
+                          render={() => <PrivateMessage userId={id} />}
+                        />
+
                         <Route
                           exact
                           path="/notifications"
