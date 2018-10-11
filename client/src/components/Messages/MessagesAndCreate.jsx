@@ -176,7 +176,7 @@ class MessagesAndCreate extends Component {
             </button>
           )}
         </div>
-        {this.props.folder === 'new' && (
+        {this.props.folder === 'unread' && (
           <NewList userId={this.props.userId} replyFormat={this.replyFormat} />
         )}
         {this.props.folder === 'inbox' && (

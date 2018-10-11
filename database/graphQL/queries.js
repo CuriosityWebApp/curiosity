@@ -113,9 +113,6 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(QuestionType),
       args: { term: { type: GraphQLString } },
       resolve(parent, args) {
-        if (args.term === '!empty') {
-          return Question.find({}).limit(25);
-        }
         return Question.find({
           $or: [
             { questionContent: { $regex: args.term, $options: 'i' } },

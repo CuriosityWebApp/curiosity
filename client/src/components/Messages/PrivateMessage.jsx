@@ -150,4 +150,7 @@ class PrivateMessage extends Component {
   }
 }
 
-export default graphql(AddMessage)(PrivateMessage);
+export default compose(
+  withApollo,
+  graphql(AddMessage),
+)(PrivateMessage);
