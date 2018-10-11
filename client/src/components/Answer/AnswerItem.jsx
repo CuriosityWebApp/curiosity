@@ -107,6 +107,7 @@ class AnswerItem extends Component {
     if (data && data.loading) {
       return <div>Loading answers...</div>;
     } else {
+      console.log(data);
       return (
         <React.Fragment>
           <div className="list-group">
@@ -181,7 +182,6 @@ class AnswerItem extends Component {
     }
   }
   report() {
-    console.log(this.props);
     let messageTitle = 'REPORT: AnswerId:' + this.props.answerId;
     let messageContent =
       'User: ' +

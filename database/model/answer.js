@@ -11,6 +11,7 @@ const answerSchema = new Schema(
     ratedUpBy: { type: [String], default: [], unique: true },
     ratedDownBy: { type: [String], default: [], unique: true },
     answerChosen: Boolean,
+    questionerSeen: Boolean,
   },
   {
     timestamps: true,

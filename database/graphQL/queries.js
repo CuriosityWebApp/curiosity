@@ -59,10 +59,24 @@ const RootQuery = new GraphQLObjectType({
     },
     questions: {
       type: new GraphQLList(QuestionType),
-      args: { limit: { type: GraphQLInt }, skip: { type: GraphQLInt } },
+      args: {
+        limit: { type: GraphQLInt },
+        skip: { type: GraphQLInt },
+        filter: { type: GraphQLString },
+      },
       resolve(parent, args) {
         console.log('these are the args', args);
-        return Question.find()
+        if (!args.filter) {
+          return Question.find()
+            .skip(args.skip)
+            .limit(args.limit);
+        }
+        return Question.find({
+          $or: [
+            { category: { $regex: args.filter, $options: 'i' } },
+            { tags: { $regex: args.filter, $options: 'i' } },
+          ],
+        })
           .skip(args.skip)
           .limit(args.limit);
       },
@@ -99,7 +113,6 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(QuestionType),
       args: { term: { type: GraphQLString } },
       resolve(parent, args) {
-        // code to get data from db
         return Question.find({
           $or: [
             { questionContent: { $regex: args.term, $options: 'i' } },
@@ -107,7 +120,7 @@ const RootQuery = new GraphQLObjectType({
             { category: { $regex: args.term, $options: 'i' } },
             { tags: { $regex: args.term, $options: 'i' } },
           ],
-        });
+        }).limit(25);
       },
     },
     userMessages: {

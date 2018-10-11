@@ -20,7 +20,6 @@ class ProfileQuestionList extends Component {
       return (
         <div>
           <Link
-            key={this.props.question.id}
             to={`/questionContent/${this.props.question.id}`}
             style={{ textDecoration: 'none', color: 'black' }}
           >
@@ -54,8 +53,8 @@ class ProfileQuestionList extends Component {
                 <div>Category: {question.category}</div>
                 <div>
                   Tags:{' '}
-                  {question.tags.map(tag => {
-                    return <span>{tag} </span>;
+                  {question.tags.map((tag, idx) => {
+                    return <span key={idx}>{tag} </span>;
                   })}
                 </div>
               </small>

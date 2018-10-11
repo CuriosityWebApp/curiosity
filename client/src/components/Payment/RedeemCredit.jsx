@@ -22,12 +22,6 @@ class RedeemCredit extends Component {
   }
 
   render() {
-    const popover = (
-      <Popover id="modal-popover" title="popover">
-        very popover. such engagement
-      </Popover>
-    );
-    const tooltip = <Tooltip id="modal-tooltip">wow.</Tooltip>;
     return (
       <div>
         <strong>Redeem Credit</strong>

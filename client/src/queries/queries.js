@@ -45,6 +45,7 @@ const getUser = gql`
 const getQuestion = gql`
   query($id: ID!) {
     question(id: $id) {
+      id
       questionTitle
       questionContent
       category
@@ -88,34 +89,15 @@ const getAnswer = gql`
       question {
         id
         questionTitle
-        user {
-          username
-        }
       }
     }
   }
 `;
 
 const getQuestions = gql`
-  query($limit: Int!, $skip: Int!) {
-    questions(limit: $limit, skip: $skip) {
+  query($limit: Int!, $skip: Int!, $filter: String) {
+    questions(limit: $limit, skip: $skip, filter: $filter) {
       id
-      category
-      questionTitle
-      questionContent
-      score
-      ratedUpBy
-      ratedDownBy
-      user {
-        username
-      }
-      bounty
-      restriction
-      tags
-      createdAt
-      answers {
-        id
-      }
     }
   }
 `;
@@ -131,6 +113,23 @@ const checkUserEmail = gql`
       messages {
         unread
       }
+      questions {
+        id
+        questionTitle
+        answers {
+          id
+          answer
+          createdAt
+          question {
+            id
+            questionTitle
+          }
+          user {
+            username
+          }
+          questionerSeen
+        }
+      }
     }
   }
 `;
@@ -144,13 +143,14 @@ const checkUsername = gql`
 `;
 
 const searchQuestion = gql`
-  query($term: String!) {
+  query($term: String) {
     searchQuestion(term: $term) {
       id
       category
       questionTitle
       questionContent
       user {
+        id
         username
       }
       bounty

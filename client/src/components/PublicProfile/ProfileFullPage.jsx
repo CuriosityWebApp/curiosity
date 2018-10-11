@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { getUser } from '../../queries/queries.js';
+import { Link } from 'react-router-dom';
 import ProfileQuestionList from './ProfileQuestionList.jsx';
 import ProfileAnswerList from './ProfileAnswerList.jsx';
+import moment from 'moment';
 
 class ProfileFullPage extends Component {
   constructor(props) {
@@ -33,7 +34,13 @@ class ProfileFullPage extends Component {
                   >
                     <div>
                       {user.questions.map(question => {
-                        return <ProfileQuestionList question={question} username={user.username} />;
+                        return (
+                          <ProfileQuestionList
+                            question={question}
+                            username={user.username}
+                            key={question.id}
+                          />
+                        );
                       })}
                     </div>
                   </div>
@@ -49,7 +56,13 @@ class ProfileFullPage extends Component {
                   >
                     <div>
                       {user.answers.map(answer => {
-                        return <ProfileAnswerList answer={answer} username={user.username} />;
+                        return (
+                          <ProfileAnswerList
+                            answer={answer}
+                            username={user.username}
+                            key={answer.id}
+                          />
+                        );
                       })}
                     </div>
                   </div>
@@ -66,15 +79,22 @@ class ProfileFullPage extends Component {
                       display: 'block',
                       marginLeft: 'auto',
                       marginRight: 'auto',
+                      textAlign: 'center',
                     }}
                   >
                     <img
                       src="https://www.shareicon.net/download/2016/09/01/822739_user_512x512.png"
                       style={{ width: '160px', height: '160px' }}
                     />
-                    <div>username: {user.username}</div>
-                    <div>rank: {user.rank}</div>
-                    <div>credit: {user.credit}</div>
+                    <div>Username: {user.username}</div>
+                    <div>Likes: {user.rank}</div>
+                    <div>Member Since {moment(user.createdAt).format('LL')}</div>
+                    <br />
+                    <Link to={`/privatemessage`}>
+                      <button type="button" class="btn btn-outline-primary">
+                        Send Message
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

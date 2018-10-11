@@ -2,152 +2,168 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { compose, graphql } from 'react-apollo';
-import { getQuestions } from '../../queries/queries.js';
+import { getQuestion } from '../../queries/queries.js';
 import { QuestionLike, QuestionDislike } from '../../mutations/mutations.js';
+import _ from 'lodash';
 
 class QuestionItem extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
-	componentDidMount() {
-		this.setState({ score: this.props.postData.score });
-	}
-	IncrementLikes(e) {
-		e.stopPropagation();
-		let up, down, data;
-		let userId = this.props.userId;
-		data = this.props.postData;
-		up = new Set(data.ratedUpBy);
-		down = new Set(data.ratedDownBy);
-		if (up.has(userId)) {
-			this.props
-				.QuestionLike({
-					mutation: QuestionLike,
-					variables: {
-						id: data.id,
-						userId: userId,
-						method: 'delete'
-					}
-				})
-				.then(() => {
-					// this.props.rerender();
-					// this.setState({ score: data.QuestionRatedUpBy.score });
-					this.props.refetch();
-				});
-		} else if (!up.has(userId) && !down.has(userId)) {
-			this.props
-				.QuestionLike({
-					mutation: QuestionLike,
-					variables: {
-						id: data.id,
-						userId: userId,
-						method: 'add'
-					}
-				})
-				.then(() => {
-					// this.props.rerender();
-					// this.setState({ score: data.QuestionRatedUpBy.score });
-					this.props.refetch();
-				});
-		}
-	}
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.IncrementLikes = this.IncrementLikes.bind(this);
+    this.decrementLikes = this.decrementLikes.bind(this);
+    this.throttledIcrement = _.throttle(this.IncrementLikes, 200, { leading: false }).bind(this);
+    this.throttledDecrement = _.throttle(this.decrementLikes, 200, { leading: false }).bind(this);
+    this.OpenQuestion = this.OpenQuestion.bind(this);
+  }
 
-	decrementLikes(e) {
-		e.stopPropagation();
-		let up, down, data;
-		let userId = this.props.userId;
-		data = this.props.postData;
-		up = new Set(data.ratedUpBy);
-		down = new Set(data.ratedDownBy);
+  IncrementLikes(e) {
+    let up, down, data;
+    let userId = this.props.userId;
 
-		if (down.has(userId)) {
-			this.props
-				.QuestionDislike({
-					mutation: QuestionDislike,
-					variables: {
-						id: data.id,
-						userId: userId,
-						method: 'delete'
-					}
-				})
-				.then(() => {
-					// this.props.rerender();
-					this.props.refetch();
-					// this.setState({ score: data.QuestionRatedDownBy.score });
-				});
-		} else if (!up.has(userId) && !down.has(userId)) {
-			this.props
-				.QuestionDislike({
-					mutation: QuestionDislike,
-					variables: {
-						id: data.id,
-						userId: userId,
-						method: 'add'
-					}
-				})
-				.then(() => {
-					// this.props.rerender();
-					this.props.refetch();
-					// this.setState({ score: data.QuestionRatedDownBy.score });
-				});
-		}
-	}
+    if (this.props.data.loading) {
+      console.log('loading questions..');
+    } else {
+      data = this.props.data.question;
+      up = new Set(data.ratedUpBy);
+      down = new Set(data.ratedDownBy);
+      if (up.has(userId)) {
+        this.props
+          .QuestionLike({
+            mutation: QuestionLike,
+            variables: {
+              id: data.id,
+              userId: userId,
+              method: 'delete',
+            },
+          })
+          .then(() => {
+            this.props.data.refetch();
+          });
+      } else if (!up.has(userId) && !down.has(userId)) {
+        this.props
+          .QuestionLike({
+            mutation: QuestionLike,
+            variables: {
+              id: data.id,
+              userId: userId,
+              method: 'add',
+            },
+          })
+          .then(() => {
+            this.props.data.refetch();
+          });
+      }
+    }
+  }
 
-	render() {
-		let { postData } = this.props;
-		return (
-			<div className="inline-block container" style={{ cursor: 'pointer' }}>
-				<div className="list-group">
-					<div
-						className="list-group-item list-group-item-action flex-column align-items-start"
-						onClick={() => this.props.onSelect(postData.id)}
-					>
-						<div className="row">
-							<div className="col-1">
-								<div className="row" style={{ textAlign: 'right' }}>
-									<div className="col align-self-start">
-										<button
-											className="fa fa-caret-up"
-											aria-hidden="true"
-											style={{ color: 'green', cursor: 'pointer' }}
-											onClick={this.IncrementLikes.bind(this)}
-										/>
-									</div>
-									<div className="col align-self-start">{this.props.score}</div>
-									<div className="col align-self-start">
-										<button
-											className="fa fa-caret-down"
-											aria-hidden="true"
-											style={{ color: 'red', cursor: 'pointer' }}
-											onClick={this.decrementLikes.bind(this)}
-										/>
-									</div>
-								</div>
-							</div>
-							<div className="col-11">
-								<div className="d-flex w-100 justify-content-between">
-									<h5>{postData.questionTitle}</h5>
-									<h6>Reward: {postData.bounty}</h6>
-								</div>
-								<div>
-									<small className="text-muted d-flex w-100 justify-content-between">
-										Posted By {postData.user.username} {moment(postData.createdAt).fromNow()}
-									</small>
-									<small className="text-muted"> Rank {postData.restriction} </small>
-									<small className="text-muted"> Answers {postData.answers.length}</small>
-									<p>{postData.questionContent}</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
-	}
+  decrementLikes(e) {
+    let up, down, data;
+    let userId = this.props.userId;
+
+    if (this.props.data.loading) {
+      console.log('loading questions..');
+    } else {
+      data = this.props.data.question;
+      up = new Set(data.ratedUpBy);
+      down = new Set(data.ratedDownBy);
+      if (down.has(userId)) {
+        this.props
+          .QuestionDislike({
+            mutation: QuestionDislike,
+            variables: {
+              id: data.id,
+              userId: userId,
+              method: 'delete',
+            },
+          })
+          .then(() => {
+            this.props.data.refetch();
+          });
+      } else if (!up.has(userId) && !down.has(userId)) {
+        this.props
+          .QuestionDislike({
+            mutation: QuestionDislike,
+            variables: {
+              id: data.id,
+              userId: userId,
+              method: 'add',
+            },
+          })
+          .then(() => {
+            this.props.data.refetch();
+          });
+      }
+    }
+  }
+  OpenQuestion() {
+    this.props.onSelect(this.props.data.question.id);
+  }
+
+  render() {
+    if (this.props.data && this.props.data.loading) {
+      return <div> Loading...</div>;
+    } else {
+      let data = this.props.data.question;
+      return (
+        <div className="inline-block container" style={{ cursor: 'pointer' }}>
+          <div className="list-group">
+            <div className="list-group-item list-group-item-action flex-column align-items-start">
+              <div className="row">
+                <div className="col-1">
+                  <div className="row" style={{ textAlign: 'right' }}>
+                    <div className="col align-self-start">
+                      <button
+                        className="fa fa-caret-up"
+                        aria-hidden="true"
+                        style={{ color: 'green', cursor: 'pointer' }}
+                        onClick={this.throttledIcrement}
+                      />
+                    </div>
+                    <div className="col align-self-start">{data.score}</div>
+                    <div className="col align-self-start">
+                      <button
+                        className="fa fa-caret-down"
+                        aria-hidden="true"
+                        style={{ color: 'red', cursor: 'pointer' }}
+                        onClick={this.throttledDecrement}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-11" onClick={this.OpenQuestion}>
+                  <div className="d-flex w-100 justify-content-between">
+                    <h5>{data.questionTitle}</h5>
+                    <h6>Reward: {data.bounty}</h6>
+                  </div>
+                  <div>
+                    <small className="text-muted d-flex w-100 justify-content-between">
+                      Posted By {data.user.username} {moment(data.createdAt).fromNow()}
+                    </small>
+                    <small className="text-muted"> Rank {data.restriction} </small>
+                    <small className="text-muted"> Answers {data.answers.length}</small>
+                    <p>{data.questionContent}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
 }
 
 export default compose(
-	graphql(QuestionLike, { name: 'QuestionLike' }),
-	graphql(QuestionDislike, { name: 'QuestionDislike' })
+  graphql(getQuestion, {
+    options: props => {
+      return {
+        variables: {
+          id: props.questionId,
+        },
+      };
+    },
+  }),
+  graphql(QuestionLike, { name: 'QuestionLike' }),
+  graphql(QuestionDislike, { name: 'QuestionDislike' }),
 )(QuestionItem);

@@ -10,18 +10,18 @@ class ProfileAnswerList extends Component {
   }
 
   render() {
+    console.log(this.props.answer, 'hello');
     let { loading, error, answer } = this.props.data;
     if (loading) {
       return <div>Loading...</div>;
     }
     if (error) {
-      return <div>Error...</div>;
+      console.log(error);
+      return <div>Error</div>;
     } else {
-      // console.log(answer, 'ANSWERANSWER');
       return (
         <div>
           <Link
-            key={answer.id}
             to={`/questionContent/${answer.question.id}`}
             style={{ textDecoration: 'none', color: 'black' }}
           >
@@ -30,10 +30,7 @@ class ProfileAnswerList extends Component {
                 <i className="fas fa-comment" />{' '}
                 <b style={{ color: '#14C7F4' }}>{this.props.username}</b> answered on{' '}
                 <b>{answer.question.questionTitle}</b>
-                <span>
-                  {' '}
-                  - <em>Posted By {answer.question.user.username}</em>
-                </span>
+                <span> {/* - <em>Posted By {answer.question.user.username}</em> */}</span>
               </small>
               <hr
                 style={{
