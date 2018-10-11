@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 import { AddMessage } from '../../mutations/mutations.js';
 import Autocomplete from 'react-autocomplete';
 import { getUsernames, checkUsername } from '../../queries/queries.js';
@@ -21,14 +22,13 @@ class PrivateMessage extends Component {
     this.replyFormat = this.replyFormat.bind(this);
   }
 
-  replyFormat(receiverName, title, content) {
+  componentDidMount() {
+    this.replyFormat('justin');
+  }
+
+  replyFormat(receiverName) {
     this.setState({
       receiverName: receiverName,
-      title: title,
-      content: content,
-    });
-    this.setState({
-      creator: true,
     });
   }
 
@@ -102,7 +102,6 @@ class PrivateMessage extends Component {
           <u>PrivateMessage</u>
         </h2>
         <div>
-          <h4>Send a message </h4>
           <form onSubmit={this.submitForm.bind(this)}>
             <Autocomplete
               items={this.state.users}
