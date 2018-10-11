@@ -113,7 +113,7 @@ class QuestionList extends Component {
   render() {
     if (!this.state.selected) {
       return (
-        <div>
+        <div style={{ zIndex: '5' }}>
           <h2>
             <u>Questions</u>
           </h2>

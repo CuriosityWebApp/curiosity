@@ -116,7 +116,7 @@ class AnswerItem extends Component {
                 <div className="col-1">
                   <div className="col align-self-start">
                     <button
-                      className="fa fa-caret-up"
+                      className="fas fa-caret-up"
                       aria-hidden="true"
                       style={{ color: 'green', cursor: 'pointer' }}
                       onClick={this.throttledIcrement.bind(this)}
@@ -125,7 +125,7 @@ class AnswerItem extends Component {
                   <div className="col align-self-start">{data.answer.score}</div>
                   <div className="col align-self-start">
                     <button
-                      className="fa fa-caret-down"
+                      className="fas fa-caret-down"
                       aria-hidden="true"
                       style={{ color: 'red', cursor: 'pointer' }}
                       onClick={this.throttledDecrement.bind(this)}

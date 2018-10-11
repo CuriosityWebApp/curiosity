@@ -30,6 +30,14 @@ a (standard):   #fbfbfb80 (gray)
 a (hover):    #fff (white)
 
 **/
+.list-group-item {
+  position: static !important;
+  z-index: 0
+}
+.list-group-item:hover {
+  position: static !important;
+  z-index: 0
+}
  
 /* Smartphones (portrait and landscape) -- -- -- -- -- - */
  @media screen and (min-width: 304px) and (max-width: 667px) {

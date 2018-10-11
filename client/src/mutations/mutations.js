@@ -167,8 +167,8 @@ const ReadMessages = gql`
 `;
 
 const ClearNotifications = gql`
-  mutation($userId: ID) {
-    ClearNotifications(userId: $userId) {
+  mutation($id: ID) {
+    ClearNotifications(id: $id) {
       id
     }
   }

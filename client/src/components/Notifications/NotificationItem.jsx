@@ -8,20 +8,6 @@ class NotificationItem extends Component {
     this.state = {
       clicked: null,
     };
-    this.deleteNotification = this.deleteNotification.bind(this);
-  }
-
-  deleteNotification() {
-    this.props
-      .DeleteNotification({
-        mutation: DeleteNotification,
-        variables: {
-          id: this.props.post.id,
-        },
-      })
-      .then(() => {
-        this.props.getNotifications.refetch();
-      });
   }
 
   render() {

@@ -34,13 +34,22 @@ class Notifications extends Component {
     }
   }
   clearNotifications() {
-    console.log(this.props.userId);
-    this.props.ClearNotifications({
-      mutation: ClearNotifications,
-      variables: {
-        userId: this.props.userId,
-      },
-    });
+    let unreadNotifications = [];
+    for (let j = 0; j < this.props.questions.length; j++) {
+      for (let k = 0; k < this.props.questions[j].answers.length; k++) {
+        if (this.props.questions[j].answers[k].questionerSeen === false) {
+          unreadNotifications.push(this.props.questions[j].answers[k]);
+        }
+      }
+    }
+    for (let l = 0; l < unreadNotifications.length; l++) {
+      this.props.ClearNotifications({
+        mutation: ClearNotifications,
+        variables: {
+          id: unreadNotifications[l].id,
+        },
+      });
+    }
   }
 
   render() {

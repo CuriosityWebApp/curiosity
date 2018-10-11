@@ -61,6 +61,17 @@ class Search extends React.Component {
           <Autocomplete
             items={this.state.questions}
             getItemValue={item => item.questionTitle}
+            menuStyle={{
+              borderRadius: '3px',
+              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+              background: 'rgba(255, 255, 255, 1)',
+              padding: '2px 0',
+              fontSize: '90%',
+              position: 'absolute',
+              overflow: 'auto',
+              maxHeight: '50%',
+              zIndex: 1,
+            }}
             renderItem={(item, highlighted) => (
               <div
                 key={item.id}
@@ -71,10 +82,6 @@ class Search extends React.Component {
                 {item.questionTitle}
               </div>
             )}
-            wrapperStyle={{
-              marginBottom: '7px',
-              position: 'sticky',
-            }}
             onChange={this.searchQuestions}
             onSelect={value => this.setState({ term: value })}
             value={this.state.term}
