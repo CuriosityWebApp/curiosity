@@ -1,22 +1,14 @@
+const _ = require('lodash');
 const User = require('../../database/model/user.js');
 const Question = require('../../database/model/question.js');
 const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
 const Message = require('../../database/model/message.js');
 const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLBoolean,
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
 } = require('graphql');
 const {
-  UserType,
-  QuestionType,
-  AnswerType,
-  TransactionType,
-  MessageType,
+  UserType, QuestionType, AnswerType, TransactionType, MessageType,
 } = require('./typeDefs.js');
 
 const RootQuery = new GraphQLObjectType({
@@ -63,22 +55,86 @@ const RootQuery = new GraphQLObjectType({
         limit: { type: GraphQLInt },
         skip: { type: GraphQLInt },
         filter: { type: GraphQLString },
+        sortBy: { type: GraphQLString },
+        range: { type: GraphQLString },
       },
       resolve(parent, args) {
         console.log('these are the args', args);
-        if (!args.filter) {
+        const today = new Date();
+        const day = 86400000; // number of milliseconds in a day
+        const days = args.range || 0;
+        const daysAgo = new Date(today - days * day);
+        // no args passed in
+        if (args.filter === '' && args.sortBy === '') {
           return Question.find()
+            .sort({ createdAt: -1, views: -1, bounty: -1 })
             .skip(args.skip)
             .limit(args.limit);
         }
-        return Question.find({
-          $or: [
-            { category: { $regex: args.filter, $options: 'i' } },
-            { tags: { $regex: args.filter, $options: 'i' } },
-          ],
-        })
-          .skip(args.skip)
-          .limit(args.limit);
+        // getting items just bassed on filter
+        if (args.filter !== '' && args.sortBy === '') {
+          return Question.find({
+            $or: [
+              { category: { $regex: args.filter, $options: 'i' } },
+              { tags: { $regex: args.filter, $options: 'i' } },
+            ],
+          })
+            .sort({ createdAt: -1, views: -1, bounty: -1 })
+            .skip(args.skip)
+            .limit(args.limit);
+        }
+        // getting items based on passed sort option and range if provided
+        if (args.sortBy !== '' && args.sortBy !== 'top') {
+          // if range but no filter
+          let range = args.range ? { createdAt: { $gte: daysAgo } } : {};
+          // if range and filter
+          args.range && args.filter
+            ? (range = { createdAt: { $gte: daysAgo }, category: args.filter })
+            : (range = range);
+          return Question.find(range)
+            .sort({ [args.sortBy]: -1 })
+            .skip(args.skip)
+            .limit(args.limit);
+        }
+        // finds the top questions + if filter is passed will sum both of them
+        if (args.sortBy === 'top') {
+          let criteria = args.filter ? { category: args.filter } : {};
+          if (args.range && args.filter) {
+            criteria = {
+              $or: [
+                { category: { $regex: args.filter, $options: 'i' } },
+                { tags: { $regex: args.filter, $options: 'i' } },
+              ],
+              createdAt: { $gte: daysAgo },
+            };
+          } else if (args.range && !args.filter) {
+            criteria = { createdAt: { $gte: daysAgo } };
+          }
+          return Question.aggregate([
+            { $match: criteria },
+            {
+              $project: {
+                score: {
+                  $subtract: [
+                    { $size: { $ifNull: ['$ratedUpBy', []] } },
+                    { $size: { $ifNull: ['$ratedDownBy', []] } },
+                  ],
+                },
+                createdAt: 1,
+              },
+            },
+            { $sort: { score: -1, createdAt: -1 } },
+          ])
+            .skip(args.skip)
+            .limit(args.limit)
+            .then((data) => {
+              const newData = [];
+              data.forEach((item) => {
+                newData.push({ id: item._id.toString() });
+              });
+              return newData;
+            });
+        }
       },
     },
     answers: {

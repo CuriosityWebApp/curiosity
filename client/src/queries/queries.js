@@ -95,11 +95,11 @@ const getAnswer = gql`
 `;
 
 const getQuestions = gql`
-  query($limit: Int!, $skip: Int!, $filter: String) {
-    questions(limit: $limit, skip: $skip, filter: $filter) {
-      id
-    }
-  }
+	query($limit: Int!, $skip: Int!, $filter: String, $sortBy: String, $range: String) {
+		questions(limit: $limit, skip: $skip, filter: $filter, sortBy: $sortBy, range: $range) {
+			id
+		}
+	}
 `;
 
 const checkUserEmail = gql`
