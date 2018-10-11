@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
-import { Button } from 'react-bootstrap';
 import { Mutation } from 'react-apollo';
-import { Modal, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
+import { Modal, OverlayTrigger, Popover, Tooltip, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 import { UpdateCredit } from '../../mutations/mutations.js';
@@ -204,17 +203,20 @@ class PaymentCheckOut extends Component {
 
                   <div>
                     <p>Please declare amount in usd</p>
-                    <span>$</span>
-                    <input
-                      className="create-input"
-                      type="text"
-                      placeholder="usd"
-                      name="usd"
-                      onChange={this.handleChange}
-                    />
-                    <small>
-                      <em> You will receive {this.state.credits} credits!</em>
-                    </small>
+
+                    <div className="form-group">
+                      <span>$</span>
+                      <input
+                        type="number"
+                        placeholder="usd"
+                        min="0"
+                        name="usd"
+                        onChange={this.handleChange}
+                      />
+                      <small>
+                        <em> You will receive {this.state.credits} credits!</em>
+                      </small>
+                    </div>
                   </div>
 
                   <hr />
