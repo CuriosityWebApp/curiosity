@@ -8,6 +8,7 @@ const getUser = gql`
       rank
       credit
       email
+      createdAt
       questions {
         id
         questionTitle
@@ -84,6 +85,10 @@ const getAnswer = gql`
         id
         username
         rank
+      }
+      question {
+        id
+        questionTitle
       }
     }
   }

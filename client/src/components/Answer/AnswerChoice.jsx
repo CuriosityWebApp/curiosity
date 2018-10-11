@@ -51,8 +51,6 @@ class AnswerItem extends Component {
 				})
       })
       .then(() => {
-        // this.props.getAnswer.refetch();
-				// this.props.getQuestion.refetch();
 				this.props.data.refetch();
       })
 	}
