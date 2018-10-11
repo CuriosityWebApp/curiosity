@@ -70,13 +70,13 @@ class QuestionNavBar extends Component {
 								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', null)}>
 									All time
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', 1)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', '1')}>
 									Today
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', 7)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', '7')}>
 									1 Week
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', 30)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', '30')}>
 									1 Month
 								</a>
 							</div>
@@ -96,13 +96,13 @@ class QuestionNavBar extends Component {
 								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', null)}>
 									All time
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', 1)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', '1')}>
 									Today
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', 7)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', '7')}>
 									1 Week
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', 30)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', '30')}>
 									1 Month
 								</a>
 							</div>
@@ -122,13 +122,13 @@ class QuestionNavBar extends Component {
 								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', null)}>
 									All time
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', 1)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', '1')}>
 									Today
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', 7)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt','7')}>
 									1 Week
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', 30)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', '30')}>
 									1 Month
 								</a>
 							</div>
@@ -148,13 +148,13 @@ class QuestionNavBar extends Component {
 								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', null)}>
 									All time
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', 1)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', '1')}>
 									Today
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', 7)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', '7')}>
 									1 Week
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', 30)}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', '30')}>
 									1 Month
 								</a>
 							</div>
