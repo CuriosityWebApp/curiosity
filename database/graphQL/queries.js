@@ -4,10 +4,19 @@ const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
 const Message = require('../../database/model/message.js');
 const {
-  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLBoolean,
 } = require('graphql');
 const {
-  UserType, QuestionType, AnswerType, TransactionType, MessageType,
+  UserType,
+  QuestionType,
+  AnswerType,
+  TransactionType,
+  MessageType,
 } = require('./typeDefs.js');
 
 const RootQuery = new GraphQLObjectType({

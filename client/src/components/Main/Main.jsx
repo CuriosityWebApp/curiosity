@@ -4,6 +4,7 @@ import QuestionList from '../Question/QuestionList.jsx';
 import CreateQuestion from '../Question/CreateQuestion.jsx';
 import QuestionContent from '../Question/QuestionContent.jsx';
 import UsernameSubmit from '../Auth/UsernameSubmit.jsx';
+import ProfileFullPage from '../PublicProfile/ProfileFullPage.jsx';
 import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
 import NavBar from './NavBar.jsx';
@@ -102,6 +103,13 @@ class Main extends Component {
                           path="/messages/:folder"
                           render={({ match }) => {
                             return <MessagesAndCreate folder={match.params.folder} userId={id} />;
+                          }}
+                        />
+                        <Route
+                          exact
+                          path="/user/:id"
+                          render={({ match }) => {
+                            return <ProfileFullPage userId={match.params.id} />;
                           }}
                         />
                       </Switch>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BuyCredit from '../Payment/BuyCredit.jsx';
+import RedeemCredit from '../Payment/RedeemCredit.jsx';
 import moment from 'moment';
 
 const UserWallet = ({ user, data }) => {
@@ -22,11 +23,7 @@ const UserWallet = ({ user, data }) => {
             <BuyCredit id={user.id} username={user.username} data={data} />
           </div>
           <div>
-            <strong>Redeem Credit</strong>
-            <img
-              src="https://d1g8y79pdob38v.cloudfront.net/media/catalog/product/p/a/payment-logo_1.png"
-              style={{ width: '200px' }}
-            />
+            <RedeemCredit />
           </div>
         </div>
       </div>
