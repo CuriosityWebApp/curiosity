@@ -336,10 +336,10 @@ const Mutation = new GraphQLObjectType({
     ClearNotifications: {
       type: AnswerType,
       args: {
-        userId: { type: GraphQLID },
+        id: { type: GraphQLID },
       },
       resolve(parent, args) {
-        return Answer.updateMany({ questionerId: args.userId }, { questionerSeen: true });
+        return Answer.updateMany({ _id: args.id }, { questionerSeen: true });
       },
     },
   },

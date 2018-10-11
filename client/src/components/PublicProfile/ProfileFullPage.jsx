@@ -91,7 +91,7 @@ class ProfileFullPage extends Component {
                     <div>Member Since {moment(user.createdAt).format('LL')}</div>
                     <br />
                     <Link to={`/privatemessage`}>
-                      <button type="button" class="btn btn-outline-primary">
+                      <button type="button" className="btn btn-outline-primary">
                         Send Message
                       </button>
                     </Link>
