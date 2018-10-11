@@ -211,6 +211,47 @@ const getUsernames = gql`
   }
 `;
 
+const getUserData = gql`
+  query($id: ID) {
+    user(id: $id) {
+      id
+      username
+      rank
+      credit
+      email
+      questions {
+        id
+        questionTitle
+        bounty
+      }
+      answers {
+        id
+        answer
+        score
+        question {
+          id
+          questionTitle
+        }
+      }
+      transactions {
+        id
+        questionId
+        amount
+        receiverId
+        recipient {
+          username
+        }
+        sender {
+          username
+        }
+        questionName {
+          questionTitle
+        }
+      }
+    }
+  }
+`;
+
 module.exports = {
   getUser,
   getQuestion,
@@ -222,4 +263,5 @@ module.exports = {
   userSentMessages,
   getUsernames,
   checkUsername,
+  getUserData,
 };

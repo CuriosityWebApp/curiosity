@@ -339,7 +339,7 @@ const Mutation = new GraphQLObjectType({
         userId: { type: GraphQLID },
       },
       resolve(parent, args) {
-        return Answer.updateMany({ userId: args.userId }, { questionerSeen: true });
+        return Answer.updateMany({ questionerId: args.userId }, { questionerSeen: true });
       },
     },
   },
