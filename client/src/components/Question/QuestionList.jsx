@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { graphql, compose, withApollo } from 'react-apollo';
 import { getQuestions } from '../../queries/queries.js';
 import { Redirect } from 'react-router-dom';
-import QuestionItem from './QuestionItem.jsx';
 import _ from 'lodash';
+import QuestionItem from './QuestionItem.jsx';
+import QuestionNavBar from './QuestionNavBar.jsx';
 
 class QuestionList extends Component {
 	constructor(props) {
@@ -12,17 +13,23 @@ class QuestionList extends Component {
 			selected: null,
 			skip: 0,
 			questions: [],
-			filterBy: ''
+			filterBy: '',
+			sortBy: '',
+			range: null
 		};
 		this.onSelect = this.onSelect.bind(this);
 		this.onScroll = this.onScroll.bind(this);
-		this.getNextQuestions = this.getNextQuestions.bind(this);
-		this.throttledQuestionCall = _.throttle(this.getNextQuestions, 250, { leading: false });
-		this.displayCategories = this.displayCategories.bind(this);
+		this.getNextQuestions = this.getNextQuestions;
+		this.throttledQuestionCall = _.throttle(this.getNextQuestions, this.state.sortBy === 'top' ? 700 : 500, {
+			leading: false
+		}).bind(this);
+		this.filterQuestions = this.filterQuestions.bind(this);
+		this.sortQuestions = this.sortQuestions.bind(this);
 	}
 	componentDidMount() {
-		this.getNextQuestions();
+		this.throttledQuestionCall();
 		window.addEventListener('scroll', this.onScroll, false);
+		console.log('this is the state', this.state);
 	}
 
 	componentWillUnmount() {
@@ -30,38 +37,64 @@ class QuestionList extends Component {
 	}
 
 	onScroll = () => {
-		if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && this.state.questions.length) {
+		if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300 && this.state.questions.length) {
 			window.removeEventListener('scroll', this.onScroll, false);
 			this.throttledQuestionCall();
 		}
 	};
-	displayCategories() {
-		let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
-		return categories.map(category => {
-			return (
-				<option key={category} value={category}>
-					{category}
-				</option>
-			);
-		});
-	}
 
-	filterQuestions() {
-		this.props.client
-			.query({
-				query: getQuestions,
-				variables: {
-					limit: 15,
-					skip: 0,
-					filter: this.state.filterBy
-				}
-			})
-			.then(({ data }) => {
-				console.log('this is data filter', data);
-				this.setState({ questions: data.questions });
-				window.addEventListener('scroll', this.onScroll, false);
-			});
-	}
+	sortQuestions = async (e, method, range) => {
+		e ? e.preventDefault() : '';
+		// console.log('this is the sorting method', method);
+		console.log('im inside sort', e, method, range);
+		await this.setState({ sortBy: method, skip: 0, questions: [], range: range }, () => {
+			this.props.client
+				.query({
+					query: getQuestions,
+					variables: {
+						limit: 15,
+						skip: this.state.skip,
+						filter: this.state.filterBy,
+						sortBy: this.state.sortBy,
+						range: this.state.range
+					}
+				})
+				.then(({ data }) => {
+					console.log('this is data sorted', data);
+					let newQuestions = this.state.questions.concat(data.questions);
+					this.setState({ questions: newQuestions, skip: this.state.skip + 15 });
+					window.addEventListener('scroll', this.onScroll, false);
+					console.log('this is the state in sort', this.state);
+				});
+		});
+	};
+
+	filterQuestions = async (e, category, range) => {
+		e.preventDefault();
+		console.log('im inside filter');
+
+		// console.log('this is the category', category);
+		await this.setState({ filterBy: category, skip: 0, questions: [], range: range }, () => {
+			this.props.client
+				.query({
+					query: getQuestions,
+					variables: {
+						limit: 15,
+						skip: this.state.skip,
+						filter: this.state.filterBy,
+						sortBy: this.state.sortBy,
+						range: this.state.range
+					}
+				})
+				.then(({ data }) => {
+					console.log('this is data filter', data);
+					let newQuestions = this.state.questions.concat(data.questions);
+
+					this.setState({ questions: newQuestions, skip: this.state.skip + 15 });
+					window.addEventListener('scroll', this.onScroll, false);
+				});
+		});
+	};
 
 	getNextQuestions = async () => {
 		await this.props.client
@@ -70,16 +103,22 @@ class QuestionList extends Component {
 				variables: {
 					limit: 15,
 					skip: this.state.skip,
-					filter: this.state.filterBy
+					filter: this.state.filterBy,
+					sortBy: this.state.sortBy,
+					range: this.state.range
 				}
 			})
 			.then(({ data }) => {
+				console.log('this is data', data);
 				let newProps = this.state.questions.concat(data.questions);
-				let next = this.state.skip + 10;
+				let next;
+				data.questions.length ? (next = this.state.skip + 15) : (next = this.state.questions.length);
 				this.setState({ questions: newProps, skip: next }, () => {
-					window.addEventListener('scroll', this.onScroll, false);
+					console.log('im inside then next');
+					console.log('this is the state in next', this.state);
 				});
 			})
+			.then(() => window.addEventListener('scroll', this.onScroll, false))
 			.catch(err => console.log('error in nextquestions', err));
 	};
 
@@ -94,6 +133,7 @@ class QuestionList extends Component {
 			return <div>Loading Questions...</div>;
 		} else {
 			let data = this.state.questions.length > 0 ? this.state.questions : this.props.data.questions;
+
 			return data.map(post => {
 				return (
 					<QuestionItem
@@ -111,23 +151,7 @@ class QuestionList extends Component {
 		if (!this.state.selected) {
 			return (
 				<div>
-					<h2>
-						<u>Questions</u>
-					</h2>
-					{'    '}
-					<label> Filter By: </label>{' '}
-					<select onChange={e => this.setState({ filterBy: e.target.value })}>
-						<option>Select Category</option>
-						{this.displayCategories()}
-					</select>
-					<button
-						type="submit"
-						className="btn btn-primary mb-2"
-						style={{ marginLeft: '10px' }}
-						onClick={this.filterQuestions.bind(this)}
-					>
-						Submit
-					</button>
+					<QuestionNavBar sortQuestions={this.sortQuestions} filterQuestions={this.filterQuestions} />
 					<div />
 					{this.displayQuestions()}
 					<div>
@@ -149,7 +173,9 @@ export default compose(
 				variables: {
 					limit: 15,
 					skip: 0,
-					filter: ''
+					filter: '',
+					sortBy: '',
+					range: null
 				}
 			};
 		}
