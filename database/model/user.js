@@ -8,6 +8,10 @@ const userSchema = new Schema(
     email: String,
     rank: { type: Number, default: 0 },
     credit: { type: Number, default: 0 },
+    avatarUrl: {
+      type: String,
+      default: 'https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Penguin-512.png',
+    },
   },
   {
     timestamps: true,

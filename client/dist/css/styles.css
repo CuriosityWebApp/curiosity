@@ -1,0 +1,9 @@
+.centerAlign .arrowUp {
+  color: green;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  background: none;
+}

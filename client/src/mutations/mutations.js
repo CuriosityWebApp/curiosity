@@ -174,6 +174,14 @@ const ClearNotifications = gql`
   }
 `;
 
+const UpdateUserAvatar = gql`
+  mutation($id: ID!, $avatarUrl: String!) {
+    UpdateUserAvatar(id: $id, avatarUrl: $avatarUrl) {
+      id
+    }
+  }
+`;
+
 module.exports = {
   AddQuestion,
   AddAnswer,
@@ -191,4 +199,5 @@ module.exports = {
   QuestionDislike,
   ReadMessages,
   ClearNotifications,
+  UpdateUserAvatar,
 };

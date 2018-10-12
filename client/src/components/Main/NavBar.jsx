@@ -9,7 +9,7 @@ class NavBar extends Component {
   }
 
   render() {
-    let { username, signedIn, rank, credits, id, email } = this.props.user;
+    let { username, signedIn, rank, credits, id, email, avatarUrl } = this.props.user;
     let unreadMessages = 0;
     for (let i = 0; i < this.props.messages.length; i++) {
       if (this.props.messages[i].unread === true) {
@@ -24,6 +24,7 @@ class NavBar extends Component {
         }
       }
     }
+    console.log(this.props.user, 'what am i');
     return (
       <div id="snb">
         <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
@@ -34,7 +35,11 @@ class NavBar extends Component {
             {signedIn ? (
               <div className="media">
                 <a className="pull-left pt-2">
-                  <img className="rounded-circle" src="http://via.placeholder.com/40x40" />
+                  <img
+                    className="rounded-circle"
+                    src={avatarUrl}
+                    style={{ width: '50px', height: '50px' }}
+                  />
                 </a>
                 <div className="media-body">
                   <h5 className="media-heading">

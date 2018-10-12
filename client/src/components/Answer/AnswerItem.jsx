@@ -111,23 +111,49 @@ class AnswerItem extends Component {
       return (
         <React.Fragment>
           <div className="list-group">
-            <div className="list-group-item list-group-item-action flex-column align-items-start">
+            <div className="list-group-item">
               <div className="row">
                 <div className="col-1">
-                  <div className="col align-self-start">
+                  <div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                     <button
-                      className="fas fa-caret-up"
+                      className="fas fa-angle-up fa-2x centerAlign arrowUp"
                       aria-hidden="true"
-                      style={{ color: 'green', cursor: 'pointer' }}
+                      style={{
+                        color: 'green',
+                        cursor: 'pointer',
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        border: 'none',
+                        background: 'none',
+                      }}
                       onClick={this.throttledIcrement.bind(this)}
                     />
                   </div>
-                  <div className="col align-self-start">{data.answer.score}</div>
-                  <div className="col align-self-start">
+                  <div
+                    style={{
+                      textAlign: 'center',
+                    }}
+                  >
+                    {data.answer.score}
+                  </div>
+                  <div>
                     <button
-                      className="fas fa-caret-down"
+                      className="fas fa-angle-down fa-2x"
                       aria-hidden="true"
-                      style={{ color: 'red', cursor: 'pointer' }}
+                      style={{
+                        color: 'red',
+                        cursor: 'pointer',
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        border: 'none',
+                        background: 'none',
+                      }}
                       onClick={this.throttledDecrement.bind(this)}
                     />
                   </div>
