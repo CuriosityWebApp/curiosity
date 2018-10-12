@@ -83,10 +83,11 @@ class ProfileFullPage extends Component {
                     }}
                   >
                     <img
-                      src="https://www.shareicon.net/download/2016/09/01/822739_user_512x512.png"
+                      src={user.avatarUrl}
+                      className="rounded-circle"
                       style={{ width: '160px', height: '160px' }}
                     />
-                    <div>Username: {user.username}</div>
+                    <div>{user.username}</div>
                     <div>Likes: {user.rank}</div>
                     <div>Member Since {moment(user.createdAt).format('LL')}</div>
                     <br />

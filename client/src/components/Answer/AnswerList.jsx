@@ -56,6 +56,7 @@ class AnswerList extends Component {
 								qOwnerId={this.props.qOwnerId}
 								loggedId={this.props.loggedId}
 								isPaid={this.props.isPaid}
+								userId={this.props.userId}
 								questionId={this.props.id}
 								bounty={this.props.bounty}
 							/>

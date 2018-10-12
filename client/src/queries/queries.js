@@ -8,6 +8,7 @@ const getUser = gql`
 			rank
 			credit
 			email
+			avatarUrl
 			createdAt
 			questions {
 				id
@@ -90,6 +91,10 @@ const getAnswer = gql`
 			question {
 				id
 				questionTitle
+				user {
+					id
+					username
+				}
 			}
 		}
 	}
@@ -119,8 +124,8 @@ const checkUserEmail = gql`
 			email
 			rank
 			credit
+			avatarUrl
 			messages {
-				id
 				unread
 			}
 			questions {

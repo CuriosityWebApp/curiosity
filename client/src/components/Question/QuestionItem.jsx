@@ -116,7 +116,6 @@ class QuestionItem extends Component {
 			return <div> Loading...</div>;
 		} else {
 			let data = this.props.data.question;
-
 			return (
 				<div className="inline-block container" style={{ cursor: 'pointer' }}>
 					<div className="list-group">
@@ -125,21 +124,43 @@ class QuestionItem extends Component {
 								<div className="col-1">
 									<div className="row" style={{ textAlign: 'right' }}>
 										<div className="col align-self-start">
-											<button
-												className="fas fa-caret-up"
-												aria-hidden="true"
-												style={{ color: 'green', cursor: 'pointer' }}
-												onClick={this.throttledIcrement}
-											/>
+											<div>
+												<button
+													className="fas fa-angle-up fa-2x"
+													aria-hidden="true"
+													style={{
+														color: 'green',
+														cursor: 'pointer',
+														display: 'block',
+														marginLeft: 'auto',
+														marginRight: 'auto',
+														border: 'none',
+														background: 'none'
+													}}
+													onClick={this.throttledIcrement}
+												/>
+											</div>
 										</div>
-										<div className="col align-self-start">{data.score}</div>
+										<div className="col align-self-start" style={{ textAlign: 'center' }}>
+											{data.score}
+										</div>
 										<div className="col align-self-start">
-											<button
-												className="fas fa-caret-down"
-												aria-hidden="true"
-												style={{ color: 'red', cursor: 'pointer' }}
-												onClick={this.throttledDecrement}
-											/>
+											<div>
+												<button
+													className="fas fa-angle-down fa-2x"
+													aria-hidden="true"
+													style={{
+														color: 'red',
+														cursor: 'pointer',
+														display: 'block',
+														marginLeft: 'auto',
+														marginRight: 'auto',
+														border: 'none',
+														background: 'none'
+													}}
+													onClick={this.throttledDecrement}
+												/>
+											</div>
 										</div>
 									</div>
 								</div>

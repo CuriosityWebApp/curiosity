@@ -27,17 +27,20 @@ class ProfileSmallPage extends Component {
                 marginRight: 'auto',
               }}
             >
-              <div className="img-circle">
+              <div>
+                <br />
                 <img
-                  className="img-circle"
-                  src="https://www.shareicon.net/download/2016/09/01/822739_user_512x512.png"
-                  style={{ width: '160px', height: '160px' }}
+                  className="rounded-circle"
+                  src={user.avatarUrl}
+                  style={{ width: '145px', height: '145px' }}
                 />
               </div>
-              <p>{user.username}</p>
-              <small>rank: {user.rank}</small>
-              <br />
-              <small>since {moment(user.createdAt).format('LL')}</small>
+              <div style={{ textAlign: 'center' }}>
+                <p>{user.username}</p>
+                <small>rank: {user.rank}</small>
+                <br />
+                <small>since {moment(user.createdAt).format('LL')}</small>
+              </div>
             </div>
           </div>
         </div>

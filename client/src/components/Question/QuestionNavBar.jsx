@@ -33,13 +33,6 @@ class QuestionNavBar extends Component {
 		let days = range || this.state.range;
 		this.props.sortQuestions(e, topic, days);
 	}
-	// handleIntervalChange(e) {
-	// 	console.log('this are the days', e.target.value);
-
-	// 	this.setState({ range: e.target.value }, () => {
-	// 		this.handleSortTopics(e);
-	// 	});
-	// }
 
 	handleFilterTopics(e) {
 		e.preventDefault();
@@ -125,7 +118,7 @@ class QuestionNavBar extends Component {
 								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', '1')}>
 									Today
 								</a>
-								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt','7')}>
+								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', '7')}>
 									1 Week
 								</a>
 								<a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'createdAt', '30')}>
@@ -180,57 +173,3 @@ class QuestionNavBar extends Component {
 }
 
 export default QuestionNavBar;
-
-/// old nav bar with collapse, gives error because of style
-// <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-// <a className="navbar-brand" href="#">
-//   Navbar
-// </a>
-// <button
-//   className="navbar-toggler"
-//   type="button"
-//   data-toggle="collapse"
-//   data-target="#navbarColor01"
-//   aria-controls="navbarColor01"
-//   aria-expanded="true"
-//   aria-label="Toggle navigation"
-// >
-//   <span className="navbar-toggler-icon" />
-// </button>
-
-// <div className="navbar-collapse collapse show" id="navbarColor01" style>
-//   <ul className="navbar-nav mr-auto">
-//     <li className="nav-item active">
-//       <a className="nav-link" href="#">
-//         Home <span className="sr-only">(current)</span>
-//       </a>
-//     </li>
-//     <li className="nav-item">
-//       <a className="nav-link" href="#">
-//         Features
-//       </a>
-//     </li>
-//     <li className="nav-item">
-//       <a className="nav-link" href="#">
-//         Pricing
-//       </a>
-//     </li>
-//     <li className="nav-item">
-//       <a className="nav-link" href="#">
-//         About
-//       </a>
-//     </li>
-//   </ul>
-//   <form className="form-inline">
-//     <input
-//       className="form-control mr-sm-2"
-//       type="search"
-//       placeholder="Search"
-//       aria-label="Search"
-//     />
-//     <button className="btn btn-outline-info my-2 my-sm-0" type="submit">
-//       Search
-//     </button>
-//   </form>
-// </div>
-// </nav>

@@ -19,11 +19,12 @@ class Index extends Component {
         signedIn: false,
         credits: 0,
         rank: 0,
+        avatarUrl: null,
       },
     };
     this.setUser = this.setUser.bind(this);
   }
-  setUser({ id, username, credit, rank }, signedIn, email) {
+  setUser({ id, username, credit, rank, avatarUrl }, signedIn, email) {
     let updatedUser = {
       id: id,
       signedIn: signedIn,
@@ -31,6 +32,7 @@ class Index extends Component {
       credits: credit,
       rank: rank,
       email: email,
+      avatarUrl: avatarUrl,
     };
     this.setState({ user: updatedUser });
   }

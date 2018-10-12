@@ -30,7 +30,10 @@ class ProfileAnswerList extends Component {
                 <i className="fas fa-comment" />{' '}
                 <b style={{ color: '#14C7F4' }}>{this.props.username}</b> answered on{' '}
                 <b>{answer.question.questionTitle}</b>
-                <span> {/* - <em>Posted By {answer.question.user.username}</em> */}</span>
+                <span>
+                  {' '}
+                  - <em>Posted By {answer.question.user.username}</em>
+                </span>
               </small>
               <hr
                 style={{

@@ -343,6 +343,16 @@ const Mutation = new GraphQLObjectType({
         return Answer.updateMany({ _id: args.id }, { questionerSeen: true });
       },
     },
+    UpdateUserAvatar: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        avatarUrl: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        return User.findByIdAndUpdate({ _id: args.id }, args, { new: false });
+      },
+    },
   },
 });
 
