@@ -41,6 +41,7 @@ class BuyCredit extends Component {
                   data={this.props.data}
                   showComponent={this.state.showComponent}
                   handleClose={this.handleClose}
+                  refetcher={this.props.refetcher}
                 />
               ) : null}
             </div>

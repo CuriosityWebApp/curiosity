@@ -76,6 +76,7 @@ class PaymentCheckOut extends Component {
     await UpdateCredit({ variables: { id: this.props.id, credit: this.state.credits } });
     this.props.handleClose();
     this.props.data.refetch();
+    this.props.refetcher.refetch();
     alert(`You received ${this.state.credits}`);
   }
 

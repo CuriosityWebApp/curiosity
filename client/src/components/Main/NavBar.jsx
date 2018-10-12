@@ -9,17 +9,27 @@ class NavBar extends Component {
   }
 
   render() {
-    let { username, signedIn, rank, credits, id, email } = this.props.user;
+    let signedIn = this.props.signedIn;
+    if (signedIn) {
+      var { username, rank, credit, messages, questions } = this.props.user;
+    } else {
+      var username = '';
+      var credit = 0;
+      var rank = 0;
+      var messages = [];
+      var questions = [];
+    }
+
     let unreadMessages = 0;
-    for (let i = 0; i < this.props.messages.length; i++) {
-      if (this.props.messages[i].unread === true) {
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].unread === true) {
         unreadMessages++;
       }
     }
     let unreadNotifications = 0;
-    for (let j = 0; j < this.props.questions.length; j++) {
-      for (let k = 0; k < this.props.questions[j].answers.length; k++) {
-        if (this.props.questions[j].answers[k].questionerSeen === false) {
+    for (let j = 0; j < questions.length; j++) {
+      for (let k = 0; k < questions[j].answers.length; k++) {
+        if (questions[j].answers[k].questionerSeen === false) {
           unreadNotifications++;
         }
       }
@@ -42,7 +52,7 @@ class NavBar extends Component {
                   </h5>
                   <small>{rank} Rank</small>
                   <br />
-                  <small>{credits} Credits</small>
+                  <small>{credit} Credits</small>
                 </div>
               </div>
             ) : (
@@ -138,7 +148,7 @@ class NavBar extends Component {
                     <Link
                       to="/"
                       onClick={e => {
-                        this.props.logout();
+                        this.props.handleLogout();
                       }}
                     >
                       <div>

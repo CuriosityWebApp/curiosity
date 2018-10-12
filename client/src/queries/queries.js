@@ -95,15 +95,15 @@ const getAnswer = gql`
 `;
 
 const getQuestions = gql`
-	query($limit: Int!, $skip: Int!, $filter: String, $sortBy: String, $range: String) {
-		questions(limit: $limit, skip: $skip, filter: $filter, sortBy: $sortBy, range: $range) {
-			id
-		}
-	}
+  query($limit: Int!, $skip: Int!, $filter: String, $sortBy: String, $range: String) {
+    questions(limit: $limit, skip: $skip, filter: $filter, sortBy: $sortBy, range: $range) {
+      id
+    }
+  }
 `;
 
 const checkUserEmail = gql`
-  query($email: String!) {
+  query($email: String) {
     checkUserEmail(email: $email) {
       id
       username
@@ -216,47 +216,6 @@ const getUsernames = gql`
   }
 `;
 
-const getUserData = gql`
-  query($id: ID) {
-    user(id: $id) {
-      id
-      username
-      rank
-      credit
-      email
-      questions {
-        id
-        questionTitle
-        bounty
-      }
-      answers {
-        id
-        answer
-        score
-        question {
-          id
-          questionTitle
-        }
-      }
-      transactions {
-        id
-        questionId
-        amount
-        receiverId
-        recipient {
-          username
-        }
-        sender {
-          username
-        }
-        questionName {
-          questionTitle
-        }
-      }
-    }
-  }
-`;
-
 module.exports = {
   getUser,
   getQuestion,
@@ -268,5 +227,4 @@ module.exports = {
   userSentMessages,
   getUsernames,
   checkUsername,
-  getUserData,
 };

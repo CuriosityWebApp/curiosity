@@ -107,7 +107,6 @@ class AnswerItem extends Component {
     if (data && data.loading) {
       return <div>Loading answers...</div>;
     } else {
-      console.log(data);
       return (
         <React.Fragment>
           <div className="list-group">
