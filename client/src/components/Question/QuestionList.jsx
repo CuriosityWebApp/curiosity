@@ -158,27 +158,27 @@ class QuestionList extends Component {
 
   render() {
     let filter = this.state.filterBy ? (
-      <span class="badge badge-warning">{this.state.filterBy}</span>
+      <span className="badge badge-warning">{this.state.filterBy}</span>
     ) : (
       ''
     );
     let sorted = this.state.sortBy ? (
       this.state.sortBy !== 'createdAt' ? (
-        <span class="badge badge-warning">{this.state.sortBy}</span>
+        <span className="badge badge-warning">{this.state.sortBy}</span>
       ) : (
-        <span class="badge badge-warning">New first</span>
+        <span className="badge badge-warning">New first</span>
       )
     ) : (
       ''
     );
     let range = this.state.range ? (
       this.state.range > 1 ? (
-        <span class="badge badge-warning">{this.state.range} days</span>
+        <span className="badge badge-warning">{this.state.range} days</span>
       ) : (
-        <span class="badge badge-warning">Today</span>
+        <span className="badge badge-warning">Today</span>
       )
     ) : (
-      <span class="badge badge-warning">All time</span>
+      <span className="badge badge-warning">All time</span>
     );
     if (!this.state.selected) {
       return (
@@ -187,7 +187,7 @@ class QuestionList extends Component {
             sortQuestions={this.sortQuestions}
             filterQuestions={this.filterQuestions}
           />
-          <span class="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
+          <span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
           <div />
           {this.displayQuestions()}
           <div>

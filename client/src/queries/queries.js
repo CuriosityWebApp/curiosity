@@ -8,6 +8,7 @@ const getUser = gql`
       rank
       credit
       email
+      avatarUrl
       createdAt
       questions {
         id
@@ -89,17 +90,21 @@ const getAnswer = gql`
       question {
         id
         questionTitle
+        user {
+          id
+          username
+        }
       }
     }
   }
 `;
 
 const getQuestions = gql`
-	query($limit: Int!, $skip: Int!, $filter: String, $sortBy: String, $range: String) {
-		questions(limit: $limit, skip: $skip, filter: $filter, sortBy: $sortBy, range: $range) {
-			id
-		}
-	}
+  query($limit: Int!, $skip: Int!, $filter: String, $sortBy: String, $range: String) {
+    questions(limit: $limit, skip: $skip, filter: $filter, sortBy: $sortBy, range: $range) {
+      id
+    }
+  }
 `;
 
 const checkUserEmail = gql`
@@ -110,6 +115,7 @@ const checkUserEmail = gql`
       email
       rank
       credit
+      avatarUrl
       messages {
         unread
       }
@@ -125,6 +131,7 @@ const checkUserEmail = gql`
             questionTitle
           }
           user {
+            id
             username
           }
           questionerSeen

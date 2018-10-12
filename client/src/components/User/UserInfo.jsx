@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import UpdateUserAvatar from './UpdateUserAvatar.jsx';
 
 const UserInfo = ({ user }) => {
   return (
     <div className="card">
       <strong>User Info</strong>
       <div className="card-body">
+        <UpdateUserAvatar id={user.id} /> <br />
         <strong>E-Mail: </strong>
         {user.email}
         <br />
