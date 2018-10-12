@@ -3,7 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import { getAnswer, getQuestion } from '../../queries/queries.js';
 import { UpdatePaid, UpdateCredit, AddTransaction, UpdateChosenAnswer } from '../../mutations/mutations.js';
 
-class AnswerItem extends Component {
+class AnswerChoice extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -11,9 +11,9 @@ class AnswerItem extends Component {
 		};
 		this.chooseAnswer = this.chooseAnswer.bind(this);
 		this.clickChooseAnswer = this.clickChooseAnswer.bind(this);
-  }
+	}
 
-  clickChooseAnswer() {
+	clickChooseAnswer() {
 		this.props
 			.UpdatePaid({
 				variables: {
@@ -35,7 +35,7 @@ class AnswerItem extends Component {
 					mutation: AddTransaction,
 					variables: {
 						questionId: this.props.questionId,
-						senderId: this.props.ownerId,
+						senderId: this.props.qOwnerId,
 						receiverId: this.props.getAnswer.answer.user.id,
 						amount: this.props.getQuestion.question.bounty
 					}
@@ -48,16 +48,16 @@ class AnswerItem extends Component {
 						id: this.props.answerId,
 						answerChosen: true
 					}
-				})
-      })
-      .then(() => {
-				this.props.data.refetch();
-      })
+				});
+			})
+			.then(() => {
+				this.props.refetch();
+			});
 	}
 
 	chooseAnswer() {
 		if (
-			this.props.ownerId === this.props.loggedId &&
+			this.props.qOwnerId === this.props.loggedId &&
 			this.props.getAnswer.answer.user.id !== this.props.loggedId &&
 			!this.props.getQuestion.question.bountyPaid
 		) {
@@ -71,18 +71,18 @@ class AnswerItem extends Component {
 		}
 
 		if (this.props.getQuestion.question.bountyPaid && this.props.getAnswer.answer.answerChosen) {
-			return <small>Best Answer</small>
+			return <small>Best Answer</small>;
 		}
-  }
-  
-  render() {
+	}
+
+	render() {
 		let data = this.props.getAnswer;
 		if (data && data.loading) {
 			return <div>Loading answers...</div>;
 		} else {
-      return <div>{this.chooseAnswer()}</div>
-    }
-  }
+			return <div>{this.chooseAnswer()}</div>;
+		}
+	}
 }
 
 export default compose(
@@ -95,8 +95,8 @@ export default compose(
 				}
 			};
 		}
-  }),
-  graphql(getQuestion, {
+	}),
+	graphql(getQuestion, {
 		name: 'getQuestion',
 		options: props => {
 			return {
@@ -110,4 +110,4 @@ export default compose(
 	graphql(UpdateCredit, { name: 'UpdateCredit' }),
 	graphql(AddTransaction, { name: 'AddTransaction' }),
 	graphql(UpdateChosenAnswer, { name: 'UpdateChosenAnswer' })
-)(AnswerItem);
+)(AnswerChoice);

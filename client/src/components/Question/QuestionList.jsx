@@ -29,7 +29,6 @@ class QuestionList extends Component {
 	componentDidMount() {
 		this.throttledQuestionCall();
 		window.addEventListener('scroll', this.onScroll, false);
-		console.log('this is the state', this.state);
 	}
 
 	componentWillUnmount() {
@@ -45,8 +44,6 @@ class QuestionList extends Component {
 
 	sortQuestions = async (e, method, range) => {
 		e ? e.preventDefault() : '';
-		// console.log('this is the sorting method', method);
-		console.log('im inside sort', e, method, range);
 		await this.setState({ sortBy: method, skip: 0, questions: [], range: range }, () => {
 			this.props.client
 				.query({
@@ -60,20 +57,16 @@ class QuestionList extends Component {
 					}
 				})
 				.then(({ data }) => {
-					console.log('this is data sorted', data);
 					let newQuestions = this.state.questions.concat(data.questions);
 					this.setState({ questions: newQuestions, skip: this.state.skip + 15 });
 					window.addEventListener('scroll', this.onScroll, false);
-					console.log('this is the state in sort', this.state);
 				});
 		});
 	};
 
 	filterQuestions = async (e, category, range) => {
 		e.preventDefault();
-		console.log('im inside filter');
 
-		// console.log('this is the category', category);
 		await this.setState({ filterBy: category, skip: 0, questions: [], range: range }, () => {
 			this.props.client
 				.query({
@@ -87,7 +80,6 @@ class QuestionList extends Component {
 					}
 				})
 				.then(({ data }) => {
-					console.log('this is data filter', data);
 					let newQuestions = this.state.questions.concat(data.questions);
 
 					this.setState({ questions: newQuestions, skip: this.state.skip + 15 });
@@ -109,14 +101,10 @@ class QuestionList extends Component {
 				}
 			})
 			.then(({ data }) => {
-				console.log('this is data', data);
 				let newProps = this.state.questions.concat(data.questions);
 				let next;
 				data.questions.length ? (next = this.state.skip + 15) : (next = this.state.questions.length);
-				this.setState({ questions: newProps, skip: next }, () => {
-					console.log('im inside then next');
-					console.log('this is the state in next', this.state);
-				});
+				this.setState({ questions: newProps, skip: next }, () => {});
 			})
 			.then(() => window.addEventListener('scroll', this.onScroll, false))
 			.catch(err => console.log('error in nextquestions', err));
@@ -148,22 +136,30 @@ class QuestionList extends Component {
 	}
 
 	render() {
-		let filter = this.state.filterBy ? <span class="badge badge-warning">{this.state.filterBy}</span> : '';
-		let sorted = this.state.sortBy ? <span class="badge badge-warning">{this.state.sortBy}</span> : '';
-		let range = this.state.range ? (
-			this.state.range > 1 ? (
-				<span class="badge badge-warning">{this.state.range} days</span>
+		let filter = this.state.filterBy ? <span className="badge badge-warning">{this.state.filterBy}</span> : '';
+		let sorted = this.state.sortBy ? (
+			this.state.sortBy !== 'createdAt' ? (
+				<span className="badge badge-warning">{this.state.sortBy}</span>
 			) : (
-				<span class="badge badge-warning">Today</span>
+				<span className="badge badge-warning">New first</span>
 			)
 		) : (
-			<span class="badge badge-warning">All time</span>
+			''
+		);
+		let range = this.state.range ? (
+			this.state.range > 1 ? (
+				<span className="badge badge-warning">{this.state.range} days</span>
+			) : (
+				<span className="badge badge-warning">Today</span>
+			)
+		) : (
+			<span className="badge badge-warning">All time</span>
 		);
 		if (!this.state.selected) {
 			return (
 				<div>
 					<QuestionNavBar sortQuestions={this.sortQuestions} filterQuestions={this.filterQuestions} />
-					<span class="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
+					<span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
 					<div />
 					{this.displayQuestions()}
 					<div>

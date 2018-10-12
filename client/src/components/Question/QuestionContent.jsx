@@ -45,7 +45,7 @@ class QuestionContent extends Component {
 					</div>
 					<AnswerList
 						id={this.props.id}
-						ownerId={data.question.user.id}
+						qOwnerId={data.question.user.id}
 						loggedId={this.props.loggedId}
 						isPaid={data.question.bountyPaid}
 						bounty={data.question.bounty}
