@@ -10,7 +10,6 @@ class ProfileAnswerList extends Component {
   }
 
   render() {
-    console.log(this.props.answer, 'hello');
     let { loading, error, answer } = this.props.data;
     if (loading) {
       return <div>Loading...</div>;
@@ -49,6 +48,9 @@ class ProfileAnswerList extends Component {
               >
                 {this.props.username} {answer.score} likes -{' '}
                 <em>{moment(answer.createdAt).fromNow()}</em>
+                <div>
+                  <em>{answer.answerChosen ? 'Chosen as Best Answer' : ''}</em>
+                </div>
               </small>
               <small
                 style={{

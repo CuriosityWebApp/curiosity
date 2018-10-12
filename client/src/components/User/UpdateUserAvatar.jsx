@@ -56,17 +56,24 @@ class ChooseUserAvatar extends Component {
             src={this.state.avatarUrl}
             alt="Your picture here!"
             className="rounded-circle"
-            style={{ width: '200px', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
+            style={{
+              width: '200px',
+              height: '200px',
+              display: 'block',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
           />
           <Modal.Body>
             <hr />
-            <p>Place Your Url here!</p>
+            <p style={{ textAlign: 'center' }}>Place Your Url here!</p>
             <form>
               <input
                 type="text"
                 placeholder="url goes here"
                 onChange={this.handleChange}
                 name="avatarUrl"
+                className="form-control"
               />
             </form>
           </Modal.Body>

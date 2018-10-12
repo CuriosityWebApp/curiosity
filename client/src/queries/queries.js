@@ -19,6 +19,7 @@ const getUser = gql`
         id
         answer
         score
+        answerChosen
         question {
           id
           questionTitle

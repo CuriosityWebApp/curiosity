@@ -9,6 +9,26 @@ import moment from 'moment';
 class ProfileFullPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showChosen: false,
+      showAll: true,
+    };
+    this.showChosenOnClick = this.showChosenOnClick.bind(this);
+    this.showAllOnClick = this.showAllOnClick.bind(this);
+  }
+
+  showChosenOnClick() {
+    this.setState({
+      showChosen: true,
+      showAll: false,
+    });
+  }
+
+  showAllOnClick() {
+    this.setState({
+      showChosen: false,
+      showAll: true,
+    });
   }
 
   render() {
@@ -26,6 +46,48 @@ class ProfileFullPage extends Component {
               <div className="col">
                 <div className="card">
                   <div className="card-header bg-primary text-white">
+                    <i className="fas fa-trophy" />
+                    <span onClick={this.showAllOnClick} style={{ cursor: 'pointer' }}>
+                      {' '}
+                      Answers{' '}
+                    </span>
+                    <span onClick={this.showChosenOnClick} style={{ cursor: 'pointer' }}>
+                      Chosen{' '}
+                    </span>
+                  </div>
+                  <div
+                    className="card-body well well-sm pre-scrollable"
+                    style={{ maxHeight: '55vh' }}
+                  >
+                    <div>
+                      {user.answers.map(answer => {
+                        console.log(answer, 'I am answer');
+                        if (answer.answerChosen && this.state.showChosen) {
+                          return (
+                            <ProfileAnswerList
+                              answer={answer}
+                              username={user.username}
+                              key={answer.id}
+                            />
+                          );
+                        }
+
+                        if (this.state.showAll) {
+                          return (
+                            <ProfileAnswerList
+                              answer={answer}
+                              username={user.username}
+                              key={answer.id}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div className="card">
+                  <div className="card-header bg-primary text-white">
                     <i className="fa fa-question-circle" /> Questions
                   </div>
                   <div
@@ -39,28 +101,6 @@ class ProfileFullPage extends Component {
                             question={question}
                             username={user.username}
                             key={question.id}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-                <br />
-                <div className="card">
-                  <div className="card-header bg-primary text-white">
-                    <i className="fas fa-trophy" /> Answers
-                  </div>
-                  <div
-                    className="card-body well well-sm pre-scrollable"
-                    style={{ maxHeight: '55vh' }}
-                  >
-                    <div>
-                      {user.answers.map(answer => {
-                        return (
-                          <ProfileAnswerList
-                            answer={answer}
-                            username={user.username}
-                            key={answer.id}
                           />
                         );
                       })}
