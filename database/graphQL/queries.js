@@ -61,56 +61,57 @@ const RootQuery = new GraphQLObjectType({
         sortBy: { type: GraphQLString },
         range: { type: GraphQLString },
       },
-      resolve(parent, args) {
-        console.log('these are the args', args);
+      resolve(parent, {
+        limit, skip, sortBy, range, filter,
+      }) {
         const today = new Date();
         const day = 86400000; // number of milliseconds in a day
-        const days = args.range || 0;
+        const days = range || 0;
         const daysAgo = new Date(today - days * day);
         // no args passed in
-        if (args.filter === '' && args.sortBy === '') {
+        if (filter === '' && sortBy === '') {
           return Question.find()
             .sort({ createdAt: -1, views: -1, bounty: -1 })
-            .skip(args.skip)
-            .limit(args.limit);
+            .skip(skip)
+            .limit(limit);
         }
         // getting items just bassed on filter
-        if (args.filter !== '' && args.sortBy === '') {
+        if (filter !== '' && sortBy === '') {
           return Question.find({
             $or: [
-              { category: { $regex: args.filter, $options: 'i' } },
-              { tags: { $regex: args.filter, $options: 'i' } },
+              { category: { $regex: filter, $options: 'i' } },
+              { tags: { $regex: filter, $options: 'i' } },
             ],
           })
             .sort({ createdAt: -1, views: -1, bounty: -1 })
-            .skip(args.skip)
-            .limit(args.limit);
+            .skip(skip)
+            .limit(limit);
         }
         // getting items based on passed sort option and range if provided
-        if (args.sortBy !== '' && args.sortBy !== 'top') {
+        if (sortBy !== '' && sortBy !== 'top') {
           // if range but no filter
-          let range = args.range ? { createdAt: { $gte: daysAgo } } : {};
+          let newRange = range ? { createdAt: { $gte: daysAgo } } : {};
           // if range and filter
-          args.range && args.filter
-            ? (range = { createdAt: { $gte: daysAgo }, category: args.filter })
-            : (range = range);
-          return Question.find(range)
-            .sort({ [args.sortBy]: -1 })
-            .skip(args.skip)
-            .limit(args.limit);
+          range && filter
+            ? (newRange = { createdAt: { $gte: daysAgo }, category: filter })
+            : (newRange = range);
+          return Question.find(newRange)
+            .sort({ [sortBy]: -1 })
+            .skip(skip)
+            .limit(limit);
         }
         // finds the top questions + if filter is passed will sum both of them
-        if (args.sortBy === 'top') {
-          let criteria = args.filter ? { category: args.filter } : {};
-          if (args.range && args.filter) {
+        if (sortBy === 'top') {
+          let criteria = filter ? { category: filter } : {};
+          if (range && filter) {
             criteria = {
               $or: [
-                { category: { $regex: args.filter, $options: 'i' } },
-                { tags: { $regex: args.filter, $options: 'i' } },
+                { category: { $regex: filter, $options: 'i' } },
+                { tags: { $regex: filter, $options: 'i' } },
               ],
               createdAt: { $gte: daysAgo },
             };
-          } else if (args.range && !args.filter) {
+          } else if (range && !filter) {
             criteria = { createdAt: { $gte: daysAgo } };
           }
           return Question.aggregate([
@@ -129,8 +130,8 @@ const RootQuery = new GraphQLObjectType({
             },
             { $sort: { score: -1, views: -1, createdAt: -1 } },
           ])
-            .skip(args.skip)
-            .limit(args.limit)
+            .skip(skip)
+            .limit(limit)
             .then((data) => {
               const newData = [];
               data.forEach((item) => {

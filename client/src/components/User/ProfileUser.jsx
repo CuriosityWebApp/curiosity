@@ -5,6 +5,7 @@ import UserInfo from './UserInfo.jsx';
 import UserWallet from './UserWallet.jsx';
 import UserQuestions from './UserQuestions.jsx';
 import UserAnswers from './UserAnswers.jsx';
+import UserFavorites from './UserFavorites.jsx';
 
 class ProfileUser extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class ProfileUser extends Component {
   }
 
   render() {
-    let { loading, error, user } = this.props.data;
+    let { loading, error, user, refetch } = this.props.data;
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -96,6 +97,21 @@ class ProfileUser extends Component {
                     Answers
                   </a>
                 </li>
+                <li
+                  className={this.state.activeTab === 'favorites' ? 'nav-item active' : 'nav-item'}
+                >
+                  <a
+                    className="nav-link"
+                    onClick={() => {
+                      this.setState({ activeTab: 'favorites' });
+                    }}
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Favorites
+                  </a>
+                </li>
               </ul>
             </div>
           </nav>
@@ -112,6 +128,9 @@ class ProfileUser extends Component {
           )}
           {this.state.activeTab === 'questions' && <UserQuestions questions={user.questions} />}
           {this.state.activeTab === 'answers' && <UserAnswers answers={user.answers} />}
+          {this.state.activeTab === 'favorites' && (
+            <UserFavorites user={user} refetchTags={refetch} />
+          )}
         </div>
       );
     }

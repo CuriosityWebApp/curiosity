@@ -36,6 +36,7 @@ const UserType = new GraphQLObjectType({
     vouch: { type: new GraphQLList(GraphQLString) },
     createdAt: { type: GraphQLDate },
     updatedAt: { type: GraphQLDate },
+    favoriteTags: { type: new GraphQLList(GraphQLString) },
     questions: {
       type: new GraphQLList(QuestionType),
       resolve(parent, args) {
