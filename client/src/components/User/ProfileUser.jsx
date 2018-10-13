@@ -100,7 +100,9 @@ class ProfileUser extends Component {
             </div>
           </nav>
           {this.state.activeTab === 'info' && <UserInfo user={user} />}
-          {this.state.activeTab === 'wallet' && <UserWallet user={user} data={this.props.data} />}
+          {this.state.activeTab === 'wallet' && (
+            <UserWallet user={user} data={this.props.data} refetcher={this.props.refetcher} />
+          )}
           {this.state.activeTab === 'questions' && <UserQuestions questions={user.questions} />}
           {this.state.activeTab === 'answers' && <UserAnswers answers={user.answers} />}
         </div>

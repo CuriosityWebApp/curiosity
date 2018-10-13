@@ -20,14 +20,22 @@ class Main extends Component {
   }
 
   render() {
-    let { username, signedIn, rank, credits, id, email } = this.props.user;
+    var signedIn = this.props.signedIn;
+    if (this.props.signedIn) {
+      var { username, credits, id, email } = this.props.user;
+    } else {
+      var username = '';
+      var credits = 0;
+      var id = '';
+      var email = '';
+    }
     return (
       <div>
         <NavBar
           user={this.props.user}
-          logout={this.props.logout}
-          messages={this.props.messages}
-          questions={this.props.questions}
+          signedIn={signedIn}
+          uiConfig={this.uiConfig}
+          handleLogout={this.props.handleLogout}
         />
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <div className="bg-content">
@@ -64,9 +72,7 @@ class Main extends Component {
                                 );
                               }
                               if (!username) {
-                                return (
-                                  <UsernameSubmit email={email} setUser={this.props.setUser} />
-                                );
+                                return <UsernameSubmit email={email} />;
                               }
                               return <Redirect to="/" />;
                             }
@@ -76,7 +82,7 @@ class Main extends Component {
                           exact
                           path="/profileUser"
                           render={() => {
-                            return <ProfileUser id={id} />;
+                            return <ProfileUser id={id} refetcher={this.props.refetcher} />;
                           }}
                         />
                         <Route
@@ -85,6 +91,7 @@ class Main extends Component {
                           render={({ match }) => {
                             return (
                               <QuestionContent
+                                signedIn={signedIn}
                                 loggedId={id}
                                 user={this.props.user}
                                 id={match.params.questionId}
@@ -122,7 +129,13 @@ class Main extends Component {
                           exact
                           path="/notifications"
                           render={() => {
-                            return <Notifications userId={id} questions={this.props.questions} />;
+                            return (
+                              <Notifications
+                                userId={id}
+                                user={this.props.user}
+                                refetcher={this.props.refetcher}
+                              />
+                            );
                           }}
                         />
                       </Switch>

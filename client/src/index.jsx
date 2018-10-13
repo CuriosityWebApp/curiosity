@@ -4,6 +4,15 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/Auth/App.jsx';
+import firebase, { database } from 'firebase/app';
+import 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
+  authDomain: 'curiosity-a9199.firebaseapp.com',
+});
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
@@ -12,39 +21,65 @@ const client = new ApolloClient({
 class Index extends Component {
   constructor() {
     super();
-    this.state = {
-      user: {
-        id: undefined,
-        username: undefined,
-        signedIn: false,
-        credits: 0,
-        rank: 0,
-        avatarUrl: null,
-      },
-    };
-    this.setUser = this.setUser.bind(this);
+    this.state = { email: null, firebaseCheck: false };
+    this.firebaseCheck = this.firebaseCheck.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
-  setUser({ id, username, credit, rank, avatarUrl }, signedIn, email) {
-    let updatedUser = {
-      id: id,
-      signedIn: signedIn,
-      username: username,
-      credits: credit,
-      rank: rank,
-      email: email,
-      avatarUrl: avatarUrl,
-    };
-    this.setState({ user: updatedUser });
+
+  componentDidMount() {
+    this.firebaseCheck();
   }
+
+  firebaseCheck() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ email: user.email, firebaseCheck: true });
+      } else {
+        this.setState({ firebaseCheck: true });
+      }
+    });
+  }
+
+  uiConfig = {
+    signInFlow: 'popup',
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+      firebase.auth.GithubAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    ],
+    callbacks: {
+      signInSuccessWithAuthResult: () => false,
+    },
+  };
+  handleLogout() {
+    console.log('logout');
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.setState({ email: '' });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
   render() {
-    return (
-      <App
-        setUser={(user, signedIn, email) => {
-          this.setUser(user, signedIn, email);
-        }}
-        user={this.state.user}
-      />
-    );
+    if (!this.state.firebaseCheck) {
+      return <div>loading</div>;
+    } else {
+      return (
+        <App
+          email={this.state.email}
+          handleLogout={this.handleLogout}
+          firebase={firebase}
+          firebaseCheck={this.state.firebaseCheck}
+          uiConfig={this.uiConfig}
+        />
+      );
+    }
   }
 }
 ReactDOM.render(
