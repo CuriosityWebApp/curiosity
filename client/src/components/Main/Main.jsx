@@ -22,10 +22,10 @@ class Main extends Component {
   render() {
     var signedIn = this.props.signedIn;
     if (signedIn) {
-      var { username, credits, id, email } = this.props.user;
+      var { username, credit, id } = this.props.user;
     } else {
       var username = '';
-      var credits = 0;
+      var credit = 0;
       var id = '';
       var email = '';
     }
@@ -54,7 +54,7 @@ class Main extends Component {
                             <CreateQuestion
                               userId={id}
                               signedIn={signedIn}
-                              credits={credits}
+                              credit={credit}
                               user={this.props.user}
                             />
                           )}
