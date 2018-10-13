@@ -8,6 +8,8 @@ import firebase, { database } from 'firebase/app';
 import 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
@@ -24,6 +26,7 @@ class Index extends Component {
     this.state = { email: null, firebaseCheck: false };
     this.firebaseCheck = this.firebaseCheck.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.notify = this.notify.bind(this);
   }
 
   componentDidMount() {
@@ -54,16 +57,44 @@ class Index extends Component {
     },
   };
   handleLogout() {
-    console.log('logout');
     firebase
       .auth()
       .signOut()
       .then(() => {
         this.setState({ email: '', firebaseCheck: false });
       })
+      .then(() => {
+        setTimeout(() => {
+          this.notify('auth', 'Signed Out');
+        }, 0);
+      })
       .catch(err => {
         console.error(err);
       });
+  }
+
+  notify(type, text) {
+    if (type === 'transaction') {
+      toast.success(text, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    } else if (type === 'message') {
+      toast.info(text, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    } else if (type === 'auth') {
+      toast(text, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
+    } else if (type === 'error') {
+      toast.error(text, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    }
   }
 
   render() {
@@ -71,13 +102,17 @@ class Index extends Component {
       return <div>loading</div>;
     } else {
       return (
-        <App
-          email={this.state.email}
-          handleLogout={this.handleLogout}
-          firebase={firebase}
-          firebaseCheck={this.state.firebaseCheck}
-          uiConfig={this.uiConfig}
-        />
+        <div>
+          <ToastContainer />
+          <App
+            notify={this.notify}
+            email={this.state.email}
+            handleLogout={this.handleLogout}
+            firebase={firebase}
+            firebaseCheck={this.state.firebaseCheck}
+            uiConfig={this.uiConfig}
+          />
+        </div>
       );
     }
   }

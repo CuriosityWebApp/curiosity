@@ -27,7 +27,6 @@ class Main extends Component {
       var username = '';
       var credit = 0;
       var id = '';
-      var email = '';
     }
     return (
       <div>
@@ -55,6 +54,7 @@ class Main extends Component {
                               signedIn={signedIn}
                               credit={credit}
                               user={this.props.user}
+                              notify={this.props.notify}
                             />
                           )}
                         />
@@ -74,6 +74,9 @@ class Main extends Component {
                                   />
                                 );
                               } else {
+                                setTimeout(() => {
+                                  this.props.notify('auth', 'Signed In');
+                                }, 0);
                                 return <Redirect to="/" />;
                               }
                             }
@@ -83,7 +86,13 @@ class Main extends Component {
                           exact
                           path="/profileUser"
                           render={() => {
-                            return <ProfileUser id={id} refetcher={this.props.refetcher} />;
+                            return (
+                              <ProfileUser
+                                id={id}
+                                refetcher={this.props.refetcher}
+                                notify={this.props.notify}
+                              />
+                            );
                           }}
                         />
                         <Route
@@ -96,6 +105,7 @@ class Main extends Component {
                                 loggedId={id}
                                 user={this.props.user}
                                 id={match.params.questionId}
+                                notify={this.props.notify}
                               />
                             );
                           }}
@@ -111,7 +121,13 @@ class Main extends Component {
                           exact
                           path="/messages/:folder"
                           render={({ match }) => {
-                            return <MessagesAndCreate folder={match.params.folder} userId={id} />;
+                            return (
+                              <MessagesAndCreate
+                                folder={match.params.folder}
+                                userId={id}
+                                notify={this.props.notify}
+                              />
+                            );
                           }}
                         />
                         <Route
@@ -124,7 +140,7 @@ class Main extends Component {
                         <Route
                           exact
                           path="/privatemessage"
-                          render={() => <PrivateMessage userId={id} />}
+                          render={() => <PrivateMessage userId={id} notify={this.props.notify} />}
                         />
                         <Route
                           exact
