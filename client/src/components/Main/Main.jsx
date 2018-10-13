@@ -89,8 +89,8 @@ class Main extends Component {
                             return (
                               <ProfileUser
                                 id={id}
-                                refetcher={this.props.refetcher}
                                 notify={this.props.notify}
+                                refetcher={this.props.refetcher}
                               />
                             );
                           }}
@@ -101,11 +101,11 @@ class Main extends Component {
                           render={({ match }) => {
                             return (
                               <QuestionContent
+                                notify={this.props.notify}
                                 signedIn={signedIn}
                                 loggedId={id}
                                 user={this.props.user}
                                 id={match.params.questionId}
-                                notify={this.props.notify}
                               />
                             );
                           }}
@@ -134,7 +134,12 @@ class Main extends Component {
                           exact
                           path="/user/:id"
                           render={({ match }) => {
-                            return <ProfileFullPage userId={match.params.id} />;
+                            return (
+                              <ProfileFullPage
+                                userId={match.params.id}
+                                notify={this.props.notify}
+                              />
+                            );
                           }}
                         />
                         <Route
@@ -151,6 +156,7 @@ class Main extends Component {
                                 userId={id}
                                 user={this.props.user}
                                 refetcher={this.props.refetcher}
+                                notify={this.props.notify}
                               />
                             );
                           }}

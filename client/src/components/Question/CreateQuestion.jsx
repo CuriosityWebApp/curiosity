@@ -103,7 +103,7 @@ class CreateQuestion extends Component {
             <br />
             <label>Answer by rank: </label>
             <input
-              type="number"
+              type="text"
               value={restriction}
               onChange={e => this.setState({ restriction: e.target.value })}
             />
