@@ -18,11 +18,11 @@ class AnswerItem extends Component {
 	}
 
 	IncrementLikes(e) {
-		if (!this.props.userId) {
+		if (!this.props.loggedId) {
 			alert('You must log in first!');
 		} else {
 			let up, down, data;
-			let userId = this.props.userId;
+			let userId = this.props.loggedId;
 			if (this.props.getAnswer.loading) {
 				console.log('still loading');
 			} else {
@@ -61,11 +61,11 @@ class AnswerItem extends Component {
 	}
 
 	decrementLikes(e) {
-		if (!this.props.userId) {
+		if (!this.props.loggedId) {
 			alert('You must log in first!');
 		} else {
 			let up, down, data;
-			let userId = this.props.userId;
+			let userId = this.props.loggedId;
 			if (this.props.getAnswer.loading) {
 				console.log('still loading');
 			} else {
@@ -222,7 +222,7 @@ class AnswerItem extends Component {
 		this.props.AddMessage({
 			mutation: AddMessage,
 			variables: {
-				senderId: this.props.userId,
+				senderId: this.props.loggedId,
 				receiverId: '5bb8d00baf90e323e4b9c8a9',
 				messageTitle: messageTitle,
 				messageContent: messageContent

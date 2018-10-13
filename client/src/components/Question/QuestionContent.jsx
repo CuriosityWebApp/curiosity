@@ -196,9 +196,9 @@ class QuestionContent extends Component {
 						loggedId={this.props.loggedId}
 						isPaid={data.question.bountyPaid}
 						bounty={data.question.bounty}
-						userId={this.props.user.id}
+						user={this.props.user}
 						questionId={this.props.id}
-						signedIn={this.props.user.signedIn}
+						signedIn={this.props.signedIn}
 					/>
 				</div>
 			);
