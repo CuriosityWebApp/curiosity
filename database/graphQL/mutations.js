@@ -13,11 +13,7 @@ const {
   GraphQLNonNull,
 } = require('graphql');
 const {
-  UserType,
-  QuestionType,
-  AnswerType,
-  TransactionType,
-  MessageType,
+  UserType, QuestionType, AnswerType, TransactionType, MessageType,
 } = require('./typeDefs.js');
 
 const Mutation = new GraphQLObjectType({
@@ -157,26 +153,26 @@ const Mutation = new GraphQLObjectType({
         return Answer.findOneAndUpdate({ _id: args.id }, args, { new: false });
       },
     },
-    likesOnAnswer: {
-      type: AnswerType,
-      args: {
-        id: { type: GraphQLNonNull(GraphQLID) },
-        score: { type: GraphQLInt },
-      },
-      resolve(parent, args) {
-        return Answer.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
-      },
-    },
-    likesOnQuestion: {
-      type: QuestionType,
-      args: {
-        id: { type: GraphQLNonNull(GraphQLID) },
-        score: { type: GraphQLInt },
-      },
-      resolve(parent, args) {
-        return Question.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
-      },
-    },
+    // likesOnAnswer: {
+    //   type: AnswerType,
+    //   args: {
+    //     id: { type: GraphQLNonNull(GraphQLID) },
+    //     score: { type: GraphQLInt },
+    //   },
+    //   resolve(parent, args) {
+    //     return Answer.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
+    //   },
+    // },
+    // likesOnQuestion: {
+    //   type: QuestionType,
+    //   args: {
+    //     id: { type: GraphQLNonNull(GraphQLID) },
+    //     score: { type: GraphQLInt },
+    //   },
+    //   resolve(parent, args) {
+    //     return Question.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
+    //   },
+    // },
     updateUserRank: {
       type: UserType,
       args: {
@@ -232,16 +228,10 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         if (args.method === 'add') {
-          return Question.findOneAndUpdate(
-            { _id: args.id },
-            { $push: { ratedDownBy: args.userId } },
-          );
+          return Question.findOneAndUpdate({ _id: args.id }, { $push: { ratedDownBy: args.userId } });
         }
         if (args.method === 'delete') {
-          return Question.findOneAndUpdate(
-            { _id: args.id },
-            { $pull: { ratedDownBy: args.userId } },
-          );
+          return Question.findOneAndUpdate({ _id: args.id }, { $pull: { ratedDownBy: args.userId } });
         }
       },
     },
@@ -277,6 +267,17 @@ const Mutation = new GraphQLObjectType({
         }
       },
     },
+
+    IncrementQuestionViews: {
+      type: QuestionType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Question.findOneAndUpdate({ _id: args.id }, { $inc: { views: 1 } });
+      },
+    },
+
     addMessage: {
       type: MessageType,
       args: {
@@ -340,6 +341,16 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         return Answer.updateMany({ _id: args.id }, { questionerSeen: true });
+      },
+    },
+    UpdateUserAvatar: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        avatarUrl: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        return User.findByIdAndUpdate({ _id: args.id }, args, { new: false });
       },
     },
   },

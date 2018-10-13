@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { getQuestion } from '../../queries/queries.js';
+import { Link } from 'react-router-dom';
 import AnswerList from '../Answer/AnswerList.jsx';
 import moment from 'moment';
-import CreateAnswer from '../Answer/CreateAnswer.jsx';
+import ProfileSmallPage from '../PublicProfile/ProfileSmallPage.jsx';
 
 class QuestionContent extends Component {
   constructor(props) {
@@ -20,33 +21,39 @@ class QuestionContent extends Component {
     if (data.error) {
       return <div>Error...</div>;
     } else {
-      console.log(this.props);
       return (
         <div className="list-group">
           <div className="list-group-item list-group-item-action flex-column align-items-start">
-            <div className="d-flex w-100 justify-content-between">
-              <h3 className="mb-1">{data.question.questionTitle}</h3>
-              <div>
-                <small>Bounty: {data.question.bounty}</small>
-                <br />
-                <small>Category: {data.question.category}</small>
+            <div className="row">
+              <div className="col-2">
+                <Link
+                  to={`/user/${data.question.user.id}`}
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  <ProfileSmallPage userId={data.question.user.id} />
+                </Link>
               </div>
-            </div>
-            <small>
-              Posted By {data.question.user.username} {moment(data.question.createdAt).fromNow()}
-            </small>
-            <div>
-              <br />
-              <div>{data.question.questionContent}</div>
+              <div className="col-2">
+                <small style={{ textAlign: 'center' }}>
+                  Posted By {data.question.user.username} <br />
+                  {moment(data.question.createdAt).fromNow()} <br />
+                  Bounty: {data.question.bounty} <br />
+                  Category: {data.question.category ? data.question.category : 'None'}
+                </small>
+              </div>
+              <div className="col-7">
+                <h3 className="mb-1">{data.question.questionTitle}</h3> <br />
+                <div>{data.question.questionContent}</div>
+              </div>
             </div>
           </div>
           <AnswerList
             id={this.props.id}
-            ownerId={data.question.user.id}
+            qOwnerId={data.question.user.id}
             loggedId={this.props.loggedId}
             isPaid={data.question.bountyPaid}
             bounty={data.question.bounty}
-            userId={this.props.user.id}
+            user={this.props.user}
             questionId={this.props.id}
             signedIn={this.props.signedIn}
           />

@@ -19,7 +19,7 @@ class CreateAnswer extends Component {
           .mutate({
             mutation: AddAnswer,
             variables: {
-              userId: this.props.userId,
+              userId: this.props.user.id,
               questionId: this.props.questionId,
               answer: this.state.answerContent,
             },

@@ -51,7 +51,6 @@ class QuestionList extends Component {
 
   sortQuestions = async (e, method, range) => {
     e ? e.preventDefault() : '';
-    // console.log('this is the sorting method', method);
     await this.setState({ sortBy: method, skip: 0, questions: [], range: range }, () => {
       this.props.client
         .query({
@@ -75,7 +74,6 @@ class QuestionList extends Component {
   filterQuestions = async (e, category, range) => {
     e.preventDefault();
 
-    // console.log('this is the category', category);
     await this.setState({ filterBy: category, skip: 0, questions: [], range: range }, () => {
       this.props.client
         .query({
@@ -153,7 +151,11 @@ class QuestionList extends Component {
       ''
     );
     let sorted = this.state.sortBy ? (
-      <span className="badge badge-warning">{this.state.sortBy}</span>
+      this.state.sortBy !== 'createdAt' ? (
+        <span className="badge badge-warning">{this.state.sortBy}</span>
+      ) : (
+        <span className="badge badge-warning">New first</span>
+      )
     ) : (
       ''
     );

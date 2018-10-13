@@ -8,6 +8,7 @@ const getUser = gql`
       rank
       credit
       email
+      avatarUrl
       createdAt
       questions {
         id
@@ -54,6 +55,7 @@ const getQuestion = gql`
       restriction
       tags
       score
+      views
       ratedUpBy
       ratedDownBy
       user {
@@ -89,7 +91,19 @@ const getAnswer = gql`
       question {
         id
         questionTitle
+        user {
+          id
+          username
+        }
       }
+    }
+  }
+`;
+
+const getAnswers = gql`
+  query($questionId: ID!, $skip: Int!, $limit: Int!) {
+    answers(questionId: $questionId, skip: $skip, limit: $limit) {
+      id
     }
   }
 `;
@@ -110,6 +124,7 @@ const checkUserEmail = gql`
       email
       rank
       credit
+      avatarUrl
       messages {
         unread
       }
@@ -125,6 +140,7 @@ const checkUserEmail = gql`
             questionTitle
           }
           user {
+            id
             username
           }
           questionerSeen
@@ -221,6 +237,7 @@ module.exports = {
   getQuestion,
   getQuestions,
   getAnswer,
+  getAnswers,
   checkUserEmail,
   searchQuestion,
   getMessages,

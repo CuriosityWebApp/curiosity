@@ -116,8 +116,7 @@ class MessagesAndCreate extends Component {
     return (
       <div>
         <h2>
-          <u>Messages</u>
-          {this.state.folder}
+          <u>{this.props.folder}</u>
         </h2>
         {this.state.creator && (
           <div>
