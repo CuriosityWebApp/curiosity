@@ -101,7 +101,12 @@ class ProfileUser extends Component {
           </nav>
           {this.state.activeTab === 'info' && <UserInfo user={user} />}
           {this.state.activeTab === 'wallet' && (
-            <UserWallet user={user} data={this.props.data} refetcher={this.props.refetcher} />
+            <UserWallet
+              user={user}
+              data={this.props.data}
+              refetcher={this.props.refetcher}
+              notify={this.props.notify}
+            />
           )}
           {this.state.activeTab === 'questions' && <UserQuestions questions={user.questions} />}
           {this.state.activeTab === 'answers' && <UserAnswers answers={user.answers} />}

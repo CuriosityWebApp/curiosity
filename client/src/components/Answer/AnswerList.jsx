@@ -82,9 +82,14 @@ class AnswerList extends Component {
               data={this.props.data}
               user={this.props.user}
               questionId={this.props.questionId}
+              notify={this.props.notify}
             />
           ) : (
-            <button onClick={() => alert('Please log into your account to be able to answer!')}>
+            <button
+              onClick={() =>
+                this.props.notify('error', 'Please log into your account to be able to answer!')
+              }
+            >
               Respond
             </button>
           )}

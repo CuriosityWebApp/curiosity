@@ -27,7 +27,6 @@ class Main extends Component {
       var username = '';
       var credit = 0;
       var id = '';
-      var email = '';
     }
     return (
       <div>
@@ -55,6 +54,7 @@ class Main extends Component {
                               signedIn={signedIn}
                               credit={credit}
                               user={this.props.user}
+                              notify={this.props.notify}
                             />
                           )}
                         />
@@ -74,6 +74,9 @@ class Main extends Component {
                                   />
                                 );
                               } else {
+                                setTimeout(() => {
+                                  this.props.notify('auth', 'Signed In');
+                                }, 0);
                                 return <Redirect to="/" />;
                               }
                             }
@@ -83,7 +86,13 @@ class Main extends Component {
                           exact
                           path="/profileUser"
                           render={() => {
-                            return <ProfileUser id={id} refetcher={this.props.refetcher} />;
+                            return (
+                              <ProfileUser
+                                id={id}
+                                notify={this.props.notify}
+                                refetcher={this.props.refetcher}
+                              />
+                            );
                           }}
                         />
                         <Route
@@ -92,6 +101,7 @@ class Main extends Component {
                           render={({ match }) => {
                             return (
                               <QuestionContent
+                                notify={this.props.notify}
                                 signedIn={signedIn}
                                 loggedId={id}
                                 user={this.props.user}
@@ -111,7 +121,13 @@ class Main extends Component {
                           exact
                           path="/messages/:folder"
                           render={({ match }) => {
-                            return <MessagesAndCreate folder={match.params.folder} userId={id} />;
+                            return (
+                              <MessagesAndCreate
+                                folder={match.params.folder}
+                                userId={id}
+                                notify={this.props.notify}
+                              />
+                            );
                           }}
                         />
                         <Route
@@ -122,6 +138,7 @@ class Main extends Component {
                               <ProfileFullPage
                                 userId={match.params.id}
                                 username={this.props.user.username}
+                                notify={this.props.notify}
                               />
                             );
                           }}
@@ -130,7 +147,7 @@ class Main extends Component {
                           exact
                           path="/privatemessage/:username"
                           render={({ match }) => (
-                            <PrivateMessage userId={id} username={match.params.username} />
+                            <PrivateMessage userId={id} username={match.params.username} notify={this.props.notify} />
                           )}
                         />
                         <Route
@@ -142,6 +159,7 @@ class Main extends Component {
                                 userId={id}
                                 user={this.props.user}
                                 refetcher={this.props.refetcher}
+                                notify={this.props.notify}
                               />
                             );
                           }}

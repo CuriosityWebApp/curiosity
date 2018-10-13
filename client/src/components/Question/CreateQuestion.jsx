@@ -36,17 +36,14 @@ class CreateQuestion extends Component {
     let { title, content, restriction } = this.state;
     let splittedTags = this.state.tags;
     console.log(this.state.bounty, 'bounty', this.props.credit, 'credits');
-    if (this.props.credit < Number(this.state.bounty)) {
-      alert('You have insufficient credit!');
-    }
     if (this.state.tags) {
       splittedTags = this.state.tags.split(' ');
     }
 
     if (!title || !content || !restriction) {
-      alert("Can't post an empty question!");
+      this.props.notify('error', "Can't post an empty question!");
     } else if (this.props.credit < Number(this.state.bounty)) {
-      alert('You have insufficient credit!');
+      this.props.notify('error', 'You have insufficient credit!');
     } else {
       this.props
         .AddQuestion({
@@ -106,7 +103,7 @@ class CreateQuestion extends Component {
             <br />
             <label>Answer by rank: </label>
             <input
-              type="number"
+              type="text"
               value={restriction}
               onChange={e => this.setState({ restriction: e.target.value })}
             />

@@ -30,7 +30,8 @@ class PaymentCheckOut extends Component {
     UpdateCredit({ variables: { id: this.props.id, credit: this.state.credits } }).then(() => {
       this.props.handleClose();
       this.props.data.refetch();
-      alert(`You received ${this.state.credits}`);
+      this.props.refetcher.refetch();
+      this.props.notify('transaction', `You received ${this.state.credits} Credits`);
     });
   }
 

@@ -1,39 +1,32 @@
 import React, { Component } from 'react';
 import { graphql, compose, withApollo } from 'react-apollo';
 import { getQuestions } from '../../queries/queries.js';
-import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 import QuestionItem from './QuestionItem.jsx';
 import QuestionNavBar from './QuestionNavBar.jsx';
 
 class QuestionList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: null,
-      skip: 0,
-      questions: [],
-      filterBy: '',
-      sortBy: '',
-      range: null,
-    };
-    this.onSelect = this.onSelect.bind(this);
-    this.onScroll = this.onScroll.bind(this);
-    this.getNextQuestions = this.getNextQuestions;
-    this.throttledQuestionCall = _.throttle(
-      this.getNextQuestions,
-      this.state.sortBy === 'top' ? 700 : 500,
-      {
-        leading: false,
-      },
-    ).bind(this);
-    this.filterQuestions = this.filterQuestions.bind(this);
-    this.sortQuestions = this.sortQuestions.bind(this);
-  }
-  componentDidMount() {
-    this.throttledQuestionCall();
-    window.addEventListener('scroll', this.onScroll, false);
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			skip: 0,
+			questions: [],
+			filterBy: '',
+			sortBy: '',
+			range: null
+		};
+		this.onScroll = this.onScroll.bind(this);
+		this.getNextQuestions = this.getNextQuestions;
+		this.throttledQuestionCall = _.throttle(this.getNextQuestions, this.state.sortBy === 'top' ? 700 : 500, {
+			leading: false
+		}).bind(this);
+		this.filterQuestions = this.filterQuestions.bind(this);
+		this.sortQuestions = this.sortQuestions.bind(this);
+	}
+	componentDidMount() {
+		this.throttledQuestionCall();
+		window.addEventListener('scroll', this.onScroll, false);
+	}
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll, false);
@@ -119,17 +112,11 @@ class QuestionList extends Component {
       .catch(err => console.log('error in nextquestions', err));
   };
 
-  onSelect(id) {
-    this.setState({
-      selected: id,
-    });
-  }
-
-  displayQuestions() {
-    if (this.props.data.loading) {
-      return <div>Loading Questions...</div>;
-    } else {
-      let data = this.state.questions.length > 0 ? this.state.questions : this.props.data.questions;
+	displayQuestions() {
+		if (this.props.data.loading) {
+			return <div>Loading Questions...</div>;
+		} else {
+			let data = this.state.questions.length > 0 ? this.state.questions : this.props.data.questions;
 
       return data.map(post => {
         return (
@@ -144,49 +131,38 @@ class QuestionList extends Component {
     }
   }
 
-  render() {
-    let filter = this.state.filterBy ? (
-      <span className="badge badge-warning">{this.state.filterBy}</span>
-    ) : (
-      ''
-    );
-    let sorted = this.state.sortBy ? (
-      this.state.sortBy !== 'createdAt' ? (
-        <span className="badge badge-warning">{this.state.sortBy}</span>
-      ) : (
-        <span className="badge badge-warning">New first</span>
-      )
-    ) : (
-      ''
-    );
-    let range = this.state.range ? (
-      this.state.range > 1 ? (
-        <span className="badge badge-warning">{this.state.range} days</span>
-      ) : (
-        <span className="badge badge-warning">Today</span>
-      )
-    ) : (
-      <span className="badge badge-warning">All time</span>
-    );
-    if (!this.state.selected) {
-      return (
-        <div>
-          <QuestionNavBar
-            sortQuestions={this.sortQuestions}
-            filterQuestions={this.filterQuestions}
-          />
-          <span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
-          <div />
-          {this.displayQuestions()}
-          <div>
-            <h3> You read all of it! Check back later...</h3>
-          </div>
-        </div>
-      );
-    } else {
-      return <Redirect to={`/questionContent/${this.state.selected}`} />;
-    }
-  }
+	render() {
+		let filter = this.state.filterBy ? <span className="badge badge-warning">{this.state.filterBy}</span> : '';
+		let sorted = this.state.sortBy ? (
+			this.state.sortBy !== 'createdAt' ? (
+				<span className="badge badge-warning">{this.state.sortBy}</span>
+			) : (
+				<span className="badge badge-warning">New first</span>
+			)
+		) : (
+			''
+		);
+		let range = this.state.range ? (
+			this.state.range > 1 ? (
+				<span className="badge badge-warning">{this.state.range} days</span>
+			) : (
+				<span className="badge badge-warning">Today</span>
+			)
+		) : (
+			<span className="badge badge-warning">All time</span>
+		);
+		return (
+			<div>
+				<QuestionNavBar sortQuestions={this.sortQuestions} filterQuestions={this.filterQuestions} />
+				<span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
+				<div />
+				{this.displayQuestions()}
+				<div>
+					<h3> You read all of it! Check back later...</h3>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default compose(

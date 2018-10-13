@@ -61,7 +61,7 @@ class PrivateMessage extends Component {
     e.preventDefault();
     let { title, content, receiverName } = this.state;
     if (!title || !content || !receiverName) {
-      alert("Can't post an empty question!");
+      this.props.notify('error', "Can't post an empty message!");
     } else {
       this.props.client
         .query({
@@ -88,12 +88,12 @@ class PrivateMessage extends Component {
                 },
               })
               .then(() => {
+                this.props.notify('message', `Message Sent to ${this.state.receiverName} !`);
                 this.setState({ redirect: true });
-                alert('message sent');
               })
               .catch(err => console.log('error bro', err));
           } else {
-            alert('Invalid User');
+            this.props.notify('error', 'Invalid user');
           }
         })
         .catch(err => {

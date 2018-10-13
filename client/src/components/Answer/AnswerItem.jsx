@@ -13,6 +13,7 @@ import ProfileSmallPage from '../PublicProfile/ProfileSmallPage.jsx';
 import moment from 'moment';
 import AnswerChoice from './AnswerChoice.jsx';
 import _ from 'lodash';
+import ReactTooltip from 'react-tooltip';
 
 class AnswerItem extends Component {
   constructor(props) {
@@ -24,89 +25,100 @@ class AnswerItem extends Component {
   }
 
   IncrementLikes(e) {
-    let up, down, data;
-    let userId = this.props.user.id || '';
-    if (this.props.getAnswer.loading) {
-      console.log('still loading');
+    if (!this.props.loggedId) {
+      alert('You must log in first!');
     } else {
-      data = this.props.getAnswer;
-      up = new Set(data.answer.ratedUpBy);
-      down = new Set(data.answer.ratedDownBy);
-      if (up.has(userId)) {
-        this.props
-          .AnswerLike({
-            mutation: AnswerLike,
-            variables: {
-              id: data.answer.id,
-              userId: userId,
-              method: 'delete',
-            },
-          })
-          .then(() => {
-            this.props.getAnswer.refetch();
-          });
-      } else if (!up.has(userId) && !down.has(userId)) {
-        this.props
-          .AnswerLike({
-            mutation: AnswerLike,
-            variables: {
-              id: data.answer.id,
-              userId: userId,
-              method: 'add',
-            },
-          })
-          .then(() => {
-            this.props.getAnswer.refetch();
-          });
+      let up, down, data;
+      let userId = this.props.loggedId;
+      if (this.props.getAnswer.loading) {
+        console.log('still loading');
+      } else {
+        data = this.props.getAnswer;
+        up = new Set(data.answer.ratedUpBy);
+        down = new Set(data.answer.ratedDownBy);
+        if (up.has(userId)) {
+          this.props
+            .AnswerLike({
+              mutation: AnswerLike,
+              variables: {
+                id: data.answer.id,
+                userId: userId,
+                method: 'delete',
+              },
+            })
+            .then(() => {
+              this.props.getAnswer.refetch();
+            });
+        } else if (!up.has(userId) && !down.has(userId)) {
+          this.props
+            .AnswerLike({
+              mutation: AnswerLike,
+              variables: {
+                id: data.answer.id,
+                userId: userId,
+                method: 'add',
+              },
+            })
+            .then(() => {
+              this.props.getAnswer.refetch();
+            });
+        }
       }
     }
   }
 
   decrementLikes(e) {
-    let up, down, data;
-    let userId = this.props.user.id || '';
-    if (this.props.getAnswer.loading) {
-      console.log('still loading');
+    if (!this.props.loggedId) {
+      alert('You must log in first!');
     } else {
-      data = this.props.getAnswer;
-      up = new Set(data.answer.ratedUpBy);
-      down = new Set(data.answer.ratedDownBy);
+      let up, down, data;
+      let userId = this.props.loggedId;
+      if (this.props.getAnswer.loading) {
+        console.log('still loading');
+      } else {
+        data = this.props.getAnswer;
+        up = new Set(data.answer.ratedUpBy);
+        down = new Set(data.answer.ratedDownBy);
 
-      if (down.has(userId)) {
-        this.props
-          .AnswerDislike({
-            mutation: AnswerDislike,
-            variables: {
-              id: data.answer.id,
-              userId: userId,
-              method: 'delete',
-            },
-          })
-          .then(() => {
-            this.props.getAnswer.refetch();
-          });
-      } else if (!up.has(userId) && !down.has(userId)) {
-        this.props
-          .AnswerDislike({
-            mutation: AnswerDislike,
-            variables: {
-              id: data.answer.id,
-              userId: userId,
-              method: 'add',
-            },
-          })
-          .then(() => {
-            this.props.getAnswer.refetch();
-          });
+        if (down.has(userId)) {
+          this.props
+            .AnswerDislike({
+              mutation: AnswerDislike,
+              variables: {
+                id: data.answer.id,
+                userId: userId,
+                method: 'delete',
+              },
+            })
+            .then(() => {
+              this.props.getAnswer.refetch();
+            });
+        } else if (!up.has(userId) && !down.has(userId)) {
+          this.props
+            .AnswerDislike({
+              mutation: AnswerDislike,
+              variables: {
+                id: data.answer.id,
+                userId: userId,
+                method: 'add',
+              },
+            })
+            .then(() => {
+              this.props.getAnswer.refetch();
+            });
+        }
       }
     }
   }
 
   displayAnswer() {
-    let data = this.props.getAnswer;
-    if (data && data.loading) {
+    if (this.props.getAnswer && this.props.getAnswer.loading) {
       return <div>Loading answers...</div>;
     } else {
+      let data = this.props.getAnswer;
+      let hoverText = `Likes: ${this.props.getAnswer.answer.ratedUpBy.length}, Dislikes: ${
+        this.props.getAnswer.answer.ratedDownBy.length
+      }`;
       return (
         <React.Fragment>
           <div className="list-group">
@@ -138,7 +150,8 @@ class AnswerItem extends Component {
                       textAlign: 'center',
                     }}
                   >
-                    {data.answer.score}
+                    <ReactTooltip effect="solid" />
+                    <p data-tip={hoverText}>{data.answer.score}</p>
                   </div>
                   <div>
                     <button
@@ -216,7 +229,7 @@ class AnswerItem extends Component {
     this.props.AddMessage({
       mutation: AddMessage,
       variables: {
-        senderId: this.props.userId,
+        senderId: this.props.loggedId,
         receiverId: '5bb8d00baf90e323e4b9c8a9',
         messageTitle: messageTitle,
         messageContent: messageContent,
