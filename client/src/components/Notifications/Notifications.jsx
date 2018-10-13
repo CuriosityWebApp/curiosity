@@ -45,6 +45,7 @@ class Notifications extends Component {
       }
     }
     for (let l = 0; l < unreadNotifications.length; l++) {
+      var count = 0;
       this.props
         .ClearNotifications({
           mutation: ClearNotifications,
@@ -53,7 +54,11 @@ class Notifications extends Component {
           },
         })
         .then(() => {
-          this.props.refetcher.refetch();
+          if (count < 1) {
+            this.props.notify('warning', 'Notifications cleared');
+            this.props.refetcher.refetch();
+          }
+          count++;
         });
     }
   }

@@ -48,6 +48,7 @@ class NewList extends Component {
               replyFormat={this.props.replyFormat}
               onSelect={this.onSelect}
               getMessages={this.props.getMessages}
+              notify={this.props.notify}
             />
           );
         });

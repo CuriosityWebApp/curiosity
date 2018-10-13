@@ -27,6 +27,7 @@ class SentList extends Component {
               replyFormat={this.props.replyFormat}
               onSelect={this.onSelect}
               userMessages={this.props.userMessages}
+              notify={this.props.notify}
             />
           );
         });
