@@ -23,7 +23,11 @@ class PrivateMessage extends Component {
     this.replyFormat = this.replyFormat.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({
+      receiverName: this.props.username || '',
+    });
+  }
 
   replyFormat(receiverName) {
     this.setState({

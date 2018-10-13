@@ -20,12 +20,19 @@ class ProfileFullPage extends Component {
     this.onClickAddVouch = this.onClickAddVouch.bind(this);
   }
 
-  onClickAddVouch() {
+  onClickAddVouch(e) {
+    let value;
+    if (e.target.value === 'Nevermind') {
+      value = false;
+    } else {
+      value = true;
+    }
     this.props
       .AddVouch({
         variables: {
           id: this.props.userId,
           vouch: this.props.username,
+          add: value,
         },
       })
       .then(() => this.props.getUser.refetch());
@@ -46,7 +53,7 @@ class ProfileFullPage extends Component {
   }
 
   render() {
-    console.log(this.props, 'I AM PROPS');
+    let { username } = this.props;
     let { loading, error, user } = this.props.getUser;
     if (loading) {
       return <div>Loading...</div>;
@@ -145,19 +152,25 @@ class ProfileFullPage extends Component {
                     <div>Likes: {user.rank}</div>
                     <div>Member Since {moment(user.createdAt).format('LL')}</div>
                     <br />
-                    <Link to={`/privatemessage`}>
+                    <Link to={`/privatemessage/${user.username}`}>
                       <button type="button" className="btn btn-outline-primary">
                         Send Message
                       </button>
                     </Link>
                     <br />
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary"
-                      onClick={this.onClickAddVouch}
-                    >
-                      Vouch This Person!!
-                    </button>
+                    <div>
+                      <button
+                        style={{
+                          margin: '20px',
+                        }}
+                        type="button"
+                        className="btn btn-outline-primary"
+                        value={user.vouch.includes(username) ? 'Nevermind' : 'Vouch This Person!!'}
+                        onClick={this.onClickAddVouch}
+                      >
+                        {user.vouch.includes(username) ? 'Nevermind' : 'Vouch This Person!!'}
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <Vouches vouch={user.vouch} />

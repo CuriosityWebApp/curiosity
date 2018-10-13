@@ -128,8 +128,10 @@ class Main extends Component {
                         />
                         <Route
                           exact
-                          path="/privatemessage"
-                          render={() => <PrivateMessage userId={id} />}
+                          path="/privatemessage/:username"
+                          render={({ match }) => (
+                            <PrivateMessage userId={id} username={match.params.username} />
+                          )}
                         />
                         <Route
                           exact
