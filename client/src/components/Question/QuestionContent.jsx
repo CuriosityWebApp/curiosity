@@ -56,6 +56,7 @@ class QuestionContent extends Component {
             user={this.props.user}
             questionId={this.props.id}
             signedIn={this.props.signedIn}
+            notify={this.props.notify}
           />
         </div>
       );

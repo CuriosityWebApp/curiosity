@@ -77,7 +77,7 @@ class PaymentCheckOut extends Component {
     this.props.handleClose();
     this.props.data.refetch();
     this.props.refetcher.refetch();
-    alert(`You received ${this.state.credits}`);
+    this.props.notify('transaction', `You received ${this.state.credits} Credits`);
   }
 
   async submit(UpdateCredit) {
