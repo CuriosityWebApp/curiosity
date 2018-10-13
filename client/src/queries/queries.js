@@ -9,6 +9,7 @@ const getUser = gql`
       credit
       email
       avatarUrl
+      vouch
       createdAt
       questions {
         id
@@ -19,6 +20,7 @@ const getUser = gql`
         id
         answer
         score
+        answerChosen
         question {
           id
           questionTitle
