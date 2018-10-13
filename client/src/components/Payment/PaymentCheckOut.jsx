@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { Mutation } from 'react-apollo';
-import { Modal, OverlayTrigger, Popover, Tooltip, Button } from 'react-bootstrap';
+import { Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { UpdateCredit } from '../../mutations/mutations.js';
 import { usdToCredit } from './helper.js';
