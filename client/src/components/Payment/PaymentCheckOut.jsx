@@ -3,7 +3,6 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 import { Mutation } from 'react-apollo';
 import { Modal, OverlayTrigger, Popover, Tooltip, Button } from 'react-bootstrap';
 import axios from 'axios';
-
 import { UpdateCredit } from '../../mutations/mutations.js';
 import { usdToCredit } from './helper.js';
 
@@ -27,11 +26,12 @@ class PaymentCheckOut extends Component {
     });
   }
 
-  async handlePayment(UpdateCredit) {
-    await UpdateCredit({ variables: { id: this.props.id, credit: this.state.credits } });
-    this.props.handleClose();
-    this.props.data.refetch();
-    alert(`You received ${this.state.credits}`);
+  handlePayment(UpdateCredit) {
+    UpdateCredit({ variables: { id: this.props.id, credit: this.state.credits } }).then(() => {
+      this.props.handleClose();
+      this.props.data.refetch();
+      alert(`You received ${this.state.credits}`);
+    });
   }
 
   async submit(UpdateCredit) {
