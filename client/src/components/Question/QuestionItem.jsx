@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import moment from 'moment';
+import ReactTooltip from 'react-tooltip';
 import { compose, graphql } from 'react-apollo';
 import { getQuestion } from '../../queries/queries.js';
 import { QuestionLike, QuestionDislike, IncrementQuestionViews } from '../../mutations/mutations.js';
@@ -127,7 +128,9 @@ class QuestionItem extends Component {
 				return <div> Loading...</div>;
 			} else {
 				let data = this.props.data.question;
-
+				let hoverText = `Likes: ${this.props.data.question.ratedUpBy.length}, Dislikes: ${
+					this.props.data.question.ratedDownBy.length
+				}`;
 				return (
 					<div className="inline-block container" style={{ cursor: 'pointer' }}>
 						<div className="list-group">
@@ -154,7 +157,8 @@ class QuestionItem extends Component {
 												</div>
 											</div>
 											<div className="col align-self-start" style={{ textAlign: 'center' }}>
-												{data.score}
+												<ReactTooltip effect="solid" />
+												<p data-tip={hoverText}>{data.score}</p>
 											</div>
 											<div className="col align-self-start">
 												<div>

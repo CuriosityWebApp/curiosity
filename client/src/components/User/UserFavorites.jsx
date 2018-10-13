@@ -55,12 +55,11 @@ class UserFavorites extends Component {
 		} else {
 			return tags.map((tag, i) => {
 				return (
-					<div>
-						<span key={i + 1} className="badge badge-info " style={{ margin: '2px' }}>
+					<div key={tag}>
+						<span className="badge badge-info " style={{ margin: '2px' }}>
 							{tag}
 						</span>
 						<button
-							key={i}
 							type="button"
 							className="btn btn-danger btn-xs"
 							style={{ margin: '1px' }}

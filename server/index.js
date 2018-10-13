@@ -32,12 +32,14 @@ app.use(
 );
 
 app.post('/charge', (req, res) => {
+  const token = req.body.token.token;
+
   stripe.charges
     .create({
       amount: Number(req.body.usd) * 100,
       currency: 'usd',
       description: 'Example charge',
-      source: 'tok_visa',
+      source: token.id,
       statement_descriptor: 'Custom descriptor',
     })
     .then((data) => {

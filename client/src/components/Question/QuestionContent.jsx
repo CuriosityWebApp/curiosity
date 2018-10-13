@@ -8,6 +8,7 @@ import AnswerList from '../Answer/AnswerList.jsx';
 import moment from 'moment';
 import ProfileSmallPage from '../PublicProfile/ProfileSmallPage.jsx';
 import _ from 'lodash';
+import ReactTooltip from 'react-tooltip';
 
 class QuestionContent extends Component {
 	constructor(props) {
@@ -121,6 +122,9 @@ class QuestionContent extends Component {
 			return <div>Error...</div>;
 		} else {
 			let data = this.props.data;
+			let hoverText = `Likes: ${this.props.data.question.ratedUpBy.length}, Dislikes: ${
+				this.props.data.question.ratedDownBy.length
+			}`;
 			return (
 				<div className="list-group">
 					<div className="list-group-item list-group-item-action flex-column align-items-start">
@@ -146,7 +150,8 @@ class QuestionContent extends Component {
 										</div>
 									</div>
 									<div className="col align-self-start" style={{ textAlign: 'center' }}>
-										{data.question.score}
+										<ReactTooltip effect="solid" />
+										<p data-tip={hoverText}>{data.question.score}</p>
 									</div>
 									<div className="col align-self-start">
 										<div>
@@ -208,6 +213,7 @@ class QuestionContent extends Component {
 						user={this.props.user}
 						questionId={this.props.id}
 						signedIn={this.props.signedIn}
+						notify={this.props.notify}
 					/>
 				</div>
 			);

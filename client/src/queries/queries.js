@@ -9,6 +9,7 @@ const getUser = gql`
 			credit
 			email
 			avatarUrl
+			vouch
 			createdAt
 			favoriteTags
 			questions {
@@ -20,6 +21,7 @@ const getUser = gql`
 				id
 				answer
 				score
+				answerChosen
 				question {
 					id
 					questionTitle

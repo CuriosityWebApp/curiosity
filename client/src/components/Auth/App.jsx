@@ -26,6 +26,7 @@ class App extends Component {
       }
       return (
         <Main
+          notify={this.props.notify}
           email={this.props.email}
           signedIn={signedIn}
           user={this.props.checkUserEmail.checkUserEmail}

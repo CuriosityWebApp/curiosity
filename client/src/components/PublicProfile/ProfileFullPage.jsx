@@ -1,18 +1,60 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { getUser } from '../../queries/queries.js';
+import { AddVouch } from '../../mutations/mutations.js';
 import { Link } from 'react-router-dom';
 import ProfileQuestionList from './ProfileQuestionList.jsx';
 import ProfileAnswerList from './ProfileAnswerList.jsx';
+import Vouches from './Vouches.jsx';
 import moment from 'moment';
 
 class ProfileFullPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showChosen: false,
+      showAll: true,
+    };
+    this.showChosenOnClick = this.showChosenOnClick.bind(this);
+    this.showAllOnClick = this.showAllOnClick.bind(this);
+    this.onClickAddVouch = this.onClickAddVouch.bind(this);
+  }
+
+  onClickAddVouch(e) {
+    let value;
+    if (e.target.value === 'Nevermind') {
+      value = false;
+    } else {
+      value = true;
+    }
+    this.props
+      .AddVouch({
+        variables: {
+          id: this.props.userId,
+          vouch: this.props.username,
+          add: value,
+        },
+      })
+      .then(() => this.props.getUser.refetch());
+  }
+
+  showChosenOnClick() {
+    this.setState({
+      showChosen: true,
+      showAll: false,
+    });
+  }
+
+  showAllOnClick() {
+    this.setState({
+      showChosen: false,
+      showAll: true,
+    });
   }
 
   render() {
-    let { loading, error, user } = this.props.data;
+    let { username } = this.props;
+    let { loading, error, user } = this.props.getUser;
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -24,6 +66,47 @@ class ProfileFullPage extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
+                <div className="card">
+                  <div className="card-header bg-primary text-white">
+                    <i className="fas fa-trophy" />
+                    <span onClick={this.showAllOnClick} style={{ cursor: 'pointer' }}>
+                      {' '}
+                      Answers{' '}
+                    </span>
+                    <span onClick={this.showChosenOnClick} style={{ cursor: 'pointer' }}>
+                      Chosen{' '}
+                    </span>
+                  </div>
+                  <div
+                    className="card-body well well-sm pre-scrollable"
+                    style={{ maxHeight: '55vh' }}
+                  >
+                    <div>
+                      {user.answers.map(answer => {
+                        if (answer.answerChosen && this.state.showChosen) {
+                          return (
+                            <ProfileAnswerList
+                              answer={answer}
+                              username={user.username}
+                              key={answer.id}
+                            />
+                          );
+                        }
+
+                        if (this.state.showAll) {
+                          return (
+                            <ProfileAnswerList
+                              answer={answer}
+                              username={user.username}
+                              key={answer.id}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <br />
                 <div className="card">
                   <div className="card-header bg-primary text-white">
                     <i className="fa fa-question-circle" /> Questions
@@ -39,28 +122,6 @@ class ProfileFullPage extends Component {
                             question={question}
                             username={user.username}
                             key={question.id}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-                <br />
-                <div className="card">
-                  <div className="card-header bg-primary text-white">
-                    <i className="fas fa-trophy" /> Answers
-                  </div>
-                  <div
-                    className="card-body well well-sm pre-scrollable"
-                    style={{ maxHeight: '55vh' }}
-                  >
-                    <div>
-                      {user.answers.map(answer => {
-                        return (
-                          <ProfileAnswerList
-                            answer={answer}
-                            username={user.username}
-                            key={answer.id}
                           />
                         );
                       })}
@@ -91,13 +152,28 @@ class ProfileFullPage extends Component {
                     <div>Likes: {user.rank}</div>
                     <div>Member Since {moment(user.createdAt).format('LL')}</div>
                     <br />
-                    <Link to={`/privatemessage`}>
+                    <Link to={`/privatemessage/${user.username}`}>
                       <button type="button" className="btn btn-outline-primary">
                         Send Message
                       </button>
                     </Link>
+                    <br />
+                    <div>
+                      <button
+                        style={{
+                          margin: '20px',
+                        }}
+                        type="button"
+                        className="btn btn-outline-primary"
+                        value={user.vouch.includes(username) ? 'Nevermind' : 'Vouch This Person!!'}
+                        onClick={this.onClickAddVouch}
+                      >
+                        {user.vouch.includes(username) ? 'Nevermind' : 'Vouch This Person!!'}
+                      </button>
+                    </div>
                   </div>
                 </div>
+                <Vouches vouch={user.vouch} />
               </div>
             </div>
           </div>
@@ -107,12 +183,16 @@ class ProfileFullPage extends Component {
   }
 }
 
-export default graphql(getUser, {
-  options: props => {
-    return {
-      variables: {
-        id: props.userId,
-      },
-    };
-  },
-})(ProfileFullPage);
+export default compose(
+  graphql(getUser, {
+    name: 'getUser',
+    options: props => {
+      return {
+        variables: {
+          id: props.userId,
+        },
+      };
+    },
+  }),
+  graphql(AddVouch, { name: 'AddVouch' }),
+)(ProfileFullPage);
