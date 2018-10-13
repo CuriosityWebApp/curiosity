@@ -150,7 +150,7 @@ class QuestionItem extends Component {
                       </div>
                     </div>
                     <div className="col align-self-start" style={{ textAlign: 'center' }}>
-                      <ReactTooltip />
+                      <ReactTooltip effect="solid" />
                       <p data-tip={hoverText}>{data.score}</p>
                     </div>
                     <div className="col align-self-start">

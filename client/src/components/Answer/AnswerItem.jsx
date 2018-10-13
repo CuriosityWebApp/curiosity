@@ -142,7 +142,7 @@ class AnswerItem extends Component {
                       textAlign: 'center',
                     }}
                   >
-                    <ReactTooltip />
+                    <ReactTooltip effect="solid" />
                     <p data-tip={hoverText}>{data.answer.score}</p>
                   </div>
                   <div>
