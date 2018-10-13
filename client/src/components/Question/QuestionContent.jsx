@@ -189,6 +189,15 @@ class QuestionContent extends Component {
 								<div>{data.question.questionContent}</div>
 							</div>
 						</div>
+						<div>
+							{data.question.tags.map(tag => {
+								return (
+									<span className="badge badge-info" key={tag}>
+										{tag}
+									</span>
+								);
+							})}
+						</div>
 					</div>
 					<AnswerList
 						id={this.props.id}

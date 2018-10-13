@@ -127,6 +127,7 @@ class QuestionItem extends Component {
 				return <div> Loading...</div>;
 			} else {
 				let data = this.props.data.question;
+
 				return (
 					<div className="inline-block container" style={{ cursor: 'pointer' }}>
 						<div className="list-group">
@@ -191,6 +192,15 @@ class QuestionItem extends Component {
 											<p>{data.questionContent}</p>
 										</div>
 									</div>
+								</div>
+								<div>
+									{data.tags.map(tag => {
+										return (
+											<span className="badge badge-info" key={tag}>
+												{tag}
+											</span>
+										);
+									})}
 								</div>
 							</div>
 						</div>
