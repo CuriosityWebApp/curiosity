@@ -13,6 +13,7 @@ import ProfileSmallPage from '../PublicProfile/ProfileSmallPage.jsx';
 import moment from 'moment';
 import AnswerChoice from './AnswerChoice.jsx';
 import _ from 'lodash';
+import ReactTooltip from 'react-tooltip';
 
 class AnswerItem extends Component {
   constructor(props) {
@@ -107,6 +108,9 @@ class AnswerItem extends Component {
     if (data && data.loading) {
       return <div>Loading answers...</div>;
     } else {
+      let hoverText = `Likes: ${this.props.getAnswer.answer.ratedUpBy.length}, Dislikes: ${
+        this.props.getAnswer.answer.ratedDownBy.length
+      }`;
       return (
         <React.Fragment>
           <div className="list-group">
@@ -138,7 +142,8 @@ class AnswerItem extends Component {
                       textAlign: 'center',
                     }}
                   >
-                    {data.answer.score}
+                    <ReactTooltip />
+                    <p data-tip={hoverText}>{data.answer.score}</p>
                   </div>
                   <div>
                     <button
