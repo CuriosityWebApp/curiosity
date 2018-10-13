@@ -363,6 +363,37 @@ const Mutation = new GraphQLObjectType({
         return User.findByIdAndUpdate({ _id: args.id }, args, { new: false });
       },
     },
+    AddVouch: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        vouch: { type: GraphQLString },
+        add: { type: GraphQLBoolean },
+      },
+      async resolve(parent, args) {
+        if (args.add) {
+          await User.findById(args.id).then((data) => {
+            if (!data.vouch.includes(args.vouch)) {
+              return User.findOneAndUpdate(
+                { _id: args.id },
+                { $push: { vouch: args.vouch } },
+                { new: false },
+              );
+            }
+          });
+        } else {
+          await User.findById(args.id).then((data) => {
+            if (data.vouch.includes(args.vouch)) {
+              return User.findOneAndUpdate(
+                { _id: args.id },
+                { $pull: { vouch: args.vouch } },
+                { new: false },
+              );
+            }
+          });
+        }
+      },
+    },
   },
 });
 

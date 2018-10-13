@@ -137,6 +137,7 @@ class Main extends Component {
                             return (
                               <ProfileFullPage
                                 userId={match.params.id}
+                                username={this.props.user.username}
                                 notify={this.props.notify}
                               />
                             );
@@ -144,8 +145,10 @@ class Main extends Component {
                         />
                         <Route
                           exact
-                          path="/privatemessage"
-                          render={() => <PrivateMessage userId={id} notify={this.props.notify} />}
+                          path="/privatemessage/:username"
+                          render={({ match }) => (
+                            <PrivateMessage userId={id} username={match.params.username} notify={this.props.notify} />
+                          )}
                         />
                         <Route
                           exact

@@ -170,6 +170,22 @@ const UpdateUserAvatar = gql`
   }
 `;
 
+const AddVouch = gql`
+  mutation($id: ID!, $vouch: String!, $add: Boolean) {
+    AddVouch(id: $id, vouch: $vouch, add: $add) {
+      id
+    }
+  }
+`;
+
+// const DeleteVouch = gql`
+//   mutation($id: ID!, $vouch: String!) {
+//     DeleteVouch(id: $id, vouch: $vouch) {
+//       id
+//     }
+//   }
+// `;
+
 module.exports = {
   AddQuestion,
   AddAnswer,
@@ -188,4 +204,5 @@ module.exports = {
   ClearNotifications,
   IncrementQuestionViews,
   UpdateUserAvatar,
+  AddVouch,
 };

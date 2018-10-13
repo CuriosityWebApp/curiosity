@@ -12,6 +12,7 @@ const userSchema = new Schema(
       type: String,
       default: 'https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Penguin-512.png',
     },
+    vouch: { type: [String], default: [], unique: true },
   },
   {
     timestamps: true,

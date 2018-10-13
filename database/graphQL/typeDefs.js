@@ -33,6 +33,7 @@ const UserType = new GraphQLObjectType({
     },
     credit: { type: GraphQLInt },
     avatarUrl: { type: GraphQLString },
+    vouch: { type: new GraphQLList(GraphQLString) },
     createdAt: { type: GraphQLDate },
     updatedAt: { type: GraphQLDate },
     questions: {
