@@ -115,7 +115,7 @@ class NavBar extends Component {
                 </div>
                 <div className="card">
                   <ul className="list-group list-group-flush">
-                    <Link to="/privatemessage" style={{ cursor: 'pointer' }}>
+                    <Link to="/privatemessage/ " style={{ cursor: 'pointer' }}>
                       <li className="list-group-item">
                         <span>Create Message</span>
                       </li>
