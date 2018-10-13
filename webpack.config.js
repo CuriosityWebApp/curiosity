@@ -23,6 +23,18 @@ module.exports = {
           presets: ['env', 'react', 'stage-0'],
         },
       },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+        ],
+        include: /node_modules/,
+      },
     ],
   },
 };

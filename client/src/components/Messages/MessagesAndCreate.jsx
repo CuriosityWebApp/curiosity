@@ -74,7 +74,7 @@ class MessagesAndCreate extends Component {
     e.preventDefault();
     let { title, content, receiverName } = this.state;
     if (!title || !content || !receiverName) {
-      alert("Can't post an empty question!");
+      this.props.notify('error', 'Please input all required fields.');
     } else {
       this.props.client
         .query({
@@ -101,12 +101,12 @@ class MessagesAndCreate extends Component {
                 },
               })
               .then(() => {
-                alert('message sent');
+                this.props.notify('message', `Message Sent to ${this.state.receiverName} !`);
                 this.toggleCreator();
               })
               .catch(err => console.log('error bro', err));
           } else {
-            alert('Invalid User');
+            this.props.notify('error', 'Invalid user');
           }
         })
         .catch(err => {
