@@ -89,21 +89,25 @@ class MessagesAndCreate extends Component {
           }
         })
         .then(() => {
-          this.props
-            .mutate({
-              mutation: AddMessage,
-              variables: {
-                senderId: this.props.userId,
-                messageTitle: this.state.title,
-                messageContent: this.state.content,
-                receiverId: this.state.receiverId,
-              },
-            })
-            .then(() => {
-              alert('message sent');
-              this.toggleCreator();
-            })
-            .catch(err => console.log('error bro', err));
+          if (this.state.receiverId) {
+            this.props
+              .mutate({
+                mutation: AddMessage,
+                variables: {
+                  senderId: this.props.userId,
+                  messageTitle: this.state.title,
+                  messageContent: this.state.content,
+                  receiverId: this.state.receiverId,
+                },
+              })
+              .then(() => {
+                alert('message sent');
+                this.toggleCreator();
+              })
+              .catch(err => console.log('error bro', err));
+          } else {
+            alert('Invalid User');
+          }
         })
         .catch(err => {
           console.error(err);

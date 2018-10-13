@@ -19,28 +19,22 @@ class App extends Component {
       return <div>shit</div>;
     } else {
       if (this.props.checkUserEmail.checkUserEmail) {
-        return (
-          <Main
-            signedIn={true}
-            user={this.props.checkUserEmail.checkUserEmail}
-            refetcher={this.props.checkUserEmail}
-            handleLogout={this.props.handleLogout}
-            uiConfig={this.props.uiConfig}
-            firebaseAuth={this.props.firebase.auth()}
-          />
-        );
+        var signedIn = true;
       } else {
-        return (
-          <Main
-            signedIn={false}
-            user={this.props.checkUserEmail.checkUserEmail}
-            refetcher={this.props.checkUserEmail}
-            handleLogout={this.props.handleLogout}
-            uiConfig={this.props.uiConfig}
-            firebaseAuth={this.props.firebase.auth()}
-          />
-        );
+        var signedIn = false;
       }
+      return (
+        <Main
+          email={this.props.email}
+          signedIn={signedIn}
+          user={this.props.checkUserEmail.checkUserEmail}
+          refetcher={this.props.checkUserEmail}
+          handleLogout={this.props.handleLogout}
+          uiConfig={this.props.uiConfig}
+          firebaseAuth={this.props.firebase.auth()}
+          firebaseCheck={this.props.firebaseCheck}
+        />
+      );
     }
   }
 }

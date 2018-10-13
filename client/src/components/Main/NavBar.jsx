@@ -76,7 +76,12 @@ class NavBar extends Component {
               <div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
-                    <Link to="/">
+                    <Link
+                      to="/"
+                      onClick={() => {
+                        this.props.refetcher.refetch();
+                      }}
+                    >
                       <div>
                         <i className="fas fa-list" />
                         Question List
@@ -197,7 +202,7 @@ class NavBar extends Component {
               </ul>
               <ul className="right-navbar">
                 <li>
-                  <Link to="/messages/new" className="icon-circle">
+                  <Link to="/messages/unread" className="icon-circle">
                     <i className="fas fa-envelope" />
                     {unreadMessages > 0 && (
                       <span className="badge badge-danger">{unreadMessages}</span>

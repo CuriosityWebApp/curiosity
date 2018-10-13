@@ -21,7 +21,7 @@ class Main extends Component {
 
   render() {
     var signedIn = this.props.signedIn;
-    if (this.props.signedIn) {
+    if (signedIn) {
       var { username, credits, id, email } = this.props.user;
     } else {
       var username = '';
@@ -36,6 +36,7 @@ class Main extends Component {
           signedIn={signedIn}
           uiConfig={this.uiConfig}
           handleLogout={this.props.handleLogout}
+          refetcher={this.props.refetcher}
         />
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <div className="bg-content">
@@ -64,17 +65,18 @@ class Main extends Component {
                           render={() => {
                             {
                               if (!signedIn) {
+                                if (this.props.email && !username) {
+                                  return <UsernameSubmit email={this.props.email} />;
+                                }
                                 return (
                                   <Login
                                     uiConfig={this.props.uiConfig}
                                     firebaseAuth={this.props.firebaseAuth}
                                   />
                                 );
+                              } else {
+                                return <Redirect to="/" />;
                               }
-                              if (!username) {
-                                return <UsernameSubmit email={email} />;
-                              }
-                              return <Redirect to="/" />;
                             }
                           }}
                         />

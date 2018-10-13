@@ -59,7 +59,7 @@ class Index extends Component {
       .auth()
       .signOut()
       .then(() => {
-        this.setState({ email: '' });
+        this.setState({ email: '', firebaseCheck: false });
       })
       .catch(err => {
         console.error(err);

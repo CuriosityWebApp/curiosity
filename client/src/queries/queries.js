@@ -202,7 +202,7 @@ const getMessages = gql`
   }
 `;
 const userSentMessages = gql`
-  query($senderId: ID) {
+  query($senderId: ID!) {
     userSentMessages(senderId: $senderId) {
       id
       receiverId
