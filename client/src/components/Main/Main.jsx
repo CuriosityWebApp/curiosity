@@ -36,7 +36,6 @@ class Main extends Component {
           signedIn={signedIn}
           uiConfig={this.uiConfig}
           handleLogout={this.props.handleLogout}
-          refetcher={this.props.refetcher}
         />
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <div className="bg-content">

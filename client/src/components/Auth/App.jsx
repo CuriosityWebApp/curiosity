@@ -20,6 +20,7 @@ class App extends Component {
     } else {
       if (this.props.checkUserEmail.checkUserEmail) {
         var signedIn = true;
+        this.props.checkUserEmail.refetch();
       } else {
         var signedIn = false;
       }

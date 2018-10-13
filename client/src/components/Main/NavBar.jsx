@@ -76,12 +76,7 @@ class NavBar extends Component {
               <div>
                 <div className="card" style={{ cursor: 'pointer' }}>
                   <div className="card-header">
-                    <Link
-                      to="/"
-                      onClick={() => {
-                        this.props.refetcher.refetch();
-                      }}
-                    >
+                    <Link to="/">
                       <div>
                         <i className="fas fa-list" />
                         Question List
