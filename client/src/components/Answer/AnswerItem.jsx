@@ -97,10 +97,10 @@ class AnswerItem extends Component {
 	}
 
 	displayAnswer() {
-		let data = this.props.getAnswer;
-		if (data && data.loading) {
+		if (this.props.getAnswer && this.props.getAnswer.loading) {
 			return <div>Loading answers...</div>;
 		} else {
+			let data = this.props.getAnswer;
 			return (
 				<React.Fragment>
 					<div className="list-group">

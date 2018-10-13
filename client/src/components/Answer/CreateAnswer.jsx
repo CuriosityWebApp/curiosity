@@ -26,7 +26,7 @@ class CreateAnswer extends Component {
 					})
 					.then(() => {
 						this.setState({ answerContent: '' });
-						this.props.data.refetch();
+						this.props.data.data.refetch();
 					})
 					.catch(err => console.log('having problems in submit answer ', err))
 			: alert('Please write your answer before sending it');
