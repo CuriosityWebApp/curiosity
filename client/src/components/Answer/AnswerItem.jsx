@@ -18,80 +18,88 @@ class AnswerItem extends Component {
 	}
 
 	IncrementLikes(e) {
-		let up, down, data;
-		let userId = this.props.userId;
-		if (this.props.getAnswer.loading) {
-			console.log('still loading');
+		if (!this.props.userId) {
+			alert('You must log in first!');
 		} else {
-			data = this.props.getAnswer;
-			up = new Set(data.answer.ratedUpBy);
-			down = new Set(data.answer.ratedDownBy);
-			if (up.has(userId)) {
-				this.props
-					.AnswerLike({
-						mutation: AnswerLike,
-						variables: {
-							id: data.answer.id,
-							userId: userId,
-							method: 'delete'
-						}
-					})
-					.then(() => {
-						this.props.getAnswer.refetch();
-					});
-			} else if (!up.has(userId) && !down.has(userId)) {
-				this.props
-					.AnswerLike({
-						mutation: AnswerLike,
-						variables: {
-							id: data.answer.id,
-							userId: userId,
-							method: 'add'
-						}
-					})
-					.then(() => {
-						this.props.getAnswer.refetch();
-					});
+			let up, down, data;
+			let userId = this.props.userId;
+			if (this.props.getAnswer.loading) {
+				console.log('still loading');
+			} else {
+				data = this.props.getAnswer;
+				up = new Set(data.answer.ratedUpBy);
+				down = new Set(data.answer.ratedDownBy);
+				if (up.has(userId)) {
+					this.props
+						.AnswerLike({
+							mutation: AnswerLike,
+							variables: {
+								id: data.answer.id,
+								userId: userId,
+								method: 'delete'
+							}
+						})
+						.then(() => {
+							this.props.getAnswer.refetch();
+						});
+				} else if (!up.has(userId) && !down.has(userId)) {
+					this.props
+						.AnswerLike({
+							mutation: AnswerLike,
+							variables: {
+								id: data.answer.id,
+								userId: userId,
+								method: 'add'
+							}
+						})
+						.then(() => {
+							this.props.getAnswer.refetch();
+						});
+				}
 			}
 		}
 	}
 
 	decrementLikes(e) {
-		let up, down, data;
-		let userId = this.props.userId;
-		if (this.props.getAnswer.loading) {
-			console.log('still loading');
+		if (!this.props.userId) {
+			alert('You must log in first!');
 		} else {
-			data = this.props.getAnswer;
-			up = new Set(data.answer.ratedUpBy);
-			down = new Set(data.answer.ratedDownBy);
+			let up, down, data;
+			let userId = this.props.userId;
+			if (this.props.getAnswer.loading) {
+				console.log('still loading');
+			} else {
+				data = this.props.getAnswer;
+				up = new Set(data.answer.ratedUpBy);
+				down = new Set(data.answer.ratedDownBy);
 
-			if (down.has(userId)) {
-				this.props
-					.AnswerDislike({
-						mutation: AnswerDislike,
-						variables: {
-							id: data.answer.id,
-							userId: userId,
-							method: 'delete'
-						}
-					})
-					.then(() => {
-						this.props.getAnswer.refetch();
-					});
-			} else if (!up.has(userId) && !down.has(userId)) {
-				this.props
-					.AnswerDislike({
-						mutation: AnswerDislike,
-						variables: {
-							id: data.answer.id,
-							userId: userId,
-							method: 'add'
-						}
-					})
-					.then(() => {
-						this.props.getAnswer.refetch();
-					});
+				if (down.has(userId)) {
+					this.props
+						.AnswerDislike({
+							mutation: AnswerDislike,
+							variables: {
+								id: data.answer.id,
+								userId: userId,
+								method: 'delete'
+							}
+						})
+						.then(() => {
+							this.props.getAnswer.refetch();
+						});
+				} else if (!up.has(userId) && !down.has(userId)) {
+					this.props
+						.AnswerDislike({
+							mutation: AnswerDislike,
+							variables: {
+								id: data.answer.id,
+								userId: userId,
+								method: 'add'
+							}
+						})
+						.then(() => {
+							this.props.getAnswer.refetch();
+						});
+				}
 			}
 		}
 	}

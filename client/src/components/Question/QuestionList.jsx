@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, compose, withApollo } from 'react-apollo';
 import { getQuestions } from '../../queries/queries.js';
-import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 import QuestionItem from './QuestionItem.jsx';
 import QuestionNavBar from './QuestionNavBar.jsx';
@@ -10,14 +9,12 @@ class QuestionList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selected: null,
 			skip: 0,
 			questions: [],
 			filterBy: '',
 			sortBy: '',
 			range: null
 		};
-		this.onSelect = this.onSelect.bind(this);
 		this.onScroll = this.onScroll.bind(this);
 		this.getNextQuestions = this.getNextQuestions;
 		this.throttledQuestionCall = _.throttle(this.getNextQuestions, this.state.sortBy === 'top' ? 700 : 500, {
@@ -110,12 +107,6 @@ class QuestionList extends Component {
 			.catch(err => console.log('error in nextquestions', err));
 	};
 
-	onSelect(id) {
-		this.setState({
-			selected: id
-		});
-	}
-
 	displayQuestions() {
 		if (this.props.data.loading) {
 			return <div>Loading Questions...</div>;
@@ -155,21 +146,17 @@ class QuestionList extends Component {
 		) : (
 			<span className="badge badge-warning">All time</span>
 		);
-		if (!this.state.selected) {
-			return (
+		return (
+			<div>
+				<QuestionNavBar sortQuestions={this.sortQuestions} filterQuestions={this.filterQuestions} />
+				<span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
+				<div />
+				{this.displayQuestions()}
 				<div>
-					<QuestionNavBar sortQuestions={this.sortQuestions} filterQuestions={this.filterQuestions} />
-					<span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
-					<div />
-					{this.displayQuestions()}
-					<div>
-						<h3> You read all of it! Check back later...</h3>
-					</div>
+					<h3> You read all of it! Check back later...</h3>
 				</div>
-			);
-		} else {
-			return <Redirect to={`/questionContent/${this.state.selected}`} />;
-		}
+			</div>
+		);
 	}
 }
 
