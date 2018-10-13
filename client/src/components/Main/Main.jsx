@@ -147,7 +147,11 @@ class Main extends Component {
                           exact
                           path="/privatemessage/:username"
                           render={({ match }) => (
-                            <PrivateMessage userId={id} username={match.params.username} notify={this.props.notify} />
+                            <PrivateMessage
+                              userId={id}
+                              username={match.params.username}
+                              notify={this.props.notify}
+                            />
                           )}
                         />
                         <Route

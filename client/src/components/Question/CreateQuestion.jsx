@@ -67,13 +67,17 @@ class CreateQuestion extends Component {
           });
         })
         .then(data => {
-          this.props.UpdateCredit({
-            mutation: UpdateCredit,
-            variables: {
-              id: this.props.userId,
-              credit: Number(this.state.bounty * -1),
-            },
-          });
+          this.props
+            .UpdateCredit({
+              mutation: UpdateCredit,
+              variables: {
+                id: this.props.userId,
+                credit: Number(this.state.bounty * -1),
+              },
+            })
+            .then(() => {
+              this.props.notify('transaction', 'Question Created!');
+            });
         })
         .catch(err => console.log('error bro', err));
     }
