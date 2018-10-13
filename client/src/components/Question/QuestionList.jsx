@@ -33,7 +33,6 @@ class QuestionList extends Component {
   componentDidMount() {
     this.throttledQuestionCall();
     window.addEventListener('scroll', this.onScroll, false);
-    console.log('this is the state', this.state);
   }
 
   componentWillUnmount() {
@@ -52,8 +51,6 @@ class QuestionList extends Component {
 
   sortQuestions = async (e, method, range) => {
     e ? e.preventDefault() : '';
-    // console.log('this is the sorting method', method);
-    console.log('im inside sort', e, method, range);
     await this.setState({ sortBy: method, skip: 0, questions: [], range: range }, () => {
       this.props.client
         .query({
@@ -67,20 +64,16 @@ class QuestionList extends Component {
           },
         })
         .then(({ data }) => {
-          console.log('this is data sorted', data);
           let newQuestions = this.state.questions.concat(data.questions);
           this.setState({ questions: newQuestions, skip: this.state.skip + 15 });
           window.addEventListener('scroll', this.onScroll, false);
-          console.log('this is the state in sort', this.state);
         });
     });
   };
 
   filterQuestions = async (e, category, range) => {
     e.preventDefault();
-    console.log('im inside filter');
 
-    // console.log('this is the category', category);
     await this.setState({ filterBy: category, skip: 0, questions: [], range: range }, () => {
       this.props.client
         .query({
@@ -94,7 +87,6 @@ class QuestionList extends Component {
           },
         })
         .then(({ data }) => {
-          console.log('this is data filter', data);
           let newQuestions = this.state.questions.concat(data.questions);
 
           this.setState({ questions: newQuestions, skip: this.state.skip + 15 });
@@ -116,16 +108,12 @@ class QuestionList extends Component {
         },
       })
       .then(({ data }) => {
-        console.log('this is data', data);
         let newProps = this.state.questions.concat(data.questions);
         let next;
         data.questions.length
           ? (next = this.state.skip + 15)
           : (next = this.state.questions.length);
-        this.setState({ questions: newProps, skip: next }, () => {
-          console.log('im inside then next');
-          console.log('this is the state in next', this.state);
-        });
+        this.setState({ questions: newProps, skip: next }, () => {});
       })
       .then(() => window.addEventListener('scroll', this.onScroll, false))
       .catch(err => console.log('error in nextquestions', err));

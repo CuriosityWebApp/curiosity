@@ -11,11 +11,12 @@ class Notifications extends Component {
   }
 
   displayNotifications() {
+    let { questions } = this.props.user;
     let unreadNotifications = [];
-    for (let j = 0; j < this.props.questions.length; j++) {
-      for (let k = 0; k < this.props.questions[j].answers.length; k++) {
-        if (this.props.questions[j].answers[k].questionerSeen === false) {
-          unreadNotifications.push(this.props.questions[j].answers[k]);
+    for (let j = 0; j < questions.length; j++) {
+      for (let k = 0; k < questions[j].answers.length; k++) {
+        if (questions[j].answers[k].questionerSeen === false) {
+          unreadNotifications.push(questions[j].answers[k]);
         }
       }
     }
@@ -34,21 +35,26 @@ class Notifications extends Component {
     }
   }
   clearNotifications() {
+    let { questions } = this.props.user;
     let unreadNotifications = [];
-    for (let j = 0; j < this.props.questions.length; j++) {
-      for (let k = 0; k < this.props.questions[j].answers.length; k++) {
-        if (this.props.questions[j].answers[k].questionerSeen === false) {
-          unreadNotifications.push(this.props.questions[j].answers[k]);
+    for (let j = 0; j < questions.length; j++) {
+      for (let k = 0; k < questions[j].answers.length; k++) {
+        if (questions[j].answers[k].questionerSeen === false) {
+          unreadNotifications.push(questions[j].answers[k]);
         }
       }
     }
     for (let l = 0; l < unreadNotifications.length; l++) {
-      this.props.ClearNotifications({
-        mutation: ClearNotifications,
-        variables: {
-          id: unreadNotifications[l].id,
-        },
-      });
+      this.props
+        .ClearNotifications({
+          mutation: ClearNotifications,
+          variables: {
+            id: unreadNotifications[l].id,
+          },
+        })
+        .then(() => {
+          this.props.refetcher.refetch();
+        });
     }
   }
 

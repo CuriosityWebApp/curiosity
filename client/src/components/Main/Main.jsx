@@ -20,14 +20,22 @@ class Main extends Component {
   }
 
   render() {
-    let { username, signedIn, rank, credits, id, email } = this.props.user;
+    var signedIn = this.props.signedIn;
+    if (signedIn) {
+      var { username, credit, id } = this.props.user;
+    } else {
+      var username = '';
+      var credit = 0;
+      var id = '';
+      var email = '';
+    }
     return (
       <div>
         <NavBar
           user={this.props.user}
-          logout={this.props.logout}
-          messages={this.props.messages}
-          questions={this.props.questions}
+          signedIn={signedIn}
+          uiConfig={this.uiConfig}
+          handleLogout={this.props.handleLogout}
         />
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <div className="bg-content">
@@ -45,7 +53,7 @@ class Main extends Component {
                             <CreateQuestion
                               userId={id}
                               signedIn={signedIn}
-                              credits={credits}
+                              credit={credit}
                               user={this.props.user}
                             />
                           )}
@@ -56,19 +64,18 @@ class Main extends Component {
                           render={() => {
                             {
                               if (!signedIn) {
+                                if (this.props.email && !username) {
+                                  return <UsernameSubmit email={this.props.email} />;
+                                }
                                 return (
                                   <Login
                                     uiConfig={this.props.uiConfig}
                                     firebaseAuth={this.props.firebaseAuth}
                                   />
                                 );
+                              } else {
+                                return <Redirect to="/" />;
                               }
-                              if (!username) {
-                                return (
-                                  <UsernameSubmit email={email} setUser={this.props.setUser} />
-                                );
-                              }
-                              return <Redirect to="/" />;
                             }
                           }}
                         />
@@ -76,7 +83,7 @@ class Main extends Component {
                           exact
                           path="/profileUser"
                           render={() => {
-                            return <ProfileUser id={id} />;
+                            return <ProfileUser id={id} refetcher={this.props.refetcher} />;
                           }}
                         />
                         <Route
@@ -85,6 +92,7 @@ class Main extends Component {
                           render={({ match }) => {
                             return (
                               <QuestionContent
+                                signedIn={signedIn}
                                 loggedId={id}
                                 user={this.props.user}
                                 id={match.params.questionId}
@@ -110,7 +118,12 @@ class Main extends Component {
                           exact
                           path="/user/:id"
                           render={({ match }) => {
-                            return <ProfileFullPage userId={match.params.id} />;
+                            return (
+                              <ProfileFullPage
+                                userId={match.params.id}
+                                username={this.props.user.username}
+                              />
+                            );
                           }}
                         />
                         <Route
@@ -122,7 +135,13 @@ class Main extends Component {
                           exact
                           path="/notifications"
                           render={() => {
-                            return <Notifications userId={id} questions={this.props.questions} />;
+                            return (
+                              <Notifications
+                                userId={id}
+                                user={this.props.user}
+                                refetcher={this.props.refetcher}
+                              />
+                            );
                           }}
                         />
                       </Switch>

@@ -11,11 +11,7 @@ class QuestionContent extends Component {
     super(props);
     this.state = {
       answerClicked: false,
-      rerender: false,
     };
-  }
-  forceRender() {
-    this.setState({ rerender: !this.state.rerender });
   }
   displayQuestionContent() {
     let data = this.props.data;
@@ -53,13 +49,13 @@ class QuestionContent extends Component {
           </div>
           <AnswerList
             id={this.props.id}
-            ownerId={data.question.user.id}
+            qOwnerId={data.question.user.id}
             loggedId={this.props.loggedId}
             isPaid={data.question.bountyPaid}
             bounty={data.question.bounty}
-            userId={this.props.user.id}
+            user={this.props.user}
             questionId={this.props.id}
-            signedIn={this.props.user.signedIn}
+            signedIn={this.props.signedIn}
           />
         </div>
       );

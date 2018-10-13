@@ -157,26 +157,26 @@ const Mutation = new GraphQLObjectType({
         return Answer.findOneAndUpdate({ _id: args.id }, args, { new: false });
       },
     },
-    likesOnAnswer: {
-      type: AnswerType,
-      args: {
-        id: { type: GraphQLNonNull(GraphQLID) },
-        score: { type: GraphQLInt },
-      },
-      resolve(parent, args) {
-        return Answer.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
-      },
-    },
-    likesOnQuestion: {
-      type: QuestionType,
-      args: {
-        id: { type: GraphQLNonNull(GraphQLID) },
-        score: { type: GraphQLInt },
-      },
-      resolve(parent, args) {
-        return Question.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
-      },
-    },
+    // likesOnAnswer: {
+    //   type: AnswerType,
+    //   args: {
+    //     id: { type: GraphQLNonNull(GraphQLID) },
+    //     score: { type: GraphQLInt },
+    //   },
+    //   resolve(parent, args) {
+    //     return Answer.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
+    //   },
+    // },
+    // likesOnQuestion: {
+    //   type: QuestionType,
+    //   args: {
+    //     id: { type: GraphQLNonNull(GraphQLID) },
+    //     score: { type: GraphQLInt },
+    //   },
+    //   resolve(parent, args) {
+    //     return Question.findOneAndUpdate({ _id: args.id }, { $inc: { score: args.score } });
+    //   },
+    // },
     updateUserRank: {
       type: UserType,
       args: {
@@ -277,6 +277,17 @@ const Mutation = new GraphQLObjectType({
         }
       },
     },
+
+    IncrementQuestionViews: {
+      type: QuestionType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Question.findOneAndUpdate({ _id: args.id }, { $inc: { views: 1 } });
+      },
+    },
+
     addMessage: {
       type: MessageType,
       args: {
@@ -350,6 +361,24 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         return User.findByIdAndUpdate({ _id: args.id }, args, { new: false });
+      },
+    },
+    AddVouch: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        vouch: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        User.findById(args.id).then((data) => {
+          if (!data.vouch.includes(args.vouch)) {
+            return User.findOneAndUpdate(
+              { _id: args.id },
+              { $push: { vouch: args.vouch } },
+              { new: false },
+            );
+          }
+        });
       },
     },
   },

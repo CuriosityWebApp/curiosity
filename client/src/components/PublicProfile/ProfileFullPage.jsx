@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { getUser } from '../../queries/queries.js';
+import { AddVouch } from '../../mutations/mutations.js';
 import { Link } from 'react-router-dom';
 import ProfileQuestionList from './ProfileQuestionList.jsx';
 import ProfileAnswerList from './ProfileAnswerList.jsx';
+import Vouches from './Vouches.jsx';
 import moment from 'moment';
 
 class ProfileFullPage extends Component {
@@ -15,6 +17,18 @@ class ProfileFullPage extends Component {
     };
     this.showChosenOnClick = this.showChosenOnClick.bind(this);
     this.showAllOnClick = this.showAllOnClick.bind(this);
+    this.onClickAddVouch = this.onClickAddVouch.bind(this);
+  }
+
+  onClickAddVouch() {
+    this.props
+      .AddVouch({
+        variables: {
+          id: this.props.userId,
+          vouch: this.props.username,
+        },
+      })
+      .then(() => this.props.getUser.refetch());
   }
 
   showChosenOnClick() {
@@ -32,7 +46,8 @@ class ProfileFullPage extends Component {
   }
 
   render() {
-    let { loading, error, user } = this.props.data;
+    console.log(this.props, 'I AM PROPS');
+    let { loading, error, user } = this.props.getUser;
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -61,7 +76,6 @@ class ProfileFullPage extends Component {
                   >
                     <div>
                       {user.answers.map(answer => {
-                        console.log(answer, 'I am answer');
                         if (answer.answerChosen && this.state.showChosen) {
                           return (
                             <ProfileAnswerList
@@ -136,8 +150,17 @@ class ProfileFullPage extends Component {
                         Send Message
                       </button>
                     </Link>
+                    <br />
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary"
+                      onClick={this.onClickAddVouch}
+                    >
+                      Vouch This Person!!
+                    </button>
                   </div>
                 </div>
+                <Vouches vouch={user.vouch} />
               </div>
             </div>
           </div>
@@ -147,12 +170,16 @@ class ProfileFullPage extends Component {
   }
 }
 
-export default graphql(getUser, {
-  options: props => {
-    return {
-      variables: {
-        id: props.userId,
-      },
-    };
-  },
-})(ProfileFullPage);
+export default compose(
+  graphql(getUser, {
+    name: 'getUser',
+    options: props => {
+      return {
+        variables: {
+          id: props.userId,
+        },
+      };
+    },
+  }),
+  graphql(AddVouch, { name: 'AddVouch' }),
+)(ProfileFullPage);

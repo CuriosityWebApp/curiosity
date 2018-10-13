@@ -25,7 +25,7 @@ class AnswerItem extends Component {
 
   IncrementLikes(e) {
     let up, down, data;
-    let userId = this.props.userId;
+    let userId = this.props.user.id || '';
     if (this.props.getAnswer.loading) {
       console.log('still loading');
     } else {
@@ -64,7 +64,7 @@ class AnswerItem extends Component {
 
   decrementLikes(e) {
     let up, down, data;
-    let userId = this.props.userId;
+    let userId = this.props.user.id || '';
     if (this.props.getAnswer.loading) {
       console.log('still loading');
     } else {
@@ -107,7 +107,6 @@ class AnswerItem extends Component {
     if (data && data.loading) {
       return <div>Loading answers...</div>;
     } else {
-      console.log(data);
       return (
         <React.Fragment>
           <div className="list-group">
@@ -180,11 +179,11 @@ class AnswerItem extends Component {
                       <AnswerChoice
                         questionId={this.props.questionId}
                         bounty={this.props.bounty}
-                        ownerId={this.props.userId}
+                        qOwnerId={this.props.qOwnerId}
                         answerId={this.props.answerId}
                         loggedId={this.props.loggedId}
                         isPaid={this.props.isPaid}
-                        data={this.props.data}
+                        refetch={this.props.refetch}
                       />
                     </div>
                     <div>

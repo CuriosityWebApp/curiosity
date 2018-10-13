@@ -1,4 +1,7 @@
 const _ = require('lodash');
+const Mongoose = require('mongoose');
+
+const ObjectId = Mongoose.Types.ObjectId;
 const User = require('../../database/model/user.js');
 const Question = require('../../database/model/question.js');
 const Answer = require('../../database/model/answer.js');
@@ -121,9 +124,10 @@ const RootQuery = new GraphQLObjectType({
                   ],
                 },
                 createdAt: 1,
+                views: 1,
               },
             },
-            { $sort: { score: -1, createdAt: -1 } },
+            { $sort: { score: -1, views: -1, createdAt: -1 } },
           ])
             .skip(args.skip)
             .limit(args.limit)
@@ -133,14 +137,43 @@ const RootQuery = new GraphQLObjectType({
                 newData.push({ id: item._id.toString() });
               });
               return newData;
-            });
+            })
+            .catch(err => console.error('error in questions query TOP', err));
         }
       },
     },
     answers: {
       type: new GraphQLList(AnswerType),
+      args: {
+        questionId: { type: GraphQLID },
+        skip: { type: GraphQLInt },
+        limit: { type: GraphQLInt },
+      },
       resolve(parent, args) {
-        return Answer.find({});
+        return Answer.aggregate([
+          { $match: { questionId: args.questionId } },
+          {
+            $project: {
+              score: {
+                $subtract: [
+                  { $size: { $ifNull: ['$ratedUpBy', []] } },
+                  { $size: { $ifNull: ['$ratedDownBy', []] } },
+                ],
+              },
+              createdAt: 1,
+              answerChosen: 1,
+            },
+          },
+          { $sort: { answerChosen: -1, createdAt: 1, score: -1 } },
+        ])
+          .skip(args.skip)
+          .limit(args.limit)
+          .then((data) => {
+            const newData = [];
+            data.forEach(item => newData.push({ id: item._id.toString() }));
+            return newData;
+          })
+          .catch(err => console.error('error in getting asnwers', err));
       },
     },
     transactions: {

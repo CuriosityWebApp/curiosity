@@ -9,6 +9,7 @@ const getUser = gql`
       credit
       email
       avatarUrl
+      vouch
       createdAt
       questions {
         id
@@ -56,6 +57,7 @@ const getQuestion = gql`
       restriction
       tags
       score
+      views
       ratedUpBy
       ratedDownBy
       user {
@@ -100,6 +102,14 @@ const getAnswer = gql`
   }
 `;
 
+const getAnswers = gql`
+  query($questionId: ID!, $skip: Int!, $limit: Int!) {
+    answers(questionId: $questionId, skip: $skip, limit: $limit) {
+      id
+    }
+  }
+`;
+
 const getQuestions = gql`
   query($limit: Int!, $skip: Int!, $filter: String, $sortBy: String, $range: String) {
     questions(limit: $limit, skip: $skip, filter: $filter, sortBy: $sortBy, range: $range) {
@@ -109,7 +119,7 @@ const getQuestions = gql`
 `;
 
 const checkUserEmail = gql`
-  query($email: String!) {
+  query($email: String) {
     checkUserEmail(email: $email) {
       id
       username
@@ -194,7 +204,7 @@ const getMessages = gql`
   }
 `;
 const userSentMessages = gql`
-  query($senderId: ID) {
+  query($senderId: ID!) {
     userSentMessages(senderId: $senderId) {
       id
       receiverId
@@ -224,57 +234,16 @@ const getUsernames = gql`
   }
 `;
 
-const getUserData = gql`
-  query($id: ID) {
-    user(id: $id) {
-      id
-      username
-      rank
-      credit
-      email
-      questions {
-        id
-        questionTitle
-        bounty
-      }
-      answers {
-        id
-        answer
-        score
-        question {
-          id
-          questionTitle
-        }
-      }
-      transactions {
-        id
-        questionId
-        amount
-        receiverId
-        recipient {
-          username
-        }
-        sender {
-          username
-        }
-        questionName {
-          questionTitle
-        }
-      }
-    }
-  }
-`;
-
 module.exports = {
   getUser,
   getQuestion,
   getQuestions,
   getAnswer,
+  getAnswers,
   checkUserEmail,
   searchQuestion,
   getMessages,
   userSentMessages,
   getUsernames,
   checkUsername,
-  getUserData,
 };

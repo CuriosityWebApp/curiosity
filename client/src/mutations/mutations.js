@@ -54,26 +54,6 @@ const AddTransaction = gql`
   }
 `;
 
-const UpdatePostLikes = gql`
-  mutation($id: ID!, $score: Int) {
-    likesOnQuestion(id: $id, score: $score) {
-      id
-      score
-    }
-  }
-`;
-const UpdateAnswerLikes = gql`
-  mutation($userId: ID!, $answerId: ID!, $score: Int) {
-    likesOnAnswer(id: $answerId, score: $score) {
-      id
-      score
-    }
-    updateUserRank(id: $userId, rank: $score) {
-      id
-      rank
-    }
-  }
-`;
 const UpdateCredit = gql`
   mutation($id: ID!, $credit: Int) {
     updateCredit(id: $id, credit: $credit) {
@@ -146,6 +126,14 @@ const QuestionDislike = gql`
   }
 `;
 
+const IncrementQuestionViews = gql`
+  mutation($id: ID!) {
+    IncrementQuestionViews(id: $id) {
+      id
+      views
+    }
+  }
+`;
 const AddMessage = gql`
   mutation($senderId: ID!, $receiverId: ID!, $messageTitle: String!, $messageContent: String!) {
     addMessage(
@@ -182,6 +170,14 @@ const UpdateUserAvatar = gql`
   }
 `;
 
+const AddVouch = gql`
+  mutation($id: ID!, $vouch: String!) {
+    AddVouch(id: $id, vouch: $vouch) {
+      id
+    }
+  }
+`;
+
 module.exports = {
   AddQuestion,
   AddAnswer,
@@ -189,7 +185,6 @@ module.exports = {
   AddTransaction,
   AnswerLike,
   AnswerDislike,
-  UpdatePostLikes,
   UpdateCredit,
   UpdatePaid,
   UpdateChosenAnswer,
@@ -199,5 +194,7 @@ module.exports = {
   QuestionDislike,
   ReadMessages,
   ClearNotifications,
+  IncrementQuestionViews,
   UpdateUserAvatar,
+  AddVouch,
 };

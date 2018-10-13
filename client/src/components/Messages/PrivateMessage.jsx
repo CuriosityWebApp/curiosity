@@ -4,6 +4,7 @@ import { withApollo } from 'react-apollo';
 import { AddMessage } from '../../mutations/mutations.js';
 import Autocomplete from 'react-autocomplete';
 import { getUsernames, checkUsername } from '../../queries/queries.js';
+import { Redirect } from 'react-router-dom';
 
 class PrivateMessage extends Component {
   constructor(props) {
@@ -22,9 +23,7 @@ class PrivateMessage extends Component {
     this.replyFormat = this.replyFormat.bind(this);
   }
 
-  componentDidMount() {
-    this.replyFormat('justin');
-  }
+  componentDidMount() {}
 
   replyFormat(receiverName) {
     this.setState({
@@ -73,20 +72,25 @@ class PrivateMessage extends Component {
           }
         })
         .then(() => {
-          this.props
-            .mutate({
-              mutation: AddMessage,
-              variables: {
-                senderId: this.props.userId,
-                messageTitle: this.state.title,
-                messageContent: this.state.content,
-                receiverId: this.state.receiverId,
-              },
-            })
-            .then(() => {
-              alert('message sent');
-            })
-            .catch(err => console.log('error bro', err));
+          if (this.state.receiverId) {
+            this.props
+              .mutate({
+                mutation: AddMessage,
+                variables: {
+                  senderId: this.props.userId,
+                  messageTitle: this.state.title,
+                  messageContent: this.state.content,
+                  receiverId: this.state.receiverId,
+                },
+              })
+              .then(() => {
+                this.setState({ redirect: true });
+                alert('message sent');
+              })
+              .catch(err => console.log('error bro', err));
+          } else {
+            alert('Invalid User');
+          }
         })
         .catch(err => {
           console.error(err);
@@ -96,56 +100,60 @@ class PrivateMessage extends Component {
 
   render() {
     const { title, content, receiverName } = this.state;
-    return (
-      <div>
-        <h2>
-          <u>PrivateMessage</u>
-        </h2>
+    if (this.state.redirect) {
+      return <Redirect to="/messages/sent" />;
+    } else {
+      return (
         <div>
-          <form onSubmit={this.submitForm.bind(this)}>
-            <Autocomplete
-              items={this.state.users}
-              shouldItemRender={(item, value) =>
-                item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
-              }
-              getItemValue={item => item.username}
-              renderItem={(item, highlighted) => (
-                <div
-                  key={item.id}
-                  style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}
-                >
-                  {item.username}
-                </div>
-              )}
-              wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-              value={receiverName}
-              onChange={this.searchUsers}
-              onSelect={value => this.setState({ receiverName: value })}
-              inputProps={{ placeholder: 'username', name: 'receiverName' }}
-            />
-            <br />
-            <input
-              type="text"
-              value={title}
-              onChange={e => this.setState({ title: e.target.value })}
-              placeholder="title"
-              style={{ display: 'inline' }}
-            />
-            <br />
-            <div>
-              <textarea
-                rows="5"
-                cols="60"
-                value={content}
-                onChange={e => this.setState({ content: e.target.value })}
-                placeholder="message"
+          <h2>
+            <u>PrivateMessage</u>
+          </h2>
+          <div>
+            <form onSubmit={this.submitForm.bind(this)}>
+              <Autocomplete
+                items={this.state.users}
+                shouldItemRender={(item, value) =>
+                  item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
+                }
+                getItemValue={item => item.username}
+                renderItem={(item, highlighted) => (
+                  <div
+                    key={item.id}
+                    style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}
+                  >
+                    {item.username}
+                  </div>
+                )}
+                wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+                value={receiverName}
+                onChange={this.searchUsers}
+                onSelect={value => this.setState({ receiverName: value })}
+                inputProps={{ placeholder: 'username', name: 'receiverName' }}
               />
-            </div>
-          </form>
-          <button onClick={this.submitForm.bind(this)}>Send Message</button>
+              <br />
+              <input
+                type="text"
+                value={title}
+                onChange={e => this.setState({ title: e.target.value })}
+                placeholder="title"
+                style={{ display: 'inline' }}
+              />
+              <br />
+              <div>
+                <textarea
+                  rows="5"
+                  cols="60"
+                  value={content}
+                  onChange={e => this.setState({ content: e.target.value })}
+                  placeholder="message"
+                />
+              </div>
+            </form>
+            <button onClick={this.submitForm.bind(this)}>Send Message</button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
