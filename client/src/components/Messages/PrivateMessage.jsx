@@ -24,8 +24,12 @@ class PrivateMessage extends Component {
   }
 
   componentDidMount() {
+    let { username } = this.props;
+    if (username === 'none') {
+      username = '';
+    }
     this.setState({
-      receiverName: this.props.username || '',
+      receiverName: username,
     });
   }
 
