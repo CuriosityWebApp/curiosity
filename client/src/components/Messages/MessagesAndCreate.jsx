@@ -180,13 +180,25 @@ class MessagesAndCreate extends Component {
           )}
         </div>
         {this.props.folder === 'unread' && (
-          <NewList userId={this.props.userId} replyFormat={this.replyFormat} />
+          <NewList
+            userId={this.props.userId}
+            replyFormat={this.replyFormat}
+            notify={this.props.notify}
+          />
         )}
         {this.props.folder === 'inbox' && (
-          <InboxList userId={this.props.userId} replyFormat={this.replyFormat} />
+          <InboxList
+            userId={this.props.userId}
+            replyFormat={this.replyFormat}
+            notify={this.props.notify}
+          />
         )}
         {this.props.folder === 'sent' && (
-          <SentList userId={this.props.userId} replyFormat={this.replyFormat} />
+          <SentList
+            userId={this.props.userId}
+            replyFormat={this.replyFormat}
+            notify={this.props.notify}
+          />
         )}
       </div>
     );

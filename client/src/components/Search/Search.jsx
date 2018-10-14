@@ -2,7 +2,7 @@ import React from 'react';
 import { searchQuestion } from '../../queries/queries.js';
 import { withApollo } from 'react-apollo';
 import Autocomplete from 'react-autocomplete';
-import { Redirect, Switch, Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 class Search extends React.Component {
   constructor(props) {
@@ -72,18 +72,23 @@ class Search extends React.Component {
               maxHeight: '50%',
               zIndex: 1,
             }}
-            renderItem={(item, highlighted) => (
-              <div
-                key={item.id}
-                style={{
-                  backgroundColor: highlighted ? '#eee' : 'transparent',
-                }}
-              >
-                {item.questionTitle}
-              </div>
-            )}
+            renderItem={(item, highlighted) => {
+              var searchLink = `/questionContent/${item.id}`;
+              return (
+                <div
+                  key={item.id}
+                  style={{
+                    backgroundColor: highlighted ? '#eee' : 'transparent',
+                  }}
+                >
+                  <Link to={searchLink}>
+                    <div>{item.questionTitle}</div>
+                  </Link>
+                </div>
+              );
+            }}
             onChange={this.searchQuestions}
-            onSelect={value => this.setState({ term: value })}
+            onSelect={value => this.setState({ term: '' })}
             value={this.state.term}
             inputProps={{
               placeholder: 'Filter Questions',

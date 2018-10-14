@@ -22,6 +22,7 @@ class MessageItem extends Component {
         },
       })
       .then(() => {
+        this.props.notify('error', 'Message deleted');
         this.props.getMessages.refetch();
       });
   }

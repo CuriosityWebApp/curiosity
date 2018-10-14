@@ -35,7 +35,14 @@ class ProfileFullPage extends Component {
           add: value,
         },
       })
-      .then(() => this.props.getUser.refetch());
+      .then(() => {
+        if (value === false) {
+          this.props.notify('error', 'Removed Vouch!');
+        } else {
+          this.props.notify('message', 'Added Vouch!');
+        }
+        this.props.getUser.refetch();
+      });
   }
 
   showChosenOnClick() {

@@ -94,6 +94,11 @@ class Index extends Component {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 3000,
       });
+    } else if (type === 'warning') {
+      toast.warning(text, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
     }
   }
 
