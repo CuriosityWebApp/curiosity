@@ -180,7 +180,7 @@ class ProfileFullPage extends Component {
                     </div>
                   </div>
                 </div>
-                <Vouches vouch={user.vouch} userId={user.id} />
+                <Vouches vouch={user.vouch} />
               </div>
             </div>
           </div>
