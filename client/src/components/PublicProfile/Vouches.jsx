@@ -22,7 +22,17 @@ class Vouches extends Component {
             textAlign: 'center',
           }}
         >
-          <div>{vouch}</div>
+          <div>
+            {' '}
+            {vouch.map((eachVouch, idx) => {
+              return (
+                <div key={idx}>
+                  <div className="badge badge-info">{eachVouch}</div>
+                  <br />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
