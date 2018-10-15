@@ -3,7 +3,7 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 import { Mutation } from 'react-apollo';
 import { Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { UpdateCredit } from '../../mutations/mutations.js';
+import { UpdateCredit, AddTransaction } from '../../mutations/mutations.js';
 import { usdToCredit } from './helper.js';
 
 class PaymentCheckOut extends Component {
@@ -26,16 +26,27 @@ class PaymentCheckOut extends Component {
     });
   }
 
-  handlePayment(UpdateCredit) {
-    UpdateCredit({ variables: { id: this.props.id, credit: this.state.credits } }).then(() => {
-      this.props.handleClose();
-      this.props.data.refetch();
-      this.props.refetcher.refetch();
-      this.props.notify('transaction', `You received ${this.state.credits} Credits`);
-    });
+  handlePayment(UpdateCredit, AddTransaction) {
+    UpdateCredit({ variables: { id: this.props.id, credit: this.state.credits } })
+      .then(() => {
+        AddTransaction({
+          variables: {
+            questionId: 'Credit card',
+            senderId: 'Curiosity',
+            receiverId: this.props.id,
+            amount: this.state.credits,
+          },
+        });
+      })
+      .then(() => {
+        this.props.handleClose();
+        this.props.data.refetch();
+        this.props.refetcher.refetch();
+        this.props.notify('transaction', `You received ${this.state.credits} Credits`);
+      });
   }
 
-  async submit(UpdateCredit) {
+  async submit(UpdateCredit, AddTransaction) {
     let token = await this.props.stripe.createToken({ name: this.props.username });
     console.log(token);
 
@@ -47,7 +58,7 @@ class PaymentCheckOut extends Component {
       .then(res => {
         if (res.data.paid) {
           console.log('Purchase Complete!', res.data);
-          this.handlePayment(UpdateCredit);
+          this.handlePayment(UpdateCredit, AddTransaction);
         }
       });
   }
@@ -89,116 +100,124 @@ class PaymentCheckOut extends Component {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error...</p>;
           return (
-            <div>
-              <Modal show={this.props.showComponent} onHide={this.props.handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Transaction</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <h4>Limited Offer</h4>
-                  <p>
-                    <em>
-                      <b>100</b>{' '}
-                      <OverlayTrigger overlay={tooltipOneDollar}>
-                        <a href="#tooltipOneDollar">credit</a>
-                      </OverlayTrigger>{' '}
-                      for <b>1</b> usd
-                    </em>
-                    <br />
-                    <em>
-                      <b>550</b>{' '}
-                      <OverlayTrigger overlay={tooltipFiveDollar}>
-                        <a href="#tooltipFiveDollar">credit</a>
-                      </OverlayTrigger>{' '}
-                      for <b>5</b> usd
-                    </em>
-                    <br />
-                    <em>
-                      <b>1150</b>{' '}
-                      <OverlayTrigger overlay={tooltipTenDollar}>
-                        <a href="#tooltipTenDollar">credit</a>
-                      </OverlayTrigger>{' '}
-                      for <b>10</b> usd
-                    </em>
-                    <br />
-                    <em>
-                      <b>2450</b>{' '}
-                      <OverlayTrigger overlay={tooltipTwentyDollar}>
-                        <a href="#tooltipTwentyDollar">credit</a>
-                      </OverlayTrigger>{' '}
-                      for <b>20</b> usd
-                    </em>
-                    <br />
-                    <em>
-                      <b>6500</b>{' '}
-                      <OverlayTrigger overlay={tooltipFiftyDollar}>
-                        <a href="#tooltipFiftyDollar">credit</a>
-                      </OverlayTrigger>{' '}
-                      for <b>50</b> usd
-                    </em>
-                    <br />
-                    <em>
-                      <b>14000</b>{' '}
-                      <OverlayTrigger overlay={tooltipHundredDollar}>
-                        <a href="#tooltipHundredDollar">credit</a>
-                      </OverlayTrigger>{' '}
-                      for <b>100</b> usd
-                    </em>
-                    <br />
-                  </p>
-
-                  <hr />
-
-                  <img
-                    src="http://www.pngmart.com/files/3/Major-Credit-Card-Logo-PNG-Clipart.png"
-                    style={{ width: '450px', height: '80px' }}
-                  />
-
-                  <hr />
-
+            <Mutation mutation={AddTransaction}>
+              {(AddTransaction, { loading, error, data }) => {
+                if (loading) return <p>Loading...</p>;
+                if (error) return <p>Error...</p>;
+                return (
                   <div>
-                    <p>Please declare amount in usd</p>
+                    <Modal show={this.props.showComponent} onHide={this.props.handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Transaction</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <h4>Limited Offer</h4>
+                        <p>
+                          <em>
+                            <b>100</b>{' '}
+                            <OverlayTrigger overlay={tooltipOneDollar}>
+                              <a href="#tooltipOneDollar">credit</a>
+                            </OverlayTrigger>{' '}
+                            for <b>1</b> usd
+                          </em>
+                          <br />
+                          <em>
+                            <b>550</b>{' '}
+                            <OverlayTrigger overlay={tooltipFiveDollar}>
+                              <a href="#tooltipFiveDollar">credit</a>
+                            </OverlayTrigger>{' '}
+                            for <b>5</b> usd
+                          </em>
+                          <br />
+                          <em>
+                            <b>1150</b>{' '}
+                            <OverlayTrigger overlay={tooltipTenDollar}>
+                              <a href="#tooltipTenDollar">credit</a>
+                            </OverlayTrigger>{' '}
+                            for <b>10</b> usd
+                          </em>
+                          <br />
+                          <em>
+                            <b>2450</b>{' '}
+                            <OverlayTrigger overlay={tooltipTwentyDollar}>
+                              <a href="#tooltipTwentyDollar">credit</a>
+                            </OverlayTrigger>{' '}
+                            for <b>20</b> usd
+                          </em>
+                          <br />
+                          <em>
+                            <b>6500</b>{' '}
+                            <OverlayTrigger overlay={tooltipFiftyDollar}>
+                              <a href="#tooltipFiftyDollar">credit</a>
+                            </OverlayTrigger>{' '}
+                            for <b>50</b> usd
+                          </em>
+                          <br />
+                          <em>
+                            <b>14000</b>{' '}
+                            <OverlayTrigger overlay={tooltipHundredDollar}>
+                              <a href="#tooltipHundredDollar">credit</a>
+                            </OverlayTrigger>{' '}
+                            for <b>100</b> usd
+                          </em>
+                          <br />
+                        </p>
 
-                    <div className="form-group">
-                      <span>$</span>
-                      <input
-                        type="number"
-                        placeholder="usd"
-                        min="0"
-                        name="usd"
-                        onChange={this.handleChange}
-                      />
-                      <small>
-                        <em> You will receive {this.state.credits} credits!</em>
-                      </small>
-                    </div>
+                        <hr />
+
+                        <img
+                          src="http://www.pngmart.com/files/3/Major-Credit-Card-Logo-PNG-Clipart.png"
+                          style={{ width: '450px', height: '80px' }}
+                        />
+
+                        <hr />
+
+                        <div>
+                          <p>Please declare amount in usd</p>
+
+                          <div className="form-group">
+                            <span>$</span>
+                            <input
+                              type="number"
+                              placeholder="usd"
+                              min="0"
+                              name="usd"
+                              onChange={this.handleChange}
+                            />
+                            <small>
+                              <em> You will receive {this.state.credits} credits!</em>
+                            </small>
+                          </div>
+                        </div>
+
+                        <hr />
+
+                        <p>Would you like to complete the purchase?</p>
+                        <div className="checkout">
+                          <form
+                            onClick={() => {
+                              this.submit(UpdateCredit, AddTransaction);
+                            }}
+                            onSubmit={() => {
+                              this.submit(UpdateCredit, AddTransaction);
+                            }}
+                          >
+                            <div className="card-field">
+                              <CardElement />
+                              <br />
+                            </div>
+                            <Button>Confirm Order</Button>
+                          </form>
+                        </div>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button onClick={this.props.handleClose}>Close</Button>
+                      </Modal.Footer>
+                    </Modal>
                   </div>
-
-                  <hr />
-
-                  <p>Would you like to complete the purchase?</p>
-                  <div className="checkout">
-                    <form
-                      onClick={() => {
-                        this.submit(UpdateCredit);
-                      }}
-                      onSubmit={() => {
-                        this.submit(UpdateCredit);
-                      }}
-                    >
-                      <div className="card-field">
-                        <CardElement />
-                        <br />
-                      </div>
-                      <Button>Confirm Order</Button>
-                    </form>
-                  </div>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button onClick={this.props.handleClose}>Close</Button>
-                </Modal.Footer>
-              </Modal>
-            </div>
+                );
+              }}
+            </Mutation>
           );
         }}
       </Mutation>
