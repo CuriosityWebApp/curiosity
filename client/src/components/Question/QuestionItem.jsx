@@ -128,9 +128,7 @@ class QuestionItem extends Component {
 				return <div> Loading...</div>;
 			} else {
 				let data = this.props.data.question;
-				let hoverText = `Likes: ${this.props.data.question.ratedUpBy.length}, Dislikes: ${
-					this.props.data.question.ratedDownBy.length
-				}`;
+				let hoverText = `Likes: ${data.ratedUpBy.length}, Dislikes: ${data.ratedDownBy.length}`;
 				return (
 					<div className="inline-block container" style={{ cursor: 'pointer' }}>
 						<div className="list-group">

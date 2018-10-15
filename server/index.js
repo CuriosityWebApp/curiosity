@@ -4,13 +4,14 @@ const graphqlHTTP = require('express-graphql');
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
-const config = require('../config.js');
+const compression = require('compression');
 
 const stripe = require('stripe')(config.stripe_secret_key);
 const schema = require('../database/graphQL/schema.js');
 
 const app = express();
 
+app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
 
