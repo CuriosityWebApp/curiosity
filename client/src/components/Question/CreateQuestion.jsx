@@ -91,7 +91,107 @@ class CreateQuestion extends Component {
       return (
         <div>
           <h2>Ask a Question: </h2>
-          <form onSubmit={this.submitForm.bind(this)}>
+          <form id="contact-form" method="post" action="contact.php" role="form">
+            <div className="messages" />
+
+            <div className="controls">
+              <div className="row">
+                <div className="col-md-1">
+                  <div className="form-group">
+                    <label for="form_lastname">Bounty *</label>
+                    <input
+                      type="number"
+                      value={bounty}
+                      className="form-control"
+                      required="required"
+                      onChange={e => this.setState({ bounty: e.target.value })}
+                      data-error="Bounty is required"
+                    />
+                    <div className="help-block with-errors" />
+                  </div>
+                </div>
+                <div className="col-md-2">
+                  <div className="form-group">
+                    <label for="form_lastname">Category *</label>
+                    <select
+                      onChange={e => this.setState({ category: e.target.value })}
+                      id="form_need"
+                      name="need"
+                      className="form-control"
+                      required="required"
+                      data-error="Please specify your category."
+                    >
+                      <option>Select Category</option>
+                      {this.displayCategories()}
+                    </select>
+                    <div className="help-block with-errors" />
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-8">
+                  <div className="form-group">
+                    <label>Question Title *</label>
+                    <input
+                      value={title}
+                      onChange={e => this.setState({ title: e.target.value })}
+                      type="text"
+                      className="form-control"
+                      placeholder="Please enter your Question title!"
+                      required="required"
+                      data-error="Question title is required."
+                    />
+                    <div className="help-block with-errors" />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <div className="help-block with-errors" />
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-8">
+                  <div className="form-group">
+                    <label for="form_message">Question Content *</label>
+                    <textarea
+                      value={content}
+                      onChange={e => this.setState({ content: e.target.value })}
+                      className="form-control"
+                      placeholder="Please enter your Question content!"
+                      rows="6"
+                      required="required"
+                      data-error="Question content is required"
+                    />
+                    <div className="help-block with-errors" />
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <input type="submit" className="btn btn-success btn-send" value="Send message" />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <p className="text-muted">
+                    <strong>*</strong> These fields are required.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      );
+    }
+  }
+}
+
+export default compose(
+  graphql(AddQuestion, { name: 'AddQuestion' }),
+  graphql(UpdateCredit, { name: 'UpdateCredit' }),
+)(CreateQuestion);
+
+{
+  /* <form onSubmit={this.submitForm.bind(this)}>
             <label>Amount of Bounty: </label>
             <input
               type="number"
@@ -134,14 +234,5 @@ class CreateQuestion extends Component {
               onChange={e => this.setState({ content: e.target.value })}
             />
           </form>
-          <button onClick={this.submitForm.bind(this)}>Post Question</button>
-        </div>
-      );
-    }
-  }
+          <button onClick={this.submitForm.bind(this)}>Post Question</button> */
 }
-
-export default compose(
-  graphql(AddQuestion, { name: 'AddQuestion' }),
-  graphql(UpdateCredit, { name: 'UpdateCredit' }),
-)(CreateQuestion);
