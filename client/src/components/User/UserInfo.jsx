@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import UpdateUserAvatar from './UpdateUserAvatar.jsx';
 
-const UserInfo = ({ user, refetcher, notify }) => {
+const UserInfo = ({ user, refetch, notify }) => {
   return (
     <div className="card">
       <strong>User Info</strong>
       <div className="card-body">
-        <UpdateUserAvatar id={user.id} refetcher={refetcher} notify={notify} /> <br />
+        <UpdateUserAvatar id={user.id} refetch={refetch} notify={notify} /> <br />
         <strong>E-Mail: </strong>
         {user.email}
         <br />

@@ -21,28 +21,29 @@ class ProfileFullPage extends Component {
   }
 
   onClickAddVouch(e) {
+    let { AddVouch, userId, username, notify, getUser } = this.props;
     let value;
     if (e.target.value === 'Nevermind') {
       value = false;
     } else {
       value = true;
     }
-    this.props
-      .AddVouch({
-        variables: {
-          id: this.props.userId,
-          vouch: this.props.username,
-          add: value,
-        },
-      })
+    AddVouch({
+      variables: {
+        id: userId,
+        vouch: username,
+        add: value,
+      },
+    })
       .then(() => {
         if (value === false) {
-          this.props.notify('error', 'Removed Vouch!');
+          notify('error', 'Removed Vouch!');
         } else {
-          this.props.notify('message', 'Added Vouch!');
+          notify('message', 'Added Vouch!');
         }
-        this.props.getUser.refetch();
-      });
+        getUser.refetch();
+      })
+      .catch(err => console.error(err));
   }
 
   showChosenOnClick() {

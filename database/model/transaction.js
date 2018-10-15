@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema(
   {
+    transactionMeans: String,
     questionId: String,
     senderId: String,
     receiverId: String,

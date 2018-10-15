@@ -159,6 +159,7 @@ const TransactionType = new GraphQLObjectType({
   name: 'Transaction',
   fields: () => ({
     id: { type: GraphQLID },
+    transactionMeans: { type: GraphQLString },
     questionId: { type: GraphQLID },
     senderId: { type: GraphQLID },
     receiverId: { type: GraphQLID },
@@ -175,12 +176,6 @@ const TransactionType = new GraphQLObjectType({
       type: UserType,
       resolve(parent, args) {
         return User.findById(parent.receiverId);
-      },
-    },
-    questionName: {
-      type: QuestionType,
-      resolve(parent, args) {
-        return Question.findById(parent.questionId);
       },
     },
   }),

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, OverlayTrigger, Popover, Tooltip, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 class RedeemCredit extends Component {
   constructor(props) {

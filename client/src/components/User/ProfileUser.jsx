@@ -16,7 +16,7 @@ class ProfileUser extends Component {
   }
 
   render() {
-    let { data, refetcher, notify } = this.props;
+    let { data, notify } = this.props;
     let { loading, error, user, refetch } = data;
     let { activeTab } = this.state;
     if (loading) {
@@ -113,9 +113,11 @@ class ProfileUser extends Component {
               </ul>
             </div>
           </nav>
-          {activeTab === 'info' && <UserInfo user={user} refetcher={refetcher} notify={notify} />}
+          {activeTab === 'info' && (
+            <UserInfo user={user} refetch={this.props.refetch} notify={notify} />
+          )}
           {activeTab === 'wallet' && (
-            <UserWallet user={user} data={data} refetcher={refetcher} notify={notify} />
+            <UserWallet user={user} data={data} refetch={this.props.refetch} notify={notify} />
           )}
           {activeTab === 'questions' && <UserQuestions questions={user.questions} />}
           {activeTab === 'answers' && <UserAnswers answers={user.answers} />}

@@ -31,6 +31,7 @@ const getUser = gql`
       }
       transactions {
         id
+        transactionMeans
         questionId
         amount
         receiverId
@@ -39,9 +40,6 @@ const getUser = gql`
         }
         sender {
           username
-        }
-        questionName {
-          questionTitle
         }
         createdAt
       }

@@ -13,7 +13,11 @@ const {
   GraphQLNonNull,
 } = require('graphql');
 const {
-  UserType, QuestionType, AnswerType, TransactionType, MessageType,
+  UserType,
+  QuestionType,
+  AnswerType,
+  TransactionType,
+  MessageType,
 } = require('./typeDefs.js');
 
 const Mutation = new GraphQLObjectType({
@@ -83,13 +87,15 @@ const Mutation = new GraphQLObjectType({
     addTransaction: {
       type: TransactionType,
       args: {
-        questionId: { type: GraphQLNonNull(GraphQLID) },
+        transactionMeans: { type: GraphQLNonNull(GraphQLString) },
+        questionId: { type: GraphQLID },
         senderId: { type: GraphQLNonNull(GraphQLID) },
         receiverId: { type: GraphQLNonNull(GraphQLID) },
         amount: { type: GraphQLNonNull(GraphQLInt) },
       },
       resolve(parent, args) {
         const transaction = new Transaction({
+          transactionMeans: args.transactionMeans,
           questionId: args.questionId,
           senderId: args.senderId,
           receiverId: args.receiverId,
@@ -209,10 +215,16 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         if (args.method === 'add') {
-          return Question.findOneAndUpdate({ _id: args.id }, { $push: { ratedDownBy: args.userId } });
+          return Question.findOneAndUpdate(
+            { _id: args.id },
+            { $push: { ratedDownBy: args.userId } },
+          );
         }
         if (args.method === 'delete') {
-          return Question.findOneAndUpdate({ _id: args.id }, { $pull: { ratedDownBy: args.userId } });
+          return Question.findOneAndUpdate(
+            { _id: args.id },
+            { $pull: { ratedDownBy: args.userId } },
+          );
         }
       },
     },

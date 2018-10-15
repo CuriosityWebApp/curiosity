@@ -31,7 +31,7 @@ class App extends Component {
           email={email}
           signedIn={signedIn}
           user={checkUserEmail}
-          refetcher={checkUserEmail}
+          refetch={refetch}
           handleLogout={handleLogout}
           uiConfig={uiConfig}
           firebaseAuth={firebase.auth()}

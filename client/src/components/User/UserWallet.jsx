@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import BuyCredit from '../Payment/BuyCredit.jsx';
 import RedeemCredit from '../Payment/RedeemCredit.jsx';
-import moment from 'moment';
 
-const UserWallet = ({ user, data, refetcher, notify }) => {
+const UserWallet = ({ user, data, refetch, notify }) => {
   return (
     <div>
       <strong>Wallet</strong>
@@ -24,7 +24,7 @@ const UserWallet = ({ user, data, refetcher, notify }) => {
               id={user.id}
               username={user.username}
               data={data}
-              refetcher={refetcher}
+              refetch={refetch}
               notify={notify}
             />
           </div>
@@ -37,17 +37,37 @@ const UserWallet = ({ user, data, refetcher, notify }) => {
         <strong>Transactions</strong>
         {user.transactions.length > 0 ? (
           user.transactions.map(transaction => {
-            return (
-              <div className="card-body" key={transaction.id}>
-                Question: {transaction.questionName.questionTitle}
-                <br />
-                Amount: {transaction.amount}
-                <br />
-                Sender: {transaction.sender.username}
-                <br />
-                Recipient: {transaction.recipient.username}
-              </div>
-            );
+            if (!transaction.questionId) {
+              return (
+                <div className="card-body" key={transaction.id}>
+                  Transaction: {transaction.transactionMeans}
+                  <br />
+                  Amount: {transaction.amount}
+                  <br />
+                  Sender: {transaction.sender.username}
+                  <br />
+                  Recipient: {transaction.recipient.username}
+                </div>
+              );
+            } else {
+              return (
+                <Link
+                  to={`/questionContent/${transaction.questionId}`}
+                  key={transaction.id}
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  <div className="card-body">
+                    Transaction: {transaction.transactionMeans}
+                    <br />
+                    Amount: {transaction.amount}
+                    <br />
+                    Sender: {transaction.sender.username}
+                    <br />
+                    Recipient: {transaction.recipient.username}
+                  </div>
+                </Link>
+              );
+            }
           })
         ) : (
           <div className="card">

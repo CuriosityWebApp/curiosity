@@ -23,6 +23,7 @@ class BuyCredit extends Component {
   }
 
   render() {
+    let { id, data, refetch, notify } = this.props;
     return (
       <StripeProvider apiKey={process.env.stripe_public_key}>
         <div>
@@ -36,12 +37,12 @@ class BuyCredit extends Component {
               />
               {this.state.showComponent ? (
                 <PaymentCheckOut
-                  id={this.props.id}
-                  data={this.props.data}
+                  id={id}
+                  data={data}
                   showComponent={this.state.showComponent}
                   handleClose={this.handleClose}
-                  refetcher={this.props.refetcher}
-                  notify={this.props.notify}
+                  refetch={refetch}
+                  notify={notify}
                 />
               ) : null}
             </div>
