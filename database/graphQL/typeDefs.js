@@ -35,7 +35,12 @@ const UserType = new GraphQLObjectType({
           .catch(err => console.log('error in rank', err));
 
         // return Answer.aggregate([
-
+        //   {$match: {$userId: parent.id}},
+        //   {$project: {
+        //      rank: {
+        //        $sub
+        //      }
+        //   }}
         // ])
       },
     },

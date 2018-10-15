@@ -61,57 +61,58 @@ const RootQuery = new GraphQLObjectType({
         sortBy: { type: GraphQLString },
         range: { type: GraphQLString },
       },
-      resolve(parent, {
-        limit, skip, sortBy, range, filter,
-      }) {
+      resolve(parent, args) {
         const today = new Date();
         const day = 86400000; // number of milliseconds in a day
-        const days = range || 0;
+        const days = args.range || 0;
         const daysAgo = new Date(today - days * day);
         // no args passed in
-        if (filter === '' && sortBy === '') {
+        if (args.filter === '' && args.sortBy === '') {
           return Question.find()
             .sort({ createdAt: -1, views: -1, bounty: -1 })
-            .skip(skip)
-            .limit(limit);
+            .skip(args.skip)
+            .limit(args.limit)
+            .catch(err => console.log('err', err));
         }
-        // getting items just bassed on filter
-        if (filter !== '' && sortBy === '') {
+        // getting items just bassed on args.filter
+        if (args.filter !== '' && args.sortBy === '') {
           return Question.find({
             $or: [
-              { category: { $regex: filter, $options: 'i' } },
-              { tags: { $regex: filter, $options: 'i' } },
+              { category: { $regex: args.filter, $options: 'i' } },
+              { tags: { $regex: args.filter, $options: 'i' } },
             ],
           })
             .sort({ createdAt: -1, views: -1, bounty: -1 })
-            .skip(skip)
-            .limit(limit);
+            .skip(args.skip)
+            .limit(args.limit)
+            .catch(err => console.log('err', err));
         }
         // getting items based on passed sort option and range if provided
-        if (sortBy !== '' && sortBy !== 'top') {
-          // if range but no filter
-          let newRange = range ? { createdAt: { $gte: daysAgo } } : {};
-          // if range and filter
-          range && filter
-            ? (newRange = { createdAt: { $gte: daysAgo }, category: filter })
-            : (newRange = range);
+        if (args.sortBy !== '' && args.sortBy !== 'top') {
+          // if range but no args.filter
+          let newRange = args.range ? { createdAt: { $gte: daysAgo } } : {};
+          // if range and args.filter
+          args.range && args.filter
+            ? (newRange = { createdAt: { $gte: daysAgo }, category: args.filter })
+            : (newRange = newRange);
           return Question.find(newRange)
-            .sort({ [sortBy]: -1 })
-            .skip(skip)
-            .limit(limit);
+            .sort({ [args.sortBy]: -1 })
+            .skip(args.skip)
+            .limit(args.limit)
+            .catch(err => console.log('err', err));
         }
-        // finds the top questions + if filter is passed will sum both of them
-        if (sortBy === 'top') {
-          let criteria = filter ? { category: filter } : {};
-          if (range && filter) {
+        // finds the top questions + if args.filter is passed will sum both of them
+        if (args.sortBy === 'top') {
+          let criteria = args.filter ? { category: args.filter } : {};
+          if (args.range && args.filter) {
             criteria = {
               $or: [
-                { category: { $regex: filter, $options: 'i' } },
-                { tags: { $regex: filter, $options: 'i' } },
+                { category: { $regex: args.filter, $options: 'i' } },
+                { tags: { $regex: args.filter, $options: 'i' } },
               ],
               createdAt: { $gte: daysAgo },
             };
-          } else if (range && !filter) {
+          } else if (args.range && !args.filter) {
             criteria = { createdAt: { $gte: daysAgo } };
           }
           return Question.aggregate([
@@ -130,8 +131,8 @@ const RootQuery = new GraphQLObjectType({
             },
             { $sort: { score: -1, views: -1, createdAt: -1 } },
           ])
-            .skip(skip)
-            .limit(limit)
+            .skip(args.skip)
+            .limit(args.limit)
             .then((data) => {
               const newData = [];
               data.forEach((item) => {
