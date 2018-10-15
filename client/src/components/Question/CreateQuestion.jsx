@@ -7,16 +7,18 @@ class CreateQuestion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: undefined,
-      content: undefined,
+      title: '',
+      content: '',
       bounty: 0,
-      category: undefined,
-      restriction: undefined,
-      tags: undefined,
+      category: '',
+      restriction: 0,
+      tags: '',
       returnedId: null,
       redirect: false,
     };
     this.displayCategories = this.displayCategories.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+    this.changeState = this.changeState.bind(this);
   }
 
   displayCategories() {
@@ -30,37 +32,39 @@ class CreateQuestion extends Component {
       );
     });
   }
+  changeState(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
   submitForm(e) {
     e.preventDefault();
-    let { title, content, restriction } = this.state;
-    let splittedTags = this.state.tags;
-    console.log(this.state.bounty, 'bounty', this.props.credit, 'credits');
-    if (this.state.tags) {
-      splittedTags = this.state.tags.split(' ');
+    let { title, content, restriction, tags, bounty, category } = this.state;
+    let { credit, notify, userId } = this.props;
+    let splittedTags = tags;
+    if (tags) {
+      splittedTags = tags.split(' ');
     }
 
     if (!title || !content || !restriction) {
-      this.props.notify('error', "Can't post an empty question!");
-    } else if (this.props.credit < Number(this.state.bounty)) {
-      this.props.notify('error', 'You have insufficient credit!');
+      notify('error', "Can't post an empty question!");
+    } else if (credit < Number(bounty)) {
+      notify('error', 'You have insufficient credit!');
     } else {
       this.props
         .AddQuestion({
           mutation: AddQuestion,
           variables: {
-            userId: this.props.userId,
-            questionTitle: this.state.title,
-            questionContent: this.state.content,
-            bounty: Number(this.state.bounty),
-            category: this.state.category,
-            restriction: Number(this.state.restriction),
+            userId: userId,
+            questionTitle: title,
+            questionContent: content,
+            bounty: Number(bounty),
+            category: category,
+            restriction: Number(restriction),
             tags: splittedTags,
           },
         })
-        .then(data => {
-          console.log('THIS IS CREATE QUESTION', data.data.addQuestion.id);
-          this.setState({ returnedId: data.data.addQuestion.id }, () => {
+        .then(({ data }) => {
+          this.setState({ returnedId: data.addQuestion.id }, () => {
             this.setState({ redirect: true }, () => {
               this.setState({ redirect: false });
             });
@@ -71,12 +75,12 @@ class CreateQuestion extends Component {
             .UpdateCredit({
               mutation: UpdateCredit,
               variables: {
-                id: this.props.userId,
-                credit: Number(this.state.bounty * -1),
+                id: userId,
+                credit: Number(bounty * -1),
               },
             })
             .then(() => {
-              this.props.notify('transaction', 'Question Created!');
+              notify('transaction', 'Question Created!');
             });
         })
         .catch(err => console.log('error bro', err));
@@ -84,27 +88,36 @@ class CreateQuestion extends Component {
   }
 
   render() {
-    const { title, content, bounty, category, restriction, tags, redirect } = this.state;
+    const {
+      title,
+      content,
+      bounty,
+      category,
+      restriction,
+      tags,
+      redirect,
+      returnedId,
+    } = this.state;
     if (redirect) {
-      return <Redirect to={`/questionContent/${this.state.returnedId}`} />;
+      return <Redirect to={`/questionContent/${returnedId}`} />;
     } else {
       return (
         <div>
           <h4>Ask Question</h4>
           <form id="contact-form" method="post" action="contact.php" role="form">
             <div className="messages" />
-
             <div className="controls">
               <div className="row">
                 <div className="col-md-1">
                   <div className="form-group">
                     <label>Bounty *</label>
                     <input
+                      name="bounty"
                       type="text"
                       value={bounty}
                       className="form-control"
                       required="required"
-                      onChange={e => this.setState({ bounty: e.target.value })}
+                      onChange={this.changeState}
                       data-error="Bounty is required"
                     />
                     <div className="help-block with-errors" />
@@ -114,9 +127,10 @@ class CreateQuestion extends Component {
                   <div className="form-group">
                     <label>Rank *</label>
                     <input
+                      name="restriction"
                       type="text"
                       value={restriction}
-                      onChange={e => this.setState({ restriction: e.target.value })}
+                      onChange={this.changeState}
                       className="form-control"
                       required="required"
                       data-error="Rank is required"
@@ -128,9 +142,9 @@ class CreateQuestion extends Component {
                   <div className="form-group">
                     <label>Category *</label>
                     <select
-                      onChange={e => this.setState({ category: e.target.value })}
+                      onChange={this.changeState}
                       id="form_need"
-                      name="need"
+                      name="category"
                       className="form-control"
                       required="required"
                       data-error="Please specify your category."
@@ -147,7 +161,8 @@ class CreateQuestion extends Component {
                     <input
                       type="text"
                       value={tags}
-                      onChange={e => this.setState({ tags: e.target.value })}
+                      name="tags"
+                      onChange={this.changeState}
                       className="form-control"
                       placeholder="Ex. #Biology"
                     />
@@ -161,7 +176,8 @@ class CreateQuestion extends Component {
                     <label>Question Title *</label>
                     <input
                       value={title}
-                      onChange={e => this.setState({ title: e.target.value })}
+                      name="title"
+                      onChange={this.changeState}
                       type="text"
                       className="form-control"
                       placeholder="Please enter your Question title!"
@@ -183,7 +199,8 @@ class CreateQuestion extends Component {
                     <label>Question Content *</label>
                     <textarea
                       value={content}
-                      onChange={e => this.setState({ content: e.target.value })}
+                      name="content"
+                      onChange={this.changeState}
                       className="form-control"
                       placeholder="Please enter your Question content!"
                       rows="6"
@@ -196,7 +213,7 @@ class CreateQuestion extends Component {
                 <div className="col-md-12">
                   <input
                     type="submit"
-                    onClick={this.submitForm.bind(this)}
+                    onClick={this.submitForm}
                     className="btn btn-success btn-send"
                     value="Post Question"
                   />
