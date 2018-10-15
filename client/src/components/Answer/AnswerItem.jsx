@@ -172,7 +172,7 @@ class AnswerItem extends Component {
                 </div>
                 <div className="col-2">
                   <Link
-                    to={`/user/${data.answer.user.id}`}
+                    to={!this.props.loggedId ? '/login' : `/user/${data.answer.question.user.id}`}
                     style={{ textDecoration: 'none', color: 'black' }}
                   >
                     <div>
