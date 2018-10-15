@@ -90,7 +90,7 @@ class CreateQuestion extends Component {
     } else {
       return (
         <div>
-          <h2>Ask a Question: </h2>
+          <h4>Ask Question</h4>
           <form id="contact-form" method="post" action="contact.php" role="form">
             <div className="messages" />
 
@@ -98,7 +98,7 @@ class CreateQuestion extends Component {
               <div className="row">
                 <div className="col-md-1">
                   <div className="form-group">
-                    <label for="form_lastname">Bounty *</label>
+                    <label>Bounty *</label>
                     <input
                       type="number"
                       value={bounty}
@@ -110,9 +110,23 @@ class CreateQuestion extends Component {
                     <div className="help-block with-errors" />
                   </div>
                 </div>
+                <div className="col-md-1">
+                  <div className="form-group">
+                    <label>Rank *</label>
+                    <input
+                      type="text"
+                      value={restriction}
+                      onChange={e => this.setState({ restriction: e.target.value })}
+                      className="form-control"
+                      required="required"
+                      data-error="Rank is required"
+                    />
+                    <div className="help-block with-errors" />
+                  </div>
+                </div>
                 <div className="col-md-2">
                   <div className="form-group">
-                    <label for="form_lastname">Category *</label>
+                    <label>Category *</label>
                     <select
                       onChange={e => this.setState({ category: e.target.value })}
                       id="form_need"
@@ -124,6 +138,19 @@ class CreateQuestion extends Component {
                       <option>Select Category</option>
                       {this.displayCategories()}
                     </select>
+                    <div className="help-block with-errors" />
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="form-group">
+                    <label>Tags</label>
+                    <input
+                      type="text"
+                      value={tags}
+                      onChange={e => this.setState({ tags: e.target.value })}
+                      className="form-control"
+                      placeholder="Ex. #Biology"
+                    />
                     <div className="help-block with-errors" />
                   </div>
                 </div>
@@ -153,7 +180,7 @@ class CreateQuestion extends Component {
               <div className="row">
                 <div className="col-md-8">
                   <div className="form-group">
-                    <label for="form_message">Question Content *</label>
+                    <label>Question Content *</label>
                     <textarea
                       value={content}
                       onChange={e => this.setState({ content: e.target.value })}
@@ -167,7 +194,12 @@ class CreateQuestion extends Component {
                   </div>
                 </div>
                 <div className="col-md-12">
-                  <input type="submit" className="btn btn-success btn-send" value="Send message" />
+                  <input
+                    type="submit"
+                    onClick={this.submitForm.bind(this)}
+                    className="btn btn-success btn-send"
+                    value="Post Question"
+                  />
                 </div>
               </div>
               <div className="row">
@@ -189,50 +221,3 @@ export default compose(
   graphql(AddQuestion, { name: 'AddQuestion' }),
   graphql(UpdateCredit, { name: 'UpdateCredit' }),
 )(CreateQuestion);
-
-{
-  /* <form onSubmit={this.submitForm.bind(this)}>
-            <label>Amount of Bounty: </label>
-            <input
-              type="number"
-              value={bounty}
-              onChange={e => this.setState({ bounty: e.target.value })}
-            />
-            <br />
-            <label>Category: </label>
-            <select onChange={e => this.setState({ category: e.target.value })}>
-              <option>Select Category</option>
-              {this.displayCategories()}
-            </select>
-            <br />
-            <label>Answer by rank: </label>
-            <input
-              type="text"
-              value={restriction}
-              onChange={e => this.setState({ restriction: e.target.value })}
-            />
-            <br />
-            <label>Tags (#name): </label>
-            <input
-              type="text"
-              value={tags}
-              onChange={e => this.setState({ tags: e.target.value })}
-            />
-            <br />
-            <label>Title: </label>
-            <input
-              type="text"
-              value={title}
-              onChange={e => this.setState({ title: e.target.value })}
-            />
-            <br />
-            <label>Content of the Questions: </label>
-            <textarea
-              rows="15"
-              cols="80"
-              value={content}
-              onChange={e => this.setState({ content: e.target.value })}
-            />
-          </form>
-          <button onClick={this.submitForm.bind(this)}>Post Question</button> */
-}
