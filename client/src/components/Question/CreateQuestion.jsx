@@ -89,130 +89,139 @@ class CreateQuestion extends Component {
       return <Redirect to={`/questionContent/${this.state.returnedId}`} />;
     } else {
       return (
-        <div>
-          <h4>Ask Question</h4>
-          <form id="contact-form" method="post" action="contact.php" role="form">
-            <div className="messages" />
+        <div className="card">
+          <div className="card-header bg-primary text-white">
+            <i className="fa fa-question-circle" />
+            <span> Ask Question</span>
+          </div>
+          <div
+            style={{
+              margin: '40px 40px 40px 40px',
+            }}
+          >
+            <form id="contact-form" method="post" action="contact.php" role="form">
+              <div className="messages" />
 
-            <div className="controls">
-              <div className="row">
-                <div className="col-md-1">
-                  <div className="form-group">
-                    <label>Bounty *</label>
-                    <input
-                      type="text"
-                      placeholder="0"
-                      value={bounty}
-                      className="form-control"
-                      required="required"
-                      onChange={e => this.setState({ bounty: e.target.value })}
-                      data-error="Bounty is required"
-                    />
-                    <div className="help-block with-errors" />
+              <div className="controls">
+                <div className="row">
+                  <div className="col-md-1">
+                    <div className="form-group">
+                      <label>Bounty *</label>
+                      <input
+                        type="text"
+                        placeholder="0"
+                        value={bounty}
+                        className="form-control"
+                        required="required"
+                        onChange={e => this.setState({ bounty: e.target.value })}
+                        data-error="Bounty is required"
+                      />
+                      <div className="help-block with-errors" />
+                    </div>
+                  </div>
+                  <div className="col-md-1">
+                    <div className="form-group">
+                      <label>Rank *</label>
+                      <input
+                        type="text"
+                        placeholder="0"
+                        value={restriction}
+                        onChange={e => this.setState({ restriction: e.target.value })}
+                        className="form-control"
+                        required="required"
+                        data-error="Rank is required"
+                      />
+                      <div className="help-block with-errors" />
+                    </div>
+                  </div>
+                  <div className="col-md-2">
+                    <div className="form-group">
+                      <label>Category *</label>
+                      <select
+                        onChange={e => this.setState({ category: e.target.value })}
+                        id="form_need"
+                        name="need"
+                        className="form-control"
+                        required="required"
+                        data-error="Please specify your category."
+                      >
+                        <option>Select Category</option>
+                        {this.displayCategories()}
+                      </select>
+                      <div className="help-block with-errors" />
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="form-group">
+                      <label>Tags</label>
+                      <input
+                        type="text"
+                        value={tags}
+                        onChange={e => this.setState({ tags: e.target.value })}
+                        className="form-control"
+                        placeholder="Ex. #Biology"
+                      />
+                      <div className="help-block with-errors" />
+                    </div>
                   </div>
                 </div>
-                <div className="col-md-1">
-                  <div className="form-group">
-                    <label>Rank *</label>
-                    <input
-                      type="text"
-                      placeholder="0"
-                      value={restriction}
-                      onChange={e => this.setState({ restriction: e.target.value })}
-                      className="form-control"
-                      required="required"
-                      data-error="Rank is required"
-                    />
-                    <div className="help-block with-errors" />
+                <div className="row">
+                  <div className="col-md-8">
+                    <div className="form-group">
+                      <label>Question Title *</label>
+                      <input
+                        value={title}
+                        onChange={e => this.setState({ title: e.target.value })}
+                        type="text"
+                        className="form-control"
+                        placeholder="Please enter your Question title!"
+                        required="required"
+                        data-error="Question title is required."
+                      />
+                      <div className="help-block with-errors" />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <div className="help-block with-errors" />
+                    </div>
                   </div>
                 </div>
-                <div className="col-md-2">
-                  <div className="form-group">
-                    <label>Category *</label>
-                    <select
-                      onChange={e => this.setState({ category: e.target.value })}
-                      id="form_need"
-                      name="need"
-                      className="form-control"
-                      required="required"
-                      data-error="Please specify your category."
-                    >
-                      <option>Select Category</option>
-                      {this.displayCategories()}
-                    </select>
-                    <div className="help-block with-errors" />
+                <div className="row">
+                  <div className="col-md-8">
+                    <div className="form-group">
+                      <label>Question Content *</label>
+                      <textarea
+                        value={content}
+                        onChange={e => this.setState({ content: e.target.value })}
+                        className="form-control"
+                        placeholder="Please enter your Question content!"
+                        rows="6"
+                        required="required"
+                        data-error="Question content is required"
+                      />
+                      <div className="help-block with-errors" />
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <input
+                      type="submit"
+                      onClick={this.submitForm.bind(this)}
+                      className="btn btn-success btn-send"
+                      value="Post Question"
+                    />
                   </div>
                 </div>
-                <div className="col-md-4">
-                  <div className="form-group">
-                    <label>Tags</label>
-                    <input
-                      type="text"
-                      value={tags}
-                      onChange={e => this.setState({ tags: e.target.value })}
-                      className="form-control"
-                      placeholder="Ex. #Biology"
-                    />
-                    <div className="help-block with-errors" />
+                <div className="row">
+                  <div className="col-md-12">
+                    <p className="text-muted">
+                      <strong>*</strong> These fields are required.
+                    </p>
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-md-8">
-                  <div className="form-group">
-                    <label>Question Title *</label>
-                    <input
-                      value={title}
-                      onChange={e => this.setState({ title: e.target.value })}
-                      type="text"
-                      className="form-control"
-                      placeholder="Please enter your Question title!"
-                      required="required"
-                      data-error="Question title is required."
-                    />
-                    <div className="help-block with-errors" />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-group">
-                    <div className="help-block with-errors" />
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-8">
-                  <div className="form-group">
-                    <label>Question Content *</label>
-                    <textarea
-                      value={content}
-                      onChange={e => this.setState({ content: e.target.value })}
-                      className="form-control"
-                      placeholder="Please enter your Question content!"
-                      rows="6"
-                      required="required"
-                      data-error="Question content is required"
-                    />
-                    <div className="help-block with-errors" />
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <input
-                    type="submit"
-                    onClick={this.submitForm.bind(this)}
-                    className="btn btn-success btn-send"
-                    value="Post Question"
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <p className="text-muted">
-                    <strong>*</strong> These fields are required.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       );
     }
