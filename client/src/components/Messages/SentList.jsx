@@ -10,16 +10,15 @@ class SentList extends Component {
   }
 
   displayMessages() {
-    console.log(this.props.userId, 'id', this.props);
-    let { loading, error, user } = this.props.data;
+    let { loading, error, userSentMessages } = this.props.data;
     if (loading) {
       return <div>Loading...</div>;
     }
     if (error) {
       return <div>Error...Sent</div>;
     } else {
-      if (this.props.data.userSentMessages.length > 0) {
-        return this.props.data.userSentMessages.map(post => {
+      if (userSentMessages.length > 0) {
+        return userSentMessages.map(post => {
           return (
             <MessageItem
               key={post.id}

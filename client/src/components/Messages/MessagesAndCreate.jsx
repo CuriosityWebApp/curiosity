@@ -66,21 +66,23 @@ class MessagesAndCreate extends Component {
               this.setState({ users: data.getUsernames });
             }
           }
-        });
+        })
+        .catch(err => console.error(err));
     });
   }
 
   submitForm(e) {
     e.preventDefault();
-    let { title, content, receiverName } = this.state;
+    let { title, content, receiverName, receiverId } = this.state;
+    let { client, mutate, notify, userId } = this.props;
     if (!title || !content || !receiverName) {
-      this.props.notify('error', 'Please input all required fields.');
+      notify('error', 'Please input all required fields.');
     } else {
-      this.props.client
+      client
         .query({
           query: checkUsername,
           variables: {
-            username: this.state.receiverName,
+            username: receiverName,
           },
         })
         .then(({ data }) => {
@@ -89,24 +91,23 @@ class MessagesAndCreate extends Component {
           }
         })
         .then(() => {
-          if (this.state.receiverId) {
-            this.props
-              .mutate({
-                mutation: AddMessage,
-                variables: {
-                  senderId: this.props.userId,
-                  messageTitle: this.state.title,
-                  messageContent: this.state.content,
-                  receiverId: this.state.receiverId,
-                },
-              })
+          if (receiverId) {
+            mutate({
+              mutation: AddMessage,
+              variables: {
+                senderId: userId,
+                messageTitle: title,
+                messageContent: content,
+                receiverId: receiverId,
+              },
+            })
               .then(() => {
-                this.props.notify('message', `Message Sent to ${this.state.receiverName} !`);
+                notify('message', `Message Sent to ${receiverName} !`);
                 this.toggleCreator();
               })
               .catch(err => console.log('error bro', err));
           } else {
-            this.props.notify('error', 'Invalid user');
+            notify('error', 'Invalid user');
           }
         })
         .catch(err => {
@@ -116,18 +117,19 @@ class MessagesAndCreate extends Component {
   }
 
   render() {
-    const { title, content, receiverName } = this.state;
+    const { title, content, receiverName, creator, users } = this.state;
+    const { folder, notify, userId } = this.props;
     return (
       <div>
         <h2>
-          <u>{this.props.folder}</u>
+          <u>{folder}</u>
         </h2>
-        {this.state.creator && (
+        {creator && (
           <div>
             <h4>Send a message </h4>
             <form onSubmit={this.submitForm.bind(this)}>
               <Autocomplete
-                items={this.state.users}
+                items={users}
                 shouldItemRender={(item, value) =>
                   item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
                 }
@@ -169,7 +171,7 @@ class MessagesAndCreate extends Component {
           </div>
         )}
         <div>
-          {this.state.creator ? (
+          {creator ? (
             <button className="btn btn-info" onClick={this.toggleCreator}>
               Close
             </button>
@@ -179,26 +181,14 @@ class MessagesAndCreate extends Component {
             </button>
           )}
         </div>
-        {this.props.folder === 'unread' && (
-          <NewList
-            userId={this.props.userId}
-            replyFormat={this.replyFormat}
-            notify={this.props.notify}
-          />
+        {folder === 'unread' && (
+          <NewList userId={userId} replyFormat={this.replyFormat} notify={notify} />
         )}
-        {this.props.folder === 'inbox' && (
-          <InboxList
-            userId={this.props.userId}
-            replyFormat={this.replyFormat}
-            notify={this.props.notify}
-          />
+        {folder === 'inbox' && (
+          <InboxList userId={userId} replyFormat={this.replyFormat} notify={notify} />
         )}
-        {this.props.folder === 'sent' && (
-          <SentList
-            userId={this.props.userId}
-            replyFormat={this.replyFormat}
-            notify={this.props.notify}
-          />
+        {folder === 'sent' && (
+          <SentList userId={userId} replyFormat={this.replyFormat} notify={notify} />
         )}
       </div>
     );

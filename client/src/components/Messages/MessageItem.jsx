@@ -24,36 +24,40 @@ class MessageItem extends Component {
       .then(() => {
         this.props.notify('error', 'Message deleted');
         this.props.getMessages.refetch();
+      })
+      .catch(err => {
+        console.error(err);
       });
   }
 
   replyMessage() {
-    let newTitle = '(RE:"' + this.props.post.messageTitle + '")';
+    let { sender, messageTitle, messageContent, createdAt } = this.props.post;
+    let newTitle = '(RE:"' + messageTitle + '")';
     let oldContent =
       '\n\n\n' +
-      `[On ${moment(this.props.post.createdAt).format('MMMM Do YYYY, h:mm:ss a')},${
-        this.props.post.sender.username
-      } wrote : "${this.props.post.messageContent}"]`;
+      `[On ${moment(createdAt).format('MMMM Do YYYY, h:mm:ss a')},${
+        sender.username
+      } wrote : "${messageContent}"]`;
 
-    this.props.replyFormat(this.props.post.sender.username, newTitle, oldContent);
+    this.props.replyFormat(sender.username, newTitle, oldContent);
   }
 
   render() {
-    let data = this.props.post;
+    let { sender, recipient, messageTitle, messageContent, createdAt, unread } = this.props.post;
     return (
       <div className="list-group">
         <div className="list-group-item list-group-item-action flex-column align-items-start">
           <div className="d-flex w-100 justify-content-between">
             <div>
-              <small>Sender: {data.sender.username}</small>
+              <small>Sender: {sender.username}</small>
               <br />
-              <small>Receiver: {data.recipient.username}</small>
+              <small>Receiver: {recipient.username}</small>
               <br />
-              <small>Message Title: {data.messageTitle}</small>
+              <small>Message Title: {messageTitle}</small>
               <br />
-              <small>Content: {data.messageContent}</small> <br />
-              <small>Date: {moment(data.createdAt).fromNow()}</small> <br />
-              <small>New?: {JSON.stringify(data.unread)}</small>
+              <small>Content: {messageContent}</small> <br />
+              <small>Date: {moment(createdAt).fromNow()}</small> <br />
+              <small>New?: {JSON.stringify(unread)}</small>
             </div>
             <div>
               <button type="button" className="btn btn-info" onClick={this.replyMessage}>

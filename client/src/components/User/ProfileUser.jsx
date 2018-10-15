@@ -16,7 +16,9 @@ class ProfileUser extends Component {
   }
 
   render() {
-    let { loading, error, user, refetch } = this.props.data;
+    let { data, refetcher, notify } = this.props;
+    let { loading, error, user, refetch } = data;
+    let { activeTab } = this.state;
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -43,7 +45,7 @@ class ProfileUser extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
               <ul className="navbar-nav">
-                <li className={this.state.activeTab === 'info' ? 'nav-item active' : 'nav-item'}>
+                <li className={activeTab === 'info' ? 'nav-item active' : 'nav-item'}>
                   <a
                     className="nav-link"
                     onClick={() => {
@@ -56,7 +58,7 @@ class ProfileUser extends Component {
                     Info <span className="sr-only">(current)</span>
                   </a>
                 </li>
-                <li className={this.state.activeTab === 'wallet' ? 'nav-item active' : 'nav-item'}>
+                <li className={activeTab === 'wallet' ? 'nav-item active' : 'nav-item'}>
                   <a
                     className="nav-link"
                     onClick={() => {
@@ -69,9 +71,7 @@ class ProfileUser extends Component {
                     Wallet
                   </a>
                 </li>
-                <li
-                  className={this.state.activeTab === 'questions' ? 'nav-item active' : 'nav-item'}
-                >
+                <li className={activeTab === 'questions' ? 'nav-item active' : 'nav-item'}>
                   <a
                     className="nav-link"
                     onClick={() => {
@@ -84,7 +84,7 @@ class ProfileUser extends Component {
                     Questions
                   </a>
                 </li>
-                <li className={this.state.activeTab === 'answers' ? 'nav-item active' : 'nav-item'}>
+                <li className={activeTab === 'answers' ? 'nav-item active' : 'nav-item'}>
                   <a
                     className="nav-link"
                     onClick={() => {
@@ -97,9 +97,7 @@ class ProfileUser extends Component {
                     Answers
                   </a>
                 </li>
-                <li
-                  className={this.state.activeTab === 'favorites' ? 'nav-item active' : 'nav-item'}
-                >
+                <li className={activeTab === 'favorites' ? 'nav-item active' : 'nav-item'}>
                   <a
                     className="nav-link"
                     onClick={() => {
@@ -115,21 +113,14 @@ class ProfileUser extends Component {
               </ul>
             </div>
           </nav>
-          {this.state.activeTab === 'info' && (
-            <UserInfo user={user} refetcher={this.props.refetcher} notify={this.props.notify} />
+          {activeTab === 'info' && <UserInfo user={user} refetcher={refetcher} notify={notify} />}
+          {activeTab === 'wallet' && (
+            <UserWallet user={user} data={data} refetcher={refetcher} notify={notify} />
           )}
-          {this.state.activeTab === 'wallet' && (
-            <UserWallet
-              user={user}
-              data={this.props.data}
-              refetcher={this.props.refetcher}
-              notify={this.props.notify}
-            />
-          )}
-          {this.state.activeTab === 'questions' && <UserQuestions questions={user.questions} />}
-          {this.state.activeTab === 'answers' && <UserAnswers answers={user.answers} />}
-          {this.state.activeTab === 'favorites' && (
-            <UserFavorites user={user} refetchTags={refetch} notify={this.props.notify} />
+          {activeTab === 'questions' && <UserQuestions questions={user.questions} />}
+          {activeTab === 'answers' && <UserAnswers answers={user.answers} />}
+          {activeTab === 'favorites' && (
+            <UserFavorites user={user} refetchTags={refetch} notify={notify} />
           )}
         </div>
       );
