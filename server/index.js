@@ -44,7 +44,8 @@ app.post('/charge', (req, res) => {
     })
     .then((data) => {
       res.send(data);
-    });
+    })
+    .catch(err => console.error(err));
 });
 
 app.get('/*', (req, res) => {

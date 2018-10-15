@@ -57,7 +57,8 @@ class PrivateMessage extends Component {
               this.setState({ users: data.getUsernames });
             }
           }
-        });
+        })
+        .catch(err => console.error(err));
     });
   }
 
