@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 const Login = ({ uiConfig, firebaseAuth }) => {
