@@ -239,7 +239,7 @@ class AnswerItem extends Component {
         mutation: AddMessage,
         variables: {
           senderId: this.props.loggedId,
-          receiverId: '5bb8d00baf90e323e4b9c8a9',
+          receiverId: process.env.ADMINID,
           messageTitle: messageTitle,
           messageContent: messageContent,
         },
