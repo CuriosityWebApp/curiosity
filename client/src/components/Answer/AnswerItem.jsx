@@ -188,7 +188,7 @@ class AnswerItem extends Component {
 												answerId={this.props.answerId}
 												loggedId={this.props.loggedId}
 												isPaid={this.props.isPaid}
-												refetch={this.props.refetch}
+												refetchAnswerList={this.props.refetchAnswerList}
 											/>
 										</div>
 										<div>
