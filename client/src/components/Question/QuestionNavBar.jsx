@@ -8,21 +8,10 @@ class QuestionNavBar extends Component {
       range: null,
       topic: '',
     };
-    this.displayCategories = this.displayCategories.bind(this);
     this.handleFilterTopics = this.handleFilterTopics.bind(this);
     this.handleSortTopics = this.handleSortTopics.bind(this);
   }
 
-  displayCategories() {
-    let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
-    return categories.map(category => {
-      return (
-        <option key={category} value={category}>
-          {category}
-        </option>
-      );
-    });
-  }
   handleFilterChange(e) {
     e.preventDefault();
 
@@ -35,10 +24,10 @@ class QuestionNavBar extends Component {
   }
 
   handleFilterTopics(e) {
-    e.preventDefault();
-    this.props.filterQuestions(e, this.state.filterBy, this.state.range);
+    this.props.filterQuestions(e, e.target.value, this.state.range);
   }
   render() {
+    let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="navbar-collapse collapse show" id="navbarColor01">
@@ -208,20 +197,33 @@ class QuestionNavBar extends Component {
                 </a>
               </div>
             </li>{' '}
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                id="navbarCategories"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Category
+              </a>
+              <div className="dropdown-menu" aria-labelledby="navbarCategories">
+                {categories.map((category, idx) => {
+                  return (
+                    <option
+                      value={category}
+                      className="dropdown-item"
+                      key={idx}
+                      onClick={e => this.handleFilterTopics(e)}
+                    >
+                      {category}
+                    </option>
+                  );
+                })}
+              </div>
+            </li>{' '}
           </ul>
-          <form className="form-inline">
-            <select onChange={this.handleFilterChange.bind(this)}>
-              <option>Select Category</option>
-              {this.displayCategories()}
-            </select>{' '}
-            <button
-              className="btn btn-outline-info my-2 my-sm-0"
-              type="submit"
-              onClick={this.handleFilterTopics}
-            >
-              Submit
-            </button>
-          </form>
         </div>
       </nav>
     );
