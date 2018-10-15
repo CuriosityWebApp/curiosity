@@ -12,12 +12,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyBF_AKIaEMjjU8E1ZLLjZXKTxykxhKjUG8',
-  authDomain: 'curiosity-a9199.firebaseapp.com',
+  apiKey: process.env.firebaseKey,
+  authDomain: process.env.firebaseDomain,
 });
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+  uri: process.env.apolloUri,
 });
 
 class Index extends Component {

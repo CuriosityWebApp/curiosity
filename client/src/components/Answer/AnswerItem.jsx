@@ -110,9 +110,7 @@ class AnswerItem extends Component {
 			return <div>Loading answers...</div>;
 		} else {
 			let data = this.props.getAnswer;
-			let hoverText = `Likes: ${this.props.getAnswer.answer.ratedUpBy.length}, Dislikes: ${
-				this.props.getAnswer.answer.ratedDownBy.length
-			}`;
+			let hoverText = `Likes: ${data.answer.ratedUpBy.length}, Dislikes: ${data.answer.ratedDownBy.length}`;
 			return (
 				<React.Fragment>
 					<div className="list-group">
@@ -166,7 +164,7 @@ class AnswerItem extends Component {
 								</div>
 								<div className="col-2">
 									<Link
-										to={`/user/${data.answer.user.id}`}
+										to={!this.props.loggedId ? '/login' : `/user/${data.answer.question.user.id}`}
 										style={{ textDecoration: 'none', color: 'black' }}
 									>
 										<div>
@@ -218,7 +216,6 @@ class AnswerItem extends Component {
 		}
 	}
 	report() {
-		console.log('this are the props', this.props.data);
 		let messageTitle = 'REPORT: AnswerId:' + this.props.answerId;
 		let messageContent =
 			'User: ' +

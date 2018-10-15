@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { stripe_public_key } from '../../../../config.js';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import PaymentCheckOut from './PaymentCheckOut.jsx';
 
@@ -25,7 +24,7 @@ class BuyCredit extends Component {
 
   render() {
     return (
-      <StripeProvider apiKey={stripe_public_key}>
+      <StripeProvider apiKey={process.env.stripe_public_key}>
         <div>
           <Elements>
             <div>
