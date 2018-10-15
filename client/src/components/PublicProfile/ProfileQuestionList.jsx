@@ -17,17 +17,15 @@ class ProfileQuestionList extends Component {
     if (error) {
       return <div>Error...</div>;
     } else {
+      let { id, questionTitle } = this.props.question;
+      let { username } = this.props;
       return (
         <div>
-          <Link
-            to={`/questionContent/${this.props.question.id}`}
-            style={{ textDecoration: 'none', color: 'black' }}
-          >
-            <div className="card" key={this.props.question.id}>
+          <Link to={`/questionContent/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <div className="card" key={id}>
               <small>
-                <i className="fas fa-comment" />{' '}
-                <b style={{ color: '#14C7F4' }}>{this.props.username}</b> asked{' '}
-                <b>{this.props.question.questionTitle}</b>
+                <i className="fas fa-comment" /> <b style={{ color: '#14C7F4' }}>{username}</b>{' '}
+                asked <b>{questionTitle}</b>
                 <span>
                   {' '}
                   <em>

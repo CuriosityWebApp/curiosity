@@ -27,27 +27,31 @@ class PaymentCheckOut extends Component {
   }
 
   handlePayment(UpdateCredit, AddTransaction) {
-    UpdateCredit({ variables: { id: this.props.id, credit: this.state.credits } })
+    let { id, data, refetcher, handleClose, notify } = this.props;
+    UpdateCredit({ variables: { id: id, credit: this.state.credits } })
       .then(() => {
         AddTransaction({
           variables: {
-            questionId: 'Credit card',
-            senderId: 'Curiosity',
-            receiverId: this.props.id,
+            transactionMeans: 'Credit purchase',
+            //Sent by admin
+            senderId: '5bb8d00baf90e323e4b9c8a9',
+            receiverId: id,
             amount: this.state.credits,
           },
         });
       })
       .then(() => {
-        this.props.handleClose();
-        this.props.data.refetch();
-        this.props.refetcher.refetch();
-        this.props.notify('transaction', `You received ${this.state.credits} Credits`);
-      });
+        handleClose();
+        data.refetch();
+        refetcher.refetch();
+        notify('transaction', `You received ${this.state.credits} Credits`);
+      })
+      .catch(err => console.error(err));
   }
 
   async submit(UpdateCredit, AddTransaction) {
-    let token = await this.props.stripe.createToken({ name: this.props.username });
+    let { stripe, username } = this.props;
+    let token = await stripe.createToken({ name: username });
     console.log(token);
 
     axios
@@ -64,6 +68,7 @@ class PaymentCheckOut extends Component {
   }
 
   render() {
+    let { handleClose, showComponent } = this.props;
     const tooltipOneDollar = (
       <Tooltip id="modal-tooltip">
         <em>0 bonus credit</em>
@@ -106,7 +111,7 @@ class PaymentCheckOut extends Component {
                 if (error) return <p>Error...</p>;
                 return (
                   <div>
-                    <Modal show={this.props.showComponent} onHide={this.props.handleClose}>
+                    <Modal show={showComponent} onHide={handleClose}>
                       <Modal.Header closeButton>
                         <Modal.Title>Transaction</Modal.Title>
                       </Modal.Header>
@@ -211,7 +216,7 @@ class PaymentCheckOut extends Component {
                         </div>
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button onClick={this.props.handleClose}>Close</Button>
+                        <Button onClick={handleClose}>Close</Button>
                       </Modal.Footer>
                     </Modal>
                   </div>
