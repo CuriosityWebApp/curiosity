@@ -4,6 +4,7 @@ const graphqlHTTP = require('express-graphql');
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 const config = require('dotenv').config();
 
 const stripe = require('stripe')(process.env.stripe_secret_key);
@@ -11,6 +12,7 @@ const schema = require('../database/graphQL/schema.js');
 
 const app = express();
 
+app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
 
