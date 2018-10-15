@@ -100,7 +100,8 @@ class CreateQuestion extends Component {
                   <div className="form-group">
                     <label>Bounty *</label>
                     <input
-                      type="number"
+                      type="text"
+                      placeholder="0"
                       value={bounty}
                       className="form-control"
                       required="required"
@@ -115,6 +116,7 @@ class CreateQuestion extends Component {
                     <label>Rank *</label>
                     <input
                       type="text"
+                      placeholder="0"
                       value={restriction}
                       onChange={e => this.setState({ restriction: e.target.value })}
                       className="form-control"
