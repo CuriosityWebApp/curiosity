@@ -59,6 +59,7 @@ class AnswerList extends Component {
                 user={this.props.user}
                 questionId={this.props.id}
                 bounty={this.props.bounty}
+                notify={this.props.notify}
               />
             );
           }
