@@ -64,6 +64,7 @@ const RootQuery = new GraphQLObjectType({
     questions: {
       type: new GraphQLList(QuestionType),
       args: {
+        userId: { type: GraphQLID },
         limit: { type: GraphQLInt },
         skip: { type: GraphQLInt },
         filter: { type: GraphQLString },
@@ -81,7 +82,7 @@ const RootQuery = new GraphQLObjectType({
             .sort({ createdAt: -1, views: -1, bounty: -1 })
             .skip(args.skip)
             .limit(args.limit)
-            .catch(err => console.log('err', err));
+            .catch(err => console.error('err', err));
         }
         // getting items just bassed on args.filter
         if (args.filter !== '' && args.sortBy === '') {
@@ -94,10 +95,10 @@ const RootQuery = new GraphQLObjectType({
             .sort({ createdAt: -1, views: -1, bounty: -1 })
             .skip(args.skip)
             .limit(args.limit)
-            .catch(err => console.log('err', err));
+            .catch(err => console.error('err', err));
         }
         // getting items based on passed sort option and range if provided
-        if (args.sortBy !== '' && args.sortBy !== 'top') {
+        if (args.sortBy !== '' && args.sortBy !== 'top' && args.sortBy !== 'recommendation') {
           // if range but no args.filter
           let newRange = args.range ? { createdAt: { $gte: daysAgo } } : {};
           // if range and args.filter
@@ -108,7 +109,7 @@ const RootQuery = new GraphQLObjectType({
             .sort({ [args.sortBy]: -1 })
             .skip(args.skip)
             .limit(args.limit)
-            .catch(err => console.log('err', err));
+            .catch(err => console.error('err', err));
         }
         // finds the top questions + if args.filter is passed will sum both of them
         if (args.sortBy === 'top') {
@@ -151,14 +152,47 @@ const RootQuery = new GraphQLObjectType({
             })
             .catch(err => console.error('error in questions query TOP', err));
         }
-
-        // get user recommendations
-        // match user id, find favorite tags
-        // find all questions which match user favorite list
-        // sort by created, bounty, most likes.
-        // skip passed in number
-        // limit 15
-        // return
+        // getting questions based on user favorite tags
+        if (args.sortBy === 'recommendation') {
+          return User.findById(args.userId)
+            .then((data) => {
+              const criteria = args.range
+                ? {
+                  tags: { $in: data.favoriteTags },
+                  createdAt: { $gte: daysAgo },
+                }
+                : {
+                  tags: { $in: data.favoriteTags },
+                };
+              return Question.aggregate([
+                { $match: criteria },
+                {
+                  $project: {
+                    score: {
+                      $subtract: [
+                        { $size: { $ifNull: ['$ratedUpBy', []] } },
+                        { $size: { $ifNull: ['$ratedDownBy', []] } },
+                      ],
+                    },
+                    createdAt: 1,
+                    views: 1,
+                  },
+                },
+                { $sort: { score: -1, views: -1, createdAt: -1 } },
+              ])
+                .skip(args.skip)
+                .limit(args.limit)
+                .then((data) => {
+                  const newData = [];
+                  data.forEach((item) => {
+                    newData.push({ id: item._id.toString() });
+                  });
+                  return newData;
+                })
+                .catch(err => console.error('error in questions query Recommendation inner', err));
+            })
+            .catch(err => console.error('error in questions query Recommendation outer', err));
+        }
       },
     },
     answers: {
