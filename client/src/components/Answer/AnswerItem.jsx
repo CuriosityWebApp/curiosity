@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import { getAnswer } from '../../queries/queries.js';
-import {
-  AnswerLike,
-  AnswerDislike,
-  UpdateCredit,
-  AddTransaction,
-  AddMessage,
-} from '../../mutations/mutations.js';
+import { AnswerLike, AnswerDislike, UpdateCredit, AddTransaction, AddMessage } from '../../mutations/mutations.js';
 import ProfileSmallPage from '../PublicProfile/ProfileSmallPage.jsx';
 import moment from 'moment';
 import AnswerChoice from './AnswerChoice.jsx';
@@ -87,45 +81,43 @@ class AnswerItem extends Component {
         up = new Set(data.answer.ratedUpBy);
         down = new Set(data.answer.ratedDownBy);
 
-        if (down.has(userId)) {
-          this.props
-            .AnswerDislike({
-              mutation: AnswerDislike,
-              variables: {
-                id: data.answer.id,
-                userId: userId,
-                method: 'delete',
-              },
-            })
-            .then(() => {
-              this.props.getAnswer.refetch();
-            });
-        } else if (!up.has(userId) && !down.has(userId)) {
-          this.props
-            .AnswerDislike({
-              mutation: AnswerDislike,
-              variables: {
-                id: data.answer.id,
-                userId: userId,
-                method: 'add',
-              },
-            })
-            .then(() => {
-              this.props.getAnswer.refetch();
-            });
-        }
-      }
-    }
-  }
+				if (down.has(userId)) {
+					this.props
+						.AnswerDislike({
+							mutation: AnswerDislike,
+							variables: {
+								id: data.answer.id,
+								userId: userId,
+								method: 'delete'
+							}
+						})
+						.then(() => {
+							this.props.getAnswer.refetch();
+						});
+				} else if (!up.has(userId) && !down.has(userId)) {
+					this.props
+						.AnswerDislike({
+							mutation: AnswerDislike,
+							variables: {
+								id: data.answer.id,
+								userId: userId,
+								method: 'add'
+							}
+						})
+						.then(() => {
+							this.props.getAnswer.refetch();
+						});
+				}
+			}
+		}
+	}
 
   displayAnswer() {
     if (this.props.getAnswer && this.props.getAnswer.loading) {
       return <div>Loading answers...</div>;
     } else {
       let data = this.props.getAnswer;
-      let hoverText = `Likes: ${this.props.getAnswer.answer.ratedUpBy.length}, Dislikes: ${
-        this.props.getAnswer.answer.ratedDownBy.length
-      }`;
+			let hoverText = `Likes: ${data.answer.ratedUpBy.length}, Dislikes: ${data.answer.ratedDownBy.length}`;
       return (
         <React.Fragment>
           <div className="list-group">
@@ -204,7 +196,7 @@ class AnswerItem extends Component {
                         answerId={this.props.answerId}
                         loggedId={this.props.loggedId}
                         isPaid={this.props.isPaid}
-                        refetch={this.props.refetch}
+                        refetchAnswerList={this.props.refetchAnswerList}
                       />
                     </div>
                     <div>
@@ -252,25 +244,25 @@ class AnswerItem extends Component {
       });
   }
 
-  render() {
-    return <div>{this.displayAnswer()}</div>;
-  }
+	render() {
+		return <div>{this.displayAnswer()}</div>;
+	}
 }
 
 export default compose(
-  graphql(getAnswer, {
-    name: 'getAnswer',
-    options: props => {
-      return {
-        variables: {
-          id: props.answerId,
-        },
-      };
-    },
-  }),
-  graphql(AnswerLike, { name: 'AnswerLike' }),
-  graphql(AnswerDislike, { name: 'AnswerDislike' }),
-  graphql(UpdateCredit, { name: 'UpdateCredit' }),
-  graphql(AddTransaction, { name: 'AddTransaction' }),
-  graphql(AddMessage, { name: 'AddMessage' }),
+	graphql(getAnswer, {
+		name: 'getAnswer',
+		options: props => {
+			return {
+				variables: {
+					id: props.answerId
+				}
+			};
+		}
+	}),
+	graphql(AnswerLike, { name: 'AnswerLike' }),
+	graphql(AnswerDislike, { name: 'AnswerDislike' }),
+	graphql(UpdateCredit, { name: 'UpdateCredit' }),
+	graphql(AddTransaction, { name: 'AddTransaction' }),
+	graphql(AddMessage, { name: 'AddMessage' })
 )(AnswerItem);
