@@ -15,20 +15,23 @@ class QuestionContent extends Component {
 		super(props);
 		this.state = {
 			answerClicked: false
-			// rerender: false
 		};
 		this.IncrementLikes = this.IncrementLikes.bind(this);
 		this.decrementLikes = this.decrementLikes.bind(this);
 		this.throttledIcrement = _.throttle(this.IncrementLikes, 200, { leading: false }).bind(this);
 		this.throttledDecrement = _.throttle(this.decrementLikes, 200, { leading: false }).bind(this);
+		this.forceLogin = this.forceLogin.bind(this);
 	}
-	// forceRender() {
-	// 	this.setState({ rerender: !this.state.rerender });
-	// }
+
+	forceLogin(e) {
+		if (!this.props.loggedId) {
+			this.props.notify('error', 'You must be logged in to view this profile.');
+		}
+	}
 
 	IncrementLikes(e) {
 		if (!this.props.loggedId) {
-			alert('You must log in first!');
+			this.props.notify('error', 'You must log in first!');
 		} else {
 			let up, down, data;
 			let userId = this.props.loggedId;
@@ -72,7 +75,7 @@ class QuestionContent extends Component {
 
 	decrementLikes(e) {
 		if (!this.props.loggedId) {
-			alert('You must log in first!');
+			this.props.notify('error', 'You must log in first!');
 		} else {
 			let up, down, data;
 			let userId = this.props.loggedId;
@@ -177,6 +180,7 @@ class QuestionContent extends Component {
 								<Link
 									to={!this.props.loggedId ? '/login' : `/user/${data.question.user.id}`}
 									style={{ textDecoration: 'none', color: 'black' }}
+									onClick={this.forceLogin}
 								>
 									<ProfileSmallPage userId={data.question.user.id} />
 								</Link>
@@ -213,8 +217,9 @@ class QuestionContent extends Component {
 						user={this.props.user}
 						questionId={this.props.id}
 						signedIn={this.props.signedIn}
-						refetchAnswerList={this.props.data.refetch}
 						notify={this.props.notify}
+						forceLogin={this.props.forceLogin}
+						refetchAnswerList={this.props.data.refetch}
 					/>
 				</div>
 			);

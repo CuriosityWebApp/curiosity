@@ -4,123 +4,127 @@ import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import { compose, graphql } from 'react-apollo';
 import { getQuestion } from '../../queries/queries.js';
-import { QuestionLike, QuestionDislike, IncrementQuestionViews } from '../../mutations/mutations.js';
+import {
+  QuestionLike,
+  QuestionDislike,
+  IncrementQuestionViews,
+} from '../../mutations/mutations.js';
 
 import _ from 'lodash';
 
 class QuestionItem extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			selected: null
-		};
-		this.IncrementLikes = this.IncrementLikes.bind(this);
-		this.decrementLikes = this.decrementLikes.bind(this);
-		this.throttledIcrement = _.throttle(this.IncrementLikes, 200, { leading: false }).bind(this);
-		this.throttledDecrement = _.throttle(this.decrementLikes, 200, { leading: false }).bind(this);
-		this.OpenQuestion = this.OpenQuestion.bind(this);
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: null,
+    };
+    this.IncrementLikes = this.IncrementLikes.bind(this);
+    this.decrementLikes = this.decrementLikes.bind(this);
+    this.throttledIcrement = _.throttle(this.IncrementLikes, 200, { leading: false }).bind(this);
+    this.throttledDecrement = _.throttle(this.decrementLikes, 200, { leading: false }).bind(this);
+    this.OpenQuestion = this.OpenQuestion.bind(this);
+  }
 
-	IncrementLikes(e) {
-		if (!this.props.userId) {
-			alert('You must log in first!');
-		} else {
-			let up, down, data;
-			let userId = this.props.userId;
+  IncrementLikes(e) {
+    if (!this.props.userId) {
+      this.props.notify('error', 'You must log in first!');
+    } else {
+      let up, down, data;
+      let userId = this.props.userId;
 
-			if (this.props.data.loading) {
-				console.log('loading questions..');
-			} else {
-				data = this.props.data.question;
-				up = new Set(data.ratedUpBy);
-				down = new Set(data.ratedDownBy);
-				if (up.has(userId)) {
-					this.props
-						.QuestionLike({
-							mutation: QuestionLike,
-							variables: {
-								id: data.id,
-								userId: userId,
-								method: 'delete'
-							}
-						})
-						.then(() => {
-							this.props.data.refetch();
-						});
-				} else if (!up.has(userId) && !down.has(userId)) {
-					this.props
-						.QuestionLike({
-							mutation: QuestionLike,
-							variables: {
-								id: data.id,
-								userId: userId,
-								method: 'add'
-							}
-						})
-						.then(() => {
-							this.props.data.refetch();
-						});
-				}
-			}
-		}
-	}
+      if (this.props.data.loading) {
+        console.log('loading questions..');
+      } else {
+        data = this.props.data.question;
+        up = new Set(data.ratedUpBy);
+        down = new Set(data.ratedDownBy);
+        if (up.has(userId)) {
+          this.props
+            .QuestionLike({
+              mutation: QuestionLike,
+              variables: {
+                id: data.id,
+                userId: userId,
+                method: 'delete',
+              },
+            })
+            .then(() => {
+              this.props.data.refetch();
+            });
+        } else if (!up.has(userId) && !down.has(userId)) {
+          this.props
+            .QuestionLike({
+              mutation: QuestionLike,
+              variables: {
+                id: data.id,
+                userId: userId,
+                method: 'add',
+              },
+            })
+            .then(() => {
+              this.props.data.refetch();
+            });
+        }
+      }
+    }
+  }
 
-	decrementLikes(e) {
-		if (!this.props.userId) {
-			alert('You must log in first!');
-		} else {
-			let up, down, data;
-			let userId = this.props.userId;
+  decrementLikes(e) {
+    if (!this.props.userId) {
+      this.props.notify('error', 'You must log in first!');
+    } else {
+      let up, down, data;
+      let userId = this.props.userId;
 
-			if (this.props.data.loading) {
-				console.log('loading questions..');
-			} else {
-				data = this.props.data.question;
-				up = new Set(data.ratedUpBy);
-				down = new Set(data.ratedDownBy);
-				if (down.has(userId)) {
-					this.props
-						.QuestionDislike({
-							mutation: QuestionDislike,
-							variables: {
-								id: data.id,
-								userId: userId,
-								method: 'delete'
-							}
-						})
-						.then(() => {
-							this.props.data.refetch();
-						});
-				} else if (!up.has(userId) && !down.has(userId)) {
-					this.props
-						.QuestionDislike({
-							mutation: QuestionDislike,
-							variables: {
-								id: data.id,
-								userId: userId,
-								method: 'add'
-							}
-						})
-						.then(() => {
-							this.props.data.refetch();
-						});
-				}
-			}
-		}
-	}
-	OpenQuestion() {
-		let id = this.props.data.question.id;
-		this.setState({ selected: id }, () => {
-			this.props
-				.IncrementQuestionViews({
-					mutation: IncrementQuestionViews,
-					variables: {
-						id: id
-					}
-				})
-				.then(() => this.props.data.refetch());
-		});
-	}
+      if (this.props.data.loading) {
+        console.log('loading questions..');
+      } else {
+        data = this.props.data.question;
+        up = new Set(data.ratedUpBy);
+        down = new Set(data.ratedDownBy);
+        if (down.has(userId)) {
+          this.props
+            .QuestionDislike({
+              mutation: QuestionDislike,
+              variables: {
+                id: data.id,
+                userId: userId,
+                method: 'delete',
+              },
+            })
+            .then(() => {
+              this.props.data.refetch();
+            });
+        } else if (!up.has(userId) && !down.has(userId)) {
+          this.props
+            .QuestionDislike({
+              mutation: QuestionDislike,
+              variables: {
+                id: data.id,
+                userId: userId,
+                method: 'add',
+              },
+            })
+            .then(() => {
+              this.props.data.refetch();
+            });
+        }
+      }
+    }
+  }
+  OpenQuestion() {
+    let id = this.props.data.question.id;
+    this.setState({ selected: id }, () => {
+      this.props
+        .IncrementQuestionViews({
+          mutation: IncrementQuestionViews,
+          variables: {
+            id: id,
+          },
+        })
+        .then(() => this.props.data.refetch());
+    });
+  }
 
 	render() {
 		if (!this.state.selected) {
@@ -216,16 +220,16 @@ class QuestionItem extends Component {
 }
 
 export default compose(
-	graphql(getQuestion, {
-		options: props => {
-			return {
-				variables: {
-					id: props.questionId
-				}
-			};
-		}
-	}),
-	graphql(QuestionLike, { name: 'QuestionLike' }),
-	graphql(QuestionDislike, { name: 'QuestionDislike' }),
-	graphql(IncrementQuestionViews, { name: 'IncrementQuestionViews' })
+  graphql(getQuestion, {
+    options: props => {
+      return {
+        variables: {
+          id: props.questionId,
+        },
+      };
+    },
+  }),
+  graphql(QuestionLike, { name: 'QuestionLike' }),
+  graphql(QuestionDislike, { name: 'QuestionDislike' }),
+  graphql(IncrementQuestionViews, { name: 'IncrementQuestionViews' }),
 )(QuestionItem);

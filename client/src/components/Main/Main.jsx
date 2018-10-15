@@ -44,7 +44,11 @@ class Main extends Component {
                   <div className="container-fluid">
                     <div>
                       <Switch>
-                        <Route exact path="/" render={() => <QuestionList userId={id} />} />
+                        <Route
+                          exact
+                          path="/"
+                          render={() => <QuestionList userId={id} notify={this.props.notify} />}
+                        />
                         <Route
                           exact
                           path="/createQuestion"

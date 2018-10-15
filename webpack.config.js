@@ -45,6 +45,7 @@ module.exports = {
       'process.env.firebaseKey': JSON.stringify(process.env.firebaseKey),
       'process.env.firebaseDomain': JSON.stringify(process.env.firebaseDomain),
       'process.env.apolloUri': JSON.stringify(process.env.apolloUri),
+      'process.env.ADMINID': JSON.stringify(process.env.ADMINID),
     }),
   ],
 };

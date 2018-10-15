@@ -40,63 +40,64 @@ class AnswerList extends Component {
 			.catch(err => console.log('error in nextquestions', err));
 	};
 
-	displayAnswers() {
-		if (this.props.data.loading) {
-			return <div>Loading...</div>;
-		} else {
-			let answers = this.state.answers.length > 0 ? this.state.answers : this.props.data.answers;
-			return answers.map(
-				answer => {
-					if (!answer.answerChosen) {
-						return (
-							<AnswerItem
-								key={answer.id}
-								refetchAnswerList={this.props.refetchAnswerList}
-								answerId={answer.id}
-								qOwnerId={this.props.qOwnerId}
-								loggedId={this.props.loggedId}
-								isPaid={this.props.isPaid}
-								user={this.props.user}
-								questionId={this.props.id}
-								bounty={this.props.bounty}
-							/>
-						);
-					}
-				},
-				() => {
-					this.setState({ answers: answers });
-				}
-			);
-		}
-	}
-	render() {
-		return (
-			<div>
-				<div>{this.displayAnswers()}</div>
-				<div>
-					<button onClick={this.getNextAnswers}>Load more...</button>
-				</div>
-				<div>
-					{this.props.signedIn ? (
-						<CreateAnswer
-							data={this.props.data}
-							user={this.props.user}
-							questionId={this.props.questionId}
-							notify={this.props.notify}
-						/>
-					) : (
-						<button
-							onClick={() =>
-								this.props.notify('error', 'Please log into your account to be able to answer!')
-							}
-						>
-							Respond
-						</button>
-					)}
-				</div>
-			</div>
-		);
-	}
+  displayAnswers() {
+    if (this.props.data.loading) {
+      return <div>Loading...</div>;
+    } else {
+      let answers = this.state.answers.length > 0 ? this.state.answers : this.props.data.answers;
+      return answers.map(
+        answer => {
+          if (!answer.answerChosen) {
+            return (
+              <AnswerItem
+                key={answer.id}
+                refetchAnswerList={this.props.refetchAnswerList}
+                answerId={answer.id}
+                qOwnerId={this.props.qOwnerId}
+                loggedId={this.props.loggedId}
+                isPaid={this.props.isPaid}
+                user={this.props.user}
+                questionId={this.props.id}
+                bounty={this.props.bounty}
+                notify={this.props.notify}
+              />
+            );
+          }
+        },
+        () => {
+          this.setState({ answers: answers });
+        },
+      );
+    }
+  }
+  render() {
+    return (
+      <div>
+        <div>{this.displayAnswers()}</div>
+        <div>
+          <button onClick={this.getNextAnswers}>Load more...</button>
+        </div>
+        <div>
+          {this.props.signedIn ? (
+            <CreateAnswer
+              data={this.props.data}
+              user={this.props.user}
+              questionId={this.props.questionId}
+              notify={this.props.notify}
+            />
+          ) : (
+            <button
+              onClick={() =>
+                this.props.notify('error', 'Please log into your account to be able to answer!')
+              }
+            >
+              Respond
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default compose(
