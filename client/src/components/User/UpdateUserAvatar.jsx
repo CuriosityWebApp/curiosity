@@ -41,7 +41,7 @@ class ChooseUserAvatar extends Component {
       })
       .then(() => {
         this.props.notify('message', 'Avatar Updated!');
-        this.props.refetcher.refetch();
+        this.props.refetch();
       });
   }
 
