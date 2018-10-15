@@ -12,29 +12,30 @@ class App extends Component {
   }
 
   render() {
-    let { loading, error } = this.props.checkUserEmail;
+    let { notify, email, handleLogout, uiConfig, firebase, firebaseCheck } = this.props;
+    let { loading, error, checkUserEmail, refetch } = this.props.checkUserEmail;
     if (loading) {
       return <div>Loading...</div>;
     } else if (error) {
       return <div>Error</div>;
     } else {
-      if (this.props.checkUserEmail.checkUserEmail) {
+      if (checkUserEmail) {
         var signedIn = true;
-        this.props.checkUserEmail.refetch();
+        refetch();
       } else {
         var signedIn = false;
       }
       return (
         <Main
-          notify={this.props.notify}
-          email={this.props.email}
+          notify={notify}
+          email={email}
           signedIn={signedIn}
-          user={this.props.checkUserEmail.checkUserEmail}
-          refetcher={this.props.checkUserEmail}
-          handleLogout={this.props.handleLogout}
-          uiConfig={this.props.uiConfig}
-          firebaseAuth={this.props.firebase.auth()}
-          firebaseCheck={this.props.firebaseCheck}
+          user={checkUserEmail}
+          refetcher={checkUserEmail}
+          handleLogout={handleLogout}
+          uiConfig={uiConfig}
+          firebaseAuth={firebase.auth()}
+          firebaseCheck={firebaseCheck}
         />
       );
     }

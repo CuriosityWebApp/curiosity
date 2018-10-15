@@ -11,20 +11,20 @@ class NotificationItem extends Component {
   }
 
   render() {
-    let data = this.props.post;
+    let { question, answer, createdAt } = this.props.post;
     return (
       <div className="list-group">
         <div className="list-group-item list-group-item-action flex-column align-items-start">
           <div className="d-flex w-100 justify-content-between">
             <div>
-              <small>Question Title: {data.question.questionTitle}</small>
+              <small>Question Title: {question.questionTitle}</small>
               <br />
-              <small>Answer: {data.answer}</small>
+              <small>Answer: {answer}</small>
               <br />
-              <small>Date: {moment(data.createdAt).fromNow()}</small> <br />
+              <small>Date: {moment(createdAt).fromNow()}</small> <br />
             </div>
             <div>
-              <Link to={`/questionContent/${data.question.id}`} style={{ cursor: 'pointer' }}>
+              <Link to={`/questionContent/${question.id}`} style={{ cursor: 'pointer' }}>
                 <button type="button" className="btn btn-danger">
                   Go To Question
                 </button>

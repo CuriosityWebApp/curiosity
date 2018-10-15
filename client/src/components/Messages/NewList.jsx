@@ -26,7 +26,7 @@ class NewList extends Component {
   }
 
   displayMessages() {
-    let { loading, error, user } = this.props.getMessages;
+    let { loading, error, userMessages } = this.props.getMessages;
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -34,9 +34,9 @@ class NewList extends Component {
       return <div>Error...</div>;
     } else {
       let newList = [];
-      for (let i = 0; i < this.props.getMessages.userMessages.length; i++) {
-        if (this.props.getMessages.userMessages[i].unread === true) {
-          newList.push(this.props.getMessages.userMessages[i]);
+      for (let i = 0; i < userMessages.length; i++) {
+        if (userMessages[i].unread === true) {
+          newList.push(userMessages[i]);
         }
       }
       if (newList.length > 0) {

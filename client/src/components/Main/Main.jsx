@@ -16,13 +16,21 @@ import Notifications from '../Notifications/Notifications.jsx';
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render() {
-    var signedIn = this.props.signedIn;
+    let {
+      signedIn,
+      user,
+      handleLogout,
+      notify,
+      email,
+      uiConfig,
+      firebaseAuth,
+      refetcher,
+    } = this.props;
     if (signedIn) {
-      var { username, credit, id } = this.props.user;
+      var { username, credit, id } = user;
     } else {
       var username = '';
       var credit = 0;
@@ -31,10 +39,10 @@ class Main extends Component {
     return (
       <div>
         <NavBar
-          user={this.props.user}
+          user={user}
           signedIn={signedIn}
           uiConfig={this.uiConfig}
-          handleLogout={this.props.handleLogout}
+          handleLogout={handleLogout}
         />
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <div className="bg-content">
@@ -47,7 +55,7 @@ class Main extends Component {
                         <Route
                           exact
                           path="/"
-                          render={() => <QuestionList userId={id} notify={this.props.notify} />}
+                          render={() => <QuestionList userId={id} notify={notify} />}
                         />
                         <Route
                           exact
@@ -57,8 +65,8 @@ class Main extends Component {
                               userId={id}
                               signedIn={signedIn}
                               credit={credit}
-                              user={this.props.user}
-                              notify={this.props.notify}
+                              user={user}
+                              notify={notify}
                             />
                           )}
                         />
@@ -68,18 +76,13 @@ class Main extends Component {
                           render={() => {
                             {
                               if (!signedIn) {
-                                if (this.props.email && !username) {
-                                  return <UsernameSubmit email={this.props.email} />;
+                                if (email && !username) {
+                                  return <UsernameSubmit email={email} />;
                                 }
-                                return (
-                                  <Login
-                                    uiConfig={this.props.uiConfig}
-                                    firebaseAuth={this.props.firebaseAuth}
-                                  />
-                                );
+                                return <Login uiConfig={uiConfig} firebaseAuth={firebaseAuth} />;
                               } else {
                                 setTimeout(() => {
-                                  this.props.notify('auth', 'Signed In');
+                                  notify('auth', 'Signed In');
                                 }, 0);
                                 return <Redirect to="/" />;
                               }
@@ -90,13 +93,7 @@ class Main extends Component {
                           exact
                           path="/profileUser"
                           render={() => {
-                            return (
-                              <ProfileUser
-                                id={id}
-                                notify={this.props.notify}
-                                refetcher={this.props.refetcher}
-                              />
-                            );
+                            return <ProfileUser id={id} notify={notify} refetcher={refetcher} />;
                           }}
                         />
                         <Route
@@ -105,10 +102,10 @@ class Main extends Component {
                           render={({ match }) => {
                             return (
                               <QuestionContent
-                                notify={this.props.notify}
+                                notify={notify}
                                 signedIn={signedIn}
                                 loggedId={id}
-                                user={this.props.user}
+                                user={user}
                                 id={match.params.questionId}
                               />
                             );
@@ -129,7 +126,7 @@ class Main extends Component {
                               <MessagesAndCreate
                                 folder={match.params.folder}
                                 userId={id}
-                                notify={this.props.notify}
+                                notify={notify}
                               />
                             );
                           }}
@@ -141,8 +138,8 @@ class Main extends Component {
                             return (
                               <ProfileFullPage
                                 userId={match.params.id}
-                                username={this.props.user.username}
-                                notify={this.props.notify}
+                                username={user.username}
+                                notify={notify}
                               />
                             );
                           }}
@@ -154,7 +151,7 @@ class Main extends Component {
                             <PrivateMessage
                               userId={id}
                               username={match.params.username}
-                              notify={this.props.notify}
+                              notify={notify}
                             />
                           )}
                         />
@@ -165,9 +162,9 @@ class Main extends Component {
                             return (
                               <Notifications
                                 userId={id}
-                                user={this.props.user}
-                                refetcher={this.props.refetcher}
-                                notify={this.props.notify}
+                                user={user}
+                                refetcher={refetcher}
+                                notify={notify}
                               />
                             );
                           }}
