@@ -31,18 +31,17 @@ class ChooseUserAvatar extends Component {
   }
 
   handleSubmitUrl() {
-    this.props
-      .mutate({
-        mutation: UpdateUserAvatar,
-        variables: {
-          id: this.props.id,
-          avatarUrl: this.state.avatarUrl,
-        },
-      })
-      .then(() => {
-        this.props.notify('message', 'Avatar Updated!');
-        this.props.refetch();
-      });
+    let { mutate, notify, refetch, id } = this.props;
+    mutate({
+      mutation: UpdateUserAvatar,
+      variables: {
+        id: id,
+        avatarUrl: this.state.avatarUrl,
+      },
+    }).then(() => {
+      notify('message', 'Avatar Updated!');
+      refetch();
+    });
   }
 
   render() {

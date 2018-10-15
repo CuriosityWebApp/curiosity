@@ -11,7 +11,7 @@ class Vouches extends Component {
     return (
       <div className="card bg-light mb-3">
         <div className="card-header bg-success text-white">
-          <i className="fa fa-user" /> Vouched By
+          <i className="fas fa-users" /> Vouched By
         </div>
         <div
           className="card-body"
