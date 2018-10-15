@@ -59,7 +59,8 @@ class Notifications extends Component {
             this.props.refetcher.refetch();
           }
           count++;
-        });
+        })
+        .catch(err => console.error(err));
     }
   }
 

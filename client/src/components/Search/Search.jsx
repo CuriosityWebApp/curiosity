@@ -31,7 +31,8 @@ class Search extends React.Component {
           if (data.searchQuestion) {
             this.setState({ questions: data.searchQuestion });
           }
-        });
+        })
+        .catch(err => console.error(err));
     });
   }
 

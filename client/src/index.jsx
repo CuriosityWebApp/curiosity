@@ -74,29 +74,30 @@ class Index extends Component {
   }
 
   notify(type, text) {
+    let { TOP_RIGHT, TOP_CENTER } = toast.POSITION;
     if (type === 'transaction') {
       toast.success(text, {
-        position: toast.POSITION.TOP_RIGHT,
+        position: TOP_RIGHT,
         autoClose: 3000,
       });
     } else if (type === 'message') {
       toast.info(text, {
-        position: toast.POSITION.TOP_RIGHT,
+        position: TOP_RIGHT,
         autoClose: 3000,
       });
     } else if (type === 'auth') {
       toast(text, {
-        position: toast.POSITION.TOP_CENTER,
+        position: TOP_CENTER,
         autoClose: 3000,
       });
     } else if (type === 'error') {
       toast.error(text, {
-        position: toast.POSITION.TOP_RIGHT,
+        position: TOP_RIGHT,
         autoClose: 3000,
       });
     } else if (type === 'warning') {
       toast.warning(text, {
-        position: toast.POSITION.TOP_RIGHT,
+        position: TOP_RIGHT,
         autoClose: 3000,
       });
     }

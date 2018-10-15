@@ -59,7 +59,7 @@ class AnswerChoice extends Component {
         });
       })
       .then(() => {
-        this.props.refetch();
+        this.props.refetchAnswerList();
       })
       .catch(err => console.error(err));
   }

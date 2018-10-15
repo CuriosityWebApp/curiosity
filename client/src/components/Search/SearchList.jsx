@@ -20,14 +20,16 @@ class SearchList extends Component {
   }
 
   displayQuestions() {
-    let data = this.props.data.searchQuestion;
-    if (this.props.data.loading) {
+    let { searchQuestion, loading, error } = this.props.data;
+    if (loading) {
       return <div>Loading Questions...</div>;
-    } else if (data && !this.state.onSelect) {
-      if (data.length < 1) {
+    } else if (error) {
+      return <div>Error</div>;
+    } else if (searchQuestion && !this.state.onSelect) {
+      if (searchQuestion.length < 1) {
         return <div>No search results</div>;
       } else {
-        return data.map(post => {
+        return searchQuestion.map(post => {
           return <SearchItem key={post.id} postData={post} onSelect={this.onSelect} />;
         });
       }

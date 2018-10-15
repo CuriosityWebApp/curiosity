@@ -152,6 +152,44 @@ class QuestionNavBar extends Component {
 								</a>
 							</div>
 						</li>{' '}
+						<li className="nav-item dropdown">
+							<a
+								className="nav-link dropdown-toggle"
+								id="navbarRecommendation"
+								role="button"
+								data-toggle="dropdown"
+								aria-haspopup="true"
+								aria-expanded="false"
+							>
+								Reccomendations
+							</a>
+							<div className="dropdown-menu" aria-labelledby="navbarRecommendation">
+								<a
+									className="dropdown-item"
+									onClick={e => this.handleSortTopics(e, 'recommendation', null)}
+								>
+									All time
+								</a>
+								<a
+									className="dropdown-item"
+									onClick={e => this.handleSortTopics(e, 'recommendation', '1')}
+								>
+									Today
+								</a>
+								<a
+									className="dropdown-item"
+									onClick={e => this.handleSortTopics(e, 'recommendation', '7')}
+								>
+									1 Week
+								</a>
+								<a
+									className="dropdown-item"
+									onClick={e => this.handleSortTopics(e, 'recommendation', '30')}
+								>
+									1 Month
+								</a>
+							</div>
+						</li>{' '}
 					</ul>
 					<form className="form-inline">
 						<select onChange={this.handleFilterChange.bind(this)}>
