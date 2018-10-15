@@ -11,15 +11,15 @@ class InboxList extends Component {
   }
 
   displayMessages() {
-    let { loading, error, user } = this.props.getMessages;
+    let { loading, error, userMessages } = this.props.getMessages;
     if (loading) {
       return <div>Loading...</div>;
     }
     if (error) {
       return <div>Error...</div>;
     } else {
-      if (this.props.getMessages.userMessages.length > 0) {
-        return this.props.getMessages.userMessages.map(post => {
+      if (userMessages.length > 0) {
+        return userMessages.map(post => {
           return (
             <MessageItem
               key={post.id}

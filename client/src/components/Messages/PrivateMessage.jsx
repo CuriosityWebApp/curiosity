@@ -57,21 +57,24 @@ class PrivateMessage extends Component {
               this.setState({ users: data.getUsernames });
             }
           }
-        });
+        })
+        .catch(err => console.error(err));
     });
   }
 
   submitForm(e) {
     e.preventDefault();
-    let { title, content, receiverName } = this.state;
+    let { title, content, receiverName, receiverId } = this.state;
+    let { client, mutate, notify, userId } = this.props;
+
     if (!title || !content || !receiverName) {
-      this.props.notify('error', "Can't post an empty message!");
+      notify('error', "Can't post an empty message!");
     } else {
-      this.props.client
+      client
         .query({
           query: checkUsername,
           variables: {
-            username: this.state.receiverName,
+            username: receiverName,
           },
         })
         .then(({ data }) => {
@@ -80,24 +83,23 @@ class PrivateMessage extends Component {
           }
         })
         .then(() => {
-          if (this.state.receiverId) {
-            this.props
-              .mutate({
-                mutation: AddMessage,
-                variables: {
-                  senderId: this.props.userId,
-                  messageTitle: this.state.title,
-                  messageContent: this.state.content,
-                  receiverId: this.state.receiverId,
-                },
-              })
+          if (receiverId) {
+            mutate({
+              mutation: AddMessage,
+              variables: {
+                senderId: userId,
+                messageTitle: title,
+                messageContent: content,
+                receiverId: receiverId,
+              },
+            })
               .then(() => {
-                this.props.notify('message', `Message Sent to ${this.state.receiverName} !`);
+                notify('message', `Message Sent to ${receiverName} !`);
                 this.setState({ redirect: true });
               })
               .catch(err => console.log('error bro', err));
           } else {
-            this.props.notify('error', 'Invalid user');
+            notify('error', 'Invalid user');
           }
         })
         .catch(err => {
@@ -107,8 +109,8 @@ class PrivateMessage extends Component {
   }
 
   render() {
-    const { title, content, receiverName } = this.state;
-    if (this.state.redirect) {
+    const { title, content, receiverName, users, redirect } = this.state;
+    if (redirect) {
       return <Redirect to="/messages/sent" />;
     } else {
       return (
@@ -119,7 +121,7 @@ class PrivateMessage extends Component {
           <div>
             <form onSubmit={this.submitForm.bind(this)}>
               <Autocomplete
-                items={this.state.users}
+                items={users}
                 shouldItemRender={(item, value) =>
                   item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
                 }

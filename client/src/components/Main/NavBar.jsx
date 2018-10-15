@@ -9,9 +9,9 @@ class NavBar extends Component {
   }
 
   render() {
-    let signedIn = this.props.signedIn;
+    let { signedIn, user, handleLogout } = this.props;
     if (signedIn) {
-      var { username, rank, credit, messages, questions, avatarUrl } = this.props.user;
+      var { username, rank, credit, messages, questions, avatarUrl } = user;
     } else {
       var username = '';
       var credit = 0;
@@ -152,7 +152,7 @@ class NavBar extends Component {
                     <Link
                       to="/"
                       onClick={e => {
-                        this.props.handleLogout();
+                        handleLogout();
                       }}
                     >
                       <div>
