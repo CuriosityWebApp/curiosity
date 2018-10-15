@@ -247,8 +247,9 @@ const RootQuery = new GraphQLObjectType({
       type: UserType,
       args: { username: { type: GraphQLString } },
       resolve(parent, args) {
-        // code to get data from db
-        return User.findOne({ username: args.username });
+        return User.findOne({
+          username: args.username,
+        });
       },
     },
     searchQuestion: {

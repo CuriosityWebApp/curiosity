@@ -14,11 +14,11 @@ class PrivateMessage extends Component {
       receiverName: '',
       title: '',
       content: '',
-      returnedId: null,
       redirect: false,
       users: [],
     };
     this.searchUsers = this.searchUsers.bind(this);
+    this.selectUser = this.selectUser.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.replyFormat = this.replyFormat.bind(this);
   }
@@ -38,11 +38,30 @@ class PrivateMessage extends Component {
       receiverName: receiverName,
     });
   }
+  selectUser(value) {
+    this.setState({ receiverName: value }, () => {
+      this.props.client
+        .query({
+          query: checkUsername,
+          variables: {
+            username: this.state.receiverName,
+          },
+        })
+        .then(({ data }) => {
+          if (data.checkUsername) {
+            this.setState({ receiverId: data.checkUsername.id });
+          } else {
+            this.setState({ receiverId: '' });
+          }
+        })
+        .catch(err => console.error(err));
+    });
+  }
 
   searchUsers(e) {
-    e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value }, () => {
-      this.props.client
+    let { client } = this.props;
+    this.setState({ receiverName: e.target.value }, () => {
+      client
         .query({
           query: getUsernames,
           variables: {
@@ -59,52 +78,51 @@ class PrivateMessage extends Component {
           }
         })
         .catch(err => console.error(err));
+
+      client
+        .query({
+          query: checkUsername,
+          variables: {
+            username: this.state.receiverName,
+          },
+        })
+        .then(({ data }) => {
+          if (data.checkUsername) {
+            this.setState({ receiverId: data.checkUsername.id });
+          } else {
+            this.setState({ receiverId: '' });
+          }
+        })
+        .catch(err => console.error(err));
     });
   }
 
   submitForm(e) {
     e.preventDefault();
     let { title, content, receiverName, receiverId } = this.state;
-    let { client, mutate, notify, userId } = this.props;
+    let { mutate, notify, userId } = this.props;
 
     if (!title || !content || !receiverName) {
       notify('error', "Can't post an empty message!");
     } else {
-      client
-        .query({
-          query: checkUsername,
+      if (receiverId) {
+        mutate({
+          mutation: AddMessage,
           variables: {
-            username: receiverName,
+            senderId: userId,
+            messageTitle: title,
+            messageContent: content,
+            receiverId: receiverId,
           },
         })
-        .then(({ data }) => {
-          if (data.checkUsername) {
-            this.setState({ receiverId: data.checkUsername.id });
-          }
-        })
-        .then(() => {
-          if (receiverId) {
-            mutate({
-              mutation: AddMessage,
-              variables: {
-                senderId: userId,
-                messageTitle: title,
-                messageContent: content,
-                receiverId: receiverId,
-              },
-            })
-              .then(() => {
-                notify('message', `Message Sent to ${receiverName} !`);
-                this.setState({ redirect: true });
-              })
-              .catch(err => console.log('error bro', err));
-          } else {
-            notify('error', 'Invalid user');
-          }
-        })
-        .catch(err => {
-          console.error(err);
-        });
+          .then(() => {
+            notify('message', `Message Sent to ${receiverName} !`);
+            this.setState({ redirect: true });
+          })
+          .catch(err => console.log('error bro', err));
+      } else {
+        notify('error', 'Invalid user');
+      }
     }
   }
 
@@ -137,7 +155,7 @@ class PrivateMessage extends Component {
                 wrapperStyle={{ position: 'relative', display: 'inline-block' }}
                 value={receiverName}
                 onChange={this.searchUsers}
-                onSelect={value => this.setState({ receiverName: value })}
+                onSelect={value => this.selectUser(value)}
                 inputProps={{ placeholder: 'username', name: 'receiverName' }}
               />
               <br />
