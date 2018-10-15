@@ -113,8 +113,15 @@ const getAnswers = gql`
 `;
 
 const getQuestions = gql`
-  query($limit: Int!, $skip: Int!, $filter: String, $sortBy: String, $range: String) {
-    questions(limit: $limit, skip: $skip, filter: $filter, sortBy: $sortBy, range: $range) {
+  query($limit: Int!, $skip: Int!, $filter: String, $sortBy: String, $range: String, $userId: ID) {
+    questions(
+      limit: $limit
+      skip: $skip
+      filter: $filter
+      sortBy: $sortBy
+      range: $range
+      userId: $userId
+    ) {
       id
     }
   }
