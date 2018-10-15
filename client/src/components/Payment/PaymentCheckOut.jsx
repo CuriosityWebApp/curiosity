@@ -43,7 +43,7 @@ class PaymentCheckOut extends Component {
       .then(() => {
         handleClose();
         data.refetch();
-        refetcher.refetch();
+        refetcher();
         notify('transaction', `You received ${this.state.credits} Credits`);
       })
       .catch(err => console.error(err));
