@@ -16,7 +16,7 @@ class App extends Component {
     if (loading) {
       return <div>Loading...</div>;
     } else if (error) {
-      return <div>shit</div>;
+      return <div>Error</div>;
     } else {
       if (this.props.checkUserEmail.checkUserEmail) {
         var signedIn = true;

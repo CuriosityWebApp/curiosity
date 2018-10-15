@@ -22,11 +22,18 @@ class AnswerItem extends Component {
     this.report = this.report.bind(this);
     this.throttledIcrement = _.throttle(this.IncrementLikes, 200, { leading: false });
     this.throttledDecrement = _.throttle(this.decrementLikes, 200, { leading: false });
+    this.forceLogin = this.forceLogin.bind(this);
+  }
+
+  forceLogin(e) {
+    if (!this.props.loggedId) {
+      this.props.notify('error', 'You must be logged in to view this profile.');
+    }
   }
 
   IncrementLikes(e) {
     if (!this.props.loggedId) {
-      alert('You must log in first!');
+      this.props.notify('error', 'You must log in first!');
     } else {
       let up, down, data;
       let userId = this.props.loggedId;
@@ -69,7 +76,7 @@ class AnswerItem extends Component {
 
   decrementLikes(e) {
     if (!this.props.loggedId) {
-      alert('You must log in first!');
+      this.props.notify('error', 'You must log in first!');
     } else {
       let up, down, data;
       let userId = this.props.loggedId;
@@ -174,6 +181,7 @@ class AnswerItem extends Component {
                   <Link
                     to={!this.props.loggedId ? '/login' : `/user/${data.answer.question.user.id}`}
                     style={{ textDecoration: 'none', color: 'black' }}
+                    onClick={this.forceLogin}
                   >
                     <div>
                       <ProfileSmallPage userId={data.answer.user.id} />
@@ -225,16 +233,23 @@ class AnswerItem extends Component {
       'User: ' +
       this.props.getAnswer.answer.user.username +
       '\nQuestionTitle: ' +
-      this.props.data.question.questionTitle;
-    this.props.AddMessage({
-      mutation: AddMessage,
-      variables: {
-        senderId: this.props.loggedId,
-        receiverId: '5bb8d00baf90e323e4b9c8a9',
-        messageTitle: messageTitle,
-        messageContent: messageContent,
-      },
-    });
+      this.props.getAnswer.answer.question.questionTitle;
+    this.props
+      .AddMessage({
+        mutation: AddMessage,
+        variables: {
+          senderId: this.props.loggedId,
+          receiverId: process.env.ADMINID,
+          messageTitle: messageTitle,
+          messageContent: messageContent,
+        },
+      })
+      .then(() => {
+        this.props.notify('error', 'Report submitted!');
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   render() {
