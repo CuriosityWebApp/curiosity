@@ -161,7 +161,7 @@ class QuestionNavBar extends Component {
 								aria-haspopup="true"
 								aria-expanded="false"
 							>
-								Reccomendations
+								Recommendations
 							</a>
 							<div className="dropdown-menu" aria-labelledby="navbarRecommendation">
 								<a
