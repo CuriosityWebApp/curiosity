@@ -129,7 +129,7 @@ class ProfileUser extends Component {
           {this.state.activeTab === 'questions' && <UserQuestions questions={user.questions} />}
           {this.state.activeTab === 'answers' && <UserAnswers answers={user.answers} />}
           {this.state.activeTab === 'favorites' && (
-            <UserFavorites user={user} refetchTags={refetch} />
+            <UserFavorites user={user} refetchTags={refetch} notify={this.props.notify} />
           )}
         </div>
       );
