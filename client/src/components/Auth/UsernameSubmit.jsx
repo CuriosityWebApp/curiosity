@@ -12,10 +12,6 @@ class UsernameSubmit extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({ email: this.props.email });
-  }
-
   handleAddUser() {
     this.props
       .mutate({
