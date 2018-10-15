@@ -4,9 +4,9 @@ const graphqlHTTP = require('express-graphql');
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
-const config = require('../config.js');
+const config = require('dotenv').config();
 
-const stripe = require('stripe')(config.stripe_secret_key);
+const stripe = require('stripe')(process.env.stripe_secret_key);
 const schema = require('../database/graphQL/schema.js');
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 mongoose.connect(
-  'mongodb://hyunjae9034:test1234@ds117773.mlab.com:17773/practice',
+  process.env.DBLINK,
   { useCreateIndex: true, useNewUrlParser: true },
 );
 mongoose.connection
@@ -51,6 +51,6 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
-app.listen(3000, () => {
-  console.log('listening to port 3000');
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on port ${process.env.PORT}!`);
 });
