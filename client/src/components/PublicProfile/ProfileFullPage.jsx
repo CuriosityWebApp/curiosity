@@ -75,7 +75,7 @@ class ProfileFullPage extends Component {
             <div className="row">
               <div className="col">
                 <div className="card">
-                  <div className="card-header bg-primary text-white">
+                  <div className="card-header bg-dark text-white">
                     <i className="fas fa-trophy" />
                     <span onClick={this.showAllOnClick} style={{ cursor: 'pointer' }}>
                       {' '}
@@ -116,7 +116,7 @@ class ProfileFullPage extends Component {
                 </div>
                 <br />
                 <div className="card">
-                  <div className="card-header bg-primary text-white">
+                  <div className="card-header bg-dark text-white">
                     <i className="fa fa-question-circle" /> Questions
                   </div>
                   <div
@@ -139,7 +139,7 @@ class ProfileFullPage extends Component {
               </div>
               <div className="col-12 col-sm-4">
                 <div className="card bg-light mb-3">
-                  <div className="card-header bg-success text-white">
+                  <div className="card-header bg-dark text-white">
                     <i className="fa fa-user" /> User
                   </div>
                   <div

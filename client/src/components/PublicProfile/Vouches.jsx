@@ -10,7 +10,7 @@ class Vouches extends Component {
     let { vouch } = this.props;
     return (
       <div className="card bg-light mb-3">
-        <div className="card-header bg-success text-white">
+        <div className="card-header bg-dark text-white">
           <i className="fas fa-users" /> Vouched By
         </div>
         <div

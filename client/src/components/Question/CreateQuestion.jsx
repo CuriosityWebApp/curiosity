@@ -90,7 +90,7 @@ class CreateQuestion extends Component {
     } else {
       return (
         <div className="card">
-          <div className="card-header bg-primary text-white">
+          <div className="card-header bg-dark text-white">
             <i className="fa fa-question-circle" />
             <span> Ask Question</span>
           </div>
