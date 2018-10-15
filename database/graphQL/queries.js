@@ -8,10 +8,19 @@ const Answer = require('../../database/model/answer.js');
 const Transaction = require('../../database/model/transaction.js');
 const Message = require('../../database/model/message.js');
 const {
-  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList, GraphQLBoolean,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLBoolean,
 } = require('graphql');
 const {
-  UserType, QuestionType, AnswerType, TransactionType, MessageType,
+  UserType,
+  QuestionType,
+  AnswerType,
+  TransactionType,
+  MessageType,
 } = require('./typeDefs.js');
 
 const RootQuery = new GraphQLObjectType({
@@ -142,7 +151,7 @@ const RootQuery = new GraphQLObjectType({
             })
             .catch(err => console.error('error in questions query TOP', err));
         }
-        
+
         // get user recommendations
         // match user id, find favorite tags
         // find all questions which match user favorite list
@@ -204,8 +213,9 @@ const RootQuery = new GraphQLObjectType({
       type: UserType,
       args: { username: { type: GraphQLString } },
       resolve(parent, args) {
-        // code to get data from db
-        return User.findOne({ username: args.username });
+        return User.findOne({
+          username: args.username,
+        });
       },
     },
     searchQuestion: {
