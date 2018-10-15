@@ -27,7 +27,7 @@ class Main extends Component {
       email,
       uiConfig,
       firebaseAuth,
-      refetcher,
+      refetch,
     } = this.props;
     if (signedIn) {
       var { username, credit, id } = user;
@@ -93,7 +93,7 @@ class Main extends Component {
                           exact
                           path="/profileUser"
                           render={() => {
-                            return <ProfileUser id={id} notify={notify} refetcher={refetcher} />;
+                            return <ProfileUser id={id} notify={notify} refetch={refetch} />;
                           }}
                         />
                         <Route
@@ -163,7 +163,7 @@ class Main extends Component {
                               <Notifications
                                 userId={id}
                                 user={user}
-                                refetcher={refetcher}
+                                refetch={refetch}
                                 notify={notify}
                               />
                             );

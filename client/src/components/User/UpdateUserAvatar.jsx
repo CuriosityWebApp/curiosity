@@ -31,7 +31,7 @@ class ChooseUserAvatar extends Component {
   }
 
   handleSubmitUrl() {
-    let { mutate, notify, refetcher, id } = this.props;
+    let { mutate, notify, refetch, id } = this.props;
     mutate({
       mutation: UpdateUserAvatar,
       variables: {
