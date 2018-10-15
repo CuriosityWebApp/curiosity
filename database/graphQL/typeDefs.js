@@ -23,20 +23,23 @@ const UserType = new GraphQLObjectType({
     rank: {
       type: GraphQLInt,
       resolve(parent, args) {
-        // aggregate all the answers
-        // sum up all the ratedup and rateddown
-        // return the length of retedup - rated down
-        return Answer.find({ userId: parent.id })
-          .then(data => data.reduce((sum, item) => {
-            sum += item.score;
-            console.log('sum', sum);
-            return sum;
-          }, 0))
-          .catch(err => console.log('error in rank', err));
-
-        // return Answer.aggregate([
-
-        // ])
+        return Answer.aggregate([
+          { $match: { userId: parent.id } },
+          {
+            $group: {
+              _id: null,
+              totalUp: { $sum: { $size: { $ifNull: ['$ratedUpBy', []] } } },
+              totalDown: { $sum: { $size: { $ifNull: ['$ratedDownBy', []] } } },
+            },
+          },
+          {
+            $project: {
+              count: { $subtract: ['$totalUp', '$totalDown'] },
+            },
+          },
+        ])
+          .then(data => data[0].count)
+          .catch(err => console.error('error in rank ', err));
       },
     },
     credit: { type: GraphQLInt },
