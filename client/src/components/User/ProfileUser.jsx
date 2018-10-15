@@ -13,6 +13,10 @@ class ProfileUser extends Component {
     this.state = {
       activeTab: 'info',
     };
+    this.changeTab = this.changeTab.bind(this);
+  }
+  changeTab(e) {
+    this.setState({ activeTab: e.target.name });
   }
 
   render() {
@@ -47,10 +51,9 @@ class ProfileUser extends Component {
               <ul className="navbar-nav">
                 <li className={activeTab === 'info' ? 'nav-item active' : 'nav-item'}>
                   <a
+                    name="info"
                     className="nav-link"
-                    onClick={() => {
-                      this.setState({ activeTab: 'info' });
-                    }}
+                    onClick={this.changeTab}
                     style={{
                       cursor: 'pointer',
                     }}
@@ -60,10 +63,9 @@ class ProfileUser extends Component {
                 </li>
                 <li className={activeTab === 'wallet' ? 'nav-item active' : 'nav-item'}>
                   <a
+                    name="wallet"
                     className="nav-link"
-                    onClick={() => {
-                      this.setState({ activeTab: 'wallet' });
-                    }}
+                    onClick={this.changeTab}
                     style={{
                       cursor: 'pointer',
                     }}
@@ -73,10 +75,9 @@ class ProfileUser extends Component {
                 </li>
                 <li className={activeTab === 'questions' ? 'nav-item active' : 'nav-item'}>
                   <a
+                    name="questions"
                     className="nav-link"
-                    onClick={() => {
-                      this.setState({ activeTab: 'questions' });
-                    }}
+                    onClick={this.changeTab}
                     style={{
                       cursor: 'pointer',
                     }}
@@ -86,10 +87,9 @@ class ProfileUser extends Component {
                 </li>
                 <li className={activeTab === 'answers' ? 'nav-item active' : 'nav-item'}>
                   <a
+                    name="answers"
                     className="nav-link"
-                    onClick={() => {
-                      this.setState({ activeTab: 'answers' });
-                    }}
+                    onClick={this.changeTab}
                     style={{
                       cursor: 'pointer',
                     }}
@@ -99,10 +99,9 @@ class ProfileUser extends Component {
                 </li>
                 <li className={activeTab === 'favorites' ? 'nav-item active' : 'nav-item'}>
                   <a
+                    name="favorites"
                     className="nav-link"
-                    onClick={() => {
-                      this.setState({ activeTab: 'favorites' });
-                    }}
+                    onClick={this.changeTab}
                     style={{
                       cursor: 'pointer',
                     }}
