@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import BuyCredit from '../Payment/BuyCredit.jsx';
 import RedeemCredit from '../Payment/RedeemCredit.jsx';
-import moment from 'moment';
 
-const UserWallet = ({ user, data, refetcher, notify }) => {
+const UserWallet = ({ user, data, refetch, notify }) => {
   return (
     <div>
       <strong>Wallet</strong>
@@ -25,7 +24,7 @@ const UserWallet = ({ user, data, refetcher, notify }) => {
               id={user.id}
               username={user.username}
               data={data}
-              refetcher={refetcher}
+              refetch={refetch}
               notify={notify}
             />
           </div>
