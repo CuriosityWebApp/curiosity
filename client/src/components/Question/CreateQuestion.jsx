@@ -100,7 +100,7 @@ class CreateQuestion extends Component {
                   <div className="form-group">
                     <label>Bounty *</label>
                     <input
-                      type="number"
+                      type="text"
                       value={bounty}
                       className="form-control"
                       required="required"
