@@ -58,6 +58,7 @@ class QuestionList extends Component {
             filter: this.state.filterBy,
             sortBy: this.state.sortBy,
             range: this.state.range,
+            userId: this.props.userId,
           },
         })
         .then(({ data }) => {
@@ -81,6 +82,7 @@ class QuestionList extends Component {
             filter: this.state.filterBy,
             sortBy: this.state.sortBy,
             range: this.state.range,
+            userId: this.props.userId,
           },
         })
         .then(({ data }) => {
@@ -102,6 +104,7 @@ class QuestionList extends Component {
           filter: this.state.filterBy,
           sortBy: this.state.sortBy,
           range: this.state.range,
+          userId: this.props.userId,
         },
       })
       .then(({ data }) => {
@@ -120,19 +123,23 @@ class QuestionList extends Component {
     if (this.props.data.loading) {
       return <div>Loading Questions...</div>;
     } else {
-      let data = this.state.questions.length > 0 ? this.state.questions : this.props.data.questions;
-
-      return data.map(post => {
-        return (
-          <QuestionItem
-            key={post.id}
-            questionId={post.id}
-            onSelect={this.onSelect}
-            userId={this.props.userId}
-            notify={this.props.notify}
-          />
-        );
-      });
+      if (this.state.sortBy === 'recommendation' && !this.state.questions.length) {
+        return <h3> No recommendation found</h3>;
+      } else {
+        let data =
+          this.state.questions.length > 0 ? this.state.questions : this.props.data.questions;
+        return data.map(post => {
+          return (
+            <QuestionItem
+              key={post.id}
+              questionId={post.id}
+              onSelect={this.onSelect}
+              userId={this.props.userId}
+              notify={this.props.notify}
+            />
+          );
+        });
+      }
     }
   }
 
@@ -167,7 +174,7 @@ class QuestionList extends Component {
         <div />
         {this.displayQuestions()}
         <div>
-          <h3> You read all of it! Check back later...</h3>
+          <h3>Check back later...</h3>
         </div>
       </div>
     );
@@ -177,7 +184,7 @@ class QuestionList extends Component {
 export default compose(
   withApollo,
   graphql(getQuestions, {
-    options: () => {
+    options: props => {
       return {
         variables: {
           limit: 15,
@@ -185,6 +192,7 @@ export default compose(
           filter: '',
           sortBy: '',
           range: null,
+          userId: props.userId,
         },
       };
     },
