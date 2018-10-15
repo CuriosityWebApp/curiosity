@@ -29,7 +29,7 @@ class CreateAnswer extends Component {
             this.props.data.refetch();
           })
           .catch(err => console.log('having problems in submit answer ', err))
-      : alert('Please write your answer before sending it');
+      : this.props.notify('error', 'Please write your answer before sending it');
   }
   render() {
     return (
