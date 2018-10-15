@@ -142,6 +142,7 @@ const RootQuery = new GraphQLObjectType({
             })
             .catch(err => console.error('error in questions query TOP', err));
         }
+        
         // get user recommendations
         // match user id, find favorite tags
         // find all questions which match user favorite list
