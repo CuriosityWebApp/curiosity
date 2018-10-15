@@ -15,9 +15,9 @@ class ProfileAnswerList extends Component {
       return <div>Loading...</div>;
     }
     if (error) {
-      console.log(error);
       return <div>Error</div>;
     } else {
+      let { username } = this.props;
       return (
         <div>
           <Link
@@ -26,9 +26,8 @@ class ProfileAnswerList extends Component {
           >
             <div className="card" key={answer.id}>
               <small>
-                <i className="fas fa-comment" />{' '}
-                <b style={{ color: '#14C7F4' }}>{this.props.username}</b> answered on{' '}
-                <b>{answer.question.questionTitle}</b>
+                <i className="fas fa-comment" /> <b style={{ color: '#14C7F4' }}>{username}</b>{' '}
+                answered on <b>{answer.question.questionTitle}</b>
                 <span>
                   {' '}
                   - <em>Posted By {answer.question.user.username}</em>
@@ -46,8 +45,7 @@ class ProfileAnswerList extends Component {
                   margin: '3px',
                 }}
               >
-                {this.props.username} {answer.score} likes -{' '}
-                <em>{moment(answer.createdAt).fromNow()}</em>
+                {username} {answer.score} likes - <em>{moment(answer.createdAt).fromNow()}</em>
                 <div>
                   <em>{answer.answerChosen ? 'Chosen as Best Answer' : ''}</em>
                 </div>
