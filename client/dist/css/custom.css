@@ -2610,4 +2610,7 @@ a (hover):    #fff (white)
  ::-webkit-scrollbar-thumb:hover {
      background: #555;
 }
- 
+.my-modal {
+    width: 50vw;   
+    max-width: 50vw;
+} 
