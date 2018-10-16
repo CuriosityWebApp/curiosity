@@ -1736,7 +1736,7 @@ a (hover):    #fff (white)
          overflow-y: auto;
          overflow-x: hidden;
          transition: 0.5s;
-         padding-top: 60px;
+         padding-top: 20px;
          background: #262626 none repeat scroll 0 0;
          color: rgb(251, 251, 251,0.5);
          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
@@ -1984,7 +1984,6 @@ a (hover):    #fff (white)
     /* sidenav_rgt begin */
      #snb #sidenav_rgt {
          transition: margin-left .5s;
-         padding: 16px;
          height:60px;
          background-color:#FFFFFF;
          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
