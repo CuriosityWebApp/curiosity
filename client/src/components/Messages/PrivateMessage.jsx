@@ -4,7 +4,7 @@ import { withApollo } from 'react-apollo';
 import { AddMessage } from '../../mutations/mutations.js';
 import Autocomplete from 'react-autocomplete';
 import { getUsernames, checkUsername } from '../../queries/queries.js';
-import { Modal, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 class PrivateMessage extends Component {
   constructor(props) {
@@ -15,27 +15,30 @@ class PrivateMessage extends Component {
       title: '',
       content: '',
       users: [],
-      show: true,
     };
     this.searchUsers = this.searchUsers.bind(this);
     this.selectUser = this.selectUser.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.replyFormat = this.replyFormat.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-  }
-
-  handleClose() {
-    this.setState({ show: false });
   }
 
   componentDidMount() {
-    let { username } = this.props;
-    if (username === 'none') {
-      username = '';
+    let { receiverName, title, content } = this.props;
+    if (receiverName) {
+      this.setState({
+        receiverName: receiverName,
+      });
     }
-    this.setState({
-      receiverName: username,
-    });
+    if (title) {
+      this.setState({
+        title: title,
+      });
+    }
+    if (content) {
+      this.setState({
+        content: content,
+      });
+    }
   }
 
   replyFormat(receiverName) {
@@ -105,38 +108,55 @@ class PrivateMessage extends Component {
   submitForm(e) {
     e.preventDefault();
     let { title, content, receiverName, receiverId } = this.state;
-    let { mutate, notify, userId } = this.props;
+    let { mutate, notify, userId, client } = this.props;
     this.setState({ show: true });
     if (!title || !content || !receiverName) {
       notify('error', "Can't post an empty message!");
     } else {
-      if (receiverId) {
-        mutate({
-          mutation: AddMessage,
+      client
+        .query({
+          query: checkUsername,
           variables: {
-            senderId: userId,
-            messageTitle: title,
-            messageContent: content,
-            receiverId: receiverId,
+            username: receiverName,
           },
         })
-          .then(() => {
-            notify('message', `Message Sent to ${receiverName} !`);
-            this.setState({ show: false });
-          })
-          .catch(err => console.log('error bro', err));
-      } else {
-        notify('error', 'Invalid user');
-      }
+        .then(({ data }) => {
+          if (data.checkUsername) {
+            this.setState({ receiverId: data.checkUsername.id }, () => {
+              if (this.state.receiverId) {
+                mutate({
+                  mutation: AddMessage,
+                  variables: {
+                    senderId: userId,
+                    messageTitle: title,
+                    messageContent: content,
+                    receiverId: this.state.receiverId,
+                  },
+                })
+                  .then(() => {
+                    notify('message', `Message Sent to ${receiverName} !`);
+                    this.props.handleClose();
+                  })
+                  .catch(err => console.log('error bro', err));
+              } else {
+                notify('error', 'Invalid user');
+              }
+            });
+          } else {
+            this.setState({ receiverId: '' });
+            notify('error', 'Invalid user');
+          }
+        })
+        .catch(err => console.error(err));
     }
   }
 
   render() {
     const { title, content, receiverName, users } = this.state;
-
+    let { handleClose, showComponent } = this.props;
     return (
       <div>
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal show={showComponent} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Send A Private Message</Modal.Title>
           </Modal.Header>
@@ -152,12 +172,24 @@ class PrivateMessage extends Component {
                   renderItem={(item, highlighted) => (
                     <div
                       key={item.id}
-                      style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}
+                      style={{
+                        backgroundColor: highlighted ? '#eee' : 'transparent',
+                      }}
                     >
                       {item.username}
                     </div>
                   )}
-                  wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+                  wrapperStyle={{
+                    position: 'relative',
+                  }}
+                  menuStyle={{
+                    top: 35,
+                    left: 0,
+                    position: 'absolute',
+                    borderRadius: '3px',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    fontSize: '90%',
+                  }}
                   value={receiverName}
                   onChange={this.searchUsers}
                   onSelect={value => this.selectUser(value)}
@@ -186,7 +218,7 @@ class PrivateMessage extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.handleClose}>Close</Button>
+            <Button onClick={handleClose}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>

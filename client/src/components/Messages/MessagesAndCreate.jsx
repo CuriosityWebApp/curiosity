@@ -13,29 +13,24 @@ class MessagesAndCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      receiverId: '',
-      receiverName: '',
+      showComponent: false,
+      receivername: '',
       title: '',
       content: '',
-      returnedId: null,
-      redirect: false,
-      users: [],
-      creator: false,
     };
-    this.searchUsers = this.searchUsers.bind(this);
-    this.selectUser = this.selectUser.bind(this);
-    this.submitForm = this.submitForm.bind(this);
-    this.toggleCreator = this.toggleCreator.bind(this);
+    this.onClickShowComponent = this.onClickShowComponent.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.replyFormat = this.replyFormat.bind(this);
   }
 
-  toggleCreator() {
+  onClickShowComponent() {
     this.setState({
-      creator: !this.state.creator,
-      receiverName: '',
-      title: '',
-      content: '',
+      showComponent: true,
     });
+  }
+
+  handleClose() {
+    this.setState({ showComponent: false });
   }
 
   replyFormat(receiverName, title, content) {
@@ -43,119 +38,38 @@ class MessagesAndCreate extends Component {
       receiverName: receiverName,
       title: title,
       content: content,
+      showComponent: true,
     });
-    this.setState({
-      creator: true,
-    });
-    window.scrollTo(0, 0);
-  }
-  selectUser(value) {
-    this.setState({ receiverName: value }, () => {
-      this.props.client
-        .query({
-          query: checkUsername,
-          variables: {
-            username: this.state.receiverName,
-          },
-        })
-        .then(({ data }) => {
-          if (data.checkUsername) {
-            this.setState({ receiverId: data.checkUsername.id });
-          } else {
-            this.setState({ receiverId: '' });
-          }
-        })
-        .catch(err => console.error(err));
-    });
-  }
-
-  searchUsers(e) {
-    let { client } = this.props;
-    this.setState({ receiverName: e.target.value }, () => {
-      client
-        .query({
-          query: getUsernames,
-          variables: {
-            username: this.state.receiverName,
-          },
-        })
-        .then(({ data }) => {
-          if (data.getUsernames) {
-            if (this.state.receiverName === '') {
-              this.setState({ users: [] });
-            } else {
-              this.setState({ users: data.getUsernames });
-            }
-          }
-        })
-        .catch(err => console.error(err));
-
-      client
-        .query({
-          query: checkUsername,
-          variables: {
-            username: this.state.receiverName,
-          },
-        })
-        .then(({ data }) => {
-          if (data.checkUsername) {
-            this.setState({ receiverId: data.checkUsername.id });
-          } else {
-            this.setState({ receiverId: '' });
-          }
-        })
-        .catch(err => console.error(err));
-    });
-  }
-
-  submitForm(e) {
-    e.preventDefault();
-    let { title, content, receiverName, receiverId } = this.state;
-    let { mutate, notify, userId } = this.props;
-
-    if (!title || !content || !receiverName) {
-      notify('error', "Can't post an empty message!");
-    } else {
-      if (receiverId) {
-        mutate({
-          mutation: AddMessage,
-          variables: {
-            senderId: userId,
-            messageTitle: title,
-            messageContent: content,
-            receiverId: receiverId,
-          },
-        })
-          .then(() => {
-            notify('message', `Message Sent to ${receiverName} !`);
-            this.toggleCreator();
-          })
-          .catch(err => console.log('error bro', err));
-      } else {
-        notify('error', 'Invalid user');
-      }
-    }
   }
 
   render() {
-    const { title, content, receiverName, creator, users } = this.state;
+    const { showComponent } = this.state;
     const { folder, notify, userId } = this.props;
     return (
       <div>
         <h2>
           <u>{folder}</u>
         </h2>
-        {creator && <PrivateMessage userId={userId} notify={this.props.notify} />}
+        {showComponent && (
+          <PrivateMessage
+            userId={userId}
+            notify={this.props.notify}
+            showComponent={this.state.showComponent}
+            handleClose={this.handleClose}
+            receiverName={this.state.receiverName}
+            content={this.state.content}
+            title={this.state.title}
+          />
+        )}
         <div>
-          {creator ? (
-            <button className="btn btn-info" onClick={this.toggleCreator}>
-              Close
-            </button>
-          ) : (
-            <button className="btn btn-info" onClick={this.toggleCreator}>
-              Create
-            </button>
-          )}
+          <button
+            className="btn btn-info"
+            onClick={() => {
+              this.setState({ showComponent: true });
+            }}
+          >
+            Create
+          </button>
         </div>
         {folder === 'unread' && (
           <NewList userId={userId} replyFormat={this.replyFormat} notify={notify} />

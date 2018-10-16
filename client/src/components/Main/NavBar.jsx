@@ -7,8 +7,20 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMessage: false,
+      showComponent: false,
     };
+    this.onClickShowComponent = this.onClickShowComponent.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  onClickShowComponent() {
+    this.setState({
+      showComponent: true,
+    });
+  }
+
+  handleClose() {
+    this.setState({ showComponent: false });
   }
 
   render() {
@@ -23,6 +35,14 @@ class NavBar extends Component {
 
     return (
       <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
+        {this.state.showComponent ? (
+          <PrivateMessage
+            userId={id}
+            notify={this.props.notify}
+            showComponent={this.state.showComponent}
+            handleClose={this.handleClose}
+          />
+        ) : null}
         <div className="profile-box">
           {signedIn ? (
             <div className="media">
@@ -102,13 +122,10 @@ class NavBar extends Component {
                     className="list-group-item"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
-                      this.setState({ showMessage: true });
+                      this.setState({ showComponent: true });
                     }}
                   >
                     <span>Create Message</span>
-                    {this.state.showMessage && (
-                      <PrivateMessage userId={id} notify={this.props.notify} />
-                    )}
                   </li>
                   <Link to="/messages/unread" style={{ cursor: 'pointer' }}>
                     <li className="list-group-item">

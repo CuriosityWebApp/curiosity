@@ -320,17 +320,6 @@ class QuestionList extends Component {
                         />
                         <Route
                           exact
-                          path="/privatemessage/:username"
-                          render={({ match }) => (
-                            <PrivateMessage
-                              userId={id}
-                              username={match.params.username}
-                              notify={notify}
-                            />
-                          )}
-                        />
-                        <Route
-                          exact
                           path="/notifications"
                           render={() => {
                             return (
