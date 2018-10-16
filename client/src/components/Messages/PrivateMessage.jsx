@@ -134,7 +134,7 @@ class PrivateMessage extends Component {
                   },
                 })
                   .then(() => {
-                    notify('message', `Message Sent to ${receiverName} !`);
+                    notify('transaction', `Message Sent to ${receiverName} !`);
                     this.props.handleClose();
                   })
                   .catch(err => console.log('error bro', err));
@@ -155,66 +155,129 @@ class PrivateMessage extends Component {
     const { title, content, receiverName, users } = this.state;
     let { handleClose, showComponent } = this.props;
     return (
-      <div>
-        <Modal show={showComponent} onHide={handleClose}>
+      <div className="static-modal">
+        <Modal dialogClassName="my-modal" show={showComponent} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Send A Private Message</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div>
-              <form onSubmit={this.submitForm.bind(this)}>
-                <Autocomplete
-                  items={users}
-                  shouldItemRender={(item, value) =>
-                    item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
-                  }
-                  getItemValue={item => item.username}
-                  renderItem={(item, highlighted) => (
-                    <div
-                      key={item.id}
-                      style={{
-                        backgroundColor: highlighted ? '#eee' : 'transparent',
-                      }}
-                    >
-                      {item.username}
+            <div className="card">
+              <div className="card-header bg-dark text-white">
+                <i className="fa fa-question-circle" />
+                <span> Send a Message</span>
+              </div>
+              <div
+                style={{
+                  margin: '40px 40px 40px 40px',
+                }}
+              >
+                <form id="contact-form" method="post" action="contact.php" role="form">
+                  <div className="messages" />
+
+                  <div className="controls">
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label>Recipient *</label>
+                          <Autocomplete
+                            items={users}
+                            shouldItemRender={(item, value) =>
+                              item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
+                            }
+                            getItemValue={item => item.username}
+                            renderItem={(item, highlighted) => (
+                              <div
+                                key={item.id}
+                                style={{
+                                  backgroundColor: highlighted ? '#eee' : 'transparent',
+                                }}
+                              >
+                                {item.username}
+                              </div>
+                            )}
+                            wrapperStyle={{
+                              position: 'relative',
+                            }}
+                            menuStyle={{
+                              top: 35,
+                              left: 0,
+                              position: 'sticky',
+                              borderRadius: '0px',
+                              border: '1px solid',
+                            }}
+                            value={receiverName}
+                            onChange={this.searchUsers}
+                            onSelect={value => this.selectUser(value)}
+                            inputProps={{
+                              type: 'text',
+                              placeholder: 'Username',
+                              name: 'receiverName',
+                              className: 'form-control',
+                            }}
+                          />
+                          <div className="help-block with-errors" />
+                        </div>
+                      </div>
                     </div>
-                  )}
-                  wrapperStyle={{
-                    position: 'relative',
-                  }}
-                  menuStyle={{
-                    top: 35,
-                    left: 0,
-                    position: 'absolute',
-                    borderRadius: '3px',
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    fontSize: '90%',
-                  }}
-                  value={receiverName}
-                  onChange={this.searchUsers}
-                  onSelect={value => this.selectUser(value)}
-                  inputProps={{ placeholder: 'username', name: 'receiverName' }}
-                />
-                <br />
-                <input
-                  type="text"
-                  value={title}
-                  onChange={e => this.setState({ title: e.target.value })}
-                  placeholder="title"
-                  style={{ display: 'inline' }}
-                />
-                <br />
-                <div>
-                  <textarea
-                    rows="5"
-                    cols="60"
-                    value={content}
-                    onChange={e => this.setState({ content: e.target.value })}
-                    placeholder="message"
-                  />
-                </div>
-              </form>
-              <button onClick={this.submitForm.bind(this)}>Send Message</button>
+                    <div className="row">
+                      <div className="col-md-8">
+                        <div className="form-group">
+                          <label>Message Title *</label>
+                          <input
+                            name="title"
+                            type="text"
+                            className="form-control"
+                            value={title}
+                            onChange={e => this.setState({ title: e.target.value })}
+                            placeholder="Title"
+                            style={{ display: 'inline' }}
+                            required="required"
+                            data-error="Message title is required."
+                          />
+                          <div className="help-block with-errors" />
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-group">
+                          <div className="help-block with-errors" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-8">
+                        <div className="form-group">
+                          <label>Message Content *</label>
+                          <textarea
+                            rows="6"
+                            value={content}
+                            className="form-control"
+                            onChange={e => this.setState({ content: e.target.value })}
+                            placeholder="Content"
+                            required="required"
+                            data-error="Question content is required"
+                          />
+                          <div className="help-block with-errors" />
+                        </div>
+                      </div>
+                      <div className="col-md-12">
+                        <input
+                          type="submit"
+                          onClick={this.submitForm}
+                          className="btn btn-success btn-send"
+                          value="Post Message"
+                        />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <p className="text-muted">
+                          <strong>*</strong> These fields are required.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>

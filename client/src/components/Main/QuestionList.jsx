@@ -14,7 +14,6 @@ import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
 import SearchList from '../Search/SearchList.jsx';
 import MessagesAndCreate from '../Messages/MessagesAndCreate.jsx';
-import PrivateMessage from '../Messages/PrivateMessage.jsx';
 import Notifications from '../Notifications/Notifications.jsx';
 
 class QuestionList extends Component {
