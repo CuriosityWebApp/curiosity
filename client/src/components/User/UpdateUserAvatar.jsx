@@ -48,7 +48,7 @@ class ChooseUserAvatar extends Component {
     return (
       <div>
         <button onClick={this.handleShow} className="btn btn-outline-primary">
-          Change Avatar
+          <div>Change Avatar</div>
         </button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
@@ -74,7 +74,7 @@ class ChooseUserAvatar extends Component {
             <form>
               <input
                 type="text"
-                placeholder="url goes here"
+                placeholder="Please paste img url!"
                 onChange={this.handleChange}
                 name="avatarUrl"
                 className="form-control"

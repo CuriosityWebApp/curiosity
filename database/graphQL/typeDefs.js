@@ -65,7 +65,7 @@ const UserType = new GraphQLObjectType({
       resolve(parent, args) {
         return Transaction.find({
           $or: [{ senderId: parent.id }, { receiverId: parent.id }],
-        });
+        }).sort('-createdAt');
       },
     },
     messages: {
