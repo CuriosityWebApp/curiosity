@@ -163,7 +163,7 @@ class PrivateMessage extends Component {
           <Modal.Body>
             <div className="card">
               <div className="card-header bg-dark text-white">
-                <i className="fa fa-question-circle" />
+                <i className="fas fa-envelope" />
                 <span> Send a Message</span>
               </div>
               <div
