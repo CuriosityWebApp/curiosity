@@ -7,6 +7,7 @@ import { withApollo } from 'react-apollo';
 import InboxList from './InboxList.jsx';
 import NewList from './NewList.jsx';
 import SentList from './SentList.jsx';
+import PrivateMessage from '../Messages/PrivateMessage.jsx';
 
 class MessagesAndCreate extends Component {
   constructor(props) {
@@ -144,52 +145,7 @@ class MessagesAndCreate extends Component {
         <h2>
           <u>{folder}</u>
         </h2>
-        {creator && (
-          <div>
-            <h4>Send a message </h4>
-            <form onSubmit={this.submitForm.bind(this)}>
-              <Autocomplete
-                items={users}
-                shouldItemRender={(item, value) =>
-                  item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
-                }
-                getItemValue={item => item.username}
-                renderItem={(item, highlighted) => (
-                  <div
-                    key={item.id}
-                    style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}
-                  >
-                    {item.username}
-                  </div>
-                )}
-                wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-                value={receiverName}
-                onChange={this.searchUsers}
-                onSelect={value => this.selectUser(value)}
-                inputProps={{ placeholder: 'username', name: 'receiverName' }}
-              />
-              <br />
-              <input
-                type="text"
-                value={title}
-                onChange={e => this.setState({ title: e.target.value })}
-                placeholder="title"
-                style={{ display: 'inline' }}
-              />
-              <br />
-              <div>
-                <textarea
-                  rows="5"
-                  cols="60"
-                  value={content}
-                  onChange={e => this.setState({ content: e.target.value })}
-                  placeholder="message"
-                />
-              </div>
-            </form>
-            <button onClick={this.submitForm.bind(this)}>Send Message</button>
-          </div>
-        )}
+        {creator && <PrivateMessage userId={userId} notify={this.props.notify} />}
         <div>
           {creator ? (
             <button className="btn btn-info" onClick={this.toggleCreator}>

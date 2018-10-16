@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import PrivateMessage from '../Messages/PrivateMessage.jsx';
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showMessage: false,
+    };
   }
 
   render() {
     let { signedIn, user, handleLogout } = this.props;
     if (signedIn) {
-      var { username, rank, credit, avatarUrl } = user;
+      var { id, username, rank, credit, avatarUrl } = user;
     } else {
       var username = '';
       var credit = 0;
@@ -94,11 +98,18 @@ class NavBar extends Component {
               </div>
               <div className="card">
                 <ul className="list-group list-group-flush">
-                  <Link to="/privatemessage/none" style={{ cursor: 'pointer' }}>
-                    <li className="list-group-item">
-                      <span>Create Message</span>
-                    </li>
-                  </Link>
+                  <li
+                    className="list-group-item"
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      this.setState({ showMessage: true });
+                    }}
+                  >
+                    <span>Create Message</span>
+                    {this.state.showMessage && (
+                      <PrivateMessage userId={id} notify={this.props.notify} />
+                    )}
+                  </li>
                   <Link to="/messages/unread" style={{ cursor: 'pointer' }}>
                     <li className="list-group-item">
                       <span>Unread</span>

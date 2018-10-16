@@ -196,7 +196,14 @@ class QuestionList extends Component {
     return (
       <React.Fragment>
         <div id="snb">
-          <NavBar user={user} signedIn={signedIn} uiConfig={uiConfig} handleLogout={handleLogout} />
+          <NavBar
+            user={user}
+            signedIn={signedIn}
+            uiConfig={uiConfig}
+            handleLogout={handleLogout}
+            userId={id}
+            notify={notify}
+          />
           <div id="sidenav_rgt" style={{ marginLeft: '250px' }}>
             <div className="container-fluid" />
             <QuestionNavBar

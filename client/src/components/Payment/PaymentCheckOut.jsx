@@ -34,7 +34,7 @@ class PaymentCheckOut extends Component {
           variables: {
             transactionMeans: 'Credit purchase',
             //Sent by admin
-            senderId: '5bb8d00baf90e323e4b9c8a9',
+            senderId: process.env.ADMINID,
             receiverId: id,
             amount: this.state.credits,
           },
