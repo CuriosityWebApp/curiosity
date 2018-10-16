@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Search from '../Search/Search.jsx';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 
 class QuestionNavBar extends Component {
   constructor(props) {
@@ -12,11 +14,6 @@ class QuestionNavBar extends Component {
     this.handleSortTopics = this.handleSortTopics.bind(this);
   }
 
-  handleFilterChange(e) {
-    e.preventDefault();
-
-    this.setState({ filterBy: e.target.value });
-  }
   handleSortTopics(e, value, range) {
     let topic = value || this.state.topic;
     let days = range || this.state.range;
@@ -28,15 +25,31 @@ class QuestionNavBar extends Component {
   }
   render() {
     let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
+    if (this.props.user) {
+      let { messages, questions } = this.props.user;
+      var unreadMessages = 0;
+      for (let i = 0; i < messages.length; i++) {
+        if (messages[i].unread === true) {
+          unreadMessages++;
+        }
+      }
+      var unreadNotifications = 0;
+      for (let j = 0; j < questions.length; j++) {
+        for (let k = 0; k < questions[j].answers.length; k++) {
+          if (questions[j].answers[k].questionerSeen === false) {
+            unreadNotifications++;
+          }
+        }
+      }
+    }
+
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ height: '80px' }}>
+        <a className="navbar-brand" href="/">
+          Curiosity
+        </a>
         <div className="navbar-collapse collapse show" id="navbarColor01">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="/">
-                Home
-              </a>
-            </li>
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -49,18 +62,38 @@ class QuestionNavBar extends Component {
                 Top
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarTop">
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', null)}>
-                  All time
-                </a>
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', '1')}>
-                  Today
-                </a>
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', '7')}>
-                  1 Week
-                </a>
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'top', '30')}>
-                  1 Month
-                </a>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'top', null)}
+                  >
+                    All time
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'top', '1')}
+                  >
+                    Today
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'top', '7')}
+                  >
+                    1 Week
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'top', '30')}
+                  >
+                    1 Month
+                  </option>
+                </Link>
               </div>
             </li>
             <li className="nav-item dropdown">
@@ -75,18 +108,38 @@ class QuestionNavBar extends Component {
                 Hot
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarHot">
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', null)}>
-                  All time
-                </a>
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', '1')}>
-                  Today
-                </a>
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', '7')}>
-                  1 Week
-                </a>
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'views', '30')}>
-                  1 Month
-                </a>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'views', null)}
+                  >
+                    All time
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'views', '1')}
+                  >
+                    Today
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'views', '7')}
+                  >
+                    1 Week
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'views', '30')}
+                  >
+                    1 Month
+                  </option>
+                </Link>
               </div>
             </li>
             <li className="nav-item dropdown">
@@ -101,30 +154,38 @@ class QuestionNavBar extends Component {
                 New
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarNew">
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'createdAt', null)}
-                >
-                  All time
-                </a>
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'createdAt', '1')}
-                >
-                  Today
-                </a>
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'createdAt', '7')}
-                >
-                  1 Week
-                </a>
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'createdAt', '30')}
-                >
-                  1 Month
-                </a>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'createdAt', null)}
+                  >
+                    All time
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'createdAt', '1')}
+                  >
+                    Today
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'createdAt', '7')}
+                  >
+                    1 Week
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'createdAt', '30')}
+                  >
+                    1 Month
+                  </option>
+                </Link>
               </div>
             </li>
             <li className="nav-item dropdown">
@@ -139,64 +200,88 @@ class QuestionNavBar extends Component {
                 Top Bounty
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarBounty">
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'bounty', null)}
-                >
-                  All time
-                </a>
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', '1')}>
-                  Today
-                </a>
-                <a className="dropdown-item" onClick={e => this.handleSortTopics(e, 'bounty', '7')}>
-                  1 Week
-                </a>
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'bounty', '30')}
-                >
-                  1 Month
-                </a>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'bounty', null)}
+                  >
+                    All time
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'bounty', '1')}
+                  >
+                    Today
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'bounty', '7')}
+                  >
+                    1 Week
+                  </option>
+                </Link>
+                <Link to="/">
+                  <option
+                    className="dropdown-item"
+                    onClick={e => this.handleSortTopics(e, 'bounty', '30')}
+                  >
+                    1 Month
+                  </option>
+                </Link>
               </div>
             </li>{' '}
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                id="navbarRecommendation"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Recommendations
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarRecommendation">
+            {this.props.signedIn && (
+              <li className="nav-item dropdown">
                 <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'recommendation', null)}
+                  className="nav-link dropdown-toggle"
+                  id="navbarRecommendation"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  All time
+                  Recommendations
                 </a>
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'recommendation', '1')}
-                >
-                  Today
-                </a>
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'recommendation', '7')}
-                >
-                  1 Week
-                </a>
-                <a
-                  className="dropdown-item"
-                  onClick={e => this.handleSortTopics(e, 'recommendation', '30')}
-                >
-                  1 Month
-                </a>
-              </div>
-            </li>{' '}
+                <div className="dropdown-menu" aria-labelledby="navbarRecommendation">
+                  <Link to="/">
+                    <option
+                      className="dropdown-item"
+                      onClick={e => this.handleSortTopics(e, 'recommendation', null)}
+                    >
+                      All time
+                    </option>
+                  </Link>
+                  <Link to="/">
+                    <option
+                      className="dropdown-item"
+                      onClick={e => this.handleSortTopics(e, 'recommendation', '1')}
+                    >
+                      Today
+                    </option>
+                  </Link>
+                  <Link to="/">
+                    <option
+                      className="dropdown-item"
+                      onClick={e => this.handleSortTopics(e, 'recommendation', '7')}
+                    >
+                      1 Week
+                    </option>
+                  </Link>
+                  <Link to="/">
+                    <option
+                      className="dropdown-item"
+                      onClick={e => this.handleSortTopics(e, 'recommendation', '30')}
+                    >
+                      1 Month
+                    </option>
+                  </Link>
+                </div>
+              </li>
+            )}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -211,18 +296,36 @@ class QuestionNavBar extends Component {
               <div className="dropdown-menu" aria-labelledby="navbarCategories">
                 {categories.map((category, idx) => {
                   return (
-                    <option
-                      value={category}
-                      className="dropdown-item"
-                      key={idx}
-                      onClick={e => this.handleFilterTopics(e)}
-                    >
-                      {category}
-                    </option>
+                    <Link to="/" key={idx}>
+                      <option
+                        value={category}
+                        className="dropdown-item"
+                        onClick={e => this.handleFilterTopics(e)}
+                      >
+                        {category}
+                      </option>
+                    </Link>
                   );
                 })}
               </div>
             </li>{' '}
+            <Search />
+            {this.props.signedIn && (
+              <div>
+                <Link to="/messages/unread" className="icon-circle">
+                  <i className="fas fa-envelope" />
+                  {unreadMessages > 0 && (
+                    <span className="badge badge-danger">{unreadMessages}</span>
+                  )}
+                </Link>
+                <Link to="/notifications" className="icon-circle">
+                  <i className="fas fa-bell" />
+                  {unreadNotifications > 0 && (
+                    <span className="badge badge-success">{unreadNotifications}</span>
+                  )}
+                </Link>
+              </div>
+            )}
           </ul>
         </div>
       </nav>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Main from '../Main/Main.jsx';
 import { checkUserEmail } from '../../queries/queries.js';
 import { graphql } from 'react-apollo';
+import QuestionList from '../Main/QuestionList.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -21,12 +21,17 @@ class App extends Component {
     } else {
       if (checkUserEmail) {
         var signedIn = true;
+        var userId = checkUserEmail.id;
         refetch();
       } else {
         var signedIn = false;
+        var userId = null;
       }
       return (
-        <Main
+        <QuestionList
+          notify={notify}
+          user={checkUserEmail}
+          userId={userId}
           notify={notify}
           email={email}
           signedIn={signedIn}
