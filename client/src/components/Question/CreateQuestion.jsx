@@ -44,11 +44,12 @@ class CreateQuestion extends Component {
     if (tags) {
       splittedTags = tags.split(' ');
     }
-
     if (!title || !content || !restriction) {
       notify('error', "Can't post an empty question!");
     } else if (credit < Number(bounty)) {
       notify('error', 'You have insufficient credit!');
+    } else if (splittedTags.every(tag => tag.charAt(0) === '#') === false) {
+      notify('error', "Can't use tags without # in front!");
     } else {
       this.props
         .AddQuestion({

@@ -126,97 +126,101 @@ class QuestionItem extends Component {
     });
   }
 
-	render() {
-		if (!this.state.selected) {
-			if (this.props.data && this.props.data.loading) {
-				return <div> Loading...</div>;
-			} else {
-				let data = this.props.data.question;
-				let hoverText = `Likes: ${data.ratedUpBy.length}, Dislikes: ${data.ratedDownBy.length}`;
-				return (
-					<div className="inline-block container" style={{ cursor: 'pointer' }}>
-						<div className="list-group">
-							<div className="list-group-item list-group-item-action flex-column align-items-start">
-								<div className="row">
-									<div className="col-1">
-										<div className="row" style={{ textAlign: 'right' }}>
-											<div className="col align-self-start">
-												<div>
-													<button
-														className="fas fa-angle-up fa-2x"
-														aria-hidden="true"
-														style={{
-															color: 'green',
-															cursor: 'pointer',
-															display: 'block',
-															marginLeft: 'auto',
-															marginRight: 'auto',
-															border: 'none',
-															background: 'none'
-														}}
-														onClick={this.throttledIcrement}
-													/>
-												</div>
-											</div>
-											<div className="col align-self-start" style={{ textAlign: 'center' }}>
-												<ReactTooltip effect="solid" />
-												<p data-tip={hoverText}>{data.score}</p>
-											</div>
-											<div className="col align-self-start">
-												<div>
-													<button
-														className="fas fa-angle-down fa-2x"
-														aria-hidden="true"
-														style={{
-															color: 'red',
-															cursor: 'pointer',
-															display: 'block',
-															marginLeft: 'auto',
-															marginRight: 'auto',
-															border: 'none',
-															background: 'none'
-														}}
-														onClick={this.throttledDecrement}
-													/>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div className="col-11" onClick={this.OpenQuestion}>
-										<div className="d-flex w-100 justify-content-between">
-											<h5>{data.questionTitle}</h5>
-											<h6>
-												Reward: {data.bounty} <br /> Views: {data.views}
-											</h6>
-										</div>
-										<div>
-											<small className="text-muted d-flex w-100 justify-content-between">
-												Posted By {data.user.username} {moment(data.createdAt).fromNow()}
-											</small>
-											<small className="text-muted"> Rank {data.restriction} </small>
-											<small className="text-muted"> Answers {data.answers.length}</small>
-											<p>{data.questionContent}</p>
-										</div>
-									</div>
-								</div>
-								<div>
-									{data.tags.map(tag => {
-										return (
-											<span className="badge badge-info" key={tag}>
-												{tag}
-											</span>
-										);
-									})}
-								</div>
-							</div>
-						</div>
-					</div>
-				);
-			}
-		} else {
-			return <Redirect to={`/questionContent/${this.state.selected}`} />;
-		}
-	}
+  render() {
+    if (!this.state.selected) {
+      if (this.props.data && this.props.data.loading) {
+        return <div> Loading...</div>;
+      } else {
+        let data = this.props.data.question;
+        let hoverText = `Likes: ${data.ratedUpBy.length}, Dislikes: ${data.ratedDownBy.length}`;
+        return (
+          <div className="inline-block container" style={{ cursor: 'pointer' }}>
+            <div className="list-group">
+              <div className="list-group-item list-group-item-action flex-column align-items-start">
+                <div className="row">
+                  <div className="col-1">
+                    <div className="row" style={{ textAlign: 'right' }}>
+                      <div className="col align-self-start">
+                        <div>
+                          <button
+                            className="fas fa-angle-up fa-2x"
+                            aria-hidden="true"
+                            style={{
+                              color: 'green',
+                              cursor: 'pointer',
+                              display: 'block',
+                              marginLeft: 'auto',
+                              marginRight: 'auto',
+                              border: 'none',
+                              background: 'none',
+                            }}
+                            onClick={this.throttledIcrement}
+                          />
+                        </div>
+                      </div>
+                      <div className="col align-self-start" style={{ textAlign: 'center' }}>
+                        <ReactTooltip effect="solid" />
+                        <p data-tip={hoverText}>{data.score}</p>
+                      </div>
+                      <div className="col align-self-start">
+                        <div>
+                          <button
+                            className="fas fa-angle-down fa-2x"
+                            aria-hidden="true"
+                            style={{
+                              color: 'red',
+                              cursor: 'pointer',
+                              display: 'block',
+                              marginLeft: 'auto',
+                              marginRight: 'auto',
+                              border: 'none',
+                              background: 'none',
+                            }}
+                            onClick={this.throttledDecrement}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-11" onClick={this.OpenQuestion}>
+                    <div className="d-flex w-100 justify-content-between">
+                      <h5>{data.questionTitle}</h5>
+                      <h6>
+                        Reward: {data.bounty} <br /> Views: {data.views}
+                      </h6>
+                    </div>
+                    <div>
+                      <small className="text-muted d-flex w-100 justify-content-between">
+                        Posted By {data.user.username} {moment(data.createdAt).fromNow()}
+                      </small>
+                      <small className="text-muted"> Rank {data.restriction} </small>
+                      <small className="text-muted"> Answers {data.answers.length}</small>
+                      <p>{data.questionContent}</p>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  {data.tags.map(tag => {
+                    return (
+                      <span
+                        className="badge badge-info"
+                        key={tag}
+                        onClick={e => this.props.filter(e, tag, null)}
+                      >
+                        {tag}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    } else {
+      return <Redirect to={`/questionContent/${this.state.selected}`} />;
+    }
+  }
 }
 
 export default compose(
