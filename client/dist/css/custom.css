@@ -2634,10 +2634,20 @@ a (hover):    #fff (white)
 }
 
 .borderLineColor {
-  border-color: rgb(0, 0, 0), 106);
+  border-color: rgb(0, 0, 0);
 }
 
 .basicMargin {
     margin: 20px;
     padding: 20px;
+}
+
+.rightLeftMargin {
+  margin-right: 20px;
+  margin-left: 20px;
+  background-color: rgb(253, 255, 160);
+}
+
+.backgroundColor {
+    background-color: rgb(30, 73, 143);
 }

@@ -37,17 +37,17 @@ const UserWallet = ({ user, data, refetch, notify }) => {
       </div>
       <br />
       <div className="card">
-        <div className="card-header leftAlign">
+        <div className="card-header leftAlign backgroundColor">
           <i className="far fa-handshake" /> <strong>Transaction History</strong>
         </div>
-        <hr className="noMargin" />
-        <div className="well well-sm pre-scrollable" style={{ maxHeight: '50vh' }}>
+        <hr className="noMargin backgroundColor" />
+        <div className="well well-sm pre-scrollable backgroundColor" style={{ maxHeight: '50vh' }}>
           {user.transactions.length > 0 ? (
             user.transactions.map(transaction => {
               if (!transaction.questionId) {
                 return (
                   <div key={transaction.id}>
-                    <div className="card noMargin borderLineColor">
+                    <div className="card rightLeftMargin borderLineColor">
                       <div className="noMargin leftAlign">
                         <i className="fab fa-cc-stripe" />{' '}
                         <b style={{ color: '#14C7F4' }}>{user.username}</b> made a transaction on{' '}
@@ -72,7 +72,7 @@ const UserWallet = ({ user, data, refetch, notify }) => {
                     key={transaction.id}
                     style={{ textDecoration: 'none', color: 'black' }}
                   >
-                    <div className="card noMargin borderLineColor">
+                    <div className="card rightLeftMargin borderLineColor">
                       <div className="noMargin leftAlign">
                         <i className="far fa-handshake" />{' '}
                         <b style={{ color: '#14C7F4' }}>{user.username}</b> made a transaction on{' '}
