@@ -2612,3 +2612,33 @@ a (hover):    #fff (white)
      background: #555;
 }
  
+.rightAlign {
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 18px;
+  margin-bottom: 15px;
+}
+
+.center {
+    display: 'block'; 
+    margin-left: 'auto'; 
+    margin-right: 'auto';
+}
+
+.noMargin {
+  margin: 0px;
+  padding: 0px;
+}
+
+.leftAlign {
+  text-align: left;
+}
+
+.borderLineColor {
+  border-color: rgb(0, 0, 0), 106);
+}
+
+.basicMargin {
+    margin: 20px;
+    padding: 20px;
+}

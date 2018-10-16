@@ -39,9 +39,7 @@ class AnswerChoice extends Component {
         this.props.AddTransaction({
           mutation: AddTransaction,
           variables: {
-            transactionMeans: `Chosen as Best Answer (${
-              this.props.getQuestion.question.questionTitle
-            })`,
+            transactionMeans: `Best Answer - ${this.props.getQuestion.question.questionTitle}`,
             questionId: this.props.getQuestion.question.id,
             senderId: this.props.qOwnerId,
             receiverId: this.props.getAnswer.answer.user.id,
