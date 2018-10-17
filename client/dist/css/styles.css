@@ -12,3 +12,17 @@
   color: orange;
   background-color: yellow;
 }
+
+.qShadow {
+  box-shadow: 0 0 30px;
+  transition: 0.3s color;
+  color: #217ca3;
+}
+.qShadow:hover {
+  color: #f7ce3e;
+}
+
+.btn-primary.custom-btn {
+  background-color: #217ca3;
+  border-color: #217ca3;
+}
