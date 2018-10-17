@@ -75,9 +75,9 @@ class MessageItem extends Component {
               </div>
               <div className="col">
                 <div style={{ float: 'right' }}>
-                  <button type="button" className="btn btn-success" onClick={this.replyMessage}>
-                    Reply
-                  </button>
+                  <span onClick={this.replyMessage}>
+                    <i class="fas fa-paper-plane" />
+                  </span>
                   <button type="button" className="btn btn-danger" onClick={this.deleteMessage}>
                     Delete
                   </button>
