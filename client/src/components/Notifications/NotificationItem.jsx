@@ -23,7 +23,11 @@ class NotificationItem extends Component {
                     <strong>Response to '{question.questionTitle}'</strong>
                     <div style={{ float: 'right' }}>
                       <Link to={`/questionContent/${question.id}`} style={{ cursor: 'pointer' }}>
-                        <button type="button" className="btn btn-success">
+                        <button
+                          type="button"
+                          className="btn"
+                          style={{ backgroundColor: '#217CA3', color: 'white' }}
+                        >
                           Go To Question
                         </button>
                       </Link>

@@ -78,9 +78,9 @@ class NewList extends Component {
           <strong style={{ color: 'white' }}>Unread</strong>
           <button
             type="button"
-            className="btn btn-warning btn-sm"
+            className="btn btn-sm"
             onClick={this.clearMessages}
-            style={{ float: 'right' }}
+            style={{ float: 'right', color: 'white', backgroundColor: '#F7CE3E' }}
           >
             Clear Unread Messages
           </button>

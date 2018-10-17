@@ -70,16 +70,21 @@ class MessageItem extends Component {
                 </div>
               </div>
               <div className="col-4" style={{ paddingLeft: '50px' }}>
-                <h2 className="handle">{sender.username}</h2>
+                <h2 className="handle">{sender.username} </h2>
                 <span className="qa-message-when-data">{moment(createdAt).fromNow()}</span>
               </div>
               <div className="col">
                 <div style={{ float: 'right' }}>
-                  <span onClick={this.replyMessage}>
-                    <i class="fas fa-paper-plane" />
-                  </span>
-                  <button type="button" className="btn btn-danger" onClick={this.deleteMessage}>
-                    Delete
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    style={{ color: '#dc3545' }}
+                    onClick={this.deleteMessage}
+                  >
+                    <span aria-hidden="true" style={{ fontSize: '50px' }}>
+                      &times;
+                    </span>
                   </button>
                 </div>
               </div>
@@ -97,7 +102,16 @@ class MessageItem extends Component {
           <div className="qa-message-content">
             <div style={{ fontSize: '1.5rem' }}>
               <strong>{messageTitle}</strong>
+              <div style={{ float: 'right' }}>
+                <span onClick={this.replyMessage}>
+                  <i
+                    class="fas fa-paper-plane fa-lg"
+                    style={{ color: '#217CA3', cursor: 'pointer' }}
+                  />
+                </span>
+              </div>
             </div>
+
             <div style={{ fontSize: '1.25rem' }}>{messageContent}</div>
           </div>
         </div>
