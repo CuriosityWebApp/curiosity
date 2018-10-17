@@ -22,8 +22,8 @@ class ProfileUser extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <div className="card">
-                  <div className="card-header leftAlign">
+                <div className="card baseColor">
+                  <div className="card-header smallComponentColor text-white leftAlign">
                     <i className="fa fa-home" /> <strong>Home</strong>
                   </div>
                   <UserInfo user={user} refetch={refetch} notify={notify} data={data} />
@@ -36,8 +36,6 @@ class ProfileUser extends Component {
     }
   }
 }
-
-
 
 export default graphql(getUser, {
   options: props => {

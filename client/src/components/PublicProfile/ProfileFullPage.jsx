@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { getUser } from '../../queries/queries.js';
 import { AddVouch } from '../../mutations/mutations.js';
-import { Link } from 'react-router-dom';
 import ProfileQuestionList from './ProfileQuestionList.jsx';
 import ProfileAnswerList from './ProfileAnswerList.jsx';
+import PrivateMessage from '../Messages/PrivateMessage.jsx';
 import Vouches from './Vouches.jsx';
 import moment from 'moment';
 
@@ -14,10 +14,15 @@ class ProfileFullPage extends Component {
     this.state = {
       showChosen: false,
       showAll: true,
+      showComponent: false,
+      receivername: '',
     };
     this.showChosenOnClick = this.showChosenOnClick.bind(this);
     this.showAllOnClick = this.showAllOnClick.bind(this);
     this.onClickAddVouch = this.onClickAddVouch.bind(this);
+    this.onClickShowComponent = this.onClickShowComponent.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.replyFormat = this.replyFormat.bind(this);
   }
 
   onClickAddVouch(e) {
@@ -59,9 +64,27 @@ class ProfileFullPage extends Component {
       showAll: true,
     });
   }
+  onClickShowComponent() {
+    this.setState({
+      showComponent: true,
+    });
+  }
+
+  handleClose() {
+    this.setState({ showComponent: false });
+  }
+
+  replyFormat() {
+    this.setState({
+      receiverName: this.props.getUser.user.username,
+      showComponent: true,
+    });
+  }
 
   render() {
-    let { username } = this.props;
+    const { showComponent } = this.state;
+
+    let { username, userId } = this.props;
     let { loading, error, user } = this.props.getUser;
     if (loading) {
       return <div>Loading...</div>;
@@ -71,6 +94,15 @@ class ProfileFullPage extends Component {
     } else {
       return (
         <div>
+          {showComponent && (
+            <PrivateMessage
+              userId={userId}
+              notify={this.props.notify}
+              showComponent={this.state.showComponent}
+              handleClose={this.handleClose}
+              receiverName={this.state.receiverName}
+            />
+          )}
           <div className="container">
             <div className="row">
               <div className="col">
@@ -160,11 +192,13 @@ class ProfileFullPage extends Component {
                     <div>Likes: {user.rank}</div>
                     <div>Member Since {moment(user.createdAt).format('LL')}</div>
                     <br />
-                    <Link to={`/privatemessage/${user.username}`}>
-                      <button type="button" className="btn btn-outline-primary">
-                        Send Message
-                      </button>
-                    </Link>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary"
+                      onClick={this.replyFormat}
+                    >
+                      Send Message
+                    </button>
                     <br />
                     <div>
                       <button

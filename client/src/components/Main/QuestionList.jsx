@@ -14,7 +14,6 @@ import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
 import SearchList from '../Search/SearchList.jsx';
 import MessagesAndCreate from '../Messages/MessagesAndCreate.jsx';
-import PrivateMessage from '../Messages/PrivateMessage.jsx';
 import Notifications from '../Notifications/Notifications.jsx';
 
 class QuestionList extends Component {
@@ -196,7 +195,14 @@ class QuestionList extends Component {
     return (
       <React.Fragment>
         <div id="snb">
-          <NavBar user={user} signedIn={signedIn} uiConfig={uiConfig} handleLogout={handleLogout} />
+          <NavBar
+            user={user}
+            signedIn={signedIn}
+            uiConfig={uiConfig}
+            handleLogout={handleLogout}
+            userId={id}
+            notify={notify}
+          />
           <div id="sidenav_rgt" style={{ marginLeft: '250px' }}>
             <div className="container-fluid" />
             <QuestionNavBar
@@ -310,17 +316,6 @@ class QuestionList extends Component {
                               />
                             );
                           }}
-                        />
-                        <Route
-                          exact
-                          path="/privatemessage/:username"
-                          render={({ match }) => (
-                            <PrivateMessage
-                              userId={id}
-                              username={match.params.username}
-                              notify={notify}
-                            />
-                          )}
                         />
                         <Route
                           exact

@@ -64,7 +64,7 @@ const UserInfo = ({ user, refetch, notify, data }) => {
       <div className="row" style={{ marginLeft: '65px', marginRight: '65px', marginTop: '30px' }}>
         <div className="col-12 col-sm-3">
           <Link to={`user/${user.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-            <div className="card mb-3">
+            <div className="card mb-3 smallComponentColor">
               <div
                 className="card-body"
                 style={{
@@ -81,7 +81,7 @@ const UserInfo = ({ user, refetch, notify, data }) => {
         </div>
         <div className="col-12 col-sm-3">
           <Link to={`user/${user.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-            <div className="card mb-3">
+            <div className="card mb-3 smallComponentColor">
               {' '}
               <div
                 className="card-body"
@@ -99,7 +99,7 @@ const UserInfo = ({ user, refetch, notify, data }) => {
         </div>
         <div className="col-12 col-sm-3">
           <Link to={`user/${user.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-            <div className="card mb-3">
+            <div className="card mb-3 smallComponentColor">
               {' '}
               <div
                 className="card-body"
@@ -116,7 +116,7 @@ const UserInfo = ({ user, refetch, notify, data }) => {
           </Link>
         </div>
         <div className="col-12 col-sm-3">
-          <div className="card mb-3">
+          <div className="card mb-3 smallComponentColor">
             {' '}
             <div
               className="card-body"

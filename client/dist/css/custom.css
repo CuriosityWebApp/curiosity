@@ -2645,9 +2645,28 @@ a (hover):    #fff (white)
 .rightLeftMargin {
   margin-right: 20px;
   margin-left: 20px;
-  background-color: rgb(253, 255, 160);
 }
 
-.backgroundColor {
-    background-color: rgb(30, 73, 143);
+.my-modal {
+    width: 50vw;   
+    max-width: 50vw;
+} 
+
+.headerColor {
+  background-color: #232122;
 }
+
+.baseColor {
+  background-color: #DDDEDE;
+}
+
+.smallComponentColor {
+  background-color: #7BA4A8;
+}
+
+/* Coal [#2F3131]
+Bone [#F8F1E5]
+Cerulean Blue [#217CA3]
+Marigold [#F7CE3E]
+Success [#28a745]
+Error [#dc3545] */
