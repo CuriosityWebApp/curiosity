@@ -48,7 +48,8 @@ class ChooseUserAvatar extends Component {
     return (
       <div>
         <button onClick={this.handleShow} className="btn successBtn">
-          <div className="marigold">Change Avatar</div>
+          <i className="fas fa-user-tie marigold" />
+          <span className="textWhite"> Change Avatar</span>
         </button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>

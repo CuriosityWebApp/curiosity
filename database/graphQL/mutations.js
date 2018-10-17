@@ -375,7 +375,8 @@ const Mutation = new GraphQLObjectType({
         add: { type: GraphQLBoolean },
       },
       async resolve(parent, args) {
-        if (args.add) {
+        if (!args.add) {
+          console.log('hello');
           await User.findById(args.id).then((data) => {
             if (!data.vouch.includes(args.vouch)) {
               return User.findOneAndUpdate(
@@ -386,6 +387,7 @@ const Mutation = new GraphQLObjectType({
             }
           });
         } else {
+          console.log('hi');
           await User.findById(args.id).then((data) => {
             if (data.vouch.includes(args.vouch)) {
               return User.findOneAndUpdate(

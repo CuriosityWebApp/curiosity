@@ -9,7 +9,7 @@ const UserWallet = ({ user, data, refetch, notify }) => {
     <div style={{ marginTop: '50px' }}>
       <div className="card shadow rounded">
         <div className="card-header headerColor text-white leftAlign">
-          <i className="fas fa-wallet" /> <strong>Wallet</strong>
+          <i className="fas fa-wallet marigold" /> <strong>Wallet</strong>
         </div>
         <hr className="noMargin" />
         <div className="row">
@@ -38,7 +38,7 @@ const UserWallet = ({ user, data, refetch, notify }) => {
       <br />
       <div className="card shadow rounded" style={{ marginTop: '35px' }}>
         <div className="card-header leftAlign text-white headerColor">
-          <i className="far fa-handshake" /> <strong>Transaction History</strong>
+          <i className="far fa-handshake marigold" /> <strong>Transaction History</strong>
         </div>
         <hr className="noMargin" />
         <div className="well well-sm pre-scrollable" style={{ maxHeight: '30vh' }}>
@@ -50,15 +50,19 @@ const UserWallet = ({ user, data, refetch, notify }) => {
                     <div className="card rightLeftMargin borderLineColor">
                       <div className="noMargin leftAlign">
                         <i className="fab fa-cc-stripe" />{' '}
-                        <b className="marigold">{user.username}</b> made a transaction on{' '}
                         <b>{moment(transaction.createAt).format('LL')}</b>
                       </div>
-                      <hr className="noMargin borderLineColor" />
 
                       <div className="noMargin leftAlign">
-                        <div className="noMargin">
-                          <em>{transaction.transactionMeans}</em> received{' '}
-                          <b>{transaction.amount}</b> credits.
+                        <div className="noMargin leftAlign">
+                          <em>{transaction.transactionMeans}</em>
+                          <span style={{ float: 'right' }}>
+                            <i
+                              className="fas fa-arrow-alt-circle-up"
+                              style={{ color: '#28a745' }}
+                            />{' '}
+                            <b> {transaction.amount}</b> credits
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -75,31 +79,29 @@ const UserWallet = ({ user, data, refetch, notify }) => {
                     <div className="card rightLeftMargin borderLineColor">
                       <div className="noMargin leftAlign">
                         <i className="far fa-handshake" />{' '}
-                        <b className="marigold">{user.username}</b> made a transaction on{' '}
                         <b>{moment(transaction.createAt).format('LL')}</b>
                       </div>
-                      <hr className="noMargin borderLineColor" />
                       <div className="noMargin leftAlign">
-                        <div className="noMargin">
-                          <em>
-                            {user.username === transaction.recipient.username ? (
-                              <b>{transaction.sender.username} </b>
-                            ) : (
-                              <b>You </b>
-                            )}
-                            chose the answer in
-                            {` (${transaction.transactionMeans})`}
-                          </em>{' '}
+                        <div style={{ textAlign: 'left' }}>
+                          <em>Question:</em>
+                          <b> {transaction.transactionMeans}</b>
                           {user.username === transaction.recipient.username ? (
-                            <span>
-                              <b> you</b> received
+                            <span style={{ float: 'right' }}>
+                              <i
+                                className="fas fa-arrow-alt-circle-up"
+                                style={{ color: '#28a745' }}
+                              />{' '}
+                              <b> {transaction.amount}</b> credits
                             </span>
                           ) : (
-                            <span>
-                              <b> {transaction.recipient.username}</b> received
+                            <span style={{ float: 'right' }}>
+                              <i
+                                className="fas fa-arrow-alt-circle-down"
+                                style={{ color: '#dc3545' }}
+                              />
+                              <b> {transaction.amount}</b> credits
                             </span>
                           )}
-                          <b> {transaction.amount}</b> credits.
                         </div>
                       </div>
                     </div>

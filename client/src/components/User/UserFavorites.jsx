@@ -92,7 +92,8 @@ class UserFavorites extends Component {
     return (
       <div>
         <button onClick={this.handleShow} className="btn successBtn">
-          <div className="marigold">Add Tags</div>
+          <i className="fas fa-tags marigold" />
+          <span className="textWhite"> Add Tags</span>
         </button>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
