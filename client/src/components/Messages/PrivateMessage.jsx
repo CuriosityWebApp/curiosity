@@ -134,7 +134,7 @@ class PrivateMessage extends Component {
                   },
                 })
                   .then(() => {
-                    notify('transaction', `Message Sent to ${receiverName} !`);
+                    notify('success', `Message Sent to ${receiverName} !`);
                     this.props.handleClose();
                   })
                   .catch(err => console.log('error bro', err));
@@ -190,6 +190,7 @@ class PrivateMessage extends Component {
                                 key={item.id}
                                 style={{
                                   backgroundColor: highlighted ? '#eee' : 'transparent',
+                                  cursor: 'pointer',
                                 }}
                               >
                                 {item.username}
@@ -201,9 +202,11 @@ class PrivateMessage extends Component {
                             menuStyle={{
                               top: 35,
                               left: 0,
-                              position: 'sticky',
+                              position: 'absolute',
                               borderRadius: '0px',
                               border: '1px solid',
+                              zIndex: '5000',
+                              backgroundColor: 'white',
                             }}
                             value={receiverName}
                             onChange={this.searchUsers}

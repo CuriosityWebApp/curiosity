@@ -81,7 +81,7 @@ class CreateQuestion extends Component {
               },
             })
             .then(() => {
-              notify('transaction', 'Question Created!');
+              notify('success', 'Question Created!');
             });
         })
         .catch(err => console.log('error bro', err));
