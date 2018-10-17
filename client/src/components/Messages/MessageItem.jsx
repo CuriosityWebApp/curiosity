@@ -63,20 +63,18 @@ class MessageItem extends Component {
                   >
                     <img
                       src={sender.avatarUrl}
-                      style={{
-                        minHeight: '60px',
-                        maxHeight: '60px',
-                      }}
+                      className="rounded-circle"
+                      style={{ width: '80px', height: '80px' }}
                     />
                   </Link>
                 </div>
               </div>
-              <div className="col-3">
+              <div className="col-4" style={{ paddingLeft: '50px' }}>
                 <h2 className="handle">{sender.username}</h2>
                 <span className="qa-message-when-data">{moment(createdAt).fromNow()}</span>
               </div>
-              <div className="col-8">
-                <div style={{ position: 'absolute', right: '0px', padding: '15px' }}>
+              <div className="col">
+                <div style={{ float: 'right' }}>
                   <button type="button" className="btn btn-success" onClick={this.replyMessage}>
                     Reply
                   </button>

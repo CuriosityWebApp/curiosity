@@ -318,13 +318,13 @@ class QuestionNavBar extends Component {
             <Search />
             {this.props.signedIn && (
               <div style={{ position: 'absolute', right: '0' }}>
-                <Link to="/messages/unread" className="icon-circle">
+                <Link to="/messages/unread" style={{ padding: '15px' }}>
                   <i className="fas fa-envelope" style={{ color: '#F7CE3E' }} />
                   {unreadMessages > 0 && (
                     <span className="badge badge-success">{unreadMessages}</span>
                   )}
                 </Link>
-                <Link to="/notifications" className="icon-circle">
+                <Link to="/notifications" style={{ padding: '15px' }}>
                   <i className="fas fa-bell" style={{ color: '#F7CE3E' }} />
                   {unreadNotifications > 0 && (
                     <span className="badge badge-success">{unreadNotifications}</span>

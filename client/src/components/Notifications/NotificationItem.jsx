@@ -11,27 +11,35 @@ class NotificationItem extends Component {
   }
 
   render() {
-    let { question, answer, createdAt } = this.props.post;
+    let { question, answer, user, createdAt } = this.props.post;
     return (
-      <div className="list-group">
-        <div className="list-group-item list-group-item-action flex-column align-items-start">
-          <div className="d-flex w-100 justify-content-between">
-            <div>
-              <small>Question Title: {question.questionTitle}</small>
-              <br />
-              <small>Answer: {answer}</small>
-              <br />
-              <small>Date: {moment(createdAt).fromNow()}</small> <br />
-            </div>
-            <div>
-              <Link to={`/questionContent/${question.id}`} style={{ cursor: 'pointer' }}>
-                <button type="button" className="btn btn-success">
-                  Go To Question
-                </button>
-              </Link>
+      <div className="message-item" id="m16" style={{ width: '80%', marginLeft: '6%' }}>
+        <div className="message-inner">
+          <div className="message-head clearfix">
+            <div className="row">
+              <div className="col" style={{ marginLeft: '15px' }}>
+                <h2 className="handle">
+                  <div style={{ fontSize: '1.5rem' }}>
+                    <strong>Response to '{question.questionTitle}'</strong>
+                    <div style={{ float: 'right' }}>
+                      <Link to={`/questionContent/${question.id}`} style={{ cursor: 'pointer' }}>
+                        <button type="button" className="btn btn-success">
+                          Go To Question
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </h2>
+                <div>{user.username}</div>
+                <span className="qa-message-when-data">
+                  <i>{moment(createdAt).fromNow()}</i>
+                </span>
+              </div>
             </div>
           </div>
-          <br />
+          <div className="qa-message-content" style={{ marginLeft: '15px' }}>
+            <div style={{ fontSize: '1rem' }}>{answer}</div>
+          </div>
         </div>
       </div>
     );

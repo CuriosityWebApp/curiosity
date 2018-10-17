@@ -55,7 +55,7 @@ class Notifications extends Component {
         })
         .then(() => {
           if (count < 1) {
-            this.props.notify('success', 'Notifications cleared');
+            this.props.notify('warning', 'Notifications cleared');
             this.props.refetch();
           }
           count++;
@@ -66,12 +66,24 @@ class Notifications extends Component {
 
   render() {
     return (
-      <div>
-        <h2> Notifications</h2>
-        <button type="button" className="btn btn-warning" onClick={this.clearNotifications}>
-          Clear Notifications
-        </button>
-        {this.displayNotifications()}
+      <div className="container">
+        <div
+          className="list-group-item"
+          style={{ backgroundColor: '#217CA3', marginBottom: '10px' }}
+        >
+          <strong style={{ color: 'white' }}>Notifications</strong>
+          <button
+            type="button"
+            className="btn btn-warning btn-sm"
+            onClick={this.clearNotifications}
+            style={{ float: 'right' }}
+          >
+            Clear Notifications
+          </button>
+        </div>
+        <div className="qa-message-list" id="wallmessages">
+          {this.displayNotifications()}
+        </div>
       </div>
     );
   }
