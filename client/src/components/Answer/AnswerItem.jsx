@@ -146,7 +146,7 @@ class AnswerItem extends Component {
       }`;
       return (
         <React.Fragment>
-          <div className="container-fluid pt-3 pb-3 rounded  mr-15 ">
+          <div className="container-fluid pt-1 pb-3 rounded  mr-15 ">
             <div className="row">
               <div className="col-sm-1 p-3 d-flex align-items-center flex-column">
                 <div>
@@ -240,9 +240,10 @@ class AnswerItem extends Component {
                 <div className="card-footer d-flex flex-row-reverse bg-transparent pb-0">
                   <button
                     type="button"
-                    className="fas fa-exclamation-triangle btn btn-danger shadow-sm"
+                    className="fas fa-exclamation-triangle btn btn-danger shadow"
                     onClick={this.report}
                   >
+                    {' '}
                     Report
                   </button>
                 </div>
