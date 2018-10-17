@@ -26,7 +26,6 @@ class UserAnswers extends Component {
     } else {
       return (
         <div className="card">
-          <strong>Answers</strong>
           <div className="list-group">
             {this.props.answers.length > 0 ? (
               this.props.answers.map(answer => {

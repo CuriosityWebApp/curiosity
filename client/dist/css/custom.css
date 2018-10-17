@@ -2607,10 +2607,73 @@ a (hover):    #fff (white)
  ::-webkit-scrollbar-thumb:hover {
      background: #555;
 }
+ 
+.rightAlign {
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 18px;
+  margin-bottom: 15px;
+}
+
+.center {
+    display: 'block'; 
+    margin-left: 'auto'; 
+    margin-right: 'auto';
+}
+
+.noMargin {
+  margin: 0px;
+  padding: 0px;
+}
+
+.leftAlign {
+  text-align: left;
+}
+
+.borderLineColor {
+  border-color: rgb(0, 0, 0);
+}
+
+.basicMargin {
+    margin: 20px;
+    padding: 20px;
+}
+
+.rightLeftMargin {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
 .my-modal {
     width: 50vw;   
     max-width: 50vw;
 } 
+
+.headerColor {
+  background-color: #217CA3;
+}
+
+.smallComponentColor {
+  background-color: #f4f1eb;
+}
+
+.successBtn {
+  background-color: #2F3131;
+}
+
+.marigold {
+  color: #F7CE3E;
+}
+
+.textWhite {
+  color: #FFFFFF;
+}
+/* Coal [#2F3131]
+Background [#f4f1eb]
+Cerulean Blue [#217CA3]
+Marigold [#F7CE3E]
+Success [#28a745]
+Danger [#dc3545] (edited) */
 
 .message-item {
 margin-bottom: 25px;
@@ -2717,3 +2780,7 @@ color: #777;
 font-size: 12px;
 line-height: 22px;
 }
+
+.parent > .child {
+    background-color: transparent !important;
+ }

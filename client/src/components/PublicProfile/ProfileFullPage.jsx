@@ -106,12 +106,13 @@ class ProfileFullPage extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <div className="card">
-                  <div className="card-header bg-dark text-white">
+                <div className="card shadow rounded">
+                  <div className="card-header headerColor text-white">
                     <i className="fas fa-trophy" />
                     <span onClick={this.showAllOnClick} style={{ cursor: 'pointer' }}>
                       {' '}
-                      Answers{' '}
+                      Answers
+                      {'  '}|{'  '}
                     </span>
                     <span onClick={this.showChosenOnClick} style={{ cursor: 'pointer' }}>
                       Chosen{' '}
@@ -147,8 +148,8 @@ class ProfileFullPage extends Component {
                   </div>
                 </div>
                 <br />
-                <div className="card">
-                  <div className="card-header bg-dark text-white">
+                <div className="card shadow rounded">
+                  <div className="card-header headerColor text-white">
                     <i className="fa fa-question-circle" /> Questions
                   </div>
                   <div
@@ -170,8 +171,8 @@ class ProfileFullPage extends Component {
                 </div>
               </div>
               <div className="col-12 col-sm-4">
-                <div className="card bg-light mb-3">
-                  <div className="card-header bg-dark text-white">
+                <div className="card shadow rounded bg-light mb-3">
+                  <div className="card-header headerColor text-white">
                     <i className="fa fa-user" /> User
                   </div>
                   <div
@@ -188,13 +189,19 @@ class ProfileFullPage extends Component {
                       className="rounded-circle"
                       style={{ width: '160px', height: '160px' }}
                     />
-                    <div>{user.username}</div>
-                    <div>Likes: {user.rank}</div>
-                    <div>Member Since {moment(user.createdAt).format('LL')}</div>
+                    <hr />
+                    <div>
+                      <b>{user.username}</b>
+                    </div>
+                    <div>Experience {user.rank}</div>
+                    <div>
+                      <em>Member Since</em> {moment(user.createdAt).format('LL')}
+                    </div>
+                    <hr />
                     <br />
                     <button
                       type="button"
-                      className="btn btn-outline-primary"
+                      className="btn successBtn marigold"
                       onClick={this.replyFormat}
                     >
                       Send Message
@@ -206,7 +213,7 @@ class ProfileFullPage extends Component {
                           margin: '20px',
                         }}
                         type="button"
-                        className="btn btn-outline-primary"
+                        className="btn successBtn marigold"
                         value={user.vouch.includes(username) ? 'Nevermind' : 'Vouch This Person!!'}
                         onClick={this.onClickAddVouch}
                       >

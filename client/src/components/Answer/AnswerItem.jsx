@@ -126,6 +126,7 @@ class AnswerItem extends Component {
       let hoverText = `Likes: ${data.answer.ratedUpBy.length}, Dislikes: ${
         data.answer.ratedDownBy.length
       }`;
+      console.log(this.props, 'hello');
       return (
         <React.Fragment>
           <div className="list-group">
@@ -179,7 +180,7 @@ class AnswerItem extends Component {
                 </div>
                 <div className="col-2">
                   <Link
-                    to={!this.props.loggedId ? '/login' : `/user/${data.answer.question.user.id}`}
+                    to={!this.props.loggedId ? '/login' : `/user/${data.answer.user.id}`}
                     style={{ textDecoration: 'none', color: 'black' }}
                     onClick={this.forceLogin}
                   >

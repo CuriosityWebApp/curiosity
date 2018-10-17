@@ -24,11 +24,11 @@ class RedeemCredit extends Component {
   render() {
     return (
       <div>
-        <strong>Redeem Credit</strong>
+        <strong>Redeem</strong>
 
         <img
-          src="https://d1g8y79pdob38v.cloudfront.net/media/catalog/product/p/a/payment-logo_1.png"
-          style={{ width: '200px' }}
+          src="https://png.icons8.com/windows/1600/stripe.png"
+          style={{ width: '150px', cursor: 'pointer' }}
           onClick={this.handleShow}
         />
 
