@@ -8,21 +8,25 @@ class NewList extends Component {
   constructor(props) {
     super(props);
     this.displayMessages = this.displayMessages.bind(this);
+    this.clearMessages = this.clearMessages.bind(this);
   }
 
   componentDidMount() {
     this.props.getMessages.refetch();
-    setTimeout(() => {
-      this.props.ReadMessages(
-        {
-          mutation: ReadMessages,
-          variables: {
-            receiverId: this.props.userId,
-          },
+  }
+
+  clearMessages() {
+    this.props
+      .ReadMessages({
+        mutation: ReadMessages,
+        variables: {
+          receiverId: this.props.userId,
         },
-        5000,
-      );
-    });
+      })
+      .then(() => {
+        this.props.getMessages.refetch();
+        this.props.notify('warning', 'Unread Messages cleared');
+      });
   }
 
   displayMessages() {
@@ -69,9 +73,17 @@ class NewList extends Component {
       <div className="container">
         <div
           className="list-group-item"
-          style={{ backgroundColor: '#F7CE3E', marginBottom: '10px' }}
+          style={{ backgroundColor: '#217CA3', marginBottom: '10px' }}
         >
           <strong style={{ color: 'white' }}>Unread</strong>
+          <button
+            type="button"
+            className="btn btn-sm"
+            onClick={this.clearMessages}
+            style={{ float: 'right', color: 'white', backgroundColor: '#F7CE3E' }}
+          >
+            Clear Unread Messages
+          </button>
         </div>
         <div className="qa-message-list" id="wallmessages">
           {this.displayMessages()}

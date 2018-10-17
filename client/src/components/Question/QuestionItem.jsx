@@ -17,12 +17,16 @@ class QuestionItem extends Component {
     super(props);
     this.state = {
       selected: null,
+      clickedDown: false,
+      clickedUp: false,
     };
     this.IncrementLikes = this.IncrementLikes.bind(this);
     this.decrementLikes = this.decrementLikes.bind(this);
     this.throttledIcrement = _.throttle(this.IncrementLikes, 200, { leading: false }).bind(this);
     this.throttledDecrement = _.throttle(this.decrementLikes, 200, { leading: false }).bind(this);
     this.OpenQuestion = this.OpenQuestion.bind(this);
+    this.displayUpButtonColor = this.displayUpButtonColor.bind(this);
+    this.displayDownButtonColor = this.displayDownButtonColor.bind(this);
   }
 
   IncrementLikes(e) {
@@ -49,7 +53,9 @@ class QuestionItem extends Component {
               },
             })
             .then(() => {
-              this.props.data.refetch();
+              this.setState({ clickedUp: false, clickedDown: false }, () => {
+                this.props.data.refetch();
+              });
             });
         } else if (!up.has(userId) && !down.has(userId)) {
           this.props
@@ -62,7 +68,9 @@ class QuestionItem extends Component {
               },
             })
             .then(() => {
-              this.props.data.refetch();
+              this.setState({ clickedUp: true, clickedDown: false }, () => {
+                this.props.data.refetch();
+              });
             });
         }
       }
@@ -83,18 +91,19 @@ class QuestionItem extends Component {
         up = new Set(data.ratedUpBy);
         down = new Set(data.ratedDownBy);
         if (down.has(userId)) {
-          this.props
-            .QuestionDislike({
-              mutation: QuestionDislike,
-              variables: {
-                id: data.id,
-                userId: userId,
-                method: 'delete',
-              },
-            })
-            .then(() => {
+          this.props.QuestionDislike({
+            mutation: QuestionDislike,
+            variables: {
+              id: data.id,
+              userId: userId,
+              method: 'delete',
+            },
+          });
+          then(() => {
+            this.setState({ clickedDown: false, clickedUp: false }, () => {
               this.props.data.refetch();
             });
+          });
         } else if (!up.has(userId) && !down.has(userId)) {
           this.props
             .QuestionDislike({
@@ -106,7 +115,9 @@ class QuestionItem extends Component {
               },
             })
             .then(() => {
-              this.props.data.refetch();
+              this.setState({ clickedDown: true, clickedUp: false }, () => {
+                this.props.data.refetch();
+              });
             });
         }
       }
@@ -125,7 +136,16 @@ class QuestionItem extends Component {
         .then(() => this.props.data.refetch());
     });
   }
-
+  displayUpButtonColor() {
+    return this.state.clickedUp
+      ? 'fas fa-caret-up fa-3x centerAlign text-success'
+      : 'fas fa-caret-up fa-3x centerAlign text-muted';
+  }
+  displayDownButtonColor() {
+    return this.state.clickedDown
+      ? 'fas fa-caret-down fa-3x centerAlign text-danger'
+      : 'fas fa-caret-down fa-3x centerAlign text-muted';
+  }
   render() {
     if (!this.state.selected) {
       if (this.props.data && this.props.data.loading) {
@@ -142,11 +162,10 @@ class QuestionItem extends Component {
                     <div className="row" style={{ textAlign: 'right' }}>
                       <div className="col align-self-start">
                         <div>
-                          <button
-                            className="fas fa-angle-up fa-2x"
+                          <i
+                            className={this.displayUpButtonColor()}
                             aria-hidden="true"
                             style={{
-                              color: 'green',
                               cursor: 'pointer',
                               display: 'block',
                               marginLeft: 'auto',
@@ -164,11 +183,10 @@ class QuestionItem extends Component {
                       </div>
                       <div className="col align-self-start">
                         <div>
-                          <button
-                            className="fas fa-angle-down fa-2x"
+                          <i
+                            className={this.displayDownButtonColor()}
                             aria-hidden="true"
                             style={{
-                              color: 'red',
                               cursor: 'pointer',
                               display: 'block',
                               marginLeft: 'auto',

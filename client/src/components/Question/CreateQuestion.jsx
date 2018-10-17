@@ -104,7 +104,7 @@ class CreateQuestion extends Component {
     } else {
       return (
         <div className="card">
-          <div className="card-header bg-dark text-white">
+          <div className="card-header text-white" style={{ backgroundColor: '#217CA3' }}>
             <i className="fa fa-question-circle" />
             <span> Ask Question</span>
           </div>

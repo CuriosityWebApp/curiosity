@@ -33,18 +33,27 @@ class CreateAnswer extends Component {
   }
   render() {
     return (
-      <div className="answerForm">
-        <form>
-          <label>Write the answer below: </label>
-          <br />
-          <textarea
-            rows="10"
-            cols="80"
-            value={this.state.answerContent}
-            onChange={this.changeContent}
-          />
-        </form>
-        <button onClick={this.submitAnswer.bind(this)}>Send response</button>
+      <div className="form-group">
+        <label className="ml-1 pl-1">Answer:</label>
+        <br />
+        <textarea
+          className="form-control"
+          rows="10"
+          cols="85"
+          value={this.state.answerContent}
+          onChange={this.changeContent}
+          required="required"
+          data-error="Answer content is required"
+          placeholder="Please write your answer here..."
+        />
+        <br />
+        <button
+          className="fas fa-paper-plane btn btn-primary custom-btn shadow ml-2 pl-2"
+          onClick={this.submitAnswer.bind(this)}
+        >
+          {' '}
+          Send
+        </button>
       </div>
     );
   }

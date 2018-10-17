@@ -17,31 +17,39 @@ class ProfileSmallPage extends Component {
       return <div>Error...</div>;
     } else {
       return (
-        <div>
-          <div className="card">
-            <div
-              className="box"
+        <div className="card shadow mp-1 bg-white rounded" style={{ backgroundColor: 'muted' }}>
+          <img
+            className="card-img-top rounded-circle mx-auto mb-1 mt-3"
+            src={user.avatarUrl}
+            style={{
+              width: '145px',
+              height: '145px',
+            }}
+            alt="user profile picture"
+          />
+          <div className="card-body mt-0 py-0">
+            <h3 className="card-title " style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <u>{user.username}</u>
+            </h3>
+            <hr />
+            <h6 className="card-subtitle text-center pb-0">
+              {' '}
+              <b>Experience</b>
+              <br />
+              {user.rank}
+            </h6>
+            <br />
+            <p
               style={{
-                display: 'block',
-                marginLeft: 'auto',
-                marginRight: 'auto',
+                textAlign: 'center',
+                fontSize: '12px',
+                fontStyle: 'italic',
+                color: 'gray',
+                padding: '1px',
               }}
             >
-              <div>
-                <br />
-                <img
-                  className="rounded-circle"
-                  src={user.avatarUrl}
-                  style={{ width: '145px', height: '145px' }}
-                />
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <p>{user.username}</p>
-                <small>rank: {user.rank}</small>
-                <br />
-                <small>since {moment(user.createdAt).format('LL')}</small>
-              </div>
-            </div>
+              Member since: {moment(user.createdAt).format('LL')}
+            </p>
           </div>
         </div>
       );
