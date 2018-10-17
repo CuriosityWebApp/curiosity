@@ -126,10 +126,14 @@ class QuestionContent extends Component {
     if (error) {
       return <div>Error...</div>;
     } else {
-      let data = data;
-      let hoverText = `Likes: ${question.ratedUpBy.length}, Dislikes: ${
-        question.ratedDownBy.length
-      }`;
+      let { question } = data;
+      let hoverText;
+      data.refetch();
+      if (question) {
+        hoverText = `Likes: ${question.ratedUpBy.length}, Dislikes: ${question.ratedDownBy.length}`;
+      } else {
+        hoverText = '';
+      }
       return (
         <div className="list-group">
           <div className="list-group-item list-group-item-action flex-column align-items-start">

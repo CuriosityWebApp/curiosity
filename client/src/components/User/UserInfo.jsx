@@ -37,17 +37,18 @@ const UserInfo = ({ user, refetch, notify, data }) => {
           <div className="basicMargin">
             <UpdateUserAvatar id={user.id} refetch={refetch} notify={notify} />
           </div>
+          <hr />
           <strong>{user.username}</strong>
-          <div>
+          <div style={{ marginBottom: '20px' }}>
             <em>Member since </em>
             {moment(user.createdAt).format('LL')}
           </div>
-          <br />
+          <hr />
           <div style={{ fontFamily: 'Impact', marginTop: '20px' }}>My Favorite Tags</div>
           <div>
             {user.favoriteTags.map((tag, i) => {
               return (
-                <span className="badge badge-info " key={i} style={{ margin: '2px' }}>
+                <span className="badge headerColor textWhite" key={i} style={{ margin: '2px' }}>
                   {tag}
                 </span>
               );
@@ -64,7 +65,7 @@ const UserInfo = ({ user, refetch, notify, data }) => {
       <div className="row" style={{ marginLeft: '65px', marginRight: '65px', marginTop: '30px' }}>
         <div className="col-12 col-sm-3">
           <Link to={`user/${user.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-            <div className="card mb-3 smallComponentColor">
+            <div className="card mb-3 successBtn">
               <div
                 className="card-body"
                 style={{
@@ -74,14 +75,15 @@ const UserInfo = ({ user, refetch, notify, data }) => {
                   textAlign: 'center',
                 }}
               >
-                <i className="fas fa-question" /> Questions {user.questions.length}
+                <i className="fas fa-question marigold" />
+                <span className="textWhite"> Questions {user.questions.length}</span>
               </div>
             </div>
           </Link>
         </div>
         <div className="col-12 col-sm-3">
           <Link to={`user/${user.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-            <div className="card mb-3 smallComponentColor">
+            <div className="card mb-3 successBtn">
               {' '}
               <div
                 className="card-body"
@@ -92,14 +94,15 @@ const UserInfo = ({ user, refetch, notify, data }) => {
                   textAlign: 'center',
                 }}
               >
-                <i className="far fa-comment-dots" /> Answers {user.answers.length}
+                <i className="far fa-comment-dots marigold" />
+                <span className="textWhite"> Answers {user.answers.length}</span>
               </div>
             </div>
           </Link>
         </div>
         <div className="col-12 col-sm-3">
           <Link to={`user/${user.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-            <div className="card mb-3 smallComponentColor">
+            <div className="card mb-3 successBtn">
               {' '}
               <div
                 className="card-body"
@@ -110,13 +113,14 @@ const UserInfo = ({ user, refetch, notify, data }) => {
                   textAlign: 'center',
                 }}
               >
-                <i className="fas fa-crown" /> Best Answers {counter}
+                <i className="fas fa-crown marigold" />
+                <span className="textWhite"> Best Answers {counter}</span>
               </div>
             </div>
           </Link>
         </div>
         <div className="col-12 col-sm-3">
-          <div className="card mb-3 smallComponentColor">
+          <div className="card mb-3 successBtn">
             {' '}
             <div
               className="card-body"
@@ -127,7 +131,8 @@ const UserInfo = ({ user, refetch, notify, data }) => {
                 textAlign: 'center',
               }}
             >
-              <i className="fas fa-award" /> Points {user.rank}
+              <i className="fas fa-award marigold" />
+              <span className="textWhite"> Experience {user.rank}</span>
             </div>
           </div>
         </div>

@@ -19,11 +19,11 @@ class ProfileUser extends Component {
     } else {
       return (
         <div>
-          <div className="container">
+          <div className="card">
             <div className="row">
               <div className="col">
-                <div className="card baseColor">
-                  <div className="card-header smallComponentColor text-white leftAlign">
+                <div className="card shadow rounded">
+                  <div className="card-header headerColor text-white leftAlign">
                     <i className="fa fa-home" /> <strong>Home</strong>
                   </div>
                   <UserInfo user={user} refetch={refetch} notify={notify} data={data} />

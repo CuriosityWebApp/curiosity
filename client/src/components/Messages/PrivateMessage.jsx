@@ -162,8 +162,8 @@ class PrivateMessage extends Component {
           </Modal.Header>
           <Modal.Body>
             <div className="card">
-              <div className="card-header bg-dark text-white">
-                <i className="fa fa-question-circle" />
+              <div className="card-header text-white" style={{ backgroundColor: '#217CA3' }}>
+                <i className="fas fa-envelope" />
                 <span> Send a Message</span>
               </div>
               <div
@@ -263,7 +263,7 @@ class PrivateMessage extends Component {
                         <input
                           type="submit"
                           onClick={this.submitForm}
-                          className="btn btn-success btn-send"
+                          className="btn btn-send btn-success"
                           value="Post Message"
                         />
                       </div>
@@ -281,7 +281,9 @@ class PrivateMessage extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={handleClose}>Close</Button>
+            <Button className="btn btn-danger" onClick={handleClose}>
+              Close
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>

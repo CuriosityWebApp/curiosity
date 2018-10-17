@@ -26,8 +26,8 @@ class ProfileAnswerList extends Component {
           >
             <div className="card" key={answer.id}>
               <small>
-                <i className="fas fa-comment" /> <b style={{ color: '#14C7F4' }}>{username}</b>{' '}
-                answered on <b>{answer.question.questionTitle}</b>
+                <i className="fas fa-comment" /> <b className="marigold">{username}</b> answered on{' '}
+                <b>{answer.question.questionTitle}</b>
                 <span>
                   {' '}
                   - <em>Posted By {answer.question.user.username}</em>
@@ -47,7 +47,13 @@ class ProfileAnswerList extends Component {
               >
                 {username} {answer.score} likes - <em>{moment(answer.createdAt).fromNow()}</em>
                 <div>
-                  <em>{answer.answerChosen ? 'Chosen as Best Answer' : ''}</em>
+                  <em>
+                    {answer.answerChosen ? (
+                      <span className="badge successBtn marigold">Chosen as Best Answer</span>
+                    ) : (
+                      ''
+                    )}
+                  </em>
                 </div>
               </small>
               <small

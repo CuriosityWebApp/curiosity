@@ -32,7 +32,7 @@ class BuyCredit extends Component {
               <strong>Buy</strong>
               <img
                 onClick={this.onClickShowComponent}
-                src="https://d1g8y79pdob38v.cloudfront.net/media/catalog/product/p/a/payment-logo_1.png"
+                src="https://png.icons8.com/windows/1600/stripe.png"
                 style={{ width: '150px', cursor: 'pointer' }}
               />
               {this.state.showComponent ? (

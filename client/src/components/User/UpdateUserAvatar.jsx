@@ -47,8 +47,8 @@ class ChooseUserAvatar extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleShow} className="btn btn-outline-primary">
-          <div>Change Avatar</div>
+        <button onClick={this.handleShow} className="btn successBtn">
+          <div className="marigold">Change Avatar</div>
         </button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>

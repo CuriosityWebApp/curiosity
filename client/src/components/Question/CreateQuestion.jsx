@@ -144,7 +144,6 @@ class CreateQuestion extends Component {
                         value={restriction}
                         onChange={this.changeState}
                         className="form-control"
-                        required="required"
                         data-error="Rank is required"
                       />
                       <div className="help-block with-errors" />
