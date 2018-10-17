@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { AddMessage } from '../../mutations/mutations.js';
-import Autocomplete from 'react-autocomplete';
-import { getUsernames, checkUsername } from '../../queries/queries.js';
 import { withApollo } from 'react-apollo';
 import InboxList from './InboxList.jsx';
 import NewList from './NewList.jsx';
@@ -47,9 +45,6 @@ class MessagesAndCreate extends Component {
     const { folder, notify, userId } = this.props;
     return (
       <div>
-        <h2>
-          <u>{folder}</u>
-        </h2>
         {showComponent && (
           <PrivateMessage
             userId={userId}
@@ -61,16 +56,6 @@ class MessagesAndCreate extends Component {
             title={this.state.title}
           />
         )}
-        <div>
-          <button
-            className="btn btn-info"
-            onClick={() => {
-              this.setState({ showComponent: true });
-            }}
-          >
-            Create
-          </button>
-        </div>
         {folder === 'unread' && (
           <NewList userId={userId} replyFormat={this.replyFormat} notify={notify} />
         )}

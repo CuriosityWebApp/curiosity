@@ -44,7 +44,7 @@ class QuestionNavBar extends Component {
     }
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ height: '80px' }}>
+      <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: '#2F3131' }}>
         <a className="navbar-brand" href="/">
           Curiosity
         </a>

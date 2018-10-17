@@ -213,7 +213,7 @@ class QuestionList extends Component {
             />
           </div>
         </div>
-        <div id="menu_feature" style={{ marginLeft: '250px', backgroundColor: '#eef1f6' }}>
+        <div id="menu_feature" style={{ marginLeft: '250px' }}>
           <span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
           <div />
           <div className="bg-content">
