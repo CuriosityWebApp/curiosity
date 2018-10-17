@@ -69,7 +69,7 @@ class NewList extends Component {
       <div className="container">
         <div
           className="list-group-item"
-          style={{ backgroundColor: '#217CA3', marginBottom: '10px' }}
+          style={{ backgroundColor: '#F7CE3E', marginBottom: '10px' }}
         >
           <strong style={{ color: 'white' }}>Unread</strong>
         </div>

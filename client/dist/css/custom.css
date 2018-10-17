@@ -1986,7 +1986,6 @@ a (hover):    #fff (white)
          transition: margin-left .5s;
          height:60px;
          background-color:#f4f1eb;
-         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     }
      #snb .sidenav_rgt_open{
          float:left;
@@ -2718,7 +2717,3 @@ color: #777;
 font-size: 12px;
 line-height: 22px;
 }
-
-.parent > .child {
-    background-color: transparent !important;
- }
