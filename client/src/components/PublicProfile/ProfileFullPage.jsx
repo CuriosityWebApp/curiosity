@@ -25,23 +25,17 @@ class ProfileFullPage extends Component {
     this.replyFormat = this.replyFormat.bind(this);
   }
 
-  onClickAddVouch(e) {
+  onClickAddVouch(vouches) {
     let { AddVouch, userId, username, notify, getUser } = this.props;
-    let value;
-    if (e.target.value === 'Nevermind') {
-      value = false;
-    } else {
-      value = true;
-    }
     AddVouch({
       variables: {
         id: userId,
         vouch: username,
-        add: value,
+        add: vouches,
       },
     })
       .then(() => {
-        if (value === false) {
+        if (!vouches) {
           notify('error', 'Removed Vouch!');
         } else {
           notify('success', 'Added Vouch!');
@@ -204,7 +198,8 @@ class ProfileFullPage extends Component {
                       className="btn successBtn marigold"
                       onClick={this.replyFormat}
                     >
-                      Send Message
+                      <i className="fas fa-envelope marigold" />
+                      <span className="textWhite"> Send Message</span>
                     </button>
                     <br />
                     <div>
@@ -213,11 +208,20 @@ class ProfileFullPage extends Component {
                           margin: '20px',
                         }}
                         type="button"
-                        className="btn successBtn marigold"
-                        value={user.vouch.includes(username) ? 'Nevermind' : 'Vouch This Person!!'}
-                        onClick={this.onClickAddVouch}
+                        className="btn successBtn textWhite"
+                        onClick={() => this.onClickAddVouch(user.vouch.includes(username))}
                       >
-                        {user.vouch.includes(username) ? 'Nevermind' : 'Vouch This Person!!'}
+                        <span className="textWhite">
+                          {user.vouch.includes(username) ? (
+                            <span>
+                              <i className="fas fa-thumbs-down marigold" /> Nevermind
+                            </span>
+                          ) : (
+                            <span>
+                              <i className="fas fa-thumbs-up marigold" /> Vouch This Person!!
+                            </span>
+                          )}
+                        </span>
                       </button>
                     </div>
                   </div>

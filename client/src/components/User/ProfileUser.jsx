@@ -24,7 +24,7 @@ class ProfileUser extends Component {
               <div className="col">
                 <div className="card shadow rounded">
                   <div className="card-header headerColor text-white leftAlign">
-                    <i className="fa fa-home" /> <strong>Home</strong>
+                    <i className="fa fa-home marigold" /> <strong>Home</strong>
                   </div>
                   <UserInfo user={user} refetch={refetch} notify={notify} data={data} />
                 </div>
