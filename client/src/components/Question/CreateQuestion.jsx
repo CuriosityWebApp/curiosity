@@ -81,7 +81,7 @@ class CreateQuestion extends Component {
               },
             })
             .then(() => {
-              notify('transaction', 'Question Created!');
+              notify('success', 'Question Created!');
             });
         })
         .catch(err => console.log('error bro', err));
@@ -144,7 +144,6 @@ class CreateQuestion extends Component {
                         value={restriction}
                         onChange={this.changeState}
                         className="form-control"
-                        required="required"
                         data-error="Rank is required"
                       />
                       <div className="help-block with-errors" />

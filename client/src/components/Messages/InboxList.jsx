@@ -44,7 +44,19 @@ class InboxList extends Component {
   }
 
   render() {
-    return <div>{this.displayMessages()}</div>;
+    return (
+      <div className="container">
+        <div
+          className="list-group-item"
+          style={{ backgroundColor: '#217CA3', marginBottom: '10px' }}
+        >
+          <strong style={{ color: 'white' }}>Inbox</strong>
+        </div>
+        <div className="qa-message-list" id="wallmessages">
+          {this.displayMessages()}
+        </div>
+      </div>
+    );
   }
 }
 

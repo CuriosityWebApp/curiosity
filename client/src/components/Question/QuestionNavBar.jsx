@@ -44,7 +44,7 @@ class QuestionNavBar extends Component {
     }
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ height: '80px' }}>
+      <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: '#2F3131' }}>
         <a className="navbar-brand" href="/">
           Curiosity
         </a>
@@ -58,6 +58,7 @@ class QuestionNavBar extends Component {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                style={{ cursor: 'pointer' }}
               >
                 Top
               </a>
@@ -104,6 +105,7 @@ class QuestionNavBar extends Component {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                style={{ cursor: 'pointer' }}
               >
                 Hot
               </a>
@@ -150,6 +152,7 @@ class QuestionNavBar extends Component {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                style={{ cursor: 'pointer' }}
               >
                 New
               </a>
@@ -196,6 +199,7 @@ class QuestionNavBar extends Component {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                style={{ cursor: 'pointer' }}
               >
                 Top Bounty
               </a>
@@ -243,6 +247,7 @@ class QuestionNavBar extends Component {
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  style={{ cursor: 'pointer' }}
                 >
                   Recommendations
                 </a>
@@ -290,6 +295,7 @@ class QuestionNavBar extends Component {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                style={{ cursor: 'pointer' }}
               >
                 Category
               </a>
@@ -311,15 +317,15 @@ class QuestionNavBar extends Component {
             </li>{' '}
             <Search />
             {this.props.signedIn && (
-              <div>
+              <div style={{ position: 'absolute', right: '0' }}>
                 <Link to="/messages/unread" className="icon-circle">
-                  <i className="fas fa-envelope" />
+                  <i className="fas fa-envelope" style={{ color: '#F7CE3E' }} />
                   {unreadMessages > 0 && (
-                    <span className="badge badge-danger">{unreadMessages}</span>
+                    <span className="badge badge-success">{unreadMessages}</span>
                   )}
                 </Link>
                 <Link to="/notifications" className="icon-circle">
-                  <i className="fas fa-bell" />
+                  <i className="fas fa-bell" style={{ color: '#F7CE3E' }} />
                   {unreadNotifications > 0 && (
                     <span className="badge badge-success">{unreadNotifications}</span>
                   )}

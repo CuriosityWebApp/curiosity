@@ -24,8 +24,8 @@ class ProfileQuestionList extends Component {
           <Link to={`/questionContent/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
             <div className="card" key={id}>
               <small>
-                <i className="fas fa-comment" /> <b style={{ color: '#14C7F4' }}>{username}</b>{' '}
-                asked <b>{questionTitle}</b>
+                <i className="fas fa-comment" /> <b className="marigold">{username}</b> asked{' '}
+                <b>{questionTitle}</b>
                 <span>
                   {' '}
                   <em>

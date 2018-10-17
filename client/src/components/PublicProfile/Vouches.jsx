@@ -9,8 +9,8 @@ class Vouches extends Component {
   render() {
     let { vouch } = this.props;
     return (
-      <div className="card bg-light mb-3">
-        <div className="card-header bg-dark text-white">
+      <div className="card shadow rounded bg-light mb-3">
+        <div className="card-header headerColor text-white">
           <i className="fas fa-users" /> Vouched By
         </div>
         <div
@@ -27,7 +27,7 @@ class Vouches extends Component {
             {vouch.map((eachVouch, idx) => {
               return (
                 <div key={idx}>
-                  <div className="badge badge-info">{eachVouch}</div>
+                  <div className="badge headerColor textWhite">{eachVouch}</div>
                   <br />
                 </div>
               );

@@ -14,7 +14,6 @@ import Login from '../Auth/Login.jsx';
 import ProfileUser from '../User/ProfileUser.jsx';
 import SearchList from '../Search/SearchList.jsx';
 import MessagesAndCreate from '../Messages/MessagesAndCreate.jsx';
-import PrivateMessage from '../Messages/PrivateMessage.jsx';
 import Notifications from '../Notifications/Notifications.jsx';
 
 class QuestionList extends Component {
@@ -172,32 +171,51 @@ class QuestionList extends Component {
       var id = '';
     }
     let filter = this.state.filterBy ? (
-      <span className="badge badge-warning">{this.state.filterBy}</span>
+      <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+        {this.state.filterBy}
+      </span>
     ) : (
       ''
     );
     let sorted = this.state.sortBy ? (
       this.state.sortBy !== 'createdAt' ? (
-        <span className="badge badge-warning">{this.state.sortBy}</span>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+          {this.state.sortBy}
+        </span>
       ) : (
-        <span className="badge badge-warning">New first</span>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+          New first
+        </span>
       )
     ) : (
       ''
     );
     let range = this.state.range ? (
       this.state.range > 1 ? (
-        <span className="badge badge-warning">{this.state.range} days</span>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+          {this.state.range} days
+        </span>
       ) : (
-        <span className="badge badge-warning">Today</span>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+          Today
+        </span>
       )
     ) : (
-      <span className="badge badge-warning">All time</span>
+      <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+        All time
+      </span>
     );
     return (
       <React.Fragment>
         <div id="snb">
-          <NavBar user={user} signedIn={signedIn} uiConfig={uiConfig} handleLogout={handleLogout} />
+          <NavBar
+            user={user}
+            signedIn={signedIn}
+            uiConfig={uiConfig}
+            handleLogout={handleLogout}
+            userId={id}
+            notify={notify}
+          />
           <div id="sidenav_rgt" style={{ marginLeft: '250px' }}>
             <div className="container-fluid" />
             <QuestionNavBar
@@ -208,8 +226,11 @@ class QuestionList extends Component {
             />
           </div>
         </div>
-        <div id="menu_feature" style={{ marginLeft: '250px', backgroundColor: '#eef1f6' }}>
-          <span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
+        <div id="menu_feature" style={{ marginLeft: '250px' }}>
+          <span className="badge" style={{ backgroundColor: '#217CA3', color: 'white' }}>
+            Filtered by:{' '}
+          </span>{' '}
+          {filter} {sorted} {range}
           <div />
           <div className="bg-content">
             <div className="container-fluid">
@@ -311,17 +332,6 @@ class QuestionList extends Component {
                               />
                             );
                           }}
-                        />
-                        <Route
-                          exact
-                          path="/privatemessage/:username"
-                          render={({ match }) => (
-                            <PrivateMessage
-                              userId={id}
-                              username={match.params.username}
-                              notify={notify}
-                            />
-                          )}
                         />
                         <Route
                           exact

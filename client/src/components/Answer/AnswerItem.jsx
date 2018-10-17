@@ -18,10 +18,7 @@ import ReactTooltip from 'react-tooltip';
 class AnswerItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      clickedUp: false,
-      clickedDown: false,
-    };
+    this.state = {};
     this.report = this.report.bind(this);
     this.throttledIcrement = _.throttle(this.IncrementLikes, 200, { leading: false });
     this.throttledDecrement = _.throttle(this.decrementLikes, 200, { leading: false });
@@ -59,9 +56,7 @@ class AnswerItem extends Component {
               },
             })
             .then(() => {
-              this.setState({ clickedUp: false, clickedDown: false }, () => {
-                this.props.getAnswer.refetch();
-              });
+              this.props.getAnswer.refetch();
             });
         } else if (!up.has(userId) && !down.has(userId)) {
           this.props
@@ -74,9 +69,7 @@ class AnswerItem extends Component {
               },
             })
             .then(() => {
-              this.setState({ clickedUp: true, clickedDown: false }, () => {
-                this.props.getAnswer.refetch();
-              });
+              this.props.getAnswer.refetch();
             });
         }
       }
@@ -107,9 +100,7 @@ class AnswerItem extends Component {
               },
             })
             .then(() => {
-              this.setState({ clickedDown: false, clickedUp: false }, () => {
-                this.props.getAnswer.refetch();
-              });
+              this.props.getAnswer.refetch();
             });
         } else if (!up.has(userId) && !down.has(userId)) {
           this.props
@@ -122,21 +113,25 @@ class AnswerItem extends Component {
               },
             })
             .then(() => {
-              this.setState({ clickedDown: true, clickedUp: false }, () => {
-                this.props.getAnswer.refetch();
-              });
+              this.props.getAnswer.refetch();
             });
         }
       }
     }
   }
   displayUpButtonColor() {
-    return this.state.clickedUp
+    let data = this.props.getAnswer.answer;
+    let up = new Set(data.ratedUpBy);
+    let userId = this.props.loggedId;
+    return up.has(userId)
       ? 'fas fa-caret-up fa-3x centerAlign text-success'
       : 'fas fa-caret-up fa-3x centerAlign text-muted';
   }
   displayDownButtonColor() {
-    return this.state.clickedDown
+    let data = this.props.getAnswer.answer;
+    let down = new Set(data.ratedDownBy);
+    let userId = this.props.loggedId;
+    return down.has(userId)
       ? 'fas fa-caret-down fa-3x centerAlign text-danger'
       : 'fas fa-caret-down fa-3x centerAlign text-muted';
   }
@@ -153,9 +148,9 @@ class AnswerItem extends Component {
         <React.Fragment>
           <div className="container-fluid pt-3 pb-3 rounded  mr-15 ">
             <div className="row">
-              <div className="col-sm-1 p-3">
+              <div className="col-sm-1 p-3 d-flex align-items-center flex-column">
                 <div>
-                  <button
+                  <i
                     className={this.displayUpButtonColor()}
                     aria-hidden="true"
                     style={{
@@ -181,11 +176,10 @@ class AnswerItem extends Component {
                   </p>
                 </div>
                 <div>
-                  <button
+                  <i
                     className={this.displayDownButtonColor()}
                     aria-hidden="true"
                     style={{
-                      color: 'red',
                       cursor: 'pointer',
                       display: 'block',
                       marginLeft: 'auto',
@@ -202,9 +196,7 @@ class AnswerItem extends Component {
                   <div className="row">
                     <div className="col-md-3">
                       <Link
-                        to={
-                          !this.props.loggedId ? '/login' : `/user/${data.answer.question.user.id}`
-                        }
+                        to={!this.props.loggedId ? '/login' : `/user/${data.answer.user.id}`}
                         style={{ textDecoration: 'none', color: 'black' }}
                         onClick={this.forceLogin}
                       >
@@ -248,7 +240,7 @@ class AnswerItem extends Component {
                 <div className="card-footer d-flex flex-row-reverse bg-transparent pb-0">
                   <button
                     type="button"
-                    className="fas fa-exclamation-triangle btn btn-danger"
+                    className="fas fa-exclamation-triangle btn btn-danger shadow-sm"
                     onClick={this.report}
                   >
                     Report

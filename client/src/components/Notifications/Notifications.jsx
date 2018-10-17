@@ -55,7 +55,7 @@ class Notifications extends Component {
         })
         .then(() => {
           if (count < 1) {
-            this.props.notify('warning', 'Notifications cleared');
+            this.props.notify('success', 'Notifications cleared');
             this.props.refetch();
           }
           count++;

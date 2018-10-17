@@ -39,7 +39,7 @@ class ChooseUserAvatar extends Component {
         avatarUrl: this.state.avatarUrl,
       },
     }).then(() => {
-      notify('message', 'Avatar Updated!');
+      notify('success', 'Avatar Updated!');
       refetch();
     });
   }
@@ -47,8 +47,8 @@ class ChooseUserAvatar extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleShow} className="btn btn-outline-primary">
-          Change Avatar
+        <button onClick={this.handleShow} className="btn successBtn">
+          <div className="marigold">Change Avatar</div>
         </button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
@@ -74,7 +74,7 @@ class ChooseUserAvatar extends Component {
             <form>
               <input
                 type="text"
-                placeholder="url goes here"
+                placeholder="Please paste img url!"
                 onChange={this.handleChange}
                 name="avatarUrl"
                 className="form-control"

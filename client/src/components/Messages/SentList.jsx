@@ -25,7 +25,7 @@ class SentList extends Component {
               post={post}
               replyFormat={this.props.replyFormat}
               onSelect={this.onSelect}
-              userMessages={this.props.userMessages}
+              userSentMessages={this.props.data}
               notify={this.props.notify}
             />
           );
@@ -43,7 +43,19 @@ class SentList extends Component {
   }
 
   render() {
-    return <div>{this.displayMessages()}</div>;
+    return (
+      <div className="container">
+        <div
+          className="list-group-item"
+          style={{ backgroundColor: '#217CA3', marginBottom: '10px' }}
+        >
+          <strong style={{ color: 'white' }}>Sent</strong>
+        </div>
+        <div className="qa-message-list" id="wallmessages">
+          {this.displayMessages()}
+        </div>
+      </div>
+    );
   }
 }
 

@@ -21,7 +21,7 @@
 # [Color codes]
 
 Navbar BG : #262626 (Black)
-HyperLink : #ffffff (white)
+HyperLink : #f4f1eb (white)
 Content   : #666666 (light gray)
 Header h4 : #383d41 (black)
 Footer    : #212529 (light black)
@@ -329,7 +329,7 @@ a (hover):    #fff (white)
          transition: margin-left .5s;
          padding: 16px;
          height:60px;
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     }
      #snb .sidenav_rgt_open{
@@ -394,7 +394,7 @@ a (hover):    #fff (white)
     }
     /* panel */
      #menu_feature .inner-content .panel{
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          margin:0px 20px;
          border-radius:3px;
     }
@@ -517,7 +517,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .snav-rgtf-canvas{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .iflate-canvas{
          border:0px;
@@ -601,7 +601,7 @@ a (hover):    #fff (white)
          color:rgb(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-push a:hover{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .asnav-lflate-push .card .card-header {
          border: transparent !important;
@@ -720,7 +720,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .snav-flate-gradient {
          background: linear-gradient(to right, rgb(0, 0, 0,0.9) 0%,rgba(27, 27, 27, 0.9) 100%);
@@ -790,7 +790,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-ogradient .card-header .label {
          background: #333;
-         color: #FFFFFF;
+         color: #f4f1eb;
     }
     /* Sidenav overlay gradient end */
     /* Sidenav push off-canvas background begin */
@@ -1180,7 +1180,7 @@ a (hover):    #fff (white)
          transition: margin-left .5s;
          padding: 16px;
          height:60px;
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     }
      #snb .sidenav_rgt_open{
@@ -1243,7 +1243,7 @@ a (hover):    #fff (white)
     }
     /* panel */
      #menu_feature .inner-content .panel{
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          margin:0px 20px;
          border-radius:3px;
     }
@@ -1372,7 +1372,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #menu_feature .snav-rgtf-canvas{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #menu_feature .iflate-canvas{
          border:0px;
@@ -1456,7 +1456,7 @@ a (hover):    #fff (white)
          color:rgb(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-push a:hover{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .asnav-lflate-push .card .card-header {
          border: transparent !important;
@@ -1575,7 +1575,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .snav-flate-gradient {
          background: linear-gradient(to right, rgb(0, 0, 0,0.9) 0%,rgba(27, 27, 27, 0.9) 100%);
@@ -1645,7 +1645,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-ogradient .card-header .label {
          background: #333;
-         color: #FFFFFF;
+         color: #f4f1eb;
     }
     /* Sidenav overlay gradient end */
     /* Sidenav push off-canvas background begin */
@@ -1737,7 +1737,7 @@ a (hover):    #fff (white)
          overflow-x: hidden;
          transition: 0.5s;
          padding-top: 20px;
-         background: #262626 none repeat scroll 0 0;
+         background: #2F3131 none repeat scroll 0 0;
          color: rgb(251, 251, 251,0.5);
          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     }
@@ -1790,7 +1790,7 @@ a (hover):    #fff (white)
          min-height: 50px;
          padding: 5px 15px;
          position: relative;
-         background: #262626 none repeat scroll 0 0;
+         background: #2F3131 none repeat scroll 0 0;
          color: rgb(251, 251, 251,0.5);
     }
      #snb .profile-box .media-body{
@@ -1811,7 +1811,7 @@ a (hover):    #fff (white)
     /* card-header */
      #snb #accordion_sidenav_lft .card .card-header {
          border-top: transparent;
-         background: #262626 none repeat scroll 0 0;
+         background: #2F3131 none repeat scroll 0 0;
          color: rgb(251, 251, 251,0.5);
          border-radius:0px;
          padding: 5px 15px;
@@ -1985,8 +1985,7 @@ a (hover):    #fff (white)
      #snb #sidenav_rgt {
          transition: margin-left .5s;
          height:60px;
-         background-color:#FFFFFF;
-         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+         background-color:#f4f1eb;
     }
      #snb .sidenav_rgt_open{
          float:left;
@@ -2020,9 +2019,7 @@ a (hover):    #fff (white)
     /* sidenav_rgt end */
     /* Menu feature begin */
      #menu_feature .bg-content{
-         background-color:#eef1f6;
-         border-bottom: 1px solid #e8e8e8;
-         border-top: 1px solid #e8e8e8;
+         background-color:#f4f1eb;
     }
      #menu_feature .bg-content .content-title{
          padding: 10px 20px;
@@ -2035,7 +2032,7 @@ a (hover):    #fff (white)
     }
      #menu_feature .inner-content{
          padding:20px 0px;
-         background-color:#eef1f6;
+         background-color:#f4f1eb;
     }
      #menu_feature .in_txt{
          padding:20px 35px;
@@ -2045,7 +2042,7 @@ a (hover):    #fff (white)
     }
     /* panel */
      #menu_feature .inner-content .panel{
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          margin:0px 20px;
          border-radius:3px;
     }
@@ -2167,7 +2164,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .snav-rgtf-canvas{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .iflate-canvas{
          border:0px;
@@ -2251,7 +2248,7 @@ a (hover):    #fff (white)
          color:rgb(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-push a:hover{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .asnav-lflate-push .card .card-header {
          border: transparent !important;
@@ -2370,7 +2367,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .snav-flate-gradient {
          background: linear-gradient(to right, rgb(0, 0, 0,0.9) 0%,rgba(27, 27, 27, 0.9) 100%);
@@ -2440,7 +2437,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-ogradient .card-header .label {
          background: #333;
-         color: #FFFFFF;
+         color: #f4f1eb;
     }
     /* Sidenav overlay gradient end */
     /* Sidenav push off-canvas background begin */
@@ -2611,3 +2608,179 @@ a (hover):    #fff (white)
      background: #555;
 }
  
+.rightAlign {
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 18px;
+  margin-bottom: 15px;
+}
+
+.center {
+    display: 'block'; 
+    margin-left: 'auto'; 
+    margin-right: 'auto';
+}
+
+.noMargin {
+  margin: 0px;
+  padding: 0px;
+}
+
+.leftAlign {
+  text-align: left;
+}
+
+.borderLineColor {
+  border-color: rgb(0, 0, 0);
+}
+
+.basicMargin {
+    margin: 20px;
+    padding: 20px;
+}
+
+.rightLeftMargin {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.my-modal {
+    width: 50vw;   
+    max-width: 50vw;
+} 
+
+.headerColor {
+  background-color: #217CA3;
+}
+
+.smallComponentColor {
+  background-color: #f4f1eb;
+}
+
+.successBtn {
+  background-color: #2F3131;
+}
+
+.marigold {
+  color: #F7CE3E;
+}
+
+.textWhite {
+  color: #FFFFFF;
+}
+/* Coal [#2F3131]
+Background [#f4f1eb]
+Cerulean Blue [#217CA3]
+Marigold [#F7CE3E]
+Success [#28a745]
+Danger [#dc3545] (edited) */
+
+.message-item {
+margin-bottom: 25px;
+margin-left: 40px;
+position: relative;
+}
+.message-item .message-inner {
+background: #fff;
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 10px;
+position: relative;
+}
+.message-item .message-inner:before {
+border-right: 10px solid #ddd;
+border-style: solid;
+border-width: 10px;
+color: rgba(0,0,0,0);
+content: "";
+display: block;
+height: 0;
+position: absolute;
+left: -20px;
+top: 6px;
+width: 0;
+}
+.message-item .message-inner:after {
+border-right: 10px solid #fff;
+border-style: solid;
+border-width: 10px;
+color: rgba(0,0,0,0);
+content: "";
+display: block;
+height: 0;
+position: absolute;
+left: -18px;
+top: 6px;
+width: 0;
+}
+.message-item:before {
+background: #fff;
+border-radius: 2px;
+bottom: -30px;
+box-shadow: 0 0 3px rgba(0,0,0,0.2);
+content: "";
+height: 100%;
+left: -30px;
+position: absolute;
+width: 3px;
+}
+.message-item:after {
+background: #fff;
+border: 2px solid #ccc;
+border-radius: 50%;
+box-shadow: 0 0 5px rgba(0,0,0,0.1);
+content: "";
+height: 15px;
+left: -36px;
+position: absolute;
+top: 10px;
+width: 15px;
+}
+.clearfix:before, .clearfix:after {
+content: " ";
+display: table;
+}
+.message-item .message-head {
+border-bottom: 1px solid #eee;
+margin-bottom: 8px;
+padding-bottom: 8px;
+}
+.message-item .message-head .avatar {
+margin-right: 20px;
+}
+.message-item .message-head .user-detail {
+overflow: hidden;
+}
+.message-item .message-head .user-detail h5 {
+font-size: 16px;
+font-weight: bold;
+margin: 0;
+}
+.message-item .message-head .post-meta {
+float: left;
+padding: 0 15px 0 0;
+}
+.message-item .message-head .post-meta >div {
+color: #333;
+font-weight: bold;
+text-align: right;
+}
+.post-meta > div {
+color: #777;
+font-size: 12px;
+line-height: 22px;
+}
+.message-item .message-head .post-meta >div {
+color: #333;
+font-weight: bold;
+text-align: right;
+}
+.post-meta > div {
+color: #777;
+font-size: 12px;
+line-height: 22px;
+}
+
+.parent > .child {
+    background-color: transparent !important;
+ }

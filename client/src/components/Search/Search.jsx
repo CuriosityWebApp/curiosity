@@ -82,7 +82,7 @@ class Search extends React.Component {
                     backgroundColor: highlighted ? '#eee' : 'transparent',
                   }}
                 >
-                  <Link to={searchLink}>
+                  <Link to={searchLink} style={{ color: 'black', textDecoration: 'none' }}>
                     <div>{item.questionTitle}</div>
                   </Link>
                 </div>
@@ -97,15 +97,19 @@ class Search extends React.Component {
               style: { width: '500px' },
               className: 'form-control',
             }}
+            wrapperStyle={{
+              position: 'relative',
+            }}
+            menuStyle={{
+              top: 35,
+              left: 0,
+              position: 'absolute',
+              borderRadius: '0px',
+              border: '1px solid',
+              zIndex: '5000',
+              backgroundColor: 'white',
+            }}
           />
-          <button
-            type="submit"
-            className="btn btn-primary mb-2"
-            onClick={this.executeSearch}
-            style={{ marginLeft: '10px' }}
-          >
-            Filter
-          </button>
         </form>
         {this.state.searched && <Redirect to={`/search/${this.state.term}`} />}
       </div>

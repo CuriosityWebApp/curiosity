@@ -65,7 +65,19 @@ class NewList extends Component {
   }
 
   render() {
-    return <div>{this.displayMessages()}</div>;
+    return (
+      <div className="container">
+        <div
+          className="list-group-item"
+          style={{ backgroundColor: '#F7CE3E', marginBottom: '10px' }}
+        >
+          <strong style={{ color: 'white' }}>Unread</strong>
+        </div>
+        <div className="qa-message-list" id="wallmessages">
+          {this.displayMessages()}
+        </div>
+      </div>
+    );
   }
 }
 

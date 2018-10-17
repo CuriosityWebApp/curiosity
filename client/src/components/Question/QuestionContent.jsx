@@ -120,12 +120,18 @@ class QuestionContent extends Component {
   }
 
   displayUpButtonColor() {
-    return this.state.clickedUp
+    let data = this.props.data.question;
+    let up = new Set(data.ratedUpBy);
+    let userId = this.props.loggedId;
+    return up.has(userId)
       ? 'fas fa-caret-up fa-3x centerAlign text-success'
       : 'fas fa-caret-up fa-3x centerAlign text-muted';
   }
   displayDownButtonColor() {
-    return this.state.clickedDown
+    let data = this.props.data.question;
+    let down = new Set(data.ratedDownBy);
+    let userId = this.props.loggedId;
+    return down.has(userId)
       ? 'fas fa-caret-down fa-3x centerAlign text-danger'
       : 'fas fa-caret-down fa-3x centerAlign text-muted';
   }
@@ -139,17 +145,21 @@ class QuestionContent extends Component {
     if (error) {
       return <div>Error...</div>;
     } else {
-      let data = data;
-      let hoverText = `Likes: ${question.ratedUpBy.length}, Dislikes: ${
-        question.ratedDownBy.length
-      }`;
+      let { question } = data;
+      let hoverText;
+      data.refetch();
+      if (question) {
+        hoverText = `Likes: ${question.ratedUpBy.length}, Dislikes: ${question.ratedDownBy.length}`;
+      } else {
+        hoverText = '';
+      }
       return (
         <div className="list-group">
           <div className="container-fluid pt-3 pb-3 rounded  mr-15 ">
             <div className="row">
-              <div className="col-sm-1 pt-5">
+              <div className="col-sm-1 pt-5 d-flex align-items-center flex-column">
                 <div>
-                  <button
+                  <i
                     className={this.displayUpButtonColor()}
                     aria-hidden="true"
                     style={{
@@ -175,11 +185,10 @@ class QuestionContent extends Component {
                   </p>
                 </div>
                 <div>
-                  <button
+                  <i
                     className={this.displayDownButtonColor()}
                     aria-hidden="true"
                     style={{
-                      color: 'red',
                       cursor: 'pointer',
                       display: 'block',
                       marginLeft: 'auto',
@@ -196,7 +205,7 @@ class QuestionContent extends Component {
                   {question.bountyPaid ? (
                     <span className="badge badge-pill badge-danger"> Bounty Claimed </span>
                   ) : (
-                    <span className="badge badge-pill badge-warning"> Bounty Not Claimed </span>
+                    <span className="badge badge-pill badge-success"> Bounty Not Claimed </span>
                   )}{' '}
                   <span className="badge badge-pill" style={{ backgroundColor: '#F7CE3E' }}>
                     {' '}
@@ -306,99 +315,3 @@ export default compose(
   graphql(QuestionLike, { name: 'QuestionLike' }),
   graphql(QuestionDislike, { name: 'QuestionDislike' }),
 )(QuestionContent);
-
-/*
-<div className="list-group">
-          <div className="list-group-item list-group-item-action flex-column align-items-start">
-            <div className="row">
-              <div className="col-1">
-                <div className="row" style={{ textAlign: 'right' }}>
-                  <div className="col align-self-start">
-                    <div>
-                      <button
-                        className="fas fa-angle-up fa-2x"
-                        aria-hidden="true"
-                        style={{
-                          color: 'green',
-                          cursor: 'pointer',
-                          display: 'block',
-                          marginLeft: 'auto',
-                          marginRight: 'auto',
-                          border: 'none',
-                          background: 'none',
-                        }}
-                        onClick={this.throttledIcrement}
-                      />
-                    </div>
-                  </div>
-                  <div className="col align-self-start" style={{ textAlign: 'center' }}>
-                    <ReactTooltip effect="solid" />
-                    <p data-tip={hoverText}>{question.score}</p>
-                  </div>
-                  <div className="col align-self-start">
-                    <div>
-                      <button
-                        className="fas fa-angle-down fa-2x"
-                        aria-hidden="true"
-                        style={{
-                          color: 'red',
-                          cursor: 'pointer',
-                          display: 'block',
-                          marginLeft: 'auto',
-                          marginRight: 'auto',
-                          border: 'none',
-                          background: 'none',
-                        }}
-                        onClick={this.throttledDecrement}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-2">
-                <Link
-                  to={!this.props.loggedId ? '/login' : `/user/${question.user.id}`}
-                  style={{ textDecoration: 'none', color: 'black' }}
-                  onClick={this.forceLogin}
-                >
-                  <ProfileSmallPage userId={question.user.id} />
-                </Link>
-              </div>
-              <div className="col-2">
-                <small style={{ textAlign: 'center' }}>
-                  Posted By {question.user.username} <br />
-                  {moment(question.createdAt).fromNow()} <br />
-                  Bounty: {question.bounty} <br />
-                  Category: {question.category ? question.category : 'None'}
-                </small>
-              </div>
-              <div className="col-7">
-                <h3 className="mb-1">{question.questionTitle}</h3> <br />
-                <div>{question.questionContent}</div>
-              </div>
-            </div>
-            <div>
-              {question.tags.map(tag => {
-                return (
-                  <span className="badge badge-info" key={tag}>
-                    {tag}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-          <AnswerList
-            id={this.props.id}
-            qOwnerId={question.user.id}
-            loggedId={this.props.loggedId}
-            isPaid={question.bountyPaid}
-            bounty={question.bounty}
-            user={this.props.user}
-            questionId={this.props.id}
-            signedIn={this.props.signedIn}
-            notify={this.props.notify}
-            forceLogin={this.props.forceLogin}
-            refetchAnswerList={this.props.data.refetch}
-          />
-        </div>
-*/

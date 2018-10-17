@@ -98,7 +98,7 @@ class AnswerList extends Component {
             />
           ) : (
             <button
-              className=" btn btn-primary custom-btn shadow-sm"
+              className="fas fa-question-circle btn btn-primary custom-btn shadow ml-3 pl-3"
               onClick={() =>
                 this.props.notify('error', 'Please log into your account to be able to answer!')
               }
