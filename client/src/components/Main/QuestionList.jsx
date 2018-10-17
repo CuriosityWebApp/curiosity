@@ -140,6 +140,7 @@ class QuestionList extends Component {
         return data.map(post => {
           return (
             <QuestionItem
+              filter={this.filterQuestions}
               key={post.id}
               questionId={post.id}
               onSelect={this.onSelect}

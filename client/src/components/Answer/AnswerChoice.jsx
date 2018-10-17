@@ -71,16 +71,14 @@ class AnswerChoice extends Component {
       !this.props.getQuestion.question.bountyPaid
     ) {
       return (
-        <small>
-          <button type="button" onClick={this.clickChooseAnswer}>
-            Choose This Answer
-          </button>
-        </small>
+        <button className="btn btn-info" onClick={this.clickChooseAnswer}>
+          Choose This Answer
+        </button>
       );
     }
 
     if (this.props.getQuestion.question.bountyPaid && this.props.getAnswer.answer.answerChosen) {
-      return <small>Best Answer</small>;
+      return <span className="badge badge-success">Best Answer</span>;
     }
   }
 

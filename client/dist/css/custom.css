@@ -373,7 +373,7 @@ a (hover):    #fff (white)
          border-top: 1px solid #e8e8e8;
     }
      #menu_feature .bg-content .content-title{
-         padding: 10px 20px;
+         padding: 10px 120px 10px 0px;
     }
      #menu_feature .bg-content .content-title h3{
          font-size: 20px;
@@ -383,14 +383,14 @@ a (hover):    #fff (white)
          padding:0px;
     }
      #menu_feature .inner-content{
-         padding:20px 0px;
+         padding: 10px 75px 10px 0px;
          background-color:#eef1f6;
     }
      #menu_feature .in_txt{
-         padding:20px 35px;
+         padding: 10px 120px 10px 0px;
     }
      #menu_feature .con-title_txt{
-         padding: 10px 58px !important;
+         padding: 10px 120px 10px 0px !important;
     }
     /* panel */
      #menu_feature .inner-content .panel{
@@ -2041,7 +2041,7 @@ a (hover):    #fff (white)
          padding:20px 35px;
     }
      #menu_feature .con-title_txt{
-         padding: 10px 58px !important;
+         padding: 10px 200px 70px 0px !important;
     }
     /* panel */
      #menu_feature .inner-content .panel{
