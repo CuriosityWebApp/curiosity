@@ -50,33 +50,52 @@ class MessageItem extends Component {
   render() {
     let { sender, recipient, messageTitle, messageContent, createdAt, unread } = this.props.post;
     return (
-      <div className="list-group">
-        <div className="list-group-item list-group-item-action flex-column align-items-start">
-          <div className="d-flex w-100 justify-content-between">
-            <div>
-              <small>Sender: {sender.username}</small>
-              <br />
-              <small>Receiver: {recipient.username}</small>
-              <br />
-              <small>Message Title: {messageTitle}</small>
-              <br />
-              <small>Content: {messageContent}</small> <br />
-              <small>Date: {moment(createdAt).fromNow()}</small> <br />
-              <small>New?: {JSON.stringify(unread)}</small>
+      <div className="message-item" id="m16">
+        <div className="message-inner">
+          <div className="message-head clearfix">
+            <div className="row">
+              <div className="col-1">
+                <div className="avatar pull-left">
+                  <a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">
+                    <img
+                      src={sender.avatarUrl}
+                      style={{
+                        minHeight: '60px',
+                        maxHeight: '60px',
+                      }}
+                    />
+                  </a>
+                </div>
+              </div>
+              <div className="col-3">
+                <h5 className="handle">{sender.username}</h5>
+                <span className="qa-message-when-data">{moment(createdAt).fromNow()}</span>
+              </div>
+              <div className="col-8">
+                
+
+                <button type="button" className="btn btn-info" onClick={this.replyMessage}>
+                  Reply
+                </button>
+                <button type="button" className="btn btn-danger" onClick={this.deleteMessage}>
+                  Delete
+                </button>
+              </div>
             </div>
-            <div>
-              <button type="button" className="btn btn-info" onClick={this.replyMessage}>
-                Reply
-              </button>
-              <button type="button" className="btn btn-danger" onClick={this.deleteMessage}>
-                Delete
-              </button>
+
+            <div className="user-detail">
+              <div className="post-meta">
+                <div className="asker-meta">
+                  <span className="qa-message-what" />
+                  <span className="qa-message-when" />
+                </div>
+              </div>
             </div>
           </div>
-          <br />
-          <div className="answerContent">
-            <p />
-          </div>
+          <div className="qa-message-content">
+          <div><strong>{messageTitle}</strong></div>
+          
+          {messageContent}</div>
         </div>
       </div>
     );

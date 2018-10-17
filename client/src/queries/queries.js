@@ -201,6 +201,7 @@ const getMessages = gql`
       sender {
         id
         username
+        avatarUrl
       }
       recipient {
         id
@@ -222,6 +223,7 @@ const userSentMessages = gql`
       sender {
         id
         username
+        avatarUrl
       }
       recipient {
         id
