@@ -2650,7 +2650,7 @@ a (hover):    #fff (white)
 } 
 
 .headerColor {
-  background-color: #217CA3;
+  background-color: #1A2930;
 }
 
 .smallComponentColor {
@@ -2673,7 +2673,11 @@ Background [#f4f1eb]
 Cerulean Blue [#217CA3]
 Marigold [#F7CE3E]
 Success [#28a745]
-Danger [#dc3545] (edited) */
+Danger [#dc3545] (edited)
+Screen #CSC1C0
+Steel #0A1612
+Denim #1A2930
+Marigold #F7CE3E */
 
 .message-item {
 margin-bottom: 25px;
