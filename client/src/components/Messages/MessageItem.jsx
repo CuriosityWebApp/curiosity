@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { DeleteMessage } from '../../mutations/mutations.js';
 import { graphql } from 'react-apollo';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 class MessageItem extends Component {
   constructor(props) {
@@ -50,13 +51,16 @@ class MessageItem extends Component {
   render() {
     let { sender, recipient, messageTitle, messageContent, createdAt, unread } = this.props.post;
     return (
-      <div className="message-item" id="m16">
+      <div className="message-item" id="m16" style={{ width: '80%', marginLeft: '6%' }}>
         <div className="message-inner">
           <div className="message-head clearfix">
             <div className="row">
               <div className="col-1">
                 <div className="avatar pull-left">
-                  <a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">
+                  <Link
+                    to={`/user/${sender.id}`}
+                    style={{ textDecoration: 'none', color: 'black' }}
+                  >
                     <img
                       src={sender.avatarUrl}
                       style={{
@@ -64,22 +68,22 @@ class MessageItem extends Component {
                         maxHeight: '60px',
                       }}
                     />
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="col-3">
-                <h5 className="handle">{sender.username}</h5>
+                <h2 className="handle">{sender.username}</h2>
                 <span className="qa-message-when-data">{moment(createdAt).fromNow()}</span>
               </div>
               <div className="col-8">
-                
-
-                <button type="button" className="btn btn-info" onClick={this.replyMessage}>
-                  Reply
-                </button>
-                <button type="button" className="btn btn-danger" onClick={this.deleteMessage}>
-                  Delete
-                </button>
+                <div style={{ position: 'absolute', right: '0px', padding: '15px' }}>
+                  <button type="button" className="btn btn-success" onClick={this.replyMessage}>
+                    Reply
+                  </button>
+                  <button type="button" className="btn btn-danger" onClick={this.deleteMessage}>
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -93,9 +97,11 @@ class MessageItem extends Component {
             </div>
           </div>
           <div className="qa-message-content">
-          <div><strong>{messageTitle}</strong></div>
-          
-          {messageContent}</div>
+            <div style={{ fontSize: '1.5rem' }}>
+              <strong>{messageTitle}</strong>
+            </div>
+            <div style={{ fontSize: '1.25rem' }}>{messageContent}</div>
+          </div>
         </div>
       </div>
     );

@@ -44,7 +44,7 @@ class ProfileFullPage extends Component {
         if (value === false) {
           notify('error', 'Removed Vouch!');
         } else {
-          notify('message', 'Added Vouch!');
+          notify('success', 'Added Vouch!');
         }
         getUser.refetch();
       })

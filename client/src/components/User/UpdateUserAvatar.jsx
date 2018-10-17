@@ -39,7 +39,7 @@ class ChooseUserAvatar extends Component {
         avatarUrl: this.state.avatarUrl,
       },
     }).then(() => {
-      notify('message', 'Avatar Updated!');
+      notify('success', 'Avatar Updated!');
       refetch();
     });
   }

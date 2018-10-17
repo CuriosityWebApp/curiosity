@@ -170,27 +170,39 @@ class QuestionList extends Component {
       var id = '';
     }
     let filter = this.state.filterBy ? (
-      <span className="badge badge-warning">{this.state.filterBy}</span>
+      <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+        {this.state.filterBy}
+      </span>
     ) : (
       ''
     );
     let sorted = this.state.sortBy ? (
       this.state.sortBy !== 'createdAt' ? (
-        <span className="badge badge-warning">{this.state.sortBy}</span>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+          {this.state.sortBy}
+        </span>
       ) : (
-        <span className="badge badge-warning">New first</span>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+          New first
+        </span>
       )
     ) : (
       ''
     );
     let range = this.state.range ? (
       this.state.range > 1 ? (
-        <span className="badge badge-warning">{this.state.range} days</span>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+          {this.state.range} days
+        </span>
       ) : (
-        <span className="badge badge-warning">Today</span>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+          Today
+        </span>
       )
     ) : (
-      <span className="badge badge-warning">All time</span>
+      <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+        All time
+      </span>
     );
     return (
       <React.Fragment>
@@ -214,7 +226,10 @@ class QuestionList extends Component {
           </div>
         </div>
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
-          <span className="badge badge-primary">Filtered by: </span> {filter} {sorted} {range}
+          <span className="badge" style={{ backgroundColor: '#217CA3', color: 'white' }}>
+            Filtered by:{' '}
+          </span>{' '}
+          {filter} {sorted} {range}
           <div />
           <div className="bg-content">
             <div className="container-fluid">
