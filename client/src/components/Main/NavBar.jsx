@@ -32,6 +32,7 @@ class NavBar extends Component {
       var credit = 0;
       var rank = 0;
     }
+    console.log(user);
 
     return (
       <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
