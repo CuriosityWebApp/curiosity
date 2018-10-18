@@ -76,11 +76,6 @@ class Index extends Component {
   notify(type, text) {
     let { TOP_RIGHT, TOP_CENTER } = toast.POSITION;
     if (type === 'success') {
-      toast.success(text, {
-        position: TOP_RIGHT,
-        autoClose: 3000,
-      });
-    } else if (type === 'message') {
       toast.info(text, {
         position: TOP_RIGHT,
         autoClose: 3000,

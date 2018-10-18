@@ -43,8 +43,10 @@ class CreateQuestion extends Component {
     let splittedTags = tags;
     if (tags) {
       splittedTags = tags.split(' ');
+    } else {
+      splittedTags = [];
     }
-    if (!title || !content || !restriction) {
+    if (!title || !content) {
       notify('error', "Can't post an empty question!");
     } else if (credit < Number(bounty)) {
       notify('error', 'You have insufficient credit!');
