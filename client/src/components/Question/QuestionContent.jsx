@@ -24,6 +24,9 @@ class QuestionContent extends Component {
     this.displayUpButtonColor = this.displayUpButtonColor.bind(this);
     this.displayDownButtonColor = this.displayDownButtonColor.bind(this);
   }
+  componentDidMount() {
+    window.removeEventListener('scroll', this.onScroll, false);
+  }
 
   forceLogin(e) {
     if (!this.props.loggedId) {
@@ -261,7 +264,9 @@ class QuestionContent extends Component {
                           Posted by {question.user.username} -{' '}
                           {moment(question.createdAt).fromNow()}{' '}
                         </span>
-                        <hr className="mt-0" />
+                        <div className="mx-0 my-1">
+                          <hr className="mx-0 my-1" />
+                        </div>
                         <div>
                           <p className="mr-5">{question.questionContent}</p>
                         </div>
@@ -279,6 +284,9 @@ class QuestionContent extends Component {
                   })}
                 </div>
               </div>
+            </div>
+            <div className="mx-0 my-1">
+              <hr className="mx-0 my-1" />
             </div>
           </div>
           <div>

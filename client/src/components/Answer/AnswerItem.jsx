@@ -229,7 +229,9 @@ class AnswerItem extends Component {
                           Posted by {data.answer.user.username} -{' '}
                           {moment(data.answer.createdAt).fromNow()}{' '}
                         </span>
-                        <hr className="mt-0" />
+                        <div className="mx-0 my-1">
+                          <hr className="mx-0 my-1" />
+                        </div>
                         <div>
                           <p className="mr-5">{data.answer.answer}</p>
                         </div>
@@ -301,58 +303,87 @@ export default compose(
 )(AnswerItem);
 
 /*
- //hover likes
+ //buttons 
 
- <ReactTooltip effect="solid" />
-   <p data-tip={hoverText}>{question.score}</p>
+ <div>
+  <i
+    className={this.displayUpButtonColor()}
+    aria-hidden="true"
+    style={{
+      cursor: 'pointer',
+      display: 'block',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      border: 'none',
+      background: 'none',
+    }}
+    onClick={this.throttledIcrement}
+  />
+</div>
+</div>
+<div className="col align-self-start" style={{ textAlign: 'center' }}>
+<ReactTooltip effect="solid" />
+<p data-tip={hoverText}>{data.score}</p>
+</div>
+<div className="col align-self-start">
+<div>
+  <i
+    className={this.displayDownButtonColor()}
+    aria-hidden="true"
+    style={{
+      cursor: 'pointer',
+      display: 'block',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      border: 'none',
+      background: 'none',
+    }}
+    onClick={this.throttledDecrement}
+  />
+</div>
 
-  // user profile
-   <Link
-    to={!this.props.loggedId ? '/login' : `/user/${question.user.id}`}
-    style={{ textDecoration: 'none', color: 'black' }}
-    onClick={this.forceLogin}
-  >
-    <ProfileSmallPage userId={question.user.id} />
-  </Link>
 
- //features 
-  Posted By {question.user.username} <br />
-  {moment(question.createdAt).fromNow()} <br />
-  Bounty: {question.bounty} <br />
-  Category: {question.category ? question.category : 'None'}
- 
+ // open question
+  
+ <div className="col-11" onClick={this.OpenQuestion}>
 
-  // tags
-  <div>
-  {question.tags.map(tag => {
+
+ // tags
+
+ <div>
+  {data.tags.map(tag => {
     return (
-      <span className="badge badge-info" key={tag}>
+      <span
+        className="badge badge-info"
+        key={tag}
+        onClick={e => this.props.filter(e, tag, null)}
+      >
         {tag}
       </span>
     );
   })}
 </div>
-  
 
- // title
- <h3 className="mb-1">{question.questionTitle}</h3> <br />
-   <div>{question.questionContent}</div>
- 
-  // list
 
-<AnswerList
-  id={this.props.id}
-  qOwnerId={question.user.id}
-  loggedId={this.props.loggedId}
-  isPaid={question.bountyPaid}
-  bounty={question.bounty}
-  user={this.props.user}
-  questionId={this.props.id}
-  signedIn={this.props.signedIn}
-  notify={this.props.notify}
-  forceLogin={this.props.forceLogin}
-  refetchAnswerList={this.props.data.refetch}
-/>
+//features
 
+ <div>
+  <small className="text-muted d-flex w-100 justify-content-between">
+    Posted By {data.user.username} {moment(data.createdAt).fromNow()}
+  </small>
+  <small className="text-muted"> Rank {data.restriction} </small>
+  <small className="text-muted"> Answers {data.answers.length}</small>
+  <p>{data.questionContent}</p>
+</div>
+
+
+ //title
+
+ <div className="d-flex w-100 justify-content-between">
+  <h5>{data.questionTitle}</h5>
+  <h6>
+    Reward: {data.bounty} <br /> Views: {data.views}
+  </h6>
+</div>
 
 */

@@ -17,8 +17,6 @@ class QuestionItem extends Component {
     super(props);
     this.state = {
       selected: null,
-      clickedDown: false,
-      clickedUp: false,
     };
     this.IncrementLikes = this.IncrementLikes.bind(this);
     this.decrementLikes = this.decrementLikes.bind(this);
@@ -53,9 +51,7 @@ class QuestionItem extends Component {
               },
             })
             .then(() => {
-              this.setState({ clickedUp: false, clickedDown: false }, () => {
-                this.props.data.refetch();
-              });
+              this.props.data.refetch();
             });
         } else if (!up.has(userId) && !down.has(userId)) {
           this.props
@@ -68,9 +64,7 @@ class QuestionItem extends Component {
               },
             })
             .then(() => {
-              this.setState({ clickedUp: true, clickedDown: false }, () => {
-                this.props.data.refetch();
-              });
+              this.props.data.refetch();
             });
         }
       }
@@ -100,9 +94,7 @@ class QuestionItem extends Component {
             },
           });
           then(() => {
-            this.setState({ clickedDown: false, clickedUp: false }, () => {
-              this.props.data.refetch();
-            });
+            this.props.data.refetch();
           });
         } else if (!up.has(userId) && !down.has(userId)) {
           this.props
@@ -115,9 +107,7 @@ class QuestionItem extends Component {
               },
             })
             .then(() => {
-              this.setState({ clickedDown: true, clickedUp: false }, () => {
-                this.props.data.refetch();
-              });
+              this.props.data.refetch();
             });
         }
       }
@@ -137,12 +127,18 @@ class QuestionItem extends Component {
     });
   }
   displayUpButtonColor() {
-    return this.state.clickedUp
+    let data = this.props.data.question;
+    let up = new Set(data.ratedUpBy);
+    let userId = this.props.userId;
+    return up.has(userId)
       ? 'fas fa-caret-up fa-3x centerAlign text-success'
       : 'fas fa-caret-up fa-3x centerAlign text-muted';
   }
   displayDownButtonColor() {
-    return this.state.clickedDown
+    let data = this.props.data.question;
+    let down = new Set(data.ratedDownBy);
+    let userId = this.props.userId;
+    return down.has(userId)
       ? 'fas fa-caret-down fa-3x centerAlign text-danger'
       : 'fas fa-caret-down fa-3x centerAlign text-muted';
   }
@@ -154,81 +150,155 @@ class QuestionItem extends Component {
         let data = this.props.data.question;
         let hoverText = `Likes: ${data.ratedUpBy.length}, Dislikes: ${data.ratedDownBy.length}`;
         return (
-          <div className="inline-block container" style={{ cursor: 'pointer' }}>
-            <div className="list-group">
-              <div className="list-group-item list-group-item-action flex-column align-items-start">
-                <div className="row">
-                  <div className="col-1">
-                    <div className="row" style={{ textAlign: 'right' }}>
-                      <div className="col align-self-start">
-                        <div>
-                          <i
-                            className={this.displayUpButtonColor()}
-                            aria-hidden="true"
-                            style={{
-                              cursor: 'pointer',
-                              display: 'block',
-                              marginLeft: 'auto',
-                              marginRight: 'auto',
-                              border: 'none',
-                              background: 'none',
-                            }}
-                            onClick={this.throttledIcrement}
-                          />
-                        </div>
-                      </div>
-                      <div className="col align-self-start" style={{ textAlign: 'center' }}>
-                        <ReactTooltip effect="solid" />
-                        <p data-tip={hoverText}>{data.score}</p>
-                      </div>
-                      <div className="col align-self-start">
-                        <div>
-                          <i
-                            className={this.displayDownButtonColor()}
-                            aria-hidden="true"
-                            style={{
-                              cursor: 'pointer',
-                              display: 'block',
-                              marginLeft: 'auto',
-                              marginRight: 'auto',
-                              border: 'none',
-                              background: 'none',
-                            }}
-                            onClick={this.throttledDecrement}
-                          />
-                        </div>
-                      </div>
-                    </div>
+          <div className="list-group ">
+            <div className="container-fluid rounded  mr-15 ">
+              <div className="row">
+                <div className="col-sm-1 d-flex align-items-center flex-column mt-4">
+                  <div>
+                    <i
+                      className={this.displayUpButtonColor()}
+                      aria-hidden="true"
+                      style={{
+                        cursor: 'pointer',
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        border: 'none',
+                        background: 'none',
+                      }}
+                      onClick={this.throttledIcrement}
+                    />
                   </div>
-                  <div className="col-11" onClick={this.OpenQuestion}>
-                    <div className="d-flex w-100 justify-content-between">
-                      <h5>{data.questionTitle}</h5>
-                      <h6>
-                        Reward: {data.bounty} <br /> Views: {data.views}
-                      </h6>
-                    </div>
-                    <div>
-                      <small className="text-muted d-flex w-100 justify-content-between">
-                        Posted By {data.user.username} {moment(data.createdAt).fromNow()}
-                      </small>
-                      <small className="text-muted"> Rank {data.restriction} </small>
-                      <small className="text-muted"> Answers {data.answers.length}</small>
-                      <p>{data.questionContent}</p>
-                    </div>
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      fontSize: '1.5em',
+                    }}
+                  >
+                    <ReactTooltip effect="solid" />
+                    <p data-tip={hoverText} style={{ margin: '0px', padding: '0px' }}>
+                      {data.score}
+                    </p>
+                  </div>
+                  <div>
+                    <i
+                      className={this.displayDownButtonColor()}
+                      aria-hidden="true"
+                      style={{
+                        cursor: 'pointer',
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        border: 'none',
+                        background: 'none',
+                      }}
+                      onClick={this.throttledDecrement}
+                    />
                   </div>
                 </div>
-                <div>
-                  {data.tags.map(tag => {
-                    return (
-                      <span
-                        className="badge badge-info"
-                        key={tag}
-                        onClick={e => this.props.filter(e, tag, null)}
-                      >
-                        {tag}
-                      </span>
-                    );
-                  })}
+                <div
+                  className="col-md-11 "
+                  style={{ cursor: 'pointer' }}
+                  onClick={this.OpenQuestion}
+                >
+                  <div className="card-header d-flex flex-row-start bg-transparent pl-0 pb-0 border-bottom-0">
+                    <h4 className="badge  badge-dark   mx-1 shadow-lg " style={{ margin: '1px' }}>
+                      <i className="fas fa-eye " /> {data.views}
+                    </h4>
+                    <h4 className="badge  badge-dark shadow-lg" style={{ margin: '1px' }}>
+                      <i className="fas fa-comment" /> {data.answers.length}
+                    </h4>
+                  </div>
+                  <div className="card bg-white rounded shadow">
+                    <div className="row">
+                      <div className="col-md-9 ">
+                        <div className="card-block pl-3 pt-2">
+                          <h3 className="card-title font-weight-bold d-flex flex-row ml-2 mb-0">
+                            {' '}
+                            {data.questionTitle}
+                          </h3>
+                          <span
+                            className="font-italic font-weight-light text-muted "
+                            style={{
+                              fontSize: '10px',
+                            }}
+                          >
+                            Asked by {data.user.username} - {moment(data.createdAt).fromNow()}{' '}
+                          </span>
+                          <div className="mx-0 my-1">
+                            <hr className="mx-0 my-1" />
+                          </div>
+                          <div>
+                            <p>
+                              {data.questionContent.length > 200
+                                ? data.questionContent.slice(0, 200) + ' ...'
+                                : data.questionContent}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-3 " style={{ color: 'black' }}>
+                        <div className="card-block d-flex align-items-start flex-column ">
+                          <button
+                            className="btn btn-block  btn-dark text-lg mt-0 mb-1 shadow-lg "
+                            style={{
+                              color: '#F7CE3E',
+                            }}
+                          >
+                            <i
+                              className="fas fa-ruble-sign  "
+                              style={{
+                                color: '#F7CE3E',
+                              }}
+                            />
+                            {''} {''}
+                            {data.bounty}
+                          </button>{' '}
+                          <button className="btn btn-block  btn-dark text-lg shadow-lg my-1 border-0 ">
+                            <i className="fa fa-graduation-cap" />
+                            {data.category ? data.category : 'None'}
+                          </button>
+                          <button
+                            className="btn btn-block  btn-warning shadow-lg my-1 border-0"
+                            style={{ backgroundColor: '#F7CE3E' }}
+                          >
+                            <i className="fas fa-lock" /> {data.restriction}
+                          </button>
+                          {data.bountyPaid ? (
+                            <button className="btn btn-block  btn-danger shadow-lg mt-1 mb-0 border-0">
+                              Bounty Claimed
+                            </button>
+                          ) : (
+                            <button
+                              className="btn btn-block  shadow-lg mt-1 mb-0 border-0"
+                              style={{
+                                backgroundColor: '#217CA3',
+                              }}
+                            >
+                              Bounty Not Claimed
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="card-footer d-flex flex-row-reverse bg-transparent pb-0 border-0 "
+                    style={{ cursor: 'auto' }}
+                  >
+                    {data.tags.map(tag => {
+                      return (
+                        <span
+                          className="badge badge-gray"
+                          key={tag}
+                          style={{ cursor: 'pointer' }}
+                          onClick={e => this.props.filter(e, tag, null)}
+                        >
+                          <i className="fas fa-tags" style={{ color: '#217CA3' }} /> <u>{tag}</u>
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
@@ -255,54 +325,3 @@ export default compose(
   graphql(QuestionDislike, { name: 'QuestionDislike' }),
   graphql(IncrementQuestionViews, { name: 'IncrementQuestionViews' }),
 )(QuestionItem);
-
-/*
-
- <div className="inline-block container" style={{ cursor: 'pointer' }}>
-            <div className="list-group">
-              <div className="list-group-item list-group-item-action flex-column align-items-start">
-                <div className="row">
-                  <div className="col-1">
-                    <div className="row" style={{ textAlign: 'right' }}>
-                      <div className="col align-self-start">
-                        
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-11" onClick={this.OpenQuestion}>
-                    <div className="d-flex w-100 justify-content-between">
-                      <h5>{data.questionTitle}</h5>
-                      <h6>
-                        Reward: {data.bounty} <br /> Views: {data.views}
-                      </h6>
-                    </div>
-                    <div>
-                      <small className="text-muted d-flex w-100 justify-content-between">
-                        Posted By {data.user.username} {moment(data.createdAt).fromNow()}
-                      </small>
-                      <small className="text-muted"> Rank {data.restriction} </small>
-                      <small className="text-muted"> Answers {data.answers.length}</small>
-                      <p>{data.questionContent}</p>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  {data.tags.map(tag => {
-                    return (
-                      <span
-                        className="badge badge-info"
-                        key={tag}
-                        onClick={e => this.props.filter(e, tag, null)}
-                      >
-                        {tag}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-*/
