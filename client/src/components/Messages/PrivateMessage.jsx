@@ -108,7 +108,7 @@ class PrivateMessage extends Component {
   submitForm(e) {
     e.preventDefault();
     let { title, content, receiverName, receiverId } = this.state;
-    let { mutate, notify, userId, client } = this.props;
+    let { mutate, notify, userId, client, refetch } = this.props;
     this.setState({ show: true });
     if (!title || !content || !receiverName) {
       notify('error', "Can't post an empty message!");
@@ -135,6 +135,7 @@ class PrivateMessage extends Component {
                 })
                   .then(() => {
                     notify('success', `Message Sent to ${receiverName} !`);
+                    refetch();
                     this.props.handleClose();
                   })
                   .catch(err => console.log('error bro', err));
@@ -266,8 +267,9 @@ class PrivateMessage extends Component {
                         <input
                           type="submit"
                           onClick={this.submitForm}
-                          className="btn btn-send btn-success"
+                          className="btn btn-send"
                           value="Post Message"
+                          style={{ backgroundColor: '#217CA3', color: 'white' }}
                         />
                       </div>
                     </div>

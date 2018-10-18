@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-class MessageItem extends Component {
+class SentItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +70,7 @@ class MessageItem extends Component {
                 </div>
               </div>
               <div className="col-5" style={{ paddingLeft: '50px' }}>
-                <h2 className="handle">{sender.username} </h2>
+                <h2 className="handle">To: {recipient.username} </h2>
                 <span className="qa-message-when-data">{moment(createdAt).fromNow()}</span>
               </div>
               <div className="col">
@@ -89,7 +89,6 @@ class MessageItem extends Component {
                 </div>
               </div>
             </div>
-
             <div className="user-detail">
               <div className="post-meta">
                 <div className="asker-meta">
@@ -102,16 +101,7 @@ class MessageItem extends Component {
           <div className="qa-message-content">
             <div style={{ fontSize: '1.5rem' }}>
               <strong>{messageTitle}</strong>
-              <div style={{ float: 'right' }}>
-                <span onClick={this.replyMessage}>
-                  <i
-                    className="fas fa-paper-plane fa-lg"
-                    style={{ color: '#217CA3', cursor: 'pointer' }}
-                  />
-                </span>
-              </div>
             </div>
-
             <div style={{ fontSize: '1.25rem' }}>{messageContent}</div>
           </div>
         </div>
@@ -122,4 +112,4 @@ class MessageItem extends Component {
 
 export default graphql(DeleteMessage, {
   name: 'DeleteMessage',
-})(MessageItem);
+})(SentItem);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { userSentMessages } from '../../queries/queries.js';
-import MessageItem from './MessageItem.jsx';
+import SentItem from './SentItem.jsx';
 
 class SentList extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class SentList extends Component {
       if (userSentMessages.length > 0) {
         return userSentMessages.map(post => {
           return (
-            <MessageItem
+            <SentItem
               key={post.id}
               post={post}
               replyFormat={this.props.replyFormat}

@@ -26,13 +26,28 @@ class NavBar extends Component {
   render() {
     let { signedIn, user, handleLogout } = this.props;
     if (signedIn) {
-      var { id, username, rank, credit, avatarUrl } = user;
+      var { id, username, rank, credit, avatarUrl, messages, questions } = user;
+      var unreadMessages = 0;
+      for (let i = 0; i < messages.length; i++) {
+        if (messages[i].unread === true) {
+          unreadMessages++;
+        }
+      }
+      var unreadNotifications = 0;
+      for (let j = 0; j < questions.length; j++) {
+        for (let k = 0; k < questions[j].answers.length; k++) {
+          if (questions[j].answers[k].questionerSeen === false) {
+            unreadNotifications++;
+          }
+        }
+      }
     } else {
       var username = '';
       var credit = 0;
       var rank = 0;
+      var unreadNotifications = 0;
+      var unreadMessages = 0;
     }
-    console.log(user);
 
     return (
       <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
@@ -42,6 +57,7 @@ class NavBar extends Component {
             notify={this.props.notify}
             showComponent={this.state.showComponent}
             handleClose={this.handleClose}
+            refetch={this.props.refetch}
           />
         ) : null}
         <div className="profile-box">
@@ -58,7 +74,7 @@ class NavBar extends Component {
                 <h5 className="media-heading">
                   Welcome <span>{username}</span>
                 </h5>
-                <small>{rank} Rank</small>
+                <small>{rank} Experience</small>
                 <br />
                 <small>{credit} Credits</small>
               </div>
@@ -113,7 +129,7 @@ class NavBar extends Component {
                   <div>
                     <i className="fas fa-envelope" />
                     Messages
-                    {0 > 0 && <span className="label">New</span>}
+                    {unreadMessages > 0 && <span className="label">New</span>}
                   </div>
                 </div>
               </div>
@@ -151,6 +167,7 @@ class NavBar extends Component {
                     <div>
                       <i className="fas fa-bell" />
                       Notifications
+                      {unreadNotifications > 0 && <span className="label">New</span>}
                     </div>
                   </Link>
                 </div>

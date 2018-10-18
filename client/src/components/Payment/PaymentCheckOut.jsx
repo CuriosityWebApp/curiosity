@@ -52,7 +52,6 @@ class PaymentCheckOut extends Component {
   async submit(UpdateCredit, AddTransaction) {
     let { stripe, username } = this.props;
     let token = await stripe.createToken({ name: username });
-    console.log(token);
 
     axios
       .post('/charge', {
@@ -61,7 +60,6 @@ class PaymentCheckOut extends Component {
       })
       .then(res => {
         if (res.data.paid) {
-          console.log('Purchase Complete!', res.data);
           this.handlePayment(UpdateCredit, AddTransaction);
         }
       });
@@ -211,12 +209,19 @@ class PaymentCheckOut extends Component {
                               <CardElement />
                               <br />
                             </div>
-                            <Button>Confirm Order</Button>
+                            <Button style={{ backgroundColor: '#217CA3', color: 'white' }}>
+                              Confirm Order
+                            </Button>
                           </form>
                         </div>
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button onClick={handleClose}>Close</Button>
+                        <Button
+                          onClick={handleClose}
+                          style={{ backgroundColor: '#dc3545', color: 'white' }}
+                        >
+                          Close
+                        </Button>
                       </Modal.Footer>
                     </Modal>
                   </div>

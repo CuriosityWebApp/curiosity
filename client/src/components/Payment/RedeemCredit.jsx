@@ -55,7 +55,12 @@ class RedeemCredit extends Component {
             <br />
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.handleClose}>Submit</Button>
+            <Button
+              style={{ backgroundColor: '#217CA3', color: 'white' }}
+              onClick={this.handleClose}
+            >
+              Submit
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
