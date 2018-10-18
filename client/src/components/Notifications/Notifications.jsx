@@ -76,7 +76,7 @@ class Notifications extends Component {
             type="button"
             className="btn btn-sm"
             onClick={this.clearNotifications}
-            style={{ float: 'right', color: 'white', backgroundColor: '#F7CE3E' }}
+            style={{ float: 'right', color: '#2F3131', backgroundColor: '#F7CE3E' }}
           >
             Clear Notifications
           </button>

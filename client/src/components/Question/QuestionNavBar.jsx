@@ -317,7 +317,7 @@ class QuestionNavBar extends Component {
             </li>{' '}
             <Search />
             {this.props.signedIn && (
-              <div style={{ position: 'absolute', right: '0' }}>
+              <div style={{ float: 'right' }}>
                 <Link to="/messages/unread" style={{ padding: '15px' }}>
                   <i className="fas fa-envelope" style={{ color: '#F7CE3E' }} />
                   {unreadMessages > 0 && (

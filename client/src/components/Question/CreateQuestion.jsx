@@ -225,8 +225,9 @@ class CreateQuestion extends Component {
                     <input
                       type="submit"
                       onClick={this.submitForm}
-                      className="btn btn-success btn-send"
+                      className="btn btn-send"
                       value="Post Question"
+                      style={{ backgroundColor: '#217CA3', color: 'white' }}
                     />
                   </div>
                 </div>

@@ -25,6 +25,7 @@ class NewList extends Component {
       })
       .then(() => {
         this.props.getMessages.refetch();
+        this.props.refetch();
         this.props.notify('warning', 'Unread Messages cleared');
       });
   }
@@ -80,7 +81,7 @@ class NewList extends Component {
             type="button"
             className="btn btn-sm"
             onClick={this.clearMessages}
-            style={{ float: 'right', color: 'white', backgroundColor: '#F7CE3E' }}
+            style={{ float: 'right', color: '#2F3131', backgroundColor: '#F7CE3E' }}
           >
             Clear Unread Messages
           </button>
