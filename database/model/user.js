@@ -11,7 +11,7 @@ const userSchema = new Schema(
     favoriteTags: { type: [String], default: [], unique: true },
     avatarUrl: {
       type: String,
-      default: 'https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Penguin-512.png',
+      default: 'http://blog.debiase.com/wp-content/blogs.dir/8328/files/2017/06/mars.jpg',
     },
     vouch: { type: [String], default: [], unique: true },
   },
