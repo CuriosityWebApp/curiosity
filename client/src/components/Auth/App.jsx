@@ -13,16 +13,17 @@ class App extends Component {
 
   render() {
     let { notify, email, handleLogout, uiConfig, firebase, firebaseCheck } = this.props;
-    let { loading, error, checkUserEmail, refetch } = this.props.checkUserEmail;
+    let { loading, error } = this.props.checkUserEmail;
     if (loading) {
       return <div>Loading...</div>;
     } else if (error) {
       return <div>Error</div>;
     } else {
+      let { checkUserEmail, refetch } = this.props.checkUserEmail;
+
       if (checkUserEmail) {
         var signedIn = true;
         var userId = checkUserEmail.id;
-        refetch();
       } else {
         var signedIn = false;
         var userId = null;

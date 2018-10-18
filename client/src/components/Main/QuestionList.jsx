@@ -224,6 +224,7 @@ class QuestionList extends Component {
             handleLogout={handleLogout}
             userId={id}
             notify={notify}
+            refetch={refetch}
           />
           <div id="sidenav_rgt" style={{ marginLeft: '250px' }}>
             <div className="container-fluid" />
@@ -334,6 +335,7 @@ class QuestionList extends Component {
                                 folder={match.params.folder}
                                 userId={id}
                                 notify={notify}
+                                refetch={refetch}
                               />
                             );
                           }}
@@ -348,6 +350,7 @@ class QuestionList extends Component {
                                 userId={match.params.id}
                                 username={user.username}
                                 notify={notify}
+                                refetch={refetch}
                               />
                             );
                           }}

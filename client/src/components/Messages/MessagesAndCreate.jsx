@@ -29,6 +29,7 @@ class MessagesAndCreate extends Component {
 
   handleClose() {
     this.setState({ showComponent: false });
+    this.props.refetch();
   }
 
   replyFormat(receiverName, title, content) {
@@ -42,12 +43,13 @@ class MessagesAndCreate extends Component {
 
   render() {
     const { showComponent } = this.state;
-    const { folder, notify, userId } = this.props;
+    const { folder, notify, userId, refetch } = this.props;
     return (
       <div>
         {showComponent && (
           <PrivateMessage
             userId={userId}
+            refetch={refetch}
             notify={this.props.notify}
             showComponent={this.state.showComponent}
             handleClose={this.handleClose}
@@ -57,10 +59,20 @@ class MessagesAndCreate extends Component {
           />
         )}
         {folder === 'unread' && (
-          <NewList userId={userId} replyFormat={this.replyFormat} notify={notify} />
+          <NewList
+            userId={userId}
+            replyFormat={this.replyFormat}
+            notify={notify}
+            refetch={refetch}
+          />
         )}
         {folder === 'inbox' && (
-          <InboxList userId={userId} replyFormat={this.replyFormat} notify={notify} />
+          <InboxList
+            userId={userId}
+            replyFormat={this.replyFormat}
+            notify={notify}
+            refetch={refetch}
+          />
         )}
         {folder === 'sent' && (
           <SentList userId={userId} replyFormat={this.replyFormat} notify={notify} />

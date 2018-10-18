@@ -2668,16 +2668,14 @@ a (hover):    #fff (white)
 .textWhite {
   color: #FFFFFF;
 }
-/* Coal [#2F3131]
-Background [#f4f1eb]
-Cerulean Blue [#217CA3]
-Marigold [#F7CE3E]
-Success [#28a745]
-Danger [#dc3545] (edited)
-Screen #CSC1C0
-Steel #0A1612
-Denim #1A2930
-Marigold #F7CE3E */
+
+.textBlack {
+  color: #0A1612;
+}
+
+.warning {
+  background-color: #dc3545;
+}
 
 .message-item {
 margin-bottom: 25px;

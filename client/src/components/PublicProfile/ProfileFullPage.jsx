@@ -35,7 +35,7 @@ class ProfileFullPage extends Component {
       },
     })
       .then(() => {
-        if (!vouches) {
+        if (vouches) {
           notify('error', 'Removed Vouch!');
         } else {
           notify('success', 'Added Vouch!');
@@ -77,8 +77,7 @@ class ProfileFullPage extends Component {
 
   render() {
     const { showComponent } = this.state;
-
-    let { username, userId } = this.props;
+    let { username, userId, refetch } = this.props;
     let { loading, error, user } = this.props.getUser;
     if (loading) {
       return <div>Loading...</div>;
@@ -95,6 +94,7 @@ class ProfileFullPage extends Component {
               showComponent={this.state.showComponent}
               handleClose={this.handleClose}
               receiverName={this.state.receiverName}
+              refetch={refetch}
             />
           )}
           <div className="container">

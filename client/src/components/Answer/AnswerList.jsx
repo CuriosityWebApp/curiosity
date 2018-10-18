@@ -45,6 +45,7 @@ class AnswerList extends Component {
       return <div>Loading...</div>;
     } else {
       let answers = this.state.answers.length > 0 ? this.state.answers : this.props.data.answers;
+      this.props.data.refetch();
       return answers.map(
         answer => {
           if (!answer.answerChosen) {
