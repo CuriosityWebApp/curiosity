@@ -37,14 +37,16 @@ class QuestionList extends Component {
     ).bind(this);
     this.filterQuestions = this.filterQuestions.bind(this);
     this.sortQuestions = this.sortQuestions.bind(this);
+    this.removeScroll = this.removeScroll.bind(this);
+    this.addScroll = this.addScroll.bind(this);
   }
   componentDidMount() {
     this.throttledQuestionCall();
-    window.addEventListener('scroll', this.onScroll, false);
+    this.addScroll();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll, false);
+    this.removeScroll();
   }
 
   onScroll = () => {
@@ -56,6 +58,13 @@ class QuestionList extends Component {
       this.throttledQuestionCall();
     }
   };
+
+  removeScroll() {
+    window.removeEventListener('scroll', this.onScroll, false);
+  }
+  addScroll() {
+    window.addEventListener('scroll', this.onScroll, false);
+  }
 
   sortQuestions = async (e, method, range) => {
     await this.setState({ sortBy: method, skip: 0, questions: [], range: range }, () => {
@@ -244,27 +253,32 @@ class QuestionList extends Component {
                           exact
                           path="/"
                           render={() => {
+                            this.addScroll();
                             return this.displayQuestions();
                           }}
                         />
                         <Route
                           exact
                           path="/createQuestion"
-                          render={() => (
-                            <CreateQuestion
-                              userId={id}
-                              signedIn={signedIn}
-                              credit={credit}
-                              user={user}
-                              notify={notify}
-                            />
-                          )}
+                          render={() => {
+                            this.removeScroll();
+                            return (
+                              <CreateQuestion
+                                userId={id}
+                                signedIn={signedIn}
+                                credit={credit}
+                                user={user}
+                                notify={notify}
+                              />
+                            );
+                          }}
                         />
                         <Route
                           exact
                           path="/login"
                           render={() => {
                             {
+                              this.removeScroll();
                               if (!signedIn) {
                                 if (email && !username) {
                                   return <UsernameSubmit email={email} />;
@@ -283,6 +297,7 @@ class QuestionList extends Component {
                           exact
                           path="/profileUser"
                           render={() => {
+                            this.removeScroll();
                             return <ProfileUser id={id} notify={notify} refetch={refetch} />;
                           }}
                         />
@@ -290,6 +305,7 @@ class QuestionList extends Component {
                           exact
                           path="/questionContent/:questionId"
                           render={({ match }) => {
+                            this.removeScroll();
                             return (
                               <QuestionContent
                                 notify={notify}
@@ -305,6 +321,7 @@ class QuestionList extends Component {
                           exact
                           path="/search/:term"
                           render={({ match }) => {
+                            this.addScroll();
                             return <SearchList term={match.params.term} />;
                           }}
                         />
@@ -312,6 +329,7 @@ class QuestionList extends Component {
                           exact
                           path="/messages/:folder"
                           render={({ match }) => {
+                            this.removeScroll();
                             return (
                               <MessagesAndCreate
                                 folder={match.params.folder}
@@ -326,6 +344,7 @@ class QuestionList extends Component {
                           exact
                           path="/user/:id"
                           render={({ match }) => {
+                            this.removeScroll();
                             return (
                               <ProfileFullPage
                                 userId={match.params.id}
@@ -340,6 +359,7 @@ class QuestionList extends Component {
                           exact
                           path="/notifications"
                           render={() => {
+                            this.removeScroll();
                             return (
                               <Notifications
                                 userId={id}
