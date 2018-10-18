@@ -38,7 +38,10 @@ const UserType = new GraphQLObjectType({
             },
           },
         ])
-          .then(data => data[0].count)
+          .then((data) => {
+            const result = data[0].count;
+            return result;
+          })
           .catch(err => console.error('error in rank ', err));
       },
     },

@@ -24,6 +24,9 @@ class QuestionContent extends Component {
     this.displayUpButtonColor = this.displayUpButtonColor.bind(this);
     this.displayDownButtonColor = this.displayDownButtonColor.bind(this);
   }
+  componentDidMount() {
+    window.removeEventListener('scroll', this.onScroll, false);
+  }
 
   forceLogin(e) {
     if (!this.props.loggedId) {
@@ -203,15 +206,18 @@ class QuestionContent extends Component {
               <div className="col-md-11 ">
                 <div className="card-header d-flex flex-row-reverse bg-transparent  pb-2 border-bottom-0">
                   {question.bountyPaid ? (
-                    <span className="badge badge-pill badge-danger"> Bounty Claimed </span>
+                    <span className="badge badge-pill badge-danger shadow"> Bounty Claimed </span>
                   ) : (
-                    <span className="badge badge-pill badge-success"> Bounty Not Claimed </span>
+                    <span className="badge badge-pill badge-success shadow">
+                      {' '}
+                      Bounty Not Claimed{' '}
+                    </span>
                   )}{' '}
-                  <span className="badge badge-pill" style={{ backgroundColor: '#F7CE3E' }}>
+                  <span className="badge badge-pill shadow" style={{ backgroundColor: '#F7CE3E' }}>
                     {' '}
                     <i className="fas fa-lock" /> {question.restriction}
                   </span>
-                  <span className="badge badge-lg badge-pill badge-dark text-lg">
+                  <span className="badge badge-lg badge-pill badge-dark text-lg shadow">
                     <i className="fa fa-graduation-cap" />{' '}
                     {question.category ? question.category : 'None'}
                   </span>{' '}
@@ -258,7 +264,9 @@ class QuestionContent extends Component {
                           Posted by {question.user.username} -{' '}
                           {moment(question.createdAt).fromNow()}{' '}
                         </span>
-                        <hr className="mt-0" />
+                        <div className="mx-0 my-1">
+                          <hr className="mx-0 my-1" />
+                        </div>
                         <div>
                           <p className="mr-5">{question.questionContent}</p>
                         </div>
@@ -276,6 +284,9 @@ class QuestionContent extends Component {
                   })}
                 </div>
               </div>
+            </div>
+            <div className="mx-0 my-1">
+              <hr className="mx-0 my-1" />
             </div>
           </div>
           <div>
