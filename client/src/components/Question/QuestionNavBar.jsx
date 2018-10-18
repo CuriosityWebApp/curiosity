@@ -321,13 +321,33 @@ class QuestionNavBar extends Component {
                 <Link to="/messages/unread" style={{ padding: '15px' }}>
                   <i className="fas fa-envelope" style={{ color: '#F7CE3E' }} />
                   {unreadMessages > 0 && (
-                    <span className="badge badge-success">{unreadMessages}</span>
+                    <span
+                      className="badge "
+                      style={{
+                        backgroundColor: '#217CA3',
+                        color: 'white',
+                        marginLeft: '3px',
+                        marginBottom: '3px',
+                      }}
+                    >
+                      {unreadMessages}
+                    </span>
                   )}
                 </Link>
                 <Link to="/notifications" style={{ padding: '15px' }}>
                   <i className="fas fa-bell" style={{ color: '#F7CE3E' }} />
                   {unreadNotifications > 0 && (
-                    <span className="badge badge-success">{unreadNotifications}</span>
+                    <span
+                      className="badge "
+                      style={{
+                        backgroundColor: '#217CA3',
+                        color: 'white',
+                        marginLeft: '3px',
+                        marginBottom: '3px',
+                      }}
+                    >
+                      {unreadNotifications}
+                    </span>
                   )}
                 </Link>
               </div>
