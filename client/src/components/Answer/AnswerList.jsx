@@ -15,7 +15,7 @@ class AnswerList extends Component {
     this.getNextAnswers = this.getNextAnswers.bind(this);
   }
   componentDidMount() {
-    this.setState({ questionId: this.props.id });
+    this.setState({ questionId: this.props.id }, () => this.props.scrollRM());
   }
   getNextAnswers = async () => {
     let skip = this.state.skip === 0 ? this.props.data.answers.length : this.state.skip;
