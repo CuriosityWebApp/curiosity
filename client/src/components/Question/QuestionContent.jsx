@@ -156,6 +156,7 @@ class QuestionContent extends Component {
       } else {
         hoverText = '';
       }
+      console.log(this.props, 'sup');
       return (
         <div className="list-group">
           <div className="container-fluid pt-3 pb-3 rounded  mr-15 ">
