@@ -14,8 +14,8 @@ const questionSchema = new Schema(
     tags: [String],
     views: { type: Number, default: 0 },
     score: { type: Number, default: 0 },
-    ratedUpBy: { type: [String], default: [], unique: true },
-    ratedDownBy: { type: [String], default: [], unique: true },
+    ratedUpBy: { type: [String], default: [] },
+    ratedDownBy: { type: [String], default: [] },
   },
   {
     timestamps: true,

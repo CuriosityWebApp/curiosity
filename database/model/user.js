@@ -8,12 +8,12 @@ const userSchema = new Schema(
     email: String,
     rank: { type: Number, default: 0 },
     credit: { type: Number, default: 0 },
-    favoriteTags: { type: [String], default: [], unique: true },
+    favoriteTags: { type: [String], default: [] },
     avatarUrl: {
       type: String,
       default: 'http://blog.debiase.com/wp-content/blogs.dir/8328/files/2017/06/mars.jpg',
     },
-    vouch: { type: [String], default: [], unique: true },
+    vouch: { type: [String], default: [] },
   },
   {
     timestamps: true,
