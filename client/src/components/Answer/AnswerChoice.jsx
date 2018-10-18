@@ -69,7 +69,7 @@ class AnswerChoice extends Component {
       !this.props.getQuestion.question.bountyPaid
     ) {
       return (
-        <button className="btn btn-info" onClick={this.clickChooseAnswer}>
+        <button className="btn" style={{ color: '#217CA3' }} onClick={this.clickChooseAnswer}>
           Choose This Answer
         </button>
       );

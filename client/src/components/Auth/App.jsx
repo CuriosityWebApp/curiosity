@@ -20,7 +20,6 @@ class App extends Component {
       return <div>Error</div>;
     } else {
       let { checkUserEmail, refetch } = this.props.checkUserEmail;
-
       if (checkUserEmail) {
         var signedIn = true;
         var userId = checkUserEmail.id;

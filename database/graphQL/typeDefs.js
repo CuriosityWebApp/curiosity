@@ -11,7 +11,6 @@ const {
   GraphQLInt,
   GraphQLList,
   GraphQLBoolean,
-  GraphQLNonNull,
 } = require('graphql');
 
 const UserType = new GraphQLObjectType({
@@ -39,7 +38,7 @@ const UserType = new GraphQLObjectType({
           },
         ])
           .then((data) => {
-            const result = data[0].count;
+            const result = data[0].count !== undefined ? data[0].count : 0;
             return result;
           })
           .catch(err => console.error('error in rank ', err));

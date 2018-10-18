@@ -61,6 +61,7 @@ class NavBar extends Component {
             refetch={this.props.refetch}
           />
         ) : null}
+
         <div className="profile-box">
           {signedIn ? (
             <div className="media">
