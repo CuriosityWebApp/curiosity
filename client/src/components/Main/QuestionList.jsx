@@ -352,6 +352,7 @@ class QuestionList extends Component {
                             this.removeScroll();
                             return (
                               <ProfileFullPage
+                                realUserId={id}
                                 userId={match.params.id}
                                 username={user.username}
                                 notify={notify}

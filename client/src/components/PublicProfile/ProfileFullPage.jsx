@@ -77,7 +77,7 @@ class ProfileFullPage extends Component {
 
   render() {
     const { showComponent } = this.state;
-    let { username, userId, refetch } = this.props;
+    let { username, userId, refetch, realUserId } = this.props;
     let { loading, error, user } = this.props.getUser;
     if (loading) {
       return <div>Loading...</div>;
@@ -85,11 +85,12 @@ class ProfileFullPage extends Component {
     if (error) {
       return <div>Error...</div>;
     } else {
+      console.log(userId, realUserId);
       return (
         <div>
           {showComponent && (
             <PrivateMessage
-              userId={userId}
+              userId={realUserId}
               notify={this.props.notify}
               showComponent={this.state.showComponent}
               handleClose={this.handleClose}
