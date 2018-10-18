@@ -123,14 +123,14 @@ class PrivateMessage extends Component {
         .then(({ data }) => {
           if (data.checkUsername) {
             this.setState({ receiverId: data.checkUsername.id }, () => {
-              if (this.state.receiverId) {
+              if (receiverId) {
                 mutate({
                   mutation: AddMessage,
                   variables: {
                     senderId: userId,
                     messageTitle: title,
                     messageContent: content,
-                    receiverId: this.state.receiverId,
+                    receiverId: receiverId,
                   },
                 })
                   .then(() => {

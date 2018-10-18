@@ -17,6 +17,7 @@ class ProfileUser extends Component {
     if (error) {
       return <div>Error...</div>;
     } else {
+      refetch();
       return (
         <div>
           <div className="card">
