@@ -73,13 +73,11 @@ class UserInfo extends Component {
                 return (
                   <span className="badge headerColor textWhite" key={i} style={{ margin: '2px' }}>
                     {tag}{' '}
-                    <span
+                    <i
                       onClick={e => this.removeTag(e, tag)}
-                      style={{ cursor: 'pointer' }}
-                      className="badge warning textBlack"
-                    >
-                      x
-                    </span>
+                      style={{ cursor: 'pointer', color: '#F7CE3E' }}
+                      className="fas fa-times "
+                    />
                   </span>
                 );
               })}

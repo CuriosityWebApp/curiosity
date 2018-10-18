@@ -48,7 +48,18 @@ class QuestionNavBar extends Component {
         <a className="navbar-brand" href="/">
           Curiosity
         </a>
-        <div className="navbar-collapse collapse show" id="navbarColor01">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon" />
+        </button>
+        <div className="navbar-collapse collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item dropdown">
               <a
@@ -287,7 +298,7 @@ class QuestionNavBar extends Component {
                 </div>
               </li>
             )}
-            <li className="nav-item dropdown">
+            <li className="nav-item dropdown mr-5">
               <a
                 className="nav-link dropdown-toggle"
                 id="navbarCategories"
@@ -299,7 +310,7 @@ class QuestionNavBar extends Component {
               >
                 Category
               </a>
-              <div className="dropdown-menu" aria-labelledby="navbarCategories">
+              <div className="dropdown-menu " aria-labelledby="navbarCategories">
                 {categories.map((category, idx) => {
                   return (
                     <Link to="/" key={idx}>
@@ -315,39 +326,35 @@ class QuestionNavBar extends Component {
                 })}
               </div>
             </li>{' '}
-            <Search />
+            <span className="ml-5">
+              <Search />
+            </span>
             {this.props.signedIn && (
-              <div style={{ float: 'right' }}>
-                <Link to="/messages/unread" style={{ padding: '15px' }}>
-                  <i className="fas fa-envelope" style={{ color: '#F7CE3E' }} />
+              <div className="ml-4">
+                <Link
+                  to="/messages/unread"
+                  className="icon-circle border-0 bg-transparent"
+                  style={{ float: 'right' }}
+                >
+                  <i
+                    className="fas fa-envelope   border-0 bg-transparent"
+                    style={{ fontSize: '20px', color: '#F7CE3E' }}
+                  />
                   {unreadMessages > 0 && (
-                    <span
-                      className="badge "
-                      style={{
-                        backgroundColor: '#217CA3',
-                        color: 'white',
-                        marginLeft: '3px',
-                        marginBottom: '3px',
-                      }}
-                    >
-                      {unreadMessages}
-                    </span>
+                    <span className="badge badge-danger">{unreadMessages}</span>
                   )}
                 </Link>
-                <Link to="/notifications" style={{ padding: '15px' }}>
-                  <i className="fas fa-bell" style={{ color: '#F7CE3E' }} />
+                <Link
+                  to="/notifications"
+                  className="icon-circle border-0 bg-transparent"
+                  style={{ float: 'right' }}
+                >
+                  <i
+                    className="fas fa-bell  border-0 bg-transparent"
+                    style={{ fontSize: '20px', color: '#F7CE3E' }}
+                  />
                   {unreadNotifications > 0 && (
-                    <span
-                      className="badge "
-                      style={{
-                        backgroundColor: '#217CA3',
-                        color: 'white',
-                        marginLeft: '3px',
-                        marginBottom: '3px',
-                      }}
-                    >
-                      {unreadNotifications}
-                    </span>
+                    <span className="badge badge-success">{unreadNotifications}</span>
                   )}
                 </Link>
               </div>
