@@ -211,7 +211,7 @@ class QuestionItem extends Component {
                   </div>
                   <div className="card bg-white rounded shadow">
                     <div className="row">
-                      <div className="col-md-9 ">
+                      <div className="col-md-10 ">
                         <div className="card-block pl-3 pt-2">
                           <h3 className="card-title font-weight-bold d-flex flex-row ml-2 mb-0">
                             {' '}
@@ -237,7 +237,7 @@ class QuestionItem extends Component {
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-3 " style={{ color: 'black' }}>
+                      <div className="col-sm-2 " style={{ color: 'black' }}>
                         <div className="card-block d-flex align-items-start flex-column ">
                           <button
                             className="btn btn-block  btn-dark text-lg mt-0 mb-1 shadow-lg "
@@ -246,7 +246,7 @@ class QuestionItem extends Component {
                             }}
                           >
                             <i
-                              className="fas fa-ruble-sign  "
+                              className="fas fa-ruble-sign "
                               style={{
                                 color: '#F7CE3E',
                               }}
@@ -266,7 +266,7 @@ class QuestionItem extends Component {
                           </button>
                           {data.bountyPaid ? (
                             <button className="btn btn-block  btn-danger shadow-lg mt-1 mb-0 border-0">
-                              Bounty Claimed
+                              Claimed
                             </button>
                           ) : (
                             <button
@@ -275,7 +275,7 @@ class QuestionItem extends Component {
                                 backgroundColor: '#217CA3',
                               }}
                             >
-                              Bounty Not Claimed
+                              Not Claimed
                             </button>
                           )}
                         </div>
