@@ -2668,6 +2668,15 @@ a (hover):    #fff (white)
 .textWhite {
   color: #FFFFFF;
 }
+
+.textBlack {
+  color: #0A1612;
+}
+
+.warning {
+  background-color: #dc3545;
+}
+
 /* Coal [#2F3131]
 Background [#f4f1eb]
 Cerulean Blue [#217CA3]

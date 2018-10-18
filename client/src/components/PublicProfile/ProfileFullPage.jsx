@@ -35,7 +35,7 @@ class ProfileFullPage extends Component {
       },
     })
       .then(() => {
-        if (!vouches) {
+        if (vouches) {
           notify('error', 'Removed Vouch!');
         } else {
           notify('success', 'Added Vouch!');
