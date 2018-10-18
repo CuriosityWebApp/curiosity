@@ -291,10 +291,10 @@ class QuestionItem extends Component {
                         <span
                           className="badge badge-gray"
                           key={tag}
-                          style={{ cursor: 'pointer' }}
+                          style={{ cursor: 'pointer', fontSize: '16px' }}
                           onClick={e => this.props.filter(e, tag, null)}
                         >
-                          <i className="fas fa-tags" style={{ color: '#217CA3' }} /> <u>{tag}</u>
+                          <i className="fas fa-tags " style={{ color: '#217CA3' }} /> <u>{tag}</u>
                         </span>
                       );
                     })}
