@@ -2786,3 +2786,11 @@ line-height: 22px;
 .parent > .child {
     background-color: transparent !important;
  }
+
+ .nav-link {
+    color:#F7CE3E;
+}
+
+.nav-link a:hover {
+    color:#F7CE3E;
+}
