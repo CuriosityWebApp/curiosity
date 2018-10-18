@@ -25,7 +25,7 @@ class QuestionContent extends Component {
     this.displayDownButtonColor = this.displayDownButtonColor.bind(this);
   }
   componentDidMount() {
-    window.removeEventListener('scroll', this.onScroll, false);
+    this.props.scrollRM();
   }
 
   forceLogin(e) {
@@ -291,6 +291,7 @@ class QuestionContent extends Component {
           </div>
           <div>
             <AnswerList
+              scrollRM={this.props.scrollRM}
               id={this.props.id}
               qOwnerId={question.user.id}
               loggedId={this.props.loggedId}

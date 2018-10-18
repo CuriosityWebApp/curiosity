@@ -278,9 +278,10 @@ class QuestionList extends Component {
                           path="/login"
                           render={() => {
                             {
-                              this.removeScroll();
                               if (!signedIn) {
+                                this.removeScroll();
                                 if (email && !username) {
+                                  this.removeScroll();
                                   return <UsernameSubmit email={email} />;
                                 }
                                 return <Login uiConfig={uiConfig} firebaseAuth={firebaseAuth} />;
@@ -288,6 +289,7 @@ class QuestionList extends Component {
                                 setTimeout(() => {
                                   notify('auth', 'Signed In');
                                 }, 0);
+                                this.removeScroll();
                                 return <Redirect to="/" />;
                               }
                             }
@@ -308,6 +310,7 @@ class QuestionList extends Component {
                             this.removeScroll();
                             return (
                               <QuestionContent
+                                scrollRM={this.removeScroll}
                                 notify={notify}
                                 signedIn={signedIn}
                                 loggedId={id}
