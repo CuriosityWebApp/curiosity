@@ -66,7 +66,7 @@ a (hover):    #fff (white)
          transition: 0.3s;
     }
      #snb .sidenav a:hover {
-         color: #fff;
+         color: #F7CE3E;
     }
      #snb .sidenav .closebtn , #snb .closebtn{
          position: absolute;
@@ -79,7 +79,7 @@ a (hover):    #fff (white)
          display: none;
     }
      #snb a.sidenav .closebtn , #snb closebtn:hover{
-         color: #fff;
+         color: #F7CE3E;
          text-decoration:none;
     }
      #snb .closebtn-rgt{
@@ -87,7 +87,7 @@ a (hover):    #fff (white)
          display: block;
     }
      #snb .icon-circle:hover {
-         background: #efefef;
+         background: #F7CE3E;
          text-decoration: none;
     }
      #snb .right-navbar {
@@ -168,7 +168,7 @@ a (hover):    #fff (white)
     /* card-header:hover */
      #snb #accordion_sidenav_lft .card .card-header:hover{
          background: #333;
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /*list-group-item */
@@ -201,7 +201,7 @@ a (hover):    #fff (white)
     }
     /* list-group-item:hover */
      #snb .card .list-group-flush .list-group-item:hover{
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /* triangle_group */
@@ -421,7 +421,7 @@ a (hover):    #fff (white)
      #menu_feature .inner-content .panel .panel-body .panel-bx:hover{
          background-color: #101525;
          border: 1px solid #e3e3e3;
-         color: #959fae;
+         color: #F7CE3E;
          cursor:pointer;
          webkit-transition: all 1s ease-in-out;
          -moz-transition: all 1s ease-in-out;
@@ -558,7 +558,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #snb .cflate-canvas .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          border:1px solid rgba(33, 33, 33, 0.1);
          cursor: pointer;
     }
@@ -566,7 +566,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-canvas a:hover{
-         color:#fff;
+         color:#F7CE3E;
     }
      #snb .cheader-sflate-canvas .list-group-item span.right:after {
          color: rgba(251, 251, 251,0.5);
@@ -619,7 +619,7 @@ a (hover):    #fff (white)
          border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
      #snb .cflate-push .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          cursor: pointer;
     }
      #snb .cflate-push .card-header .label {
@@ -637,7 +637,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .sbar-iflate-overlay ul li a:hover{
-         background-color: #fff;
+         background-color: #F7CE3E;
     }
      .sbar-iflate-overlay ul li:hover i {
          color: #4db6ac;
@@ -667,7 +667,7 @@ a (hover):    #fff (white)
          background-color: #384d56 !important;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
          cursor: pointer;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item {
@@ -716,7 +716,7 @@ a (hover):    #fff (white)
          color:rgba(255,255,255,0.5) !important;
     }
      #snb .asnav-lflate-gradient .card .card-header:hover, #snb .cflate-gradient .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
@@ -897,7 +897,7 @@ a (hover):    #fff (white)
          transition: 0.3s;
     }
      #snb .sidenav a:hover {
-         color: #fff;
+         color: #F7CE3E;
     }
      #snb .sidenav .closebtn, #snb .closebtn {
          position: absolute;
@@ -909,7 +909,7 @@ a (hover):    #fff (white)
          display: none;
     }
      #snb a.sidenav .closebtn , #snb a.closebtn:hover{
-         color: #fff;
+         color: #F7CE3E;
          text-decoration:none;
     }
      #snb .closebtn-rgt{
@@ -917,7 +917,7 @@ a (hover):    #fff (white)
          display: block;
     }
      #snb .icon-circle:hover {
-         background: #efefef;
+         background: #F7CE3E;
          text-decoration: none;
     }
      #snb .right-navbar {
@@ -995,7 +995,7 @@ a (hover):    #fff (white)
     /* card-header:hover */
      #snb #accordion_sidenav_lft .card .card-header:hover{
          background: #333;
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /*list-group-item */
@@ -1027,7 +1027,7 @@ a (hover):    #fff (white)
     }
     /* list-group-item:hover */
      #snb .card .list-group-flush .list-group-item:hover{
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /* triangle_group */
@@ -1270,7 +1270,7 @@ a (hover):    #fff (white)
      #menu_feature .inner-content .panel .panel-body .panel-bx:hover{
          background-color: #101525;
          border: 1px solid #e3e3e3;
-         color: #959fae;
+         color: #F7CE3E;
          cursor:pointer;
          webkit-transition: all 1s ease-in-out;
          -moz-transition: all 1s ease-in-out;
@@ -1404,7 +1404,7 @@ a (hover):    #fff (white)
          color: #757575 !important;
     }
      #menu_feature .asnav-lflate-canvas .card .card-header:hover {
-         background-color: #444e5f !important;
+         background-color: #F7CE3E !important;
     }
      #menu_feature .cflate-canvas .list-group-flush .list-group-item {
          border:0px !important;
@@ -1413,7 +1413,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #menu_feature .cflate-canvas .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          border:1px solid rgba(33, 33, 33, 0.1);
          cursor: pointer;
     }
@@ -1421,7 +1421,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #menu_feature .snav-fmenu-canvas a:hover{
-         color:#fff;
+         color:#F7CE3E;
     }
      #menu_feature .cheader-sflate-canvas .list-group-item span.right:after {
          color: rgba(251, 251, 251,0.5);
@@ -1456,7 +1456,7 @@ a (hover):    #fff (white)
          color:rgb(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-push a:hover{
-         color:#f4f1eb;
+         color:#F7CE3E;
     }
      #snb .asnav-lflate-push .card .card-header {
          border: transparent !important;
@@ -1465,7 +1465,7 @@ a (hover):    #fff (white)
      #snb .asnav-lflate-push .card .card-header:hover {
          border: transparent !important;
          background-color: #0f0058 !important;
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-push .list-group-flush .list-group-item {
          background: #0f0058;
@@ -1474,7 +1474,7 @@ a (hover):    #fff (white)
          border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
      #snb .cflate-push .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          cursor: pointer;
     }
      #snb .cflate-push .card-header .label {
@@ -1492,7 +1492,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .sbar-iflate-overlay ul li a:hover{
-         background-color: #fff;
+         background-color: #F7CE3E;
     }
      .sbar-iflate-overlay ul li:hover i {
          color: #4db6ac;
@@ -1522,7 +1522,7 @@ a (hover):    #fff (white)
          background-color: #384d56 !important;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
          cursor: pointer;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item {
@@ -1571,7 +1571,7 @@ a (hover):    #fff (white)
          color:rgba(255,255,255,0.5) !important;
     }
      #snb .asnav-lflate-gradient .card .card-header:hover, #snb .cflate-gradient .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
@@ -1748,7 +1748,7 @@ a (hover):    #fff (white)
          transition: 0.3s;
     }
      #snb .sidenav a:hover {
-         color: #fff;
+         color: #F7CE3E;
     }
      #snb .sidenav .closebtn, #snb .closebtn {
          position: absolute;
@@ -1760,7 +1760,7 @@ a (hover):    #fff (white)
          display: none;
     }
      #snb a.sidenav .closebtn , #snb a.closebtn:hover{
-         color: #fff;
+         color: #F7CE3E;
          text-decoration:none;
     }
      #snb .closebtn-rgt{
@@ -1768,7 +1768,7 @@ a (hover):    #fff (white)
          display: block;
     }
      #snb .icon-circle:hover {
-         background: #efefef;
+         background: #F7CE3E;
          text-decoration: none;
     }
      #snb .right-navbar {
@@ -1847,7 +1847,7 @@ a (hover):    #fff (white)
     /* card-header:hover */
      #snb #accordion_sidenav_lft .card .card-header:hover{
          background: #333;
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /*list-group-item */
@@ -1878,7 +1878,7 @@ a (hover):    #fff (white)
     }
     /* list-group-item:hover */
      #snb .card .list-group-flush .list-group-item:hover{
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /* triangle_group */
@@ -2070,7 +2070,7 @@ a (hover):    #fff (white)
      #menu_feature .inner-content .panel .panel-body .panel-bx:hover{
          background-color: #101525;
          border: 1px solid #e3e3e3;
-         color: #959fae;
+         color: #F7CE3E;
          cursor:pointer;
          webkit-transition: all 1s ease-in-out;
          -moz-transition: all 1s ease-in-out;
@@ -2205,7 +2205,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #snb .cflate-canvas .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          border:1px solid rgba(33, 33, 33, 0.1);
          cursor: pointer;
     }
@@ -2213,7 +2213,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-canvas a:hover{
-         color:#fff;
+         color:#F7CE3E;
     }
      #snb .cheader-sflate-canvas .list-group-item span.right:after {
          color: rgba(251, 251, 251,0.5);
@@ -2248,7 +2248,7 @@ a (hover):    #fff (white)
          color:rgb(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-push a:hover{
-         color:#f4f1eb;
+         color:#F7CE3E;
     }
      #snb .asnav-lflate-push .card .card-header {
          border: transparent !important;
@@ -2257,7 +2257,7 @@ a (hover):    #fff (white)
      #snb .asnav-lflate-push .card .card-header:hover {
          border: transparent !important;
          background-color: #0f0058 !important;
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-push .list-group-flush .list-group-item {
          background: #0f0058;
@@ -2266,7 +2266,7 @@ a (hover):    #fff (white)
          border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
      #snb .cflate-push .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          cursor: pointer;
     }
      #snb .cflate-push .card-header .label {
@@ -2284,7 +2284,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .sbar-iflate-overlay ul li a:hover{
-         background-color: #fff;
+         background-color: #F7CE3E;
     }
      #snb .sbar-iflate-overlay ul li:hover i {
          color: #4db6ac;
@@ -2314,7 +2314,7 @@ a (hover):    #fff (white)
          background-color: #384d56 !important;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
          cursor: pointer;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item {
@@ -2363,7 +2363,7 @@ a (hover):    #fff (white)
          color:rgba(255,255,255,0.5) !important;
     }
      #snb .asnav-lflate-gradient .card .card-header:hover, #snb .cflate-gradient .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
@@ -2550,7 +2550,7 @@ a (hover):    #fff (white)
      transition-timing-function: ease-out;
 }
  #snb .hvr-bounce-to-right:hover, #snb .hvr-bounce-to-right:focus, #snb .hvr-bounce-to-right:active {
-     color: white;
+     color: #F7CE3E;
 }
  #snb .hvr-bounce-to-right:hover:before, #snb .hvr-bounce-to-right:focus:before, #snb .hvr-bounce-to-right:active:before {
      -webkit-transform: scaleX(1);

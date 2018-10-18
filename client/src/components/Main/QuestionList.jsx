@@ -214,6 +214,8 @@ class QuestionList extends Component {
         All time
       </span>
     );
+    this.props.data.refetch();
+    refetch();
     return (
       <React.Fragment>
         <div id="snb">

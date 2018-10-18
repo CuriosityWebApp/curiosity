@@ -24,7 +24,7 @@ class NavBar extends Component {
   }
 
   render() {
-    let { signedIn, user, handleLogout } = this.props;
+    let { signedIn, user, handleLogout, refetch } = this.props;
     if (signedIn) {
       var { id, username, rank, credit, avatarUrl, messages, questions } = user;
       var unreadMessages = 0;
@@ -49,6 +49,7 @@ class NavBar extends Component {
       var unreadMessages = 0;
     }
 
+    refetch();
     return (
       <nav id="mysidenav_lft" className="sidenav" style={{ width: '250px' }}>
         {this.state.showComponent ? (
@@ -64,13 +65,15 @@ class NavBar extends Component {
         <div className="profile-box">
           {signedIn ? (
             <div className="media">
-              <a className="pull-left pt-2">
-                <img
-                  className="rounded-circle"
-                  src={avatarUrl}
-                  style={{ width: '70px', height: '70px' }}
-                />
-              </a>
+              <Link to={`/user/${id}`}>
+                <div className="pull-left pt-2">
+                  <img
+                    className="rounded-circle"
+                    src={avatarUrl}
+                    style={{ width: '70px', height: '70px' }}
+                  />
+                </div>
+              </Link>
               <div className="media-body">
                 <h5 className="media-heading">
                   Welcome <span>{username}</span>
