@@ -22,7 +22,16 @@ class CreateQuestion extends Component {
   }
 
   displayCategories() {
-    let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
+    let categories = [
+      'Biology',
+      'Technology',
+      'History',
+      'Chemistry',
+      'Politics',
+      'Economy',
+      'Psychology',
+      'Random',
+    ];
 
     return categories.map(category => {
       return (
