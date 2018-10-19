@@ -65,6 +65,7 @@ class SentItem extends Component {
                       src={sender.avatarUrl}
                       className="rounded-circle"
                       style={{ width: '80px', height: '80px' }}
+                      alt="profilePicture"
                     />
                   </Link>
                 </div>

@@ -34,6 +34,7 @@ class BuyCredit extends Component {
                 onClick={this.onClickShowComponent}
                 src="https://png.icons8.com/windows/1600/stripe.png"
                 style={{ width: '150px', cursor: 'pointer' }}
+                alt="buyCredit"
               />
               {this.state.showComponent ? (
                 <PaymentCheckOut

@@ -58,7 +58,7 @@ class QuestionNavBar extends Component {
           Curiosity
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"
@@ -66,7 +66,7 @@ class QuestionNavBar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon" />
+          <span className="navbar-toggler-icon" />
         </button>
         <div className="navbar-collapse collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
