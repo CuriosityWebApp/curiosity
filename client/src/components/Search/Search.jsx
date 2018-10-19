@@ -114,7 +114,7 @@ class Search extends React.Component {
           <a className="icon-circle border-0 bg-transparent ml-2" onClick={this.executeSearch}>
             <i
               className="fas fa-search  border-0 bg-transparent"
-              style={{ fontSize: '20px', color: '#F7CE3E' }}
+              style={{ fontSize: '20px', color: '#F7CE3E', cursor: 'pointer' }}
             />
           </a>
         </form>
