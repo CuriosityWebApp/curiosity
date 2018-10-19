@@ -107,7 +107,7 @@ class PrivateMessage extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    let { title, content, receiverName, receiverId } = this.state;
+    let { title, content, receiverName } = this.state;
     let { mutate, notify, userId, client, refetch } = this.props;
     this.setState({ show: true });
     if (!title || !content || !receiverName) {
@@ -123,18 +123,18 @@ class PrivateMessage extends Component {
         .then(({ data }) => {
           if (data.checkUsername) {
             this.setState({ receiverId: data.checkUsername.id }, () => {
-              if (receiverId) {
+              if (this.state.receiverId) {
                 mutate({
                   mutation: AddMessage,
                   variables: {
                     senderId: userId,
                     messageTitle: title,
                     messageContent: content,
-                    receiverId: receiverId,
+                    receiverId: this.state.receiverId,
                   },
                 })
                   .then(() => {
-                    notify('success', `Message Sent to ${receiverName} !`);
+                    notify('success', `Message Sent to ${this.state.receiverName} !`);
                     refetch();
                     this.props.handleClose();
                   })
