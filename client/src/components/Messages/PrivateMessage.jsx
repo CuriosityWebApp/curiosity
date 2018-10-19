@@ -138,7 +138,7 @@ class PrivateMessage extends Component {
                     refetch();
                     this.props.handleClose();
                   })
-                  .catch(err => console.log('error bro', err));
+                  .catch(err => console.log('error', err));
               } else {
                 notify('error', 'Invalid user');
               }
