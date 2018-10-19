@@ -96,6 +96,7 @@ class Search extends React.Component {
               name: 'term',
               style: { width: '400px' },
               className: 'form-control-sm',
+              'aria-label': 'search',
             }}
             wrapperStyle={{
               position: 'relative',
