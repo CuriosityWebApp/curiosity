@@ -301,8 +301,3 @@ export default compose(
   graphql(AddTransaction, { name: 'AddTransaction' }),
   graphql(AddMessage, { name: 'AddMessage' }),
 )(AnswerItem);
-
-/*
-
-
-*/

@@ -25,6 +25,7 @@ class QuestionItem extends Component {
     this.OpenQuestion = this.OpenQuestion.bind(this);
     this.displayUpButtonColor = this.displayUpButtonColor.bind(this);
     this.displayDownButtonColor = this.displayDownButtonColor.bind(this);
+    this.searchTags = this.searchTags.bind(this);
   }
 
   IncrementLikes(e) {
@@ -69,6 +70,11 @@ class QuestionItem extends Component {
         }
       }
     }
+  }
+
+  searchTags(e, tag) {
+    e.stopPropagation();
+    this.props.filter(e, tag, null);
   }
 
   decrementLikes(e) {
@@ -292,7 +298,7 @@ class QuestionItem extends Component {
                           className="badge badge-gray"
                           key={tag}
                           style={{ cursor: 'pointer', fontSize: '16px' }}
-                          onClick={e => this.props.filter(e, tag, null)}
+                          onClick={e => this.searchTags(e, tag)}
                         >
                           <i className="fas fa-tags " style={{ color: '#217CA3' }} /> <u>{tag}</u>
                         </span>
