@@ -55,6 +55,7 @@ class UserInfo extends Component {
               src={user.avatarUrl}
               className="rounded-circle"
               style={{ width: '160px', height: '160px' }}
+              alt="profilePicture"
             />
             <br />
             <div className="basicMargin">

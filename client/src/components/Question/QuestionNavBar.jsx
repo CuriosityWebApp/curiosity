@@ -24,7 +24,16 @@ class QuestionNavBar extends Component {
     this.props.filterQuestions(e, e.target.value, this.state.range);
   }
   render() {
-    let categories = ['Biology', 'Technology', 'History', 'Chemistry', 'Politics', 'Economy'];
+    let categories = [
+      'Biology',
+      'Technology',
+      'History',
+      'Chemistry',
+      'Politics',
+      'Economy',
+      'Psychology',
+      'Random',
+    ];
     if (this.props.user) {
       let { messages, questions } = this.props.user;
       var unreadMessages = 0;

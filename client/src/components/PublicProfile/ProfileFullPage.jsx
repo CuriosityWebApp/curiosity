@@ -77,7 +77,7 @@ class ProfileFullPage extends Component {
 
   render() {
     const { showComponent } = this.state;
-    let { username, userId, refetch } = this.props;
+    let { username, userId, refetch, realUserId } = this.props;
     let { loading, error, user } = this.props.getUser;
     if (loading) {
       return <div>Loading...</div>;
@@ -89,7 +89,7 @@ class ProfileFullPage extends Component {
         <div>
           {showComponent && (
             <PrivateMessage
-              userId={userId}
+              userId={realUserId}
               notify={this.props.notify}
               showComponent={this.state.showComponent}
               handleClose={this.handleClose}
@@ -182,6 +182,7 @@ class ProfileFullPage extends Component {
                       src={user.avatarUrl}
                       className="rounded-circle"
                       style={{ width: '160px', height: '160px' }}
+                      alt="profilePicture"
                     />
                     <hr />
                     <div>

@@ -30,6 +30,7 @@ class RedeemCredit extends Component {
           src="https://png.icons8.com/windows/1600/stripe.png"
           style={{ width: '150px', cursor: 'pointer' }}
           onClick={this.handleShow}
+          alt="redeemCredit"
         />
 
         <Modal show={this.state.show} onHide={this.handleClose}>
@@ -40,6 +41,7 @@ class RedeemCredit extends Component {
           <img
             src="https://uiowa.edu/university-shared-services/sites/uiowa.edu.university-shared-services/files/styles/large/public/Bank.png?itok=KBY-4Kak"
             style={{ width: '200px', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
+            alt="BankExample"
           />
           <hr />
           <Modal.Body>

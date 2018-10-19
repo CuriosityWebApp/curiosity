@@ -107,7 +107,7 @@ class PrivateMessage extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    let { title, content, receiverName, receiverId } = this.state;
+    let { title, content, receiverName } = this.state;
     let { mutate, notify, userId, client, refetch } = this.props;
     this.setState({ show: true });
     if (!title || !content || !receiverName) {
@@ -134,11 +134,11 @@ class PrivateMessage extends Component {
                   },
                 })
                   .then(() => {
-                    notify('success', `Message Sent to ${receiverName} !`);
+                    notify('success', `Message Sent to ${this.state.receiverName} !`);
                     refetch();
                     this.props.handleClose();
                   })
-                  .catch(err => console.log('error bro', err));
+                  .catch(err => console.log('error', err));
               } else {
                 notify('error', 'Invalid user');
               }

@@ -49,6 +49,7 @@ class MessageItem extends Component {
   }
 
   render() {
+    console.log(this.props.post);
     let { sender, recipient, messageTitle, messageContent, createdAt, unread } = this.props.post;
     return (
       <div className="message-item" id="m16" style={{ width: '80%', marginLeft: '6%' }}>
@@ -65,6 +66,7 @@ class MessageItem extends Component {
                       src={sender.avatarUrl}
                       className="rounded-circle"
                       style={{ width: '80px', height: '80px' }}
+                      alt="profilePicture"
                     />
                   </Link>
                 </div>
