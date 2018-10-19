@@ -54,7 +54,7 @@ class Search extends React.Component {
   render() {
     return (
       <div>
-        <form className="form-inline my-2 my-lg-0 ml-4 " onSubmit={this.executeSearch}>
+        <form onSubmit={this.executeSearch} className="form-inline">
           <label className="sr-only" htmlFor="inlineFormInputName2">
             Name
           </label>
@@ -94,8 +94,8 @@ class Search extends React.Component {
             inputProps={{
               placeholder: 'Filter Questions',
               name: 'term',
-              style: { width: '500px' },
-              className: 'form-control',
+              style: { width: '400px' },
+              className: 'form-control-sm',
             }}
             wrapperStyle={{
               position: 'relative',
@@ -110,6 +110,13 @@ class Search extends React.Component {
               backgroundColor: 'white',
             }}
           />
+
+          <a className="icon-circle border-0 bg-transparent ml-2" onClick={this.executeSearch}>
+            <i
+              className="fas fa-search  border-0 bg-transparent"
+              style={{ fontSize: '20px', color: '#F7CE3E' }}
+            />
+          </a>
         </form>
         {this.state.searched && <Redirect to={`/search/${this.state.term}`} />}
       </div>

@@ -89,6 +89,7 @@ class QuestionList extends Component {
   };
 
   filterQuestions = async (e, category, range) => {
+    // e.stopPropagation();
     await this.setState({ filterBy: category, skip: 0, questions: [], range: range }, () => {
       this.props.client
         .query({
@@ -180,7 +181,7 @@ class QuestionList extends Component {
       var id = '';
     }
     let filter = this.state.filterBy ? (
-      <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+      <span className="badge" style={{ backgroundColor: '#F7CE3E', fontSize: '13px' }}>
         {this.state.filterBy}
       </span>
     ) : (
@@ -188,11 +189,11 @@ class QuestionList extends Component {
     );
     let sorted = this.state.sortBy ? (
       this.state.sortBy !== 'createdAt' ? (
-        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E', fontSize: '13px' }}>
           {this.state.sortBy}
         </span>
       ) : (
-        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E', fontSize: '13px' }}>
           New first
         </span>
       )
@@ -201,16 +202,16 @@ class QuestionList extends Component {
     );
     let range = this.state.range ? (
       this.state.range > 1 ? (
-        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E', fontSize: '13px' }}>
           {this.state.range} days
         </span>
       ) : (
-        <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+        <span className="badge" style={{ backgroundColor: '#F7CE3E', fontSize: '13px' }}>
           Today
         </span>
       )
     ) : (
-      <span className="badge" style={{ backgroundColor: '#F7CE3E' }}>
+      <span className="badge" style={{ backgroundColor: '#F7CE3E', fontSize: '13px' }}>
         All time
       </span>
     );
@@ -239,9 +240,12 @@ class QuestionList extends Component {
           </div>
         </div>
         <div id="menu_feature" style={{ marginLeft: '250px' }}>
-          <span className="badge" style={{ backgroundColor: '#217CA3', color: 'white' }}>
+          <h3
+            className="badge my-1 ml-3 mr-2"
+            style={{ backgroundColor: '#217CA3', color: 'white', fontSize: '14px' }}
+          >
             Filtered by:{' '}
-          </span>{' '}
+          </h3>{' '}
           {filter} {sorted} {range}
           <div />
           <div className="bg-content">

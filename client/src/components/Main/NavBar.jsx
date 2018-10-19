@@ -126,8 +126,8 @@ class NavBar extends Component {
                 <div className="card-header">
                   <Link to="/profileUser">
                     <div>
-                      <i className="fas fa-user" />
-                      Profile
+                      <i className="fas fa-cog" />
+                      Settings
                     </div>
                   </Link>
                 </div>

@@ -26,3 +26,13 @@
   background-color: #217ca3;
   border-color: #217ca3;
 }
+
+.logoShadow {
+  text-shadow: 0 0 15px;
+  transition: 0.3s color;
+  color: #f7ce3e;
+}
+.logoShadow:hover {
+  text-shadow: 0 0 5px;
+  color: #f7ce3e;
+}
