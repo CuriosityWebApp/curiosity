@@ -61,17 +61,6 @@ class QuestionNavBar extends Component {
           <a className="navbar-brand mr-3 logoShadow uno" href="/">
             Curiosity
           </a>
-          <hr
-            className="my-0 hrShadow"
-            style={{
-              width: '1px',
-              height: '30px',
-              display: 'inline-block',
-              background: '#F7CE3E',
-              zIndex: '100',
-              color: '#F7CE3E',
-            }}
-          />
           <button
             className="navbar-toggler"
             type="button"
