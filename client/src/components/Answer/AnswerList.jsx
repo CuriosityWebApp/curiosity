@@ -91,12 +91,26 @@ class AnswerList extends Component {
         </div>
         <div className="ml-5 pl-5">
           {this.props.signedIn ? (
-            <CreateAnswer
-              data={this.props.data}
-              user={this.props.user}
-              questionId={this.props.questionId}
-              notify={this.props.notify}
-            />
+            this.props.user.rank >= this.props.restriction ? (
+              <CreateAnswer
+                data={this.props.data}
+                user={this.props.user}
+                questionId={this.props.questionId}
+                notify={this.props.notify}
+              />
+            ) : (
+              <button
+                className="fas fa-question-circle btn btn-primary custom-btn shadow ml-3 pl-3"
+                onClick={() =>
+                  this.props.notify(
+                    'error',
+                    'Your experience is not high enough to answer this question!',
+                  )
+                }
+              >
+                Respond
+              </button>
+            )
           ) : (
             <button
               className="fas fa-question-circle btn btn-primary custom-btn shadow ml-3 pl-3"

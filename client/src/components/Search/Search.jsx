@@ -54,7 +54,7 @@ class Search extends React.Component {
   render() {
     return (
       <div>
-        <form className="form-inline" onSubmit={this.executeSearch}>
+        <form className="form-inline my-2 my-lg-0 ml-4 " onSubmit={this.executeSearch}>
           <label className="sr-only" htmlFor="inlineFormInputName2">
             Name
           </label>

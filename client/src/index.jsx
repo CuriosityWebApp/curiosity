@@ -100,7 +100,7 @@ class Index extends Component {
 
   render() {
     if (!this.state.firebaseCheck) {
-      return <div>loading</div>;
+      return <div>Loading...</div>;
     } else {
       return (
         <div>

@@ -147,8 +147,12 @@ class QuestionItem extends Component {
       if (this.props.data && this.props.data.loading) {
         return <div> Loading...</div>;
       } else {
+        this.props.data.refetch();
         let data = this.props.data.question;
-        let hoverText = `Likes: ${data.ratedUpBy.length}, Dislikes: ${data.ratedDownBy.length}`;
+        let hoverText = '';
+        if (data) {
+          hoverText = `Likes: ${data.ratedUpBy.length}, Dislikes: ${data.ratedDownBy.length}`;
+        }
         return (
           <div className="list-group ">
             <div className="container-fluid rounded  mr-15 ">

@@ -206,18 +206,27 @@ class QuestionContent extends Component {
               <div className="col-md-11 ">
                 <div className="card-header d-flex flex-row-reverse bg-transparent  pb-2 border-bottom-0">
                   {question.bountyPaid ? (
-                    <span className="badge badge-pill badge-danger shadow"> Bounty Claimed </span>
+                    <span className="badge badge-pill badge-danger shadow-lg">
+                      {' '}
+                      Bounty Claimed{' '}
+                    </span>
                   ) : (
-                    <span className="badge badge-pill badge-success shadow">
+                    <span
+                      className="badge badge-pill shadow-lg"
+                      style={{ backgroundColor: '#217CA3' }}
+                    >
                       {' '}
                       Bounty Not Claimed{' '}
                     </span>
                   )}{' '}
-                  <span className="badge badge-pill shadow" style={{ backgroundColor: '#F7CE3E' }}>
+                  <span
+                    className="badge badge-pill shadow-lg"
+                    style={{ backgroundColor: '#F7CE3E' }}
+                  >
                     {' '}
                     <i className="fas fa-lock" /> {question.restriction}
                   </span>
-                  <span className="badge badge-lg badge-pill badge-dark text-lg shadow">
+                  <span className="badge badge-lg badge-pill badge-dark text-lg shadow-lg">
                     <i className="fa fa-graduation-cap" />{' '}
                     {question.category ? question.category : 'None'}
                   </span>{' '}
@@ -297,6 +306,7 @@ class QuestionContent extends Component {
               loggedId={this.props.loggedId}
               isPaid={question.bountyPaid}
               bounty={question.bounty}
+              restriction={question.restriction}
               user={this.props.user}
               questionId={this.props.id}
               signedIn={this.props.signedIn}

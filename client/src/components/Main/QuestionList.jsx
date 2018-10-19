@@ -138,7 +138,7 @@ class QuestionList extends Component {
 
   displayQuestions() {
     if (this.props.data.loading) {
-      return <div>Loading Questions...</div>;
+      return <div>Loading...</div>;
     } else {
       if (this.state.sortBy === 'recommendation' && !this.state.questions.length) {
         return <h3> No recommendation found</h3>;
@@ -352,6 +352,7 @@ class QuestionList extends Component {
                             this.removeScroll();
                             return (
                               <ProfileFullPage
+                                realUserId={id}
                                 userId={match.params.id}
                                 username={user.username}
                                 notify={notify}
