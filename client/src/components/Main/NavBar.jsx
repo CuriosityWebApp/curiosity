@@ -86,7 +86,11 @@ class NavBar extends Component {
           ) : (
             <div className="media">
               <a className="pull-left pt-2">
-                <img className="rounded-circle" src="http://via.placeholder.com/40x40" />
+                <img
+                  className="rounded-circle"
+                  src="http://via.placeholder.com/40x40"
+                  alt="profilePicture"
+                />
               </a>
               <div className="media-body">
                 <h5 className="media-heading">Please</h5>

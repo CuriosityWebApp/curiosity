@@ -85,7 +85,6 @@ class ProfileFullPage extends Component {
     if (error) {
       return <div>Error...</div>;
     } else {
-      console.log(userId, realUserId);
       return (
         <div>
           {showComponent && (
@@ -183,6 +182,7 @@ class ProfileFullPage extends Component {
                       src={user.avatarUrl}
                       className="rounded-circle"
                       style={{ width: '160px', height: '160px' }}
+                      alt="profilePicture"
                     />
                     <hr />
                     <div>

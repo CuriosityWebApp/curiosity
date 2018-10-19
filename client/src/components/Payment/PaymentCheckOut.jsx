@@ -171,6 +171,7 @@ class PaymentCheckOut extends Component {
                         <img
                           src="http://www.pngmart.com/files/3/Major-Credit-Card-Logo-PNG-Clipart.png"
                           style={{ width: '450px', height: '80px' }}
+                          alt="creditLogo"
                         />
 
                         <hr />
