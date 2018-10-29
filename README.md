@@ -46,7 +46,7 @@ Curiosity is a rewards based question and answer platform.
 
 ## Git Workflow
 
-[Curiosity Workflow](WORKFLOW.md).
+[Curiosity Workflow](WORKFLOW.md)
 
 ## Styling
 
