@@ -10,7 +10,7 @@ Curiosity is a rewards based question and answer platform.
 1. [Built With](#built-with)
 1. [Git Workflow](#git-workflow)
 1. [Styling](#styling)
-1. [Styling](#license)
+1. [License](#license)
 
 ## Team
 
