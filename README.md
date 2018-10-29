@@ -7,9 +7,10 @@ Curiosity is a rewards based question and answer platform.
 1. [Team](#team)
 1. [Features](#features)
 1. [Screenshots](#screenshots)
-1. [Built With](#built)
-1. [Git Workflow](#git)
+1. [Built With](#built_with)
+1. [Git Workflow](#git_workflow)
 1. [Styling](#styling)
+1. [Styling](#license)
 
 ## Team
 
