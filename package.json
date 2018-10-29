@@ -1,7 +1,7 @@
 {
   "name": "curiosity",
   "version": "1.0.0",
-  "description": "Bounty based question-and-answer site",
+  "description": "Rewards Based Q&A Platform",
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/teamSlytherin/curiosity.git"
+    "url": "git+https://github.com/curiosityQA/curiosity.git"
   },
-  "author": "teamSlytherin",
+  "author": "curiosityQA",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/teamSlytherin/curiosity/issues"
+    "url": "https://github.com/curiosityQA/curiosity/issues"
   },
-  "homepage": "https://github.com/teamSlytherin/curiosity#readme",
+  "homepage": "https://github.com/curiosityQA/curiosity#readme",
   "keywords": [],
   "devDependencies": {
     "babel-core": "^6.23.3",
