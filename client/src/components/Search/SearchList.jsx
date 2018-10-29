@@ -5,60 +5,52 @@ import { Redirect } from 'react-router-dom';
 import SearchItem from '../Search/SearchItem.jsx';
 
 class SearchList extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			selected: null,
-			redirectAnswer: false
-		};
-		this.onSelect = this.onSelect.bind(this);
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      onSelect: null,
+    };
+    this.onSelect = this.onSelect.bind(this);
+  }
 
-	onSelect(id) {
-		this.setState(
-			{
-				selected: id
-			},
-			() => {
-				this.setState({
-					redirectAnswer: true
-				});
-			}
-		);
-	}
+  onSelect(id) {
+    this.setState({
+      onSelect: id,
+    });
+  }
 
-	displayQuestions() {
-		let data = this.props.data.searchQuestion;
-		if (this.props.data.loading) {
-			return <div>Loading Questions...</div>;
-		} else if (data.length < 1) {
-			return <div>No search results</div>;
-		} else {
-			return data.map(post => {
-				return <SearchItem key={post.id} postData={post} onSelect={this.onSelect} />;
-			});
-		}
-	}
+  displayQuestions() {
+    let { searchQuestion, loading, error } = this.props.data;
+    if (loading) {
+      return <div>Loading Questions...</div>;
+    } else if (error) {
+      return <div>Error</div>;
+    } else if (searchQuestion && !this.state.onSelect) {
+      if (searchQuestion.length < 1) {
+        return <div>No search results</div>;
+      } else {
+        return searchQuestion.map(post => {
+          return <SearchItem key={post.id} postData={post} onSelect={this.onSelect} />;
+        });
+      }
+    }
 
-	render() {
-		if (!this.state.redirectAnswer) {
-			return (
-				<div>
-					<div>{this.displayQuestions()}</div>
-				</div>
-			);
-		} else {
-			return <Redirect to={`/questionContent/${this.state.selected}`} />;
-		}
-	}
+    if (this.state.onSelect) {
+      return <Redirect to={`/questionContent/${this.state.onSelect}`} />;
+    }
+  }
+
+  render() {
+    return <div>{this.displayQuestions()}</div>;
+  }
 }
 
 export default graphql(searchQuestion, {
-	options: props => {
-		return {
-			variables: {
-				term: props.term
-			}
-		};
-	}
+  options: props => {
+    return {
+      variables: {
+        term: props.term,
+      },
+    };
+  },
 })(SearchList);

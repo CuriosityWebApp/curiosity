@@ -1,4 +1,7 @@
 const path = require('path');
+const webpack = require('webpack');
+const dotenv = require('dotenv').config();
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
@@ -23,6 +26,46 @@ module.exports = {
           presets: ['env', 'react', 'stage-0'],
         },
       },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: { minimize: true },
+          },
+        ],
+        include: /node_modules/,
+      },
+    ],
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+      'process.env.stripe_public_key': JSON.stringify(process.env.stripe_public_key),
+      'process.env.firebaseKey': JSON.stringify(process.env.firebaseKey),
+      'process.env.firebaseDomain': JSON.stringify(process.env.firebaseDomain),
+      'process.env.apolloUri': JSON.stringify(process.env.apolloUri),
+      'process.env.ADMINID': JSON.stringify(process.env.ADMINID),
+    }),
+  ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          output: {
+            comments: false,
+          },
+          minify: {},
+          compress: {
+            booleans: true,
+          },
+        },
+      }),
     ],
   },
 };

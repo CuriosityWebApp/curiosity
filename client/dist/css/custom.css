@@ -21,7 +21,7 @@
 # [Color codes]
 
 Navbar BG : #262626 (Black)
-HyperLink : #ffffff (white)
+HyperLink : #f4f1eb (white)
 Content   : #666666 (light gray)
 Header h4 : #383d41 (black)
 Footer    : #212529 (light black)
@@ -30,6 +30,14 @@ a (standard):   #fbfbfb80 (gray)
 a (hover):    #fff (white)
 
 **/
+.list-group-item {
+  position: static !important;
+  z-index: 0
+}
+.list-group-item:hover {
+  position: static !important;
+  z-index: 0
+}
  
 /* Smartphones (portrait and landscape) -- -- -- -- -- - */
  @media screen and (min-width: 304px) and (max-width: 667px) {
@@ -58,7 +66,7 @@ a (hover):    #fff (white)
          transition: 0.3s;
     }
      #snb .sidenav a:hover {
-         color: #fff;
+         color: #F7CE3E;
     }
      #snb .sidenav .closebtn , #snb .closebtn{
          position: absolute;
@@ -71,7 +79,7 @@ a (hover):    #fff (white)
          display: none;
     }
      #snb a.sidenav .closebtn , #snb closebtn:hover{
-         color: #fff;
+         color: #F7CE3E;
          text-decoration:none;
     }
      #snb .closebtn-rgt{
@@ -79,7 +87,7 @@ a (hover):    #fff (white)
          display: block;
     }
      #snb .icon-circle:hover {
-         background: #efefef;
+         background: #F7CE3E;
          text-decoration: none;
     }
      #snb .right-navbar {
@@ -160,7 +168,7 @@ a (hover):    #fff (white)
     /* card-header:hover */
      #snb #accordion_sidenav_lft .card .card-header:hover{
          background: #333;
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /*list-group-item */
@@ -193,7 +201,7 @@ a (hover):    #fff (white)
     }
     /* list-group-item:hover */
      #snb .card .list-group-flush .list-group-item:hover{
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /* triangle_group */
@@ -321,7 +329,7 @@ a (hover):    #fff (white)
          transition: margin-left .5s;
          padding: 16px;
          height:60px;
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     }
      #snb .sidenav_rgt_open{
@@ -365,7 +373,7 @@ a (hover):    #fff (white)
          border-top: 1px solid #e8e8e8;
     }
      #menu_feature .bg-content .content-title{
-         padding: 10px 20px;
+         padding: 10px 120px 10px 0px;
     }
      #menu_feature .bg-content .content-title h3{
          font-size: 20px;
@@ -375,18 +383,18 @@ a (hover):    #fff (white)
          padding:0px;
     }
      #menu_feature .inner-content{
-         padding:20px 0px;
+         padding: 10px 75px 10px 0px;
          background-color:#eef1f6;
     }
      #menu_feature .in_txt{
-         padding:20px 35px;
+         padding: 10px 120px 10px 0px;
     }
      #menu_feature .con-title_txt{
-         padding: 10px 58px !important;
+         padding: 10px 120px 10px 0px !important;
     }
     /* panel */
      #menu_feature .inner-content .panel{
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          margin:0px 20px;
          border-radius:3px;
     }
@@ -413,7 +421,7 @@ a (hover):    #fff (white)
      #menu_feature .inner-content .panel .panel-body .panel-bx:hover{
          background-color: #101525;
          border: 1px solid #e3e3e3;
-         color: #959fae;
+         color: #F7CE3E;
          cursor:pointer;
          webkit-transition: all 1s ease-in-out;
          -moz-transition: all 1s ease-in-out;
@@ -509,7 +517,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .snav-rgtf-canvas{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .iflate-canvas{
          border:0px;
@@ -550,7 +558,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #snb .cflate-canvas .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          border:1px solid rgba(33, 33, 33, 0.1);
          cursor: pointer;
     }
@@ -558,7 +566,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-canvas a:hover{
-         color:#fff;
+         color:#F7CE3E;
     }
      #snb .cheader-sflate-canvas .list-group-item span.right:after {
          color: rgba(251, 251, 251,0.5);
@@ -593,7 +601,7 @@ a (hover):    #fff (white)
          color:rgb(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-push a:hover{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .asnav-lflate-push .card .card-header {
          border: transparent !important;
@@ -611,7 +619,7 @@ a (hover):    #fff (white)
          border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
      #snb .cflate-push .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          cursor: pointer;
     }
      #snb .cflate-push .card-header .label {
@@ -629,7 +637,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .sbar-iflate-overlay ul li a:hover{
-         background-color: #fff;
+         background-color: #F7CE3E;
     }
      .sbar-iflate-overlay ul li:hover i {
          color: #4db6ac;
@@ -659,7 +667,7 @@ a (hover):    #fff (white)
          background-color: #384d56 !important;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
          cursor: pointer;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item {
@@ -708,11 +716,11 @@ a (hover):    #fff (white)
          color:rgba(255,255,255,0.5) !important;
     }
      #snb .asnav-lflate-gradient .card .card-header:hover, #snb .cflate-gradient .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .snav-flate-gradient {
          background: linear-gradient(to right, rgb(0, 0, 0,0.9) 0%,rgba(27, 27, 27, 0.9) 100%);
@@ -782,7 +790,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-ogradient .card-header .label {
          background: #333;
-         color: #FFFFFF;
+         color: #f4f1eb;
     }
     /* Sidenav overlay gradient end */
     /* Sidenav push off-canvas background begin */
@@ -889,7 +897,7 @@ a (hover):    #fff (white)
          transition: 0.3s;
     }
      #snb .sidenav a:hover {
-         color: #fff;
+         color: #F7CE3E;
     }
      #snb .sidenav .closebtn, #snb .closebtn {
          position: absolute;
@@ -901,7 +909,7 @@ a (hover):    #fff (white)
          display: none;
     }
      #snb a.sidenav .closebtn , #snb a.closebtn:hover{
-         color: #fff;
+         color: #F7CE3E;
          text-decoration:none;
     }
      #snb .closebtn-rgt{
@@ -909,7 +917,7 @@ a (hover):    #fff (white)
          display: block;
     }
      #snb .icon-circle:hover {
-         background: #efefef;
+         background: #F7CE3E;
          text-decoration: none;
     }
      #snb .right-navbar {
@@ -987,7 +995,7 @@ a (hover):    #fff (white)
     /* card-header:hover */
      #snb #accordion_sidenav_lft .card .card-header:hover{
          background: #333;
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /*list-group-item */
@@ -1019,7 +1027,7 @@ a (hover):    #fff (white)
     }
     /* list-group-item:hover */
      #snb .card .list-group-flush .list-group-item:hover{
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /* triangle_group */
@@ -1172,7 +1180,7 @@ a (hover):    #fff (white)
          transition: margin-left .5s;
          padding: 16px;
          height:60px;
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     }
      #snb .sidenav_rgt_open{
@@ -1235,7 +1243,7 @@ a (hover):    #fff (white)
     }
     /* panel */
      #menu_feature .inner-content .panel{
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          margin:0px 20px;
          border-radius:3px;
     }
@@ -1262,7 +1270,7 @@ a (hover):    #fff (white)
      #menu_feature .inner-content .panel .panel-body .panel-bx:hover{
          background-color: #101525;
          border: 1px solid #e3e3e3;
-         color: #959fae;
+         color: #F7CE3E;
          cursor:pointer;
          webkit-transition: all 1s ease-in-out;
          -moz-transition: all 1s ease-in-out;
@@ -1364,7 +1372,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #menu_feature .snav-rgtf-canvas{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #menu_feature .iflate-canvas{
          border:0px;
@@ -1396,7 +1404,7 @@ a (hover):    #fff (white)
          color: #757575 !important;
     }
      #menu_feature .asnav-lflate-canvas .card .card-header:hover {
-         background-color: #444e5f !important;
+         background-color: #F7CE3E !important;
     }
      #menu_feature .cflate-canvas .list-group-flush .list-group-item {
          border:0px !important;
@@ -1405,7 +1413,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #menu_feature .cflate-canvas .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          border:1px solid rgba(33, 33, 33, 0.1);
          cursor: pointer;
     }
@@ -1413,7 +1421,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #menu_feature .snav-fmenu-canvas a:hover{
-         color:#fff;
+         color:#F7CE3E;
     }
      #menu_feature .cheader-sflate-canvas .list-group-item span.right:after {
          color: rgba(251, 251, 251,0.5);
@@ -1448,7 +1456,7 @@ a (hover):    #fff (white)
          color:rgb(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-push a:hover{
-         color:#FFFFFF;
+         color:#F7CE3E;
     }
      #snb .asnav-lflate-push .card .card-header {
          border: transparent !important;
@@ -1457,7 +1465,7 @@ a (hover):    #fff (white)
      #snb .asnav-lflate-push .card .card-header:hover {
          border: transparent !important;
          background-color: #0f0058 !important;
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-push .list-group-flush .list-group-item {
          background: #0f0058;
@@ -1466,7 +1474,7 @@ a (hover):    #fff (white)
          border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
      #snb .cflate-push .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          cursor: pointer;
     }
      #snb .cflate-push .card-header .label {
@@ -1484,7 +1492,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .sbar-iflate-overlay ul li a:hover{
-         background-color: #fff;
+         background-color: #F7CE3E;
     }
      .sbar-iflate-overlay ul li:hover i {
          color: #4db6ac;
@@ -1514,7 +1522,7 @@ a (hover):    #fff (white)
          background-color: #384d56 !important;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
          cursor: pointer;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item {
@@ -1563,11 +1571,11 @@ a (hover):    #fff (white)
          color:rgba(255,255,255,0.5) !important;
     }
      #snb .asnav-lflate-gradient .card .card-header:hover, #snb .cflate-gradient .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .snav-flate-gradient {
          background: linear-gradient(to right, rgb(0, 0, 0,0.9) 0%,rgba(27, 27, 27, 0.9) 100%);
@@ -1637,7 +1645,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-ogradient .card-header .label {
          background: #333;
-         color: #FFFFFF;
+         color: #f4f1eb;
     }
     /* Sidenav overlay gradient end */
     /* Sidenav push off-canvas background begin */
@@ -1728,8 +1736,8 @@ a (hover):    #fff (white)
          overflow-y: auto;
          overflow-x: hidden;
          transition: 0.5s;
-         padding-top: 60px;
-         background: #262626 none repeat scroll 0 0;
+         padding-top: 20px;
+         background: #2F3131 none repeat scroll 0 0;
          color: rgb(251, 251, 251,0.5);
          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     }
@@ -1740,7 +1748,7 @@ a (hover):    #fff (white)
          transition: 0.3s;
     }
      #snb .sidenav a:hover {
-         color: #fff;
+         color: #F7CE3E;
     }
      #snb .sidenav .closebtn, #snb .closebtn {
          position: absolute;
@@ -1752,7 +1760,7 @@ a (hover):    #fff (white)
          display: none;
     }
      #snb a.sidenav .closebtn , #snb a.closebtn:hover{
-         color: #fff;
+         color: #F7CE3E;
          text-decoration:none;
     }
      #snb .closebtn-rgt{
@@ -1760,7 +1768,7 @@ a (hover):    #fff (white)
          display: block;
     }
      #snb .icon-circle:hover {
-         background: #efefef;
+         background: #F7CE3E;
          text-decoration: none;
     }
      #snb .right-navbar {
@@ -1782,7 +1790,7 @@ a (hover):    #fff (white)
          min-height: 50px;
          padding: 5px 15px;
          position: relative;
-         background: #262626 none repeat scroll 0 0;
+         background: #2F3131 none repeat scroll 0 0;
          color: rgb(251, 251, 251,0.5);
     }
      #snb .profile-box .media-body{
@@ -1803,7 +1811,7 @@ a (hover):    #fff (white)
     /* card-header */
      #snb #accordion_sidenav_lft .card .card-header {
          border-top: transparent;
-         background: #262626 none repeat scroll 0 0;
+         background: #2F3131 none repeat scroll 0 0;
          color: rgb(251, 251, 251,0.5);
          border-radius:0px;
          padding: 5px 15px;
@@ -1815,7 +1823,6 @@ a (hover):    #fff (white)
 		 font-family: 'Roboto', sans-serif;
          padding:0px;
          margin:0px;
-		 font-weight: 300;
          letter-spacing: 0.5px;
     }
      #snb .card .card-header .label{
@@ -1840,7 +1847,7 @@ a (hover):    #fff (white)
     /* card-header:hover */
      #snb #accordion_sidenav_lft .card .card-header:hover{
          background: #333;
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /*list-group-item */
@@ -1871,7 +1878,7 @@ a (hover):    #fff (white)
     }
     /* list-group-item:hover */
      #snb .card .list-group-flush .list-group-item:hover{
-         color: #FFF;
+         color: #F7CE3E;
          cursor:pointer;
     }
     /* triangle_group */
@@ -1977,10 +1984,8 @@ a (hover):    #fff (white)
     /* sidenav_rgt begin */
      #snb #sidenav_rgt {
          transition: margin-left .5s;
-         padding: 16px;
          height:60px;
-         background-color:#FFFFFF;
-         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+         background-color:#f4f1eb;
     }
      #snb .sidenav_rgt_open{
          float:left;
@@ -2014,9 +2019,7 @@ a (hover):    #fff (white)
     /* sidenav_rgt end */
     /* Menu feature begin */
      #menu_feature .bg-content{
-         background-color:#eef1f6;
-         border-bottom: 1px solid #e8e8e8;
-         border-top: 1px solid #e8e8e8;
+         background-color:#f4f1eb;
     }
      #menu_feature .bg-content .content-title{
          padding: 10px 20px;
@@ -2029,17 +2032,17 @@ a (hover):    #fff (white)
     }
      #menu_feature .inner-content{
          padding:20px 0px;
-         background-color:#eef1f6;
+         background-color:#f4f1eb;
     }
      #menu_feature .in_txt{
          padding:20px 35px;
     }
      #menu_feature .con-title_txt{
-         padding: 10px 58px !important;
+         padding: 10px 200px 70px 0px !important;
     }
     /* panel */
      #menu_feature .inner-content .panel{
-         background-color:#FFFFFF;
+         background-color:#f4f1eb;
          margin:0px 20px;
          border-radius:3px;
     }
@@ -2067,7 +2070,7 @@ a (hover):    #fff (white)
      #menu_feature .inner-content .panel .panel-body .panel-bx:hover{
          background-color: #101525;
          border: 1px solid #e3e3e3;
-         color: #959fae;
+         color: #F7CE3E;
          cursor:pointer;
          webkit-transition: all 1s ease-in-out;
          -moz-transition: all 1s ease-in-out;
@@ -2161,7 +2164,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .snav-rgtf-canvas{
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .iflate-canvas{
          border:0px;
@@ -2202,7 +2205,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #snb .cflate-canvas .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          border:1px solid rgba(33, 33, 33, 0.1);
          cursor: pointer;
     }
@@ -2210,7 +2213,7 @@ a (hover):    #fff (white)
          color:rgba(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-canvas a:hover{
-         color:#fff;
+         color:#F7CE3E;
     }
      #snb .cheader-sflate-canvas .list-group-item span.right:after {
          color: rgba(251, 251, 251,0.5);
@@ -2245,7 +2248,7 @@ a (hover):    #fff (white)
          color:rgb(251, 251, 251,0.5);
     }
      #snb .snav-fmenu-push a:hover{
-         color:#FFFFFF;
+         color:#F7CE3E;
     }
      #snb .asnav-lflate-push .card .card-header {
          border: transparent !important;
@@ -2254,7 +2257,7 @@ a (hover):    #fff (white)
      #snb .asnav-lflate-push .card .card-header:hover {
          border: transparent !important;
          background-color: #0f0058 !important;
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-push .list-group-flush .list-group-item {
          background: #0f0058;
@@ -2263,7 +2266,7 @@ a (hover):    #fff (white)
          border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
      #snb .cflate-push .list-group-flush .list-group-item:hover {
-         color: #fff;
+         color: #F7CE3E;
          cursor: pointer;
     }
      #snb .cflate-push .card-header .label {
@@ -2281,7 +2284,7 @@ a (hover):    #fff (white)
          color: #fff;
     }
      #snb .sbar-iflate-overlay ul li a:hover{
-         background-color: #fff;
+         background-color: #F7CE3E;
     }
      #snb .sbar-iflate-overlay ul li:hover i {
          color: #4db6ac;
@@ -2311,7 +2314,7 @@ a (hover):    #fff (white)
          background-color: #384d56 !important;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
          cursor: pointer;
     }
      #snb .cflate-overlay .list-group-flush .list-group-item {
@@ -2360,11 +2363,11 @@ a (hover):    #fff (white)
          color:rgba(255,255,255,0.5) !important;
     }
      #snb .asnav-lflate-gradient .card .card-header:hover, #snb .cflate-gradient .list-group-flush .list-group-item:hover {
-         color: #fff !important;
+         color: #F7CE3E !important;
     }
      #snb .cflate-gradient .card-header .label {
          background: linear-gradient(to right, rgba(19, 128, 221, 0.95) 0%,rgba(55, 159, 255, 0.95) 100%);
-         color:#FFFFFF;
+         color:#f4f1eb;
     }
      #snb .snav-flate-gradient {
          background: linear-gradient(to right, rgb(0, 0, 0,0.9) 0%,rgba(27, 27, 27, 0.9) 100%);
@@ -2434,7 +2437,7 @@ a (hover):    #fff (white)
     }
      #snb .cflate-ogradient .card-header .label {
          background: #333;
-         color: #FFFFFF;
+         color: #f4f1eb;
     }
     /* Sidenav overlay gradient end */
     /* Sidenav push off-canvas background begin */
@@ -2547,7 +2550,7 @@ a (hover):    #fff (white)
      transition-timing-function: ease-out;
 }
  #snb .hvr-bounce-to-right:hover, #snb .hvr-bounce-to-right:focus, #snb .hvr-bounce-to-right:active {
-     color: white;
+     color: #F7CE3E;
 }
  #snb .hvr-bounce-to-right:hover:before, #snb .hvr-bounce-to-right:focus:before, #snb .hvr-bounce-to-right:active:before {
      -webkit-transform: scaleX(1);
@@ -2605,3 +2608,189 @@ a (hover):    #fff (white)
      background: #555;
 }
  
+.rightAlign {
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 18px;
+  margin-bottom: 15px;
+}
+
+.center {
+    display: 'block'; 
+    margin-left: 'auto'; 
+    margin-right: 'auto';
+}
+
+.noMargin {
+  margin: 0px;
+  padding: 0px;
+}
+
+.leftAlign {
+  text-align: left;
+}
+
+.borderLineColor {
+  border-color: rgb(0, 0, 0);
+}
+
+.basicMargin {
+    margin: 20px;
+    padding: 20px;
+}
+
+.rightLeftMargin {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.my-modal {
+    width: 50vw;   
+    max-width: 50vw;
+} 
+
+.headerColor {
+  background-color: #1A2930;
+}
+
+.smallComponentColor {
+  background-color: #f4f1eb;
+}
+
+.successBtn {
+  background-color: #2F3131;
+}
+
+.marigold {
+  color: #F7CE3E;
+}
+
+.textWhite {
+  color: #FFFFFF;
+}
+
+.textBlack {
+  color: #0A1612;
+}
+
+.warning {
+  background-color: #dc3545;
+}
+
+.message-item {
+margin-bottom: 25px;
+margin-left: 40px;
+position: relative;
+}
+.message-item .message-inner {
+background: #fff;
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 10px;
+position: relative;
+}
+.message-item .message-inner:before {
+border-right: 10px solid #ddd;
+border-style: solid;
+border-width: 10px;
+color: rgba(0,0,0,0);
+content: "";
+display: block;
+height: 0;
+position: absolute;
+left: -20px;
+top: 6px;
+width: 0;
+}
+.message-item .message-inner:after {
+border-right: 10px solid #fff;
+border-style: solid;
+border-width: 10px;
+color: rgba(0,0,0,0);
+content: "";
+display: block;
+height: 0;
+position: absolute;
+left: -18px;
+top: 6px;
+width: 0;
+}
+.message-item:before {
+background: #fff;
+border-radius: 2px;
+bottom: -30px;
+box-shadow: 0 0 3px rgba(0,0,0,0.2);
+content: "";
+height: 100%;
+left: -30px;
+position: absolute;
+width: 3px;
+}
+.message-item:after {
+background: #fff;
+border: 2px solid #ccc;
+border-radius: 50%;
+box-shadow: 0 0 5px rgba(0,0,0,0.1);
+content: "";
+height: 15px;
+left: -36px;
+position: absolute;
+top: 10px;
+width: 15px;
+}
+.clearfix:before, .clearfix:after {
+content: " ";
+display: table;
+}
+.message-item .message-head {
+border-bottom: 1px solid #eee;
+margin-bottom: 8px;
+padding-bottom: 8px;
+}
+.message-item .message-head .avatar {
+margin-right: 20px;
+}
+.message-item .message-head .user-detail {
+overflow: hidden;
+}
+.message-item .message-head .user-detail h5 {
+font-size: 16px;
+font-weight: bold;
+margin: 0;
+}
+.message-item .message-head .post-meta {
+float: left;
+padding: 0 15px 0 0;
+}
+.message-item .message-head .post-meta >div {
+color: #333;
+font-weight: bold;
+text-align: right;
+}
+.post-meta > div {
+color: #777;
+font-size: 12px;
+line-height: 22px;
+}
+.message-item .message-head .post-meta >div {
+color: #333;
+font-weight: bold;
+text-align: right;
+}
+.post-meta > div {
+color: #777;
+font-size: 12px;
+line-height: 22px;
+}
+
+.parent > .child {
+    background-color: transparent !important;
+ }
+
+ .nav-link {
+    color:#F7CE3E;
+}
+
+.nav-link a:hover {
+    color:#F7CE3E;
+}
