@@ -1,6 +1,6 @@
 # Curiosity
 
-Curiosity is a rewards based question and answer platform.
+[Curiosity](https://hrcuriosity.herokuapp.com/) is a rewards based question and answer platform.
 
 ## Table of Contents
 
