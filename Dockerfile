@@ -15,3 +15,14 @@ RUN npm install react-scripts@1.1.1 -g --silent
 
 # start app
 CMD ["npm", "start"]
+
+# Build and tag Docker image
+#  docker build -t curiosity .
+
+# Then spin up the container
+#  docker run -it \
+#  -v ${PWD}:/usr/src/app \
+#  -v /usr/src/app/node_modules \
+#  -p 3000:3000 \
+#  --rm \
+#  sample-app
