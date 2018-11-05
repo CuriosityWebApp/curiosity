@@ -1,8 +1,8 @@
-# Detailed Workflow (CuriosityQA core)
+# Detailed Workflow (GreyFinancial core)
 
-1. 'git branch' [make sure you show the correct branches]
+1. 'git branch' [Verify correct branches]
 1. 'git checkout dev' [go to the dev branch]
-1. 'git pull origin dev' [update the dev branch to the most up to date]
+1. 'git pull origin dev' [pull the most recent dev branch update]
 1. 'git checkout -b newFeature' [create a new branch for the feature you are working on]
 1. [write the code, stage(add) the data, and commit code]
 
@@ -13,15 +13,15 @@
      not a detailed description of everything that changed.
    - (feat) Add a new feature
    - (fix) Fix inconsistent tests
-   - (refactor) Refactoring Data
-   - (cleanup) Cleaning up
+   - (refactor) Refactoring data
+   - (cleanup) Cleaning up code
    - (test) Test related
    - (doc) Document related
 
 1. 'git checkout dev' [go back to dev branch]
 1. 'git pull origin dev' [update the dev branch to the most up to date again]
-1. 'git checkout newFeature' [go back to your newFeature work]
-1. 'git merge dev' [merge the dev and the newFeature to not have merge conflicts]
+1. 'git checkout newFeature' [go back to your current feature branch]
+1. 'git merge dev' [merge the dev and the newFeature]
 1. [fix any conflicts]
 1. 'git push origin newFeature' [DO NOT PUSH TO DEV]
 1. [GO TO GITHUB REPO]
@@ -29,6 +29,6 @@
 
    - make base: dev and compare: newFeature]
 
-1. [submit pull request (using CONTRIBUTING.md flags)]
-1. [have someone other than yourself code review and accept the pull request to dev]
-1. [eventually as a group, we will pull the dev to the master branch periodically]
+1. [submit pull request (using flags from above)]
+1. [have someone other than yourself review the code and accept the pull request to dev]
+1. [periodically, as a group, we will merge dev to the master branch]
